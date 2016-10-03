@@ -1,3 +1,4 @@
+#encoding=utf-8
 """
 Django settings for gkwebsite project.
 
@@ -37,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #添加login app
+    #by byr 161003
+    'login',
 ]
 
 MIDDLEWARE_CLASSES = [

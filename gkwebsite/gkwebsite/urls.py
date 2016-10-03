@@ -1,3 +1,4 @@
+#encoding=utf-8
 """gkwebsite URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -17,6 +18,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from login import views as loginViews
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    #    关联login界面
+    #    by byr 161003
+    url(r'^login/', loginViews.login),
 ]
