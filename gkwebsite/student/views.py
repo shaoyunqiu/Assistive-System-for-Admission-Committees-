@@ -9,8 +9,5 @@ import datetime
 
 def student_center(request):
 	t = get_template('student/center.html')
-	c = Context({'person_name': 'John Smith',
-		'company': 'Outdoor Equipment',
-		'ship_date': datetime.date(2009, 4, 2),
-		'ordered_warranty': False})
+	c = Context({'name': 'duanqn'})
 	return HttpResponse(t.render(c))
