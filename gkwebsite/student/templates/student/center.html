@@ -4,20 +4,17 @@
 </head>
 
 <body>
-<p>Hello, {{ name }} </p>
+<p>Hello, #{{ id }} {{ name }} </p>
+<p><a href="/student/score">SCORE</a></p>
+<p><a href="/student/rank">RANK</a></p>
+<p><a href="/student/contact">CONTACT US</a></p>
+<p><a href="/student/admit">ADMIT</a></p>
 
 {% load static from staticfiles %}
 <script src="{% static "js/jquery-3.1.1.min.js" %}"></script>
 <script>
     $(document).ready(function(){
-      $("#sum").click(function(){
-        var a = $("#a").val();
-        var b = $("#b").val();
- 
-        $.get("/add/",{'a':a,'b':b}, function(ret){
-            $('#result').html(ret)
-        })
-      });
+      $.post("/backend/get_user_by_id")
     });
 </script>
 
