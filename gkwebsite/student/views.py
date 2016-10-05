@@ -9,7 +9,7 @@ import datetime
 
 def student_center(request):
 	t = get_template('student/center.html')
-	c = Context({'name': 'duanqn', 'id': 2014011425})
+	c = Context({'id': 2014011425})
 	#request.session['user_id'] = 2014011425
 	return HttpResponse(t.render(c))
 	
