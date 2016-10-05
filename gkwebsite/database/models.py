@@ -1,3 +1,5 @@
+#coding:utf8
+
 from __future__ import unicode_literals
 
 from django.db import models
@@ -7,12 +9,13 @@ import django.core.validators
 # Create your models here.
 
 class Teacher(models.Model):
-    account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'(\d|\w){4,}')])
-    # bug here, sometimes validation check invalid
-    password = models.CharField(max_length=50,default="12345678")
+    account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'(\d|\w){4,}$')])
+    # account validation : 4个或以上的数字或字母
+    password = models.CharField(max_length=50,default="12345678", validators=[django.core.validators.RegexValidator(regex=r'(\d|\w){4,}$')])
+    # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20,default='')
-    phone = models.CharField(max_length=20,default='')
-    email = models.CharField(max_length=50,default='')
+    phone = models.CharField(max_length=20,default='', validators=[django.core.validators.RegexValidator(regex=r'(\d)+$')])
+    email = models.CharField(max_length=50,default='', validators=[django.core.validators.EmailValidator()])
     area = models.CharField(max_length=50,default='')
     volunteerList = my_field.ListField(default=[])
 

@@ -1,7 +1,9 @@
 # coding=utf-8
 
 from models import *
+import traceback
 from django.core.exceptions import ValidationError
+# dic = {'account':'houyf##','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
 
 def getAll():
     return Teacher.objects.all()
@@ -36,7 +38,7 @@ def createAccount(kwargs):
     # 获取所有Teacher类的field名
     # print tuple(varList)
     # print tuple(kwargs.keys())
-    if not tupleEqual(varList,tuple(kwargs.keys())):
+    if not tupleEqual(varList, tuple(kwargs.keys())):
         print "parameters passed to createAccount are not correct"
         # print varList
         # print tuple(kwargs.keys())
@@ -45,15 +47,20 @@ def createAccount(kwargs):
         print 'account has been occupied'
         return False
     try:
-        teacher = Teacher.objects.create(**kwargs)
+        # teacher = Teacher.objects.create(**kwargs)
+        teacher = Teacher.objects.model()
     except:
-        print "create fail"
+        print "create object fail"
+        traceback.print_exc()
         return False
     try:
+        for item in kwargs.keys():
+            setattr(teacher, item, kwargs[item])
+        print 'full_clean ing...'
         teacher.full_clean()
-    except ValidationError, e:
-        # bug:can not catch exception here
-        print e
+    except ValidationError:
+        print 'validation fail...'
+        traceback.print_exc()
         return False
     teacher.save()
     return True
