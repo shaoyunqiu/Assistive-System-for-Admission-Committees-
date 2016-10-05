@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -138,18 +138,74 @@
 				<div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Welcome <small>高考估分系统教师端</small>
+                            用户信息 <small>高考估分系统教师端</small>
                         </h1>
                     </div>
                 </div> 
 				<!--row-->
 				
-				 <footer><p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">早睡早起</a></p></footer>
+				<div class = "row">
+					<div class = "col-md-12">
+						<div class= "panel panel-default">
+							<div class = "panel-body">
+								<div class = "row">
+									<div class = "col-md-6">
+										<form class = "form-horizontal" role = "form" method = "POST" action = "/gkwebsite/teacher/userinfo">
+											<div class = "form-group">
+												<label for = "account" class = "col-sm-2 control-label">用户名: </label>
+												<div class"col-sm-10">
+													<p class = "form-control-static" id = "account">{{user.account}}</p>
+												</div>
+											</div>
+											<div class = "form-group">
+												<label for = "realName" class = "col-sm-2 control-label">姓名：</label>
+												<div class = "col-sm-10">
+													<input type = "text" class = "form-control" id = "realName" placeholder = {{user.realName}}>
+											    </div>
+											</div>
+											<div class = "form-group">
+												<label for = "password" class = "col-sm-2 control-label">密码：</label>
+												<div class = "col-sm-10">
+													<input type = "password" class = "form-control" id = "password" placeholder = {{user.password}}>
+											    </div>
+											</div>
+											<div class = "form-group">
+												<label for = "phone" class = "col-sm-2 control-label">电话：</label>
+												<div class = "col-sm-10">
+													<input type = "text" class = "form-control" id = "phone" placeholder = {{user.phone}}>
+											    </div>
+											</div>
+											<div class = "form-group">
+												<label for = "email" class = "col-sm-2 control-label">邮箱：</label>
+												<div class = "col-sm-10">
+													<input type = "text" class = "form-control" id = "email" placeholder = {{user.email}}>
+											    </div>
+											</div>
+											<div class = "form-group">
+												<label for = "area" class = "col-sm-2 control-label">地区：</label>
+												<div class = "col-sm-10">
+													<input type = "text" class = "form-control" id = "area" placeholder = {{user.area}}>
+											    </div>
+											</div>
+											<div class = "form-group">
+												<div class="col-sm-offset-2 col-sm-10">
+													<button type = "submit" class = "btn btn-primary">保存</button>
+													<button type = "cancel" style = "margin-left:20px;" class = "btn btn-default">取消</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+				 <footer><p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">早睡早起</a></p></footer>
+			</div>
              <!-- /. PAGE INNER  -->
-            </div>
-         <!-- /. PAGE WRAPPER  -->
         </div>
+         <!-- /. PAGE WRAPPER  -->
+    </div>
      <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
     <!-- jQuery Js -->
