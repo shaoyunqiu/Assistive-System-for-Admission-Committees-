@@ -38,11 +38,13 @@ def createAccount(kwargs):
     # 获取所有Teacher类的field名
     # print tuple(varList)
     # print tuple(kwargs.keys())
+    '''
     if not tupleEqual(varList, tuple(kwargs.keys())):
         print "parameters passed to createAccount are not correct"
         # print varList
         # print tuple(kwargs.keys())
         return False
+    '''
     if not checkAccount(kwargs['account']):
         print 'account has been occupied'
         return False
@@ -87,7 +89,8 @@ def checkPassword(_account,_password):
     :param _password: 传过来的密码，可能被加密过
     :return:
     '''
-    if _password == hash(getData(_account, 'password')): #哈希
+    #if _password == hash(getData(_account, 'password')): #哈希
+    if _password == getData(_account, 'password'):
         return True
     # 先暂时直接通过验证
     return False

@@ -13,11 +13,11 @@ class Teacher(models.Model):
     # account validation : 4个或以上的数字或字母
     password = models.CharField(max_length=50,default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # password validation : 4个或以上的数字或字母
-    realName = models.CharField(max_length=20,default='')
-    phone = models.CharField(max_length=20,default='', validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
-    email = models.CharField(max_length=50,default='', validators=[django.core.validators.EmailValidator()])
-    area = models.CharField(max_length=50,default='')
-    volunteerList = my_field.ListField(default=[])
+    realName = models.CharField(max_length=20,default='',blank=True)
+    phone = models.CharField(max_length=20,default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
+    email = models.CharField(max_length=50,default='', blank=True, validators=[django.core.validators.EmailValidator()])
+    area = models.CharField(max_length=50,default='', blank=True)
+    volunteerList = my_field.ListField(default=[], blank=True)
 
     def __unicode__(self):
         varList = (vars(item)['column'] for item in Teacher._meta.get_fields()[1:])

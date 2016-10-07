@@ -16,7 +16,7 @@ def createAccountTest():
     print 'createAccount'
     print 'account bug here'
     dic = {'account': 'houyf##', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
-           'realName': 'hyf', 'volunteerList': ['a', 'b']}
+           'realName': 'hyf'}
     createAccount(dic)
     dic = {'account': '#!@houyf', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
@@ -28,7 +28,7 @@ def createAccountTest():
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     createAccount(dic)
     print 'account right here'
-    dic = {'account': 'houyf1', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf1', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     createAccount(dic)
     dic = {'account': 'houyf2', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
