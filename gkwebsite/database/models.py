@@ -11,10 +11,10 @@ import django.core.validators
 class Teacher(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50,default="12345678", validators=[django.core.validators.RegexValidator(regex=r'(\d|\w){4,}$')])
+    password = models.CharField(max_length=50,default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20,default='')
-    phone = models.CharField(max_length=20,default='', validators=[django.core.validators.RegexValidator(regex=r'(\d)+$')])
+    phone = models.CharField(max_length=20,default='', validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
     email = models.CharField(max_length=50,default='', validators=[django.core.validators.EmailValidator()])
     area = models.CharField(max_length=50,default='')
     volunteerList = my_field.ListField(default=[])

@@ -63,6 +63,7 @@ def createAccount(kwargs):
         traceback.print_exc()
         return False
     teacher.save()
+    print 'successfully create account'
     return True
 
 def checkAccount(_account):
@@ -71,11 +72,11 @@ def checkAccount(_account):
     :param account:表示用户名的字符串
     :return:True表示无重复 False表示有重复
     '''
-    if len(getObject().filter(account = _account)) > 0:
-        return False
-    #重复
-    return True
-    #通过检查
+    if len(getObject().filter(account = _account)) == 0:
+        return True
+    # 通过检查
+    return False
+    # 重复
 
 
 def checkPassword(_account,_password):
@@ -86,7 +87,10 @@ def checkPassword(_account,_password):
     :param _password: 传过来的密码，可能被加密过
     :return:
     '''
-    return True # 先暂时直接通过验证
+    if _password == hash(getData(_account, 'password')): #哈希
+        return True
+    # 先暂时直接通过验证
+    return False
     #hash function should be applied here
 
 def checkColomn(_colomn):
