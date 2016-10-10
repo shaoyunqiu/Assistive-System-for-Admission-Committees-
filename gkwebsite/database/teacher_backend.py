@@ -57,7 +57,8 @@ def createAccount(kwargs):
         return False
     try:
         for item in kwargs.keys():
-            setattr(teacher, item, kwargs[item])
+            if hasattr(teacher, item):
+                setattr(teacher, item, kwargs[item])
         print 'full_clean ing...'
         teacher.full_clean()
     except ValidationError:

@@ -20,6 +20,9 @@ class Teacher(models.Model):
     volunteerList = my_field.ListField(default=[], blank=True)
 
     def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
         varList = (vars(item)['column'] for item in Teacher._meta.get_fields()[1:])
         ret = ''
         for item in varList:
