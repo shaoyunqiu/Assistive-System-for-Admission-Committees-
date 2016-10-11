@@ -24,7 +24,7 @@ class Teacher(models.Model):
         import sys
         reload(sys)
         sys.setdefaultencoding('utf-8')
-        varList = (vars(item)['column'] for item in Teacher._meta.get_fields()[1:])
+        varList = (vars(item)['column'] for item in Teacher._meta.get_fields())
         ret = ''
         for item in varList:
             ret = ret + str(getattr(self,item,'None')) + ' || '
