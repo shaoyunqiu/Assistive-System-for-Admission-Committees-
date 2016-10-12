@@ -6,6 +6,8 @@ from django.core.exceptions import ValidationError
 
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
 
+def getAllInStudent():
+    return Student.objects.all()
 
 def getStudentbyField(field, argc):
     dic = {field : argc}
