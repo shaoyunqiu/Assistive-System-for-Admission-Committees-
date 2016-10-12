@@ -23,7 +23,7 @@ def createTeacher(kwargs):
     :param kwargs:应当是包含所有的field信息的字典
     :return:True表示成功添加 False表示添加失败
     '''
-    varList = tuple(vars(item)['column'] for item in Teacher._meta.get_fields()[1:])
+    #varList = tuple(vars(item)['column'] for item in Teacher._meta.get_fields()[1:])
     # 获取所有Teacher类的field名
     if not checkTeacherAccount(kwargs['account']):
         print 'account has been occupied'
@@ -61,7 +61,7 @@ def checkTeacherAccount(_account):
     # 重复
 
 
-def checkPassword(_account,_password):
+def checkTeacherPassword(_account,_password):
     '''
     检查密码是否正确
     暂时空出
@@ -71,10 +71,12 @@ def checkPassword(_account,_password):
     '''
 
     #if _password == hash(getData(_account, 'password')): #哈希
-    if _password == getTeacher(_account, 'password'):
-        return True
-    # 先暂时直接通过验证
-    return False
+    if checkTeacherAccount(_account): #无重复，说明不存在这个用户
+        return (False , 'Account does not exist.')
+    if _password != getTeacher(_account, 'password'):
+        return (False , 'Password is incorrect')
+    # 密码不正确
+    return (True, str(getTeacher(_account,'id')))
     #hash function should be applied here
 
 def checkTeacherField(_colomn):
@@ -83,7 +85,7 @@ def checkTeacherField(_colomn):
     :param _colomn:列名称
     :return:是否存在的bool
     '''
-    varList = tuple(vars(item)['column'] for item in Teacher._meta.get_fields()[1:])
+    varList = tuple(vars(item)['column'] for item in Teacher._meta.get_fields())
     return _colomn in varList
 
 def getTeacherAll(_account):
@@ -108,6 +110,7 @@ def getTeacher(_account,_colomn):
     :return:信息，可以是字符串、列表等等
     '''
     if not getTeacherAll(_account):
+        #不存在账户
         return None
     if not checkTeacherField(_colomn):
         print 'this column not exist'
