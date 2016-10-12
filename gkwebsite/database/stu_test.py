@@ -17,4 +17,6 @@ def testSetStudent():
     print setStudent('lihy2', Student.BIRTH, datetime.datetime(1996, 4, 5))
     print getStudent('lihy2', Student.BIRTH)
 
-
+def testTranStudent():
+    print idToAccountStudent(getStudent('lihy2',Student.ID))
+    print accountToIDStudent('lihy2')

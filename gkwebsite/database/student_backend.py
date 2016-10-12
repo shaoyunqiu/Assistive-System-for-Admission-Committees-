@@ -9,9 +9,43 @@ from django.core.exceptions import ValidationError
 def getAllInStudent():
     return Student.objects.all()
 
+def idToAccountStudent(id):
+    '''
+
+    :param id: string类型的id
+    :return: string类型的account
+    '''
+    try:
+        int_id = (int)(id)
+    except:
+        print 'id is not int'
+        return False
+    acc = Student.objects.filter(id=int_id)
+    if len(acc) == 0:
+        print 'id not exist'
+        return None
+    # if len(acc) > 1:
+    #     print 'warning: account not unique!'
+    return getattr(acc[0], Student.ACCOUNT, 'Error')
+
+
+def accountToIDStudent(account):
+    '''
+
+    :param account: string类型的account
+    :return: string类型的id
+    '''
+    return (str)(getStudent(account, 'id'))
+
 def getStudentbyField(field, argc):
+    '''
+    :param field:待查询的字段
+    :param argc:字段的值
+    :return:返回一个student对象
+    '''
     dic = {field : argc}
     return Student.objects.filter(**dic)
+
 
 def checkField(field):
     '''
@@ -71,7 +105,6 @@ def setStudent(account, field, value):
     student.full_clean()
     student.save()
     return True
-
 
 def createStudent(account, dict):
     '''
