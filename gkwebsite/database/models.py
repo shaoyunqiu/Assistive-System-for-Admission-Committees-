@@ -11,17 +11,13 @@ import datetime
 # Create your models here.
 
 class Teacher(models.Model):
-    account = models.CharField(max_length=50, unique=True,
-                               validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678",
-                                validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
-    phone = models.CharField(max_length=20, default='', blank=True,
-                             validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
-    email = models.CharField(max_length=50, default='', blank=True,
-                             validators=[django.core.validators.EmailValidator()])
+    phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
+    email = models.CharField(max_length=50, default='', blank=True, validators=[django.core.validators.EmailValidator()])
     area = models.CharField(max_length=50, default='', blank=True)
     volunteerList = my_field.ListField(default=[], blank=True)
 
@@ -37,11 +33,9 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
-    account = models.CharField(max_length=50, unique=True,
-                               validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678",
-                                validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
