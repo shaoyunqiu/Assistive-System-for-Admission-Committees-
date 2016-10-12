@@ -8,7 +8,7 @@ import teacher_backend as tch
 # Create your views here.
 
 def search_student_by_name(request):
-	# completed by evan69, not tested
+	# completed by evan69
 	# by dqn14 Oct 12, 2016
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
@@ -34,13 +34,15 @@ def remove_student_by_id(request):
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
 		id = request.POST.get('id')
+		account = stu.idToAccountStudent(id)
+		stu.removeStudentAccount(account)
 		#	DELETE FROM student WHERE id=/%request.POST.get('id')%/
 		return JsonResponse({})	# return nothing
 	else:
 		return HttpResponse('Access denied.')
 
 def student_list_all(request):
-	# completed by evan69, not tested
+	# completed by evan69
 	# by dqn14 Oct 12, 2016
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
@@ -72,13 +74,15 @@ def student_list_all(request):
 		return HttpResponse('Access denied.')
 		
 def get_teacher_name_by_id(request):
+	# completed by evan69
 	# by dqn14 Oct 12, 2016
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
 		id = request.POST.get('id')
+		account = tch.idToAccountTeacher(id)
 		#	SELECT FROM teacher WHERE id=/%request.POST.get('id')%/
-		name = "世界"
-		t={'name':name}
+		#name = "世界"
+		t={'name':tch.getTeacher(account,'realName')}
 		return JsonResponse(t)
 	else:
 		return HttpResponse('Access denied.')

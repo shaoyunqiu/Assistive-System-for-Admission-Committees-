@@ -17,6 +17,24 @@ def deleteTeacherAll():
 def getAllFieldInTeacher():
     return Teacher._meta.get_fields()
 
+def idToAccountTeacher(id):
+    '''
+    :param id: string类型的id
+    :return: string类型的account
+    '''
+    try:
+        int_id = (int)(id)
+    except:
+        print 'id is not int'
+        return False
+    acc = Teacher.objects.filter(id=int_id)
+    if len(acc) == 0:
+        print 'id not exist'
+        return None
+    # if len(acc) > 1:
+    #     print 'warning: account not unique!'
+    return getattr(acc[0], 'account', 'Error')
+
 def createTeacher(kwargs):
     '''
     创建新账户

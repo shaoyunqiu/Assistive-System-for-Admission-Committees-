@@ -37,6 +37,9 @@ def accountToIDStudent(account):
     '''
     return (str)(getStudent(account, 'id'))
 
+def removeStudentAccount(_account):
+    getAllInStudent().filter(account = _account).delete()
+
 def getStudentbyField(field, argc):
     '''
     :param field:待查询的字段
