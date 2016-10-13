@@ -5,13 +5,13 @@ import ast
 
 
 class ListField(models.TextField):
-    __metaclass__ = models.SubfieldBase
+    #__metaclass__ = models.SubfieldBase
     description = "Stores a python list"
 
     def __init__(self, *args, **kwargs):
         super(ListField, self).__init__(*args, **kwargs)
 
-    def to_python(self, value):
+    def from_db_value(self, value, expression, connection, context):
         if not value:
             value = []
 
