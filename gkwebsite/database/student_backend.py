@@ -76,6 +76,43 @@ def getStudentAll(account):
     return acc[0]
 
 
+# def getStudentAllDicForm(account):
+#     student = getStudentAll(account)
+#     dic = {
+#         Student.ID: getattr(student, Student.ID, 'no'),
+#
+#         Student.ACCOUNT: getattr(student, Student.ACCOUNT, 'no'),
+#         Student.PASSWORD: getattr(student, Student.PASSWORD, 'no'),
+#         Student.REAL_NAME: getattr(student, Student.REAL_NAME, 'no'),
+#         Student.BIRTH: getattr(student, Student.BIRTH, 'no'),
+#         Student.ID_NUMBER: getattr(student, Student.ID_NUMBER, 'no'),
+#
+#         Student.TYPE: getattr(student, Student.TYPE, 'no'),
+#         Student.SEX: getattr(student, Student.SEX, 'no'),
+#         Student.NATION: getattr(student, Student.NATION, 'no'),
+#         Student.SCHOOL: getattr(student, Student.SCHOOL, 'no'),
+#         Student.CLASSROOM: getattr(student, Student.CLASSROOM, 'no'),
+#
+#         Student.ADDRESS: getattr(student, Student.ADDRESS, 'no'),
+#         Student.PHONE: getattr(student, Student.PHONE, 'no'),
+#         Student.EMAIL: getattr(student, Student.EMAIL, 'no'),
+#         Student.DAD_PHONE: getattr(student, Student.DAD_PHONE, 'no'),
+#         Student.MOM_PHONE: getattr(student, Student.MOM_PHONE, 'no'),
+#
+#         Student.TUTOR_NAME: getattr(student, Student.TUTOR_NAME, 'no'),
+#         Student.TUTOR_PHONE: getattr(student, Student.TUTOR_PHONE, 'no'),
+#         Student.PROVINCE: getattr(student, Student.PROVINCE, 'no'),
+#         Student.MAJOR: getattr(student, Student.MAJOR, 'no'),
+#         Student.TEST_SCORE_LIST: getattr(student, Student.TEST_SCORE_LIST, 'no'),
+#
+#         Student.RANK_LIST: getattr(student, Student.RANK_LIST, 'no'),
+#         Student.SUM_NUMBER_LIST: getattr(student, Student.SUM_NUMBER_LIST, 'no'),
+#         Student.PROVINCE: getattr(student, Student.PROVINCE, 'no'),
+#         Student.MAJOR: getattr(student, Student.MAJOR, 'no'),
+#         Student.REGISTER_CODE: getattr(student, Student.REGISTER_CODE, 'no'),
+#
+#          }
+
 def getStudent(account, field):
     '''
     通过account获得学生的field字段的值
