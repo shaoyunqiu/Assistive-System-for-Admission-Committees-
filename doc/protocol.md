@@ -68,7 +68,41 @@
 		<td>白云仁</td>
 		<td>李昊阳完成，目前有些信息比如邮编等尚未加入数据库，故暂时不能get和set，是否保留此字段后续讨论</td>
 	</tr>
+	
 	<tr>
+		<td>student_info_show</td>
+		<td>通过传递student参数将学生信息显示在student_info.html中</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>HttpResponese</td>
+		<td>GET</td>
+		<td>邵韵秋</td>
+		<td>完成</td>
+	</tr>
+	
+	<tr>
+		<td>student_info_save</td>
+		<td>保存表单中修改的学生信息并返回显示在student_info.html中</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>HttpResponese</td>
+		<td>post</td>
+		<td>邵韵秋</td>
+		<td> __尚未完成，无法获取account和id__ </td>
+	</tr>
+	
+	<tr>
+		<td>student_info_edit</td>
+		<td>在student_info_edit.html中显示学生的信息，基本与student_info_show相同，但是增加了两个变量</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>HttpResponse(需要映射student, province(中国所有省份）,nation(中国所有民族）,major(清华所有专业，以及一项“无”))</td>
+		<td>post</td>
+		<td>邵韵秋</td>
+		<td>完成</td>
+	</tr>
+	
+		<tr>
 		<td>a</td>
 		<td>b</td>
 		<td>c</td>
