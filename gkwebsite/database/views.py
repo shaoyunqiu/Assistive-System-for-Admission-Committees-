@@ -8,8 +8,8 @@ import teacher_backend as tch
 # Create your views here.
 
 def search_student_by_name(request):
-	# completed by evan69
-	# by dqn14 Oct 12, 2016
+    # completed by evan69
+    # by dqn14 Oct 12, 2016
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
 		t = []

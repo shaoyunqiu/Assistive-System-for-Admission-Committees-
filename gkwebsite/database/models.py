@@ -21,6 +21,14 @@ class Teacher(models.Model):
     area = models.CharField(max_length=50, default='', blank=True)
     volunteerList = my_field.ListField(default=[], blank=True)
 
+    ACCOUNT = 'account'
+    PASSWORD = 'password'
+    REAL_NAME = 'realName'
+    PHONE = 'phone'
+    EMAIL = 'email'
+    AREA = 'area'
+    VOLUNTEER_LIST = 'volunteerList'
+
     def __unicode__(self):
         import sys
         reload(sys)
