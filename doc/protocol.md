@@ -34,17 +34,6 @@
 	 <td>侯禺凡完成</td>
 	 </tr>
 
-	 <tr>
-	 <td>student_list_all</td>
-	 <td>返回所有学生的部分信息</td>
-	 <td>database/views.py</td>
-	 <td>request</td>
-	 <td>类型：JsonResponse 包含所有学生的姓名(name)、性别(gender)、生源地(source)、学校(school)、身份证号(school) 注意key必须和括号内的内容相同</td>
-	 <td>POST</td>
-	 <td>段清楠</td>
-	 <td>侯禺凡完成</td>
-    </tr>
-
     <tr>
  		<td>student_list_all</td>
  		<td>返回所有学生的部分信息</td>
@@ -124,6 +113,28 @@
 		<td></td>
 	</tr>
 
+	<tr>
+		<td>logincheck</td>
+		<td>志愿者登录，需要向前端给出志愿者的ID</td>
+		<td>login/views.py</td>
+		<td>request</td>
+		<td>HttpResponse和redirect('/volunteer')（已写好）</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+	
+	<tr>
+		<td>search_volunteer_by_name</td>
+		<td>志愿者登录，需要向前端给出志愿者的ID</td>
+		<td>login/views.py</td>
+		<td>request</td>
+		<td>HttpResponse和redirect('/volunteer')（已写好）</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+	
 	<tr>
 		<td>logincheck</td>
 		<td>志愿者登录，需要向前端给出志愿者的ID</td>
