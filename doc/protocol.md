@@ -101,6 +101,39 @@
 		<td>邵韵秋</td>
 		<td>完成</td>
 	</tr>
+
+	<tr>
+		<td>student_list_all</td>
+		<td>显示志愿者可以看到的学生的信息</td>
+		<td>volunteer/views.py</td>
+		<td>request(.POST['id']: <volunteer_ID>)</td>
+		<td>JsonResponse</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<td>profile</td>
+		<td>显示、修改志愿者的个人信息（保存失败建议返回失败的字段）</td>
+		<td>volunteer/views.py</td>
+		<td>request</td>
+		<td>JsonResponse</td>
+		<td>POST和GET</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<td>logincheck</td>
+		<td>志愿者登录，需要向前端给出志愿者的ID</td>
+		<td>login/views.py</td>
+		<td>request</td>
+		<td>HttpResponse和redirect('/volunteer')（已写好）</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
 	
 		<tr>
 		<td>a</td>
