@@ -100,7 +100,7 @@ def search_volunteer_by_name(request):
 		return HttpResponse('Access denied.')
 		
 def remove_volunteer_by_id(request):
-	# by dqn14 Oct 12, 2016
+	# by dqn14 Oct 15, 2016
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
 		id = request.POST.get('id')
@@ -110,8 +110,7 @@ def remove_volunteer_by_id(request):
 		return HttpResponse('Access denied.')
 
 def volunteer_list_all(request):
-	# completed by evan69
-	# by dqn14 Oct 12, 2016
+	# by dqn14 Oct 15, 2016
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
 		t = []
@@ -128,5 +127,19 @@ def volunteer_list_all(request):
 		t.append(f)
 		
 		return JsonResponse(t, safe=False)	# must use 'safe=False'
+	else:
+		return HttpResponse('Access denied.')
+		
+def add_student(request):
+	# by dqn14 Oct 15, 2016
+	# use this if-else to block violent access
+	if request.is_ajax() and request.method == 'POST':
+		num = request.POST.get('num')
+		c = {'code':'DEADBEEF'}
+		d = {'code':'1A0083F9'}
+		t = []
+		t.append(c)
+		t.append(d)
+		return JsonResponse(t, safe=False)
 	else:
 		return HttpResponse('Access denied.')

@@ -9,4 +9,5 @@ urlpatterns = [
 	url(r'^search_volunteer_by_name/$', views.search_volunteer_by_name, name="search_volunteer_by_name"),
 	url(r'^remove_volunteer_by_id/$', views.remove_volunteer_by_id, name="remove_volunteer_by_id"),
 	url(r'^volunteer_list_all/$', views.volunteer_list_all, name="volunteer_list_all"),
+	url(r'^add_student/$', views.add_student, name="add_student")
 	]
