@@ -157,6 +157,17 @@
  		<td></td>
  	</tr>
 	
+	<tr>
+	 <td>add_student</td>
+	 <td>自动生成学生注册码</td>
+	 <td>database/views.py</td>
+	 <td>request(.POST['num']: 添加的学生账户数量)</td>
+	 <td>类型：JsonResponse ([{},{},{},...]) 包含新账号的注册码(code) 注意：后端请同时将注册码添加到数据库！</td>
+	 <td>POST</td>
+	 <td>段清楠</td>
+	 <td></td>
+	 </tr>
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
