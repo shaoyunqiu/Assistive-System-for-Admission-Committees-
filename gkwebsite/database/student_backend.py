@@ -46,7 +46,7 @@ def getStudentbyField(field, argc):
     :param argc:字段的值
     :return:返回一个student对象
     '''
-    dic = {field : argc}
+    dic = {field: argc}
     return Student.objects.filter(**dic)
 
 
