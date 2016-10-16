@@ -99,7 +99,7 @@
 		<td>JsonResponse</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>完成，某些字段如qq号，最后可能会删掉，所以未显示，其他信息可以显示</td>
 	</tr>
 
 	<tr>
@@ -110,7 +110,7 @@
 		<td>JsonResponse</td>
 		<td>POST和GET</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>完成，可以显示。已经可以返回修改志愿者的失败字段，待前端显示字段定下来后即可加上去</td>
 	</tr>
 
 	<tr>
@@ -121,7 +121,7 @@
 		<td>HttpResponse和redirect('/volunteer')（已写好）</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>完成并且已经和显示志愿者信息调通</td>
 	</tr>
 	
 	</tr>
