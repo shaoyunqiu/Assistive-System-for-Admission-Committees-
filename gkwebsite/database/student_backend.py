@@ -133,18 +133,23 @@ def setStudent(account, field, value):
     :param field:字段
     :return:字段对应的值
     '''
-    if not checkField(field):
+    try:
+        if not checkField(field):
+            return False
+        if field == Student.ACCOUNT:
+            print 'can not modify account'
+            return False
+        if not getStudentAll(account):
+            return False
+        student = getStudentAll(account)
+        setattr(student, field, value)
+        student.full_clean()
+        student.save()
+        return True
+    except:
+        print "-------------------------------"
+        print "can not saved!!"
         return False
-    if field == Student.ACCOUNT:
-        print 'can not modify account'
-        return False
-    if not getStudentAll(account):
-        return False
-    student = getStudentAll(account)
-    setattr(student, field, value)
-    student.full_clean()
-    student.save()
-    return True
 
 def createStudent(account, dict):
     '''

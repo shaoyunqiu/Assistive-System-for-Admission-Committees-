@@ -96,18 +96,23 @@ def setVolunteer(account, field, value):
     :param field:字段
     :return:字段对应的值
     '''
-    if not checkField(field):
+    try:
+        if not checkField(field):
+            return False
+        if field == Volunteer.ACCOUNT:
+            print 'can not modify account'
+            return False
+        if not getVolunteerAll(account):
+            return False
+        volunteer = getVolunteerAll(account)
+        setattr(volunteer, field, value)
+        volunteer.full_clean()
+        volunteer.save()
+        return True
+    except:
+        print "-------------------------------"
+        print "can not saved!!"
         return False
-    if field == Volunteer.ACCOUNT:
-        print 'can not modify account'
-        return False
-    if not getVolunteerAll(account):
-        return False
-    volunteer = getVolunteerAll(account)
-    setattr(volunteer, field, value)
-    volunteer.full_clean()
-    volunteer.save()
-    return True
 
 def createVolunteer(account, dict):
     '''
@@ -141,6 +146,21 @@ def createVolunteer(account, dict):
     volunteer.save()
     print 'successfully create account'
     return True
+
+
+def checkVolunteerPassword(_account,_password):
+    '''
+    检查密码是否正确
+    暂时空出
+    :param _account: 用户名
+    :param _password: 传过来的密码，可能被加密过
+    :return:
+    '''
+    if not getVolunteerAll(_account): #无重复，说明不存在这个用户
+        return (False , 'Account does not exist.')
+    if _password != getVolunteer(_account, Volunteer.PASSWORD): # 密码不正确
+        return (False , 'Password is incorrect')
+    return (True, str(getVolunteer(_account, Volunteer.ID)))
 
 
 
