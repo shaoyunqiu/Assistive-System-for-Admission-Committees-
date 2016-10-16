@@ -4,9 +4,12 @@ from django.http import HttpResponse, request, JsonResponse
 from models import *
 import student_backend as stu
 import teacher_backend as tch
+import volunteer_backend as vol
+import register_backend as reg
 
 
 # Create your views here.
+
 
 def search_student_by_name(request):
     # completed by evan69
@@ -64,7 +67,7 @@ def student_list_all(request):
         stu_list = stu.getAllInStudent()
         # search for students in database
         for item in stu_list:
-            dic = {'id': getattr(item, 'id'),
+            dic = {'id': getattr(item, Student.ID),
                    'name': getattr(item, Student.REAL_NAME),
                    'gender': getattr(item, Student.SEX),
                    'source': getattr(item, Student.PROVINCE),
@@ -96,9 +99,16 @@ def search_volunteer_by_name(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        c = {'id': '151099', 'name': '王二', 'department': '电机工程与应用电子技术系', 'class': '电51', 'student_id': '2015010874'}
-        c['name'] = request.POST.get('name')
-        t.append(c)
+        name = request.POST.get('name')
+        volunteer_list = vol.getVolunteerbyField(Volunteer.REAL_NAME, name)
+        for item in volunteer_list:
+            dic = {'id': getattr(item, 'id'),
+                   'name': getattr(item, Volunteer.REAL_NAME),
+                   'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)),
+                   'class': getattr(item, Volunteer.CLASSROOM),
+                   'student_id': getattr(item, Volunteer.STUDENT_ID),
+                   }
+            t.append(dic)
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
@@ -109,7 +119,7 @@ def remove_volunteer_by_id(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         id = request.POST.get('id')
-        #	DELETE FROM student WHERE id=/%request.POST.get('id')%/
+        vol.removeVolunteerAccount(vol.idToAccountVolunteer(id))
         return JsonResponse({})  # return nothing
     else:
         return HttpResponse('Access denied.')
@@ -120,34 +130,37 @@ def volunteer_list_all(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-
-        c = {'id': '151099', 'name': '王二', 'department': '电机工程与应用电子技术系', 'class': '电51', 'student_id': '2015010874'}
-        # SELECT * FROM student
-        t = []
-        t.append(c)
-        d = {'id': '151016', 'name': '张三', 'department': '化学系', 'class': '化学51', 'student_id': '2015012874'}
-        t.append(d)
-        e = {'id': '152357', 'name': '李四', 'department': '工程物理系', 'class': '核31', 'student_id': '2013012079'}
-        t.append(e)
-        f = {'id': '159930', 'name': 'Giannis Antetokounmpo', 'department': '苏世民书院', 'class': '苏6',
-             'student_id': '2016080123'}
-        t.append(f)
-
+        vol_list = vol.getAllInVolunteer()
+        for item in vol_list:
+            dic = {'id': getattr(item, 'id'),
+                   'name': getattr(item, Volunteer.REAL_NAME),
+                   'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)),
+                   'class': getattr(item, Volunteer.CLASSROOM),
+                   'student_id': getattr(item, Volunteer.STUDENT_ID),
+                   }
+            t.append(dic)
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
 
 
 def add_student(request):
+    
     # by dqn14 Oct 15, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         num = request.POST.get('num')
-        c = {'code': 'DEADBEEF'}
-        d = {'code': '1A0083F9'}
+        # c = {'code': 'DEADBEEF'}
+        # d = {'code': '1A0083F9'}
+        # t = []
+        # t.append(c)
+        # t.append(d)
+        num = (int)(num)
         t = []
-        t.append(c)
-        t.append(d)
+        for i in range(0, num):
+            c = {'code': reg.createNewRegisterCode()}
+            t.append()
+        # print t
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')

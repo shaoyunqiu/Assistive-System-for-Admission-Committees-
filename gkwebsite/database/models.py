@@ -182,6 +182,7 @@ class Volunteer(models.Model):
     studentAccountList = my_field.ListField(default=[], blank=True)
     isLogedin = models.IntegerField(default=0, blank=True)
     isRegistered = models.IntegerField(default=0, blank=True)
+    student_id = models.CharField(max_length=100, default='', blank=True)
 
     ID = 'id'
 
@@ -222,6 +223,7 @@ class Volunteer(models.Model):
     IS_LOGED_IN = 'isLogedin'
 
     IS_REGISTERED = 'isRegistered'
+    STUDENT_ID = 'student_id'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -230,13 +232,34 @@ class Volunteer(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED]
+                  IS_REGISTERED,STUDENT_ID]
 
     def __unicode__(self):
         import sys
         reload(sys)
         sys.setdefaultencoding('utf-8')
         varList = (vars(item)['column'] for item in Volunteer._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+class RegisterCode(models.Model):
+    registerCode = models.CharField(max_length=100, default='', blank=True)
+    state = models.IntegerField(default=0, blank=True)
+    account = models.CharField(max_length=100, default='', blank=True)
+
+    REGISTER_CODE = 'registerCode'
+    STATE = 'state'
+    ACCOUNT = 'account'
+
+    FIELD_LIST = [REGISTER_CODE, STATE, ACCOUNT]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in RegisterCode._meta.get_fields()[1:])
         ret = ''
         for item in varList:
             ret = ret + str(getattr(self, item, 'None')) + ' || '
