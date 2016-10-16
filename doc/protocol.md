@@ -132,7 +132,7 @@
 	 <td>类型：JsonResponse 包含匹配的志愿者的姓名(name)、院系(department)、班级(class)、学号(student_id) 注意key必须和括号内的内容相同</td>
 	 <td>POST</td>       
 	 <td>段清楠</td>        
-	 <td></td>
+	 <td> 完成 </td>
 	 </tr>
 
 	 <tr>
@@ -143,7 +143,7 @@
 	 <td>类型：JsonResponse （空字典）</td>
 	 <td>POST</td>
 	 <td>段清楠</td>
-	 <td></td>
+	 <td> 完成 </td>
 	 </tr>
 
     <tr>
@@ -154,7 +154,7 @@
  		<td>类型：JsonResponse([{},{},{},...]) 包含所有学生的姓名(name)、院系(department)、班级(class)、学号(student_id) 注意key必须和括号内的内容相同</td>
  		<td>POST</td>
  		<td>段清楠</td>
- 		<td></td>
+ 		<td> 完成 </td>
  	</tr>
 	
 	<tr>
@@ -165,7 +165,7 @@
 	 <td>类型：JsonResponse ([{},{},{},...]) 包含新账号的注册码(code) 注意：后端请同时将注册码添加到数据库！</td>
 	 <td>POST</td>
 	 <td>段清楠</td>
-	 <td></td>
+	 <td>后端已经实现，但是前端页面暂时未完成所以没有测试正确性</td>
 	 </tr>
 	
 		<tr>
