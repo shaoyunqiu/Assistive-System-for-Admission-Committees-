@@ -167,6 +167,17 @@
 	 <td>段清楠</td>
 	 <td>后端已经实现，但是前端页面暂时未完成所以没有测试正确性</td>
 	 </tr>
+
+	<tr>
+	 <td>volunteer_search_student_by_name</td>
+	 <td>根据姓名查找志愿者可见的学生</td>
+	 <td>volunteer/views.py</td>
+	 <td>request(POST['name']: 学生姓名)，志愿者id通过session获取</td>
+	 <td>类型：JsonResponse</td>
+	 <td>POST</td>
+	 <td>侯禺凡</td>
+	 <td></td>
+	 </tr>
 	
 		<tr>
 		<td>a</td>
