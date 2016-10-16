@@ -145,7 +145,6 @@ def volunteer_list_all(request):
 
 
 def add_student(request):
-    
     # by dqn14 Oct 15, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
