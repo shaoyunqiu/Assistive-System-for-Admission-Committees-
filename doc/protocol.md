@@ -178,7 +178,67 @@
 	 <td>侯禺凡</td>
 	 <td> 完成 </td>
 	 </tr>
-	
+	 
+	 <tr>
+	 <td>volunteer_info_edit</td>
+	 <td>修改志愿者的信息</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>类型：JsonResponse(dict)  dict = {
+		'user_name' : '',
+		'realName' : '',
+		'idNumber' : '',
+		'sex' : '',
+		'nation' : '',
+		'birth_year' : '',
+		'birth_month' : '',
+		'birth_date' : '',
+		'department' : '',
+		'class' : '',
+		'phone' : '',
+		'email' : '',
+		'province' : '',
+		'distribute' : '',
+		'qqn' : '',
+		'weichat' : '',
+		'teacher' : '',
+		'comment' : '',
+	}
+                GET直接返回字典 POST返回JSON</td>
+		<td>GET/POST</td>
+		<td>白云仁</td>
+	 <td>  </td>
+	 </tr>
+	<tr>
+	<td>volunteer_info</td>
+	 <td>查看志愿者的信息</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>类型：JsonResponse(dict)  dict = {
+		'user_name' : '',
+		'realName' : '',
+		'idNumber' : '',
+		'sex' : '',
+		'nation' : '',
+		'birth_year' : '',
+		'birth_month' : '',
+		'birth_date' : '',
+		'department' : '',
+		'class' : '',
+		'phone' : '',
+		'email' : '',
+		'province' : '',
+		'distribute' : '',
+		'qqn' : '',
+		'weichat' : '',
+		'teacher' : '',
+		'comment' : '',
+	}
+                GET直接返回字典</td>
+		<td>GET</td>
+		<td>白云仁</td>
+	 <td>  </td>
+	 </tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
