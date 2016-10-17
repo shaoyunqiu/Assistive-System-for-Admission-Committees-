@@ -143,3 +143,13 @@ def add_student(request):
 		return JsonResponse(t, safe=False)
 	else:
 		return HttpResponse('Access denied.')
+		
+def add_volunteer(request):
+	# by dqn14 Oct 17, 2016
+	# use this if-else to block violent access
+	if request.is_ajax() and request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		return JsonResponse({})
+	else:
+		return HttpResponse('Access denied.')
