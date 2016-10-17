@@ -170,6 +170,7 @@ def add_volunteer(request):
 	if request.is_ajax() and request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
-		return JsonResponse({})
+		#return JsonResponse({'success':'true'})
+		return JsonResponse({'success':'false', 'username':username})
 	else:
 		return HttpResponse('Access denied.')
