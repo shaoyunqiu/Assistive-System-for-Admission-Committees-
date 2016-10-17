@@ -264,3 +264,8 @@ class RegisterCode(models.Model):
         for item in varList:
             ret = ret + str(getattr(self, item, 'None')) + ' || '
         return ret
+
+class Picture(models.Model):
+    
+    img = models.ImageField(upload_to='exam_picture/', default='exam_picture/None/no-img.jpg')
+

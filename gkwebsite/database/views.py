@@ -163,3 +163,5 @@ def add_student(request):
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
+
+
