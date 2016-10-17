@@ -149,16 +149,16 @@ def add_student(request):
 	# use this if-else to block violent access
 	if request.is_ajax() and request.method == 'POST':
 		num = request.POST.get('num')
-		# c = {'code': 'DEADBEEF'}
-		# d = {'code': '1A0083F9'}
-		# t = []
-		# t.append(c)
-		# t.append(d)
+		#c = {'code': 'DEADBEEF'}
+		#d = {'code': '1A0083F9'}
+		#t = []
+		#t.append(c)
+		#t.append(d)
 		num = (int)(num)
 		t = []
 		for i in range(0, num):
-			c = {'code': reg.createNewRegisterCode()}
-			t.append()
+			c = {'code': str(reg.createNewRegisterCode())}
+			t.append(c)
 		# print t
 		return JsonResponse(t, safe=False)
 	else:
