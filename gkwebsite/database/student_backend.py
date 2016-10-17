@@ -46,7 +46,7 @@ def getStudentbyField(field, argc):
     :param argc:字段的值
     :return:返回一个student对象
     '''
-    dic = {field : argc}
+    dic = {field: argc}
     return Student.objects.filter(**dic)
 
 
@@ -76,6 +76,43 @@ def getStudentAll(account):
     return acc[0]
 
 
+# def getStudentAllDicForm(account):
+#     student = getStudentAll(account)
+#     dic = {
+#         Student.ID: getattr(student, Student.ID, 'no'),
+#
+#         Student.ACCOUNT: getattr(student, Student.ACCOUNT, 'no'),
+#         Student.PASSWORD: getattr(student, Student.PASSWORD, 'no'),
+#         Student.REAL_NAME: getattr(student, Student.REAL_NAME, 'no'),
+#         Student.BIRTH: getattr(student, Student.BIRTH, 'no'),
+#         Student.ID_NUMBER: getattr(student, Student.ID_NUMBER, 'no'),
+#
+#         Student.TYPE: getattr(student, Student.TYPE, 'no'),
+#         Student.SEX: getattr(student, Student.SEX, 'no'),
+#         Student.NATION: getattr(student, Student.NATION, 'no'),
+#         Student.SCHOOL: getattr(student, Student.SCHOOL, 'no'),
+#         Student.CLASSROOM: getattr(student, Student.CLASSROOM, 'no'),
+#
+#         Student.ADDRESS: getattr(student, Student.ADDRESS, 'no'),
+#         Student.PHONE: getattr(student, Student.PHONE, 'no'),
+#         Student.EMAIL: getattr(student, Student.EMAIL, 'no'),
+#         Student.DAD_PHONE: getattr(student, Student.DAD_PHONE, 'no'),
+#         Student.MOM_PHONE: getattr(student, Student.MOM_PHONE, 'no'),
+#
+#         Student.TUTOR_NAME: getattr(student, Student.TUTOR_NAME, 'no'),
+#         Student.TUTOR_PHONE: getattr(student, Student.TUTOR_PHONE, 'no'),
+#         Student.PROVINCE: getattr(student, Student.PROVINCE, 'no'),
+#         Student.MAJOR: getattr(student, Student.MAJOR, 'no'),
+#         Student.TEST_SCORE_LIST: getattr(student, Student.TEST_SCORE_LIST, 'no'),
+#
+#         Student.RANK_LIST: getattr(student, Student.RANK_LIST, 'no'),
+#         Student.SUM_NUMBER_LIST: getattr(student, Student.SUM_NUMBER_LIST, 'no'),
+#         Student.PROVINCE: getattr(student, Student.PROVINCE, 'no'),
+#         Student.MAJOR: getattr(student, Student.MAJOR, 'no'),
+#         Student.REGISTER_CODE: getattr(student, Student.REGISTER_CODE, 'no'),
+#
+#          }
+
 def getStudent(account, field):
     '''
     通过account获得学生的field字段的值
@@ -96,18 +133,23 @@ def setStudent(account, field, value):
     :param field:字段
     :return:字段对应的值
     '''
-    if not checkField(field):
+    try:
+        if not checkField(field):
+            return False
+        if field == Student.ACCOUNT:
+            print 'can not modify account'
+            return False
+        if not getStudentAll(account):
+            return False
+        student = getStudentAll(account)
+        setattr(student, field, value)
+        student.full_clean()
+        student.save()
+        return True
+    except:
+        print "-------------------------------"
+        print "can not saved!!"
         return False
-    if field == Student.ACCOUNT:
-        print 'can not modify account'
-        return False
-    if not getStudentAll(account):
-        return False
-    student = getStudentAll(account)
-    setattr(student, field, value)
-    student.full_clean()
-    student.save()
-    return True
 
 def createStudent(account, dict):
     '''
