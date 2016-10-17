@@ -239,6 +239,16 @@
 		<td>白云仁</td>
 	 <td>  </td>
 	 </tr>
+	 <tr>
+	 <td>add_volunteer</td>
+	 <td>添加志愿者账号</td>
+	 <td>database/views.py</td>
+	 <td>request(.POST['username']: 用户名  .POST['password']: 用户名)</td>
+	 <td>类型：JsonResponse（用户名已存在则添加失败） 见样例 注意：后端请同时将账号添加到数据库！</td>
+	 <td>POST</td>
+	 <td>段清楠</td>
+	 <td></td>
+	 </tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
