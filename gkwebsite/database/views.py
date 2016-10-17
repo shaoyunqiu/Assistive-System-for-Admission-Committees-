@@ -157,11 +157,21 @@ def add_student(request):
         num = (int)(num)
         t = []
         for i in range(0, num):
-            c = {'code': reg.createNewRegisterCode()}
-            t.append()
+            c = {'code': str(reg.createNewRegisterCode())}
+            t.append(c)
         # print t
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
 
 
+def add_volunteer(request):
+    # by dqn14 Oct 17, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # return JsonResponse({'success':'true'})
+        return JsonResponse({'success': 'false', 'username': username})
+    else:
+        return HttpResponse('Access denied.')
