@@ -138,7 +138,9 @@ def volunteer_list_all(request):
                    'class': getattr(item, Volunteer.CLASSROOM),
                    'student_id': getattr(item, Volunteer.STUDENT_ID),
                    }
-            t.append(dic)
+            # 没注册的志愿者不显示出来
+            if dic['name'] != '':
+                t.append(dic)
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
