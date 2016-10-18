@@ -248,6 +248,19 @@
 	 <td>POST</td>
 	 <td>段清楠</td>
 	 <td> 完成 </td>
+
+	</tr>
+		<tr>
+		<td>student_info_show</td>
+		<td>显示志愿者可见的学生详细信息（说明：已将老师端同样部分的代码移植过来，后端决定是否需要做修改；另外，后端还需要根据学生id和志愿者id判断这个GET请求是否有权限，没有权限则返回到上一页面）</td>
+		<td>volunteer/views.py</td>
+		<td>request(GET['stu_id'])</td>
+		<td>HttpResponse</td>
+		<td>GET</td>
+		<td>侯禺凡</td>
+		<td>h</td>
+	</tr>
+
 	 </tr>
 		<tr>
 		<td>a</td>
