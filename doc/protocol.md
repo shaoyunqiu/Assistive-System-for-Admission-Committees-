@@ -215,6 +215,7 @@
 		<td>teacher/views.py</td>
 		<td>request</td>
 		<td>类型：JsonResponse(dict)  dict = {
+		'id':'',
 		'user_name' : '',
 		'realName' : '',
 		'idNumber' : '',
@@ -259,6 +260,62 @@
 		<td>HttpResponse</td>
 		<td>GET</td>
 		<td>侯禺凡</td>
+		<td>h</td>
+	</tr>
+	
+	
+	<tr>
+		<td>distribute_student</td>
+		<td>给学生分组</td>
+		<td>teacher/views.py</td>
+		<td>request(GET['id'])</td>
+		<td>JsonResponse({'success':1})student = {
+            'user_name':'',
+            'name':'',
+            'id':'',
+        }
+        team1 = {'teamname': 2,
+                'student1': student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        team2 = {'teamname': 3,
+                'student1': student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        team3 = {'teamname': 4,
+                'student1': student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        team = {'teamname':1,
+            'student1':student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        dict = [team, team1, team2, team3]</td>
+		<td>GET</td>
+		<td>白云仁</td>
+		<td>h</td>
+	</tr>
+
+	<tr>
+		<td>upload</td>
+		<td>上传试题</td>
+		<td>teacher/views.py</td>
+		<td>request(GET['problem_upload'])</td>
+		<td>JsonResponse(dict) dict = {'result':''}</td>
+		<td>GET/POST</td>
+		<td>白云仁</td>
 		<td>h</td>
 	</tr>
 		<tr>
