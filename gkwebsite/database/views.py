@@ -145,32 +145,38 @@ def volunteer_list_all(request):
 
 
 def add_student(request):
-	# by dqn14 Oct 15, 2016
-	# use this if-else to block violent access
-	if request.is_ajax() and request.method == 'POST':
-		num = request.POST.get('num')
-		#c = {'code': 'DEADBEEF'}
-		#d = {'code': '1A0083F9'}
-		#t = []
-		#t.append(c)
-		#t.append(d)
-		num = (int)(num)
-		t = []
-		for i in range(0, num):
-			c = {'code': str(reg.createNewRegisterCode())}
-			t.append(c)
-		# print t
-		return JsonResponse(t, safe=False)
-	else:
-		return HttpResponse('Access denied.')
-		
+    # by dqn14 Oct 15, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        num = request.POST.get('num')
+        # c = {'code': 'DEADBEEF'}
+        # d = {'code': '1A0083F9'}
+        # t = []
+        # t.append(c)
+        # t.append(d)
+        num = (int)(num)
+        t = []
+        for i in range(0, num):
+            c = {'code': str(reg.createNewRegisterCode())}
+            t.append(c)
+        # print t
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+
+
 def add_volunteer(request):
-	# by dqn14 Oct 17, 2016
-	# use this if-else to block violent access
-	if request.is_ajax() and request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		#return JsonResponse({'success':'true'})
-		return JsonResponse({'success':'false', 'username':username})
-	else:
-		return HttpResponse('Access denied.')
+    # by dqn14 Oct 17, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        dic = {Volunteer.PASSWORD: password}
+        if vol.createVolunteer(username, dic):
+            flag = 'true'
+        else:
+            flag = 'false'
+        print '-------' + username + ' ' + password + ' ' + str(flag)
+        return JsonResponse({'success': flag, 'username': username})
+    else:
+        return HttpResponse('Access denied.')

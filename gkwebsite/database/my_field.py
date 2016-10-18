@@ -3,9 +3,11 @@
 from django.db import models
 import ast
 
-MAJOR_LIST = [u'计算机科学与技术系', u'电子工程系', u'自动化系', u'化学系', u'物理系']
-SEX_LIST = [u'男', u'女']
-PROVINCE_LIST = [u'北京', u'上海', u'内蒙古', u'江苏', u'湖北', u'广东', u'广西']
+MAJOR_LIST = [u'', u'计算机科学与技术系', u'电子工程系', u'自动化系', u'化学系', u'物理系']
+SEX_LIST = [u'',u'男', u'女']
+PROVINCE_LIST = [u'', u'北京', u'上海', u'内蒙古', u'江苏', u'湖北', u'广东', u'广西']
+NATION_LIST = [u'', u'汉族', u'蒙古族', u'壮族', u'彝族', u'维吾尔族', u'兽族', u'不死族']
+
 
 def majorIntToString(num):
     index = num % len(MAJOR_LIST)
@@ -18,6 +20,10 @@ def sexIntToString(num):
 def provinceIntToString(num):
     index = num % len(PROVINCE_LIST)
     return PROVINCE_LIST[index]
+
+def nationIntToString(num):
+    index = num % len(NATION_LIST)
+    return NATION_LIST[index]
 
 
 
