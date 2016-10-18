@@ -132,7 +132,7 @@
 	 <td>类型：JsonResponse 包含匹配的志愿者的姓名(name)、院系(department)、班级(class)、学号(student_id) 注意key必须和括号内的内容相同</td>
 	 <td>POST</td>       
 	 <td>段清楠</td>        
-	 <td></td>
+	 <td> 完成 </td>
 	 </tr>
 
 	 <tr>
@@ -143,7 +143,7 @@
 	 <td>类型：JsonResponse （空字典）</td>
 	 <td>POST</td>
 	 <td>段清楠</td>
-	 <td></td>
+	 <td> 完成 </td>
 	 </tr>
 
     <tr>
@@ -154,7 +154,7 @@
  		<td>类型：JsonResponse([{},{},{},...]) 包含所有学生的姓名(name)、院系(department)、班级(class)、学号(student_id) 注意key必须和括号内的内容相同</td>
  		<td>POST</td>
  		<td>段清楠</td>
- 		<td></td>
+ 		<td> 完成 </td>
  	</tr>
 	
 	<tr>
@@ -165,9 +165,90 @@
 	 <td>类型：JsonResponse ([{},{},{},...]) 包含新账号的注册码(code) 注意：后端请同时将注册码添加到数据库！</td>
 	 <td>POST</td>
 	 <td>段清楠</td>
-	 <td></td>
+	 <td>后端已经实现，但是前端页面暂时未完成所以没有测试正确性</td>
 	 </tr>
-	
+
+	<tr>
+	 <td>volunteer_search_student_by_name</td>
+	 <td>根据姓名查找志愿者可见的学生</td>
+	 <td>volunteer/views.py</td>
+	 <td>request(POST['name']: 学生姓名)，志愿者id通过session获取</td>
+	 <td>类型：JsonResponse</td>
+	 <td>POST</td>
+	 <td>侯禺凡</td>
+	 <td> 完成 </td>
+	 </tr>
+	 
+	 <tr>
+	 <td>volunteer_info_edit</td>
+	 <td>修改志愿者的信息</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>类型：JsonResponse(dict)  dict = {
+		'user_name' : '',
+		'realName' : '',
+		'idNumber' : '',
+		'sex' : '',
+		'nation' : '',
+		'birth_year' : '',
+		'birth_month' : '',
+		'birth_date' : '',
+		'department' : '',
+		'class' : '',
+		'phone' : '',
+		'email' : '',
+		'province' : '',
+		'distribute' : '',
+		'qqn' : '',
+		'weichat' : '',
+		'teacher' : '',
+		'comment' : '',
+	}
+                GET直接返回字典 POST返回JSON</td>
+		<td>GET/POST</td>
+		<td>白云仁</td>
+	 <td>   尚未完成 前端传过来的信息不全   </td>
+	 </tr>
+	<tr>
+	<td>volunteer_info</td>
+	 <td>查看志愿者的信息</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>类型：JsonResponse(dict)  dict = {
+		'user_name' : '',
+		'realName' : '',
+		'idNumber' : '',
+		'sex' : '',
+		'nation' : '',
+		'birth_year' : '',
+		'birth_month' : '',
+		'birth_date' : '',
+		'department' : '',
+		'class' : '',
+		'phone' : '',
+		'email' : '',
+		'province' : '',
+		'distribute' : '',
+		'qqn' : '',
+		'weichat' : '',
+		'teacher' : '',
+		'comment' : '',
+	}
+                GET直接返回字典</td>
+		<td>GET</td>
+		<td>白云仁</td>
+	 <td>  完成 </td>
+	 </tr>
+	 <tr>
+	 <td>add_volunteer</td>
+	 <td>添加志愿者账号</td>
+	 <td>database/views.py</td>
+	 <td>request(.POST['username']: 用户名  .POST['password']: 用户名)</td>
+	 <td>类型：JsonResponse（用户名已存在则添加失败） 见样例 注意：后端请同时将账号添加到数据库！</td>
+	 <td>POST</td>
+	 <td>段清楠</td>
+	 <td> 完成 </td>
+	 </tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
