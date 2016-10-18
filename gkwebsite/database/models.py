@@ -81,6 +81,8 @@ class Student(models.Model):
     volunteerAccountList = my_field.ListField(default=[], blank=True)
     isLogedin = models.IntegerField(default=0, blank=True)
     isRegistered = models.IntegerField(default=0, blank=True)
+    groupList = my_field.ListField(default=[], blank=True)
+
 
     ID = 'id'
 
@@ -121,6 +123,7 @@ class Student(models.Model):
     IS_LOGED_IN = 'isLogedin'
 
     IS_REGISTERED = 'isRegistered'
+    GROUP_LIST = 'groupList'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -129,7 +132,7 @@ class Student(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED]
+                  IS_REGISTERED, GROUP_LIST]
 
     def __unicode__(self):
         import sys
@@ -178,11 +181,13 @@ class Volunteer(models.Model):
     admissionStatus = models.IntegerField(default=-1, blank=True)
     comment = models.TextField(default='', blank=True)
     registerCode = models.CharField(max_length=100, default='', blank=True)
-    teacherList = my_field.ListField(default=[], blank=True)
+    teacherList = my_field.ListField(default=[], blank=True) #对应的老师
     studentAccountList = my_field.ListField(default=[], blank=True)
     isLogedin = models.IntegerField(default=0, blank=True)
     isRegistered = models.IntegerField(default=0, blank=True)
-    student_id = models.CharField(max_length=100, default='', blank=True)
+    student_id = models.CharField(max_length=100, default='', blank=True) #学生卡卡号
+    groupList = my_field.ListField(default=[], blank=True) #分管的组
+
 
     ID = 'id'
 
@@ -224,6 +229,7 @@ class Volunteer(models.Model):
 
     IS_REGISTERED = 'isRegistered'
     STUDENT_ID = 'student_id'
+    GROUP_LIST = 'groupList'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -232,7 +238,7 @@ class Volunteer(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED,STUDENT_ID]
+                  IS_REGISTERED,STUDENT_ID, GROUP_LIST]
 
     def __unicode__(self):
         import sys
