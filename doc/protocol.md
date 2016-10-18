@@ -260,7 +260,7 @@
 		<td>HttpResponse</td>
 		<td>GET</td>
 		<td>侯禺凡</td>
-		<td>h</td>
+		<td>finished</td>
 	</tr>
 	
 	
@@ -305,7 +305,7 @@
         dict = [team, team1, team2, team3]</td>
 		<td>GET</td>
 		<td>白云仁</td>
-		<td>h</td>
+		<td>finished,but byr need to fix bug</td>
 	</tr>
 
 	<tr>
@@ -316,7 +316,7 @@
 		<td>JsonResponse(dict) dict = {'result':''}</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
-		<td>h</td>
+		<td></td>
 	</tr>
 		<tr>
 		<td>a</td>
