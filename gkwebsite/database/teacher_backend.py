@@ -143,14 +143,19 @@ def setTeacher(_account,_colomn,_data):
     :param _data:要设置成的信息
     :return:是否设置成功
     '''
-    if _colomn == 'account':
-        print 'can not modify account'
+    try:
+        if _colomn == 'account':
+            print 'can not modify account'
+            return False
+        if not checkTeacherField(_colomn):
+            print 'this column not exist'
+            return False
+        teacher = getTeacherAll(_account)
+        setattr(teacher, _colomn, _data)
+        teacher.full_clean()
+        teacher.save()
+        return True
+    except:
+        print "-------------------------------"
+        print "can not saved!!"
         return False
-    if not checkTeacherField(_colomn):
-        print 'this column not exist'
-        return False
-    teacher = getTeacherAll(_account)
-    setattr(teacher, _colomn, _data)
-    teacher.full_clean()
-    teacher.save()
-    return True
