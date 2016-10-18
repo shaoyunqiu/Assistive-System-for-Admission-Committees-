@@ -207,7 +207,7 @@
                 GET直接返回字典 POST返回JSON</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
-	 <td>  </td>
+	 <td>   尚未完成 前端传过来的信息不全   </td>
 	 </tr>
 	<tr>
 	<td>volunteer_info</td>
@@ -237,7 +237,7 @@
                 GET直接返回字典</td>
 		<td>GET</td>
 		<td>白云仁</td>
-	 <td>  </td>
+	 <td>  完成 </td>
 	 </tr>
 	 <tr>
 	 <td>add_volunteer</td>
@@ -247,7 +247,7 @@
 	 <td>类型：JsonResponse（用户名已存在则添加失败） 见样例 注意：后端请同时将账号添加到数据库！</td>
 	 <td>POST</td>
 	 <td>段清楠</td>
-	 <td></td>
+	 <td> 完成 </td>
 	 </tr>
 		<tr>
 		<td>a</td>
