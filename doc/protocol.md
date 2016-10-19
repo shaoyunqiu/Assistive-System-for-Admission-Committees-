@@ -79,6 +79,26 @@
 		<td>邵韵秋</td>
 		<td> __尚未完成，无法获取account和id__ </td>
 	</tr>
+	<tr>
+		<td>get_teacher_name_by_id</td>
+		<td>根据ID返回教师姓名</td>
+		<td>database/views.py</td>
+		<td>request(POST['id']: ID)</td>
+		<td>HttpResponese</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>get_volunteer_name_by_id</td>
+		<td>根据ID返回志愿者姓名</td>
+		<td>database/views.py</td>
+		<td>request(POST['id']: ID)</td>
+		<td>HttpResponese</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
 	
 	<tr>
 		<td>student_info_edit</td>
