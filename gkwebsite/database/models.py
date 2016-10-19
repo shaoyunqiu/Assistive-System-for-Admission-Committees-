@@ -3,6 +3,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django import forms
+
 import my_field
 import django.core.validators
 import datetime
@@ -272,6 +274,15 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    
+    account = models.CharField(max_length=150, unique=True,default='', blank=True)
     img = models.ImageField(upload_to='exam_picture/', default='exam_picture/None/no-img.jpg')
 
+    ACCOUNT = 'account'
+    IMG = 'img'
+
+    FIELD_LIST = [ACCOUNT, IMG]
+
+
+class ImageUploadForm(forms.Form):
+    """Image upload form."""
+    image = forms.ImageField()

@@ -9,6 +9,11 @@ from django.core.exceptions import ValidationError
 def getAllInStudent():
     return Student.objects.all()
 
+def deleteStudentAll():
+    getAllInStudent().delete()
+
+
+
 def idToAccountStudent(id):
     '''
 
