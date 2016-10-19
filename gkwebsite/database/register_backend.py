@@ -10,6 +10,9 @@ def getAllInRegisterCode():
     return RegisterCode.objects.all()
 
 
+def deleteRegisterCodeAll():
+    getAllInRegisterCode().delete()
+
 def getRegisterCodebyField(field, argc):
     '''
     :param field:待查询的字段

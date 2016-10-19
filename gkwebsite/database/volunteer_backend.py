@@ -9,6 +9,13 @@ from django.core.exceptions import ValidationError
 def getAllInVolunteer():
     return Volunteer.objects.all()
 
+
+
+
+def deleteVolunteerAll():
+    getAllInVolunteer().delete()
+
+
 def idToAccountVolunteer(id):
     '''
 
