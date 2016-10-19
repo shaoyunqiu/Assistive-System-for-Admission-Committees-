@@ -3,6 +3,7 @@
 from models import *
 import traceback
 from django.core.exceptions import ValidationError
+from my_field import *
 
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
 
@@ -81,42 +82,33 @@ def getStudentAll(account):
     return acc[0]
 
 
-# def getStudentAllDicForm(account):
-#     student = getStudentAll(account)
-#     dic = {
-#         Student.ID: getattr(student, Student.ID, 'no'),
-#
-#         Student.ACCOUNT: getattr(student, Student.ACCOUNT, 'no'),
-#         Student.PASSWORD: getattr(student, Student.PASSWORD, 'no'),
-#         Student.REAL_NAME: getattr(student, Student.REAL_NAME, 'no'),
-#         Student.BIRTH: getattr(student, Student.BIRTH, 'no'),
-#         Student.ID_NUMBER: getattr(student, Student.ID_NUMBER, 'no'),
-#
-#         Student.TYPE: getattr(student, Student.TYPE, 'no'),
-#         Student.SEX: getattr(student, Student.SEX, 'no'),
-#         Student.NATION: getattr(student, Student.NATION, 'no'),
-#         Student.SCHOOL: getattr(student, Student.SCHOOL, 'no'),
-#         Student.CLASSROOM: getattr(student, Student.CLASSROOM, 'no'),
-#
-#         Student.ADDRESS: getattr(student, Student.ADDRESS, 'no'),
-#         Student.PHONE: getattr(student, Student.PHONE, 'no'),
-#         Student.EMAIL: getattr(student, Student.EMAIL, 'no'),
-#         Student.DAD_PHONE: getattr(student, Student.DAD_PHONE, 'no'),
-#         Student.MOM_PHONE: getattr(student, Student.MOM_PHONE, 'no'),
-#
-#         Student.TUTOR_NAME: getattr(student, Student.TUTOR_NAME, 'no'),
-#         Student.TUTOR_PHONE: getattr(student, Student.TUTOR_PHONE, 'no'),
-#         Student.PROVINCE: getattr(student, Student.PROVINCE, 'no'),
-#         Student.MAJOR: getattr(student, Student.MAJOR, 'no'),
-#         Student.TEST_SCORE_LIST: getattr(student, Student.TEST_SCORE_LIST, 'no'),
-#
-#         Student.RANK_LIST: getattr(student, Student.RANK_LIST, 'no'),
-#         Student.SUM_NUMBER_LIST: getattr(student, Student.SUM_NUMBER_LIST, 'no'),
-#         Student.PROVINCE: getattr(student, Student.PROVINCE, 'no'),
-#         Student.MAJOR: getattr(student, Student.MAJOR, 'no'),
-#         Student.REGISTER_CODE: getattr(student, Student.REGISTER_CODE, 'no'),
-#
-#          }
+def getStudentAllDictByAccount(account):
+    student = getStudentAll(account)
+    dict = {}
+    for item in Student.FIELD_LIST:
+        try:
+            dict[item] = getattr(student, item)
+        except:
+
+            return None
+
+    dict[Student.TYPE] = typeIntToString(dict[Student.TYPE])
+    dict[Student.SEX] = sexIntToString(dict[Student.SEX])
+    dict[Student.NATION] = nationIntToString(dict[Student.NATION])
+    dict[Student.PROVINCE] = provinceIntToString(dict[Student.PROVINCE])
+
+    major_list = []
+    major_int_list = dict[Student.MAJOR]
+    print major_int_list
+    for item in major_int_list:
+        major_list.append(majorIntToString(item))
+    dict[Student.MAJOR] = major_list
+
+    dict[Student.ESTIMATE_SCORE] = dict[Student.ESTIMATE_SCORE]
+    dict[Student.REAL_SCORE] = dict[Student.REAL_SCORE]
+    dict[Student.ADMISSION_STATUS] = admissionStatusIntToString(dict[Student.ADMISSION_STATUS])
+    return dict
+
 
 def getStudent(account, field):
     '''
