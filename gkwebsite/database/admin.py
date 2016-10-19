@@ -4,3 +4,7 @@ from django.contrib import admin
 import models
 admin.site.register(models.Teacher)
 admin.site.register(models.Student)
+admin.site.register(models.Volunteer)
+admin.site.register(models.RegisterCode)
+admin.site.register(models.Picture)
+
