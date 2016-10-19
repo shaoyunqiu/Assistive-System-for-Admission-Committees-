@@ -25,7 +25,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2,3],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -64,7 +64,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 4,
-                            'major': 4,
+                            'major': [1,2,3],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -103,7 +103,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2,3],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -142,7 +142,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2,3],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -181,7 +181,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2,3],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -220,7 +220,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [4, 5, 6],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -259,7 +259,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [4, 5, 6],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -298,7 +298,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [4, 5, 6],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -337,7 +337,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 3,
-                            'major': 1,
+                            'major': [4, 5, 6],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -376,7 +376,7 @@ def testCreateStudentNew():
                             'tutorName': u'王恒志',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [4, 5, 6],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],

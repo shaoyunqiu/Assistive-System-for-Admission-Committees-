@@ -25,7 +25,7 @@ def testCreateVolunteerNew():
                             'tutorName': u'李明',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -64,7 +64,7 @@ def testCreateVolunteerNew():
                             'tutorName': u'李明',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major':[1,2],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -103,7 +103,7 @@ def testCreateVolunteerNew():
                             'tutorName': u'李明',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -142,7 +142,7 @@ def testCreateVolunteerNew():
                             'tutorName': u'李明',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],
@@ -181,7 +181,7 @@ def testCreateVolunteerNew():
                             'tutorName': u'李明',
                             'tutorPhone': '13800000000',
                             'province': 1,
-                            'major': 1,
+                            'major': [1,2],
                             'testScoreList': [100, 99, 98],
 
                             'rankList': [1, 2, 3],

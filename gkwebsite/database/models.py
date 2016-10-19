@@ -22,6 +22,8 @@ class Teacher(models.Model):
     email = models.CharField(max_length=50, default='', blank=True, validators=[django.core.validators.EmailValidator()])
     area = models.CharField(max_length=50, default='', blank=True)
     volunteerList = my_field.ListField(default=[], blank=True)
+    wechat = models.CharField(max_length=50, default='', blank=True)
+    fixedPhone = models.CharField(max_length=50, default='', blank=True)
 
     ACCOUNT = 'account'
     PASSWORD = 'password'
@@ -30,6 +32,8 @@ class Teacher(models.Model):
     EMAIL = 'email'
     AREA = 'area'
     VOLUNTEER_LIST = 'volunteerList'
+    WECHAT = 'wechat'
+    FIXED_PHONE = 'fixedPhone'
 
     def __unicode__(self):
         import sys
@@ -70,7 +74,7 @@ class Student(models.Model):
     tutorPhone = models.CharField(max_length=20, default='', blank=True,
                                   validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
     province = models.IntegerField(default=-1, blank=True)
-    major = models.IntegerField(default=-1, blank=True)
+    major = my_field.ListField(default=[], blank=True)
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
@@ -84,7 +88,8 @@ class Student(models.Model):
     isLogedin = models.IntegerField(default=0, blank=True)
     isRegistered = models.IntegerField(default=0, blank=True)
     groupList = my_field.ListField(default=[], blank=True)
-
+    wechat = models.CharField(max_length=50, default='', blank=True)
+    fixedPhone = models.CharField(max_length=50, default='', blank=True)
 
     ID = 'id'
 
@@ -126,6 +131,9 @@ class Student(models.Model):
 
     IS_REGISTERED = 'isRegistered'
     GROUP_LIST = 'groupList'
+    WECHAT = 'wechat'
+    FIXED_PHONE = 'fixedPhone'
+
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -134,7 +142,7 @@ class Student(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED, GROUP_LIST]
+                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE]
 
     def __unicode__(self):
         import sys
@@ -174,7 +182,7 @@ class Volunteer(models.Model):
     tutorPhone = models.CharField(max_length=20, default='', blank=True,
                                   validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
     province = models.IntegerField(default=-1, blank=True)
-    major = models.IntegerField(default=-1, blank=True)
+    major = my_field.ListField(default=[], blank=True)
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
@@ -189,7 +197,8 @@ class Volunteer(models.Model):
     isRegistered = models.IntegerField(default=0, blank=True)
     student_id = models.CharField(max_length=100, default='', blank=True) #学生卡卡号
     groupList = my_field.ListField(default=[], blank=True) #分管的组
-
+    wechat = models.CharField(max_length=50, default='', blank=True)
+    fixedPhone = models.CharField(max_length=50, default='', blank=True)
 
     ID = 'id'
 
@@ -232,6 +241,8 @@ class Volunteer(models.Model):
     IS_REGISTERED = 'isRegistered'
     STUDENT_ID = 'student_id'
     GROUP_LIST = 'groupList'
+    WECHAT = 'wechat'
+    FIXED_PHONE = 'fixedPhone'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -240,7 +251,7 @@ class Volunteer(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED,STUDENT_ID, GROUP_LIST]
+                  IS_REGISTERED,STUDENT_ID, GROUP_LIST, WECHAT, FIXED_PHONE]
 
     def __unicode__(self):
         import sys

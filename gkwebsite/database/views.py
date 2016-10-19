@@ -135,7 +135,7 @@ def volunteer_list_all(request):
         for item in vol_list:
             dic = {'id': getattr(item, 'id'),
                    'name': getattr(item, Volunteer.REAL_NAME),
-                   'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)),
+                   'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)[0]),
                    'class': getattr(item, Volunteer.CLASSROOM),
                    'student_id': getattr(item, Volunteer.STUDENT_ID),
                    }
