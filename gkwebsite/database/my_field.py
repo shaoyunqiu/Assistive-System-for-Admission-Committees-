@@ -25,28 +25,34 @@ ADMISSION_STATUS_LIST = [u'已录取', u'未投档', u'已投档']
 TYPE_LIST = [u'文科', u'理科']
 
 def majorIntToString(num):
-    index = num % len(MAJOR_LIST)
-    return MAJOR_LIST[index]
+    return num
+    #index = num % len(MAJOR_LIST)
+    #return MAJOR_LIST[index]
 
 def sexIntToString(num):
-    index = num % len(SEX_LIST)
-    return SEX_LIST[index]
+    return num
+    #index = num % len(SEX_LIST)
+    #return SEX_LIST[index]
 
 def provinceIntToString(num):
-    index = num % len(PROVINCE_LIST)
-    return PROVINCE_LIST[index]
+    return num
+    #index = num % len(PROVINCE_LIST)
+    #return PROVINCE_LIST[index]
 
 def nationIntToString(num):
-    index = num % len(NATION_LIST)
-    return NATION_LIST[index]
+    return num
+    #index = num % len(NATION_LIST)
+    #return NATION_LIST[index]
 
 def admissionStatusIntToString(num):
-    index = num % len(ADMISSION_STATUS_LIST)
-    return ADMISSION_STATUS_LIST[index]
+    return num
+    #index = num % len(ADMISSION_STATUS_LIST)
+    #return ADMISSION_STATUS_LIST[index]
 
 def typeIntToString(num):
-    index = num % len(TYPE_LIST)
-    return TYPE_LIST[index]
+    #index = num % len(TYPE_LIST)
+    return num
+    #return TYPE_LIST[index]
 
 
 

@@ -21,15 +21,18 @@ def getVolunteerAllDictByAccount(account):
 
     dict[Volunteer.TYPE] = typeIntToString(dict[Volunteer.TYPE])
     dict[Volunteer.SEX] = sexIntToString(dict[Volunteer.SEX])
-    dict[Volunteer.NATION] = nationIntToString(dict[Volunteer.NATION])
-    dict[Volunteer.PROVINCE] = provinceIntToString(dict[Volunteer.PROVINCE])
+    dict[Volunteer.NATION] = {'nation': nationIntToString(dict[Volunteer.NATION]),
+                            'nationlist': NATION_LIST}
+    dict[Volunteer.PROVINCE] = {'province': provinceIntToString(dict[Volunteer.PROVINCE]),
+                              'provincelist': PROVINCE_LIST,
 
-    major_list = []
+                              }
+
     major_int_list = dict[Volunteer.MAJOR]
-    print "(((" + str(major_int_list)
+    dict[Volunteer.MAJOR] = []
     for item in major_int_list:
-        major_list.append(majorIntToString(item))
-    dict[Volunteer.MAJOR] = major_list
+        dict[Volunteer.MAJOR].append({'department': item,
+                                  'departmentlist':MAJOR_LIST,})
 
     dict[Volunteer.ESTIMATE_SCORE] = dict[Volunteer.ESTIMATE_SCORE]
     dict[Volunteer.REAL_SCORE] = dict[Volunteer.REAL_SCORE]
