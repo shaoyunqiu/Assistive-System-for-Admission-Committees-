@@ -99,7 +99,6 @@ def get_volunteer_name_by_id(request):
 		# use this if-else to block violent access
 		if request.is_ajax() and request.method == 'POST':
 				id = request.POST.get('id')
-				#	SELECT FROM teacher WHERE id=/%request.POST.get('id')%/
 				name = "酒歌烁世"
 				t = {'name': name}
 				return JsonResponse(t)
