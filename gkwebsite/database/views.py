@@ -138,24 +138,24 @@ def remove_volunteer_by_id(request):
 
 
 def volunteer_list_all(request):
-		# by dqn14 Oct 15, 2016
-		# use this if-else to block violent access
-		if request.is_ajax() and request.method == 'POST':
-				t = []
-				vol_list = vol.getAllInVolunteer()
-				for item in vol_list:
-						dic = {'id': getattr(item, 'id'),
-									 'name': getattr(item, Volunteer.REAL_NAME),
-									 'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)),
-									 'class': getattr(item, Volunteer.CLASSROOM),
-									 'student_id': getattr(item, Volunteer.STUDENT_ID),
-									 }
-						# 没注册的志愿者不显示出来
-						if dic['name'] != '':
-								t.append(dic)
-				return JsonResponse(t, safe=False)	# must use 'safe=False'
-		else:
-				return HttpResponse('Access denied.')
+    # by dqn14 Oct 15, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        vol_list = vol.getAllInVolunteer()
+        for item in vol_list:
+            dic = {'id': getattr(item, 'id'),
+                   'name': getattr(item, Volunteer.REAL_NAME),
+                   'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)[0]),
+                   'class': getattr(item, Volunteer.CLASSROOM),
+                   'student_id': getattr(item, Volunteer.STUDENT_ID),
+                   }
+            # 没注册的志愿者不显示出来
+            if dic['name'] != '':
+                t.append(dic)
+        return JsonResponse(t, safe=False)  # must use 'safe=False'
+    else:
+        return HttpResponse('Access denied.')
 
 
 def add_student(request):

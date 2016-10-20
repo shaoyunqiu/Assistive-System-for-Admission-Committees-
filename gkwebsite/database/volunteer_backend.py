@@ -3,11 +3,47 @@
 from models import *
 import traceback
 from django.core.exceptions import ValidationError
-
+from my_field import *
 
 
 def getAllInVolunteer():
     return Volunteer.objects.all()
+
+def getVolunteerAllDictByAccount(account):
+    volunteer = getVolunteerAll(account)
+    dict = {}
+    for item in Volunteer.FIELD_LIST:
+        try:
+            dict[item] = getattr(volunteer, item)
+        except:
+
+            return None
+
+    dict[Volunteer.TYPE] = typeIntToString(dict[Volunteer.TYPE])
+    dict[Volunteer.SEX] = sexIntToString(dict[Volunteer.SEX])
+    dict[Volunteer.NATION] = {'nation': nationIntToString(dict[Volunteer.NATION]),
+                            'nationlist': NATION_LIST}
+    dict[Volunteer.PROVINCE] = {'province': provinceIntToString(dict[Volunteer.PROVINCE]),
+                              'provincelist': PROVINCE_LIST,
+
+                              }
+
+    major_int_list = dict[Volunteer.MAJOR]
+    dict[Volunteer.MAJOR] = []
+    for item in major_int_list:
+        dict[Volunteer.MAJOR].append({'department': item,
+                                  'departmentlist':MAJOR_LIST,})
+
+
+    dict[Volunteer.ESTIMATE_SCORE] = dict[Volunteer.ESTIMATE_SCORE]
+    dict[Volunteer.REAL_SCORE] = dict[Volunteer.REAL_SCORE]
+    dict[Volunteer.ADMISSION_STATUS] = admissionStatusIntToString(dict[Volunteer.ADMISSION_STATUS])
+    return dict
+
+
+def deleteVolunteerAll():
+    getAllInVolunteer().delete()
+
 
 def idToAccountVolunteer(id):
     '''
