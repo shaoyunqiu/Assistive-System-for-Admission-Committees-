@@ -3,11 +3,17 @@
 from models import *
 import traceback
 from django.core.exceptions import ValidationError
+from my_field import *
 
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
 
 def getAllInStudent():
     return Student.objects.all()
+
+def deleteStudentAll():
+    getAllInStudent().delete()
+
+
 
 def idToAccountStudent(id):
     '''
@@ -46,7 +52,7 @@ def getStudentbyField(field, argc):
     :param argc:字段的值
     :return:返回一个student对象
     '''
-    dic = {field : argc}
+    dic = {field: argc}
     return Student.objects.filter(**dic)
 
 
@@ -76,6 +82,42 @@ def getStudentAll(account):
     return acc[0]
 
 
+def getStudentAllDictByAccount(account):
+    student = getStudentAll(account)
+    dict = {}
+    for item in Student.FIELD_LIST:
+        try:
+            dict[item] = getattr(student, item)
+        except:
+
+            return None
+
+    dict[Student.TYPE] = typeIntToString(dict[Student.TYPE])
+    dict[Student.SEX] = sexIntToString(dict[Student.SEX])
+    dict[Student.NATION] = {'nation':nationIntToString(dict[Student.NATION]),
+                            'nationlist':NATION_LIST}
+    dict[Student.PROVINCE] = {'province':provinceIntToString(dict[Student.PROVINCE]),
+                              'provincelist':PROVINCE_LIST,
+                              }
+
+
+    major_int_list = dict[Student.MAJOR]
+    for i in range(0,10):
+        major_int_list.append(0)
+        dict[Student.TEST_SCORE_LIST].append(0)
+        dict[Student.RANK_LIST].append(0)
+        dict[Student.SUM_NUMBER_LIST].append(0)
+    dict[Volunteer.MAJOR] = []
+    for item in major_int_list:
+        numitem = (int)(item)
+        dict[Volunteer.MAJOR].append({'department': numitem,
+                               'departmentlist': MAJOR_LIST, })
+    dict[Student.ESTIMATE_SCORE] = dict[Student.ESTIMATE_SCORE]
+    dict[Student.REAL_SCORE] = dict[Student.REAL_SCORE]
+    dict[Student.ADMISSION_STATUS] = admissionStatusIntToString(dict[Student.ADMISSION_STATUS])
+    return dict
+
+
 def getStudent(account, field):
     '''
     通过account获得学生的field字段的值
@@ -96,18 +138,23 @@ def setStudent(account, field, value):
     :param field:字段
     :return:字段对应的值
     '''
-    if not checkField(field):
+    try:
+        if not checkField(field):
+            return False
+        if field == Student.ACCOUNT:
+            print 'can not modify account'
+            return False
+        if not getStudentAll(account):
+            return False
+        student = getStudentAll(account)
+        setattr(student, field, value)
+        student.full_clean()
+        student.save()
+        return True
+    except:
+        print "-------------------------------"
+        print "can not saved!!"
         return False
-    if field == Student.ACCOUNT:
-        print 'can not modify account'
-        return False
-    if not getStudentAll(account):
-        return False
-    student = getStudentAll(account)
-    setattr(student, field, value)
-    student.full_clean()
-    student.save()
-    return True
 
 def createStudent(account, dict):
     '''
