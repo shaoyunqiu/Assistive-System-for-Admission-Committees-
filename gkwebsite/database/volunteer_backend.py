@@ -3,11 +3,43 @@
 from models import *
 import traceback
 from django.core.exceptions import ValidationError
-
+from my_field import *
 
 
 def getAllInVolunteer():
     return Volunteer.objects.all()
+
+def getVolunteerAllDictByAccount(account):
+    volunteer = getVolunteerAll(account)
+    dict = {}
+    for item in Volunteer.FIELD_LIST:
+        try:
+            dict[item] = getattr(volunteer, item)
+        except:
+
+            return None
+
+    dict[Volunteer.TYPE] = typeIntToString(dict[Volunteer.TYPE])
+    dict[Volunteer.SEX] = sexIntToString(dict[Volunteer.SEX])
+    dict[Volunteer.NATION] = nationIntToString(dict[Volunteer.NATION])
+    dict[Volunteer.PROVINCE] = provinceIntToString(dict[Volunteer.PROVINCE])
+
+    major_list = []
+    major_int_list = dict[Volunteer.MAJOR]
+    print "(((" + str(major_int_list)
+    for item in major_int_list:
+        major_list.append(majorIntToString(item))
+    dict[Volunteer.MAJOR] = major_list
+
+    dict[Volunteer.ESTIMATE_SCORE] = dict[Volunteer.ESTIMATE_SCORE]
+    dict[Volunteer.REAL_SCORE] = dict[Volunteer.REAL_SCORE]
+    dict[Volunteer.ADMISSION_STATUS] = admissionStatusIntToString(dict[Volunteer.ADMISSION_STATUS])
+    return dict
+
+
+def deleteVolunteerAll():
+    getAllInVolunteer().delete()
+
 
 def idToAccountVolunteer(id):
     '''

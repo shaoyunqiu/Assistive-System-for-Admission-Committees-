@@ -2,6 +2,28 @@
 from django.test import TestCase
 from models import Teacher
 import teacher_backend as tch
+import student_backend as stu
+import volunteer_backend as vol
+import register_backend as reg
+import image_backend as img
+
+
+from vol_test import  *
+from stu_test import *
+
+
+
+def createData():
+    tch.deleteTeacherAll()
+    stu.deleteStudentAll()
+    vol.deleteVolunteerAll()
+    reg.deleteRegisterCodeAll()
+    img.deletePictureAll()
+
+    createTestData()
+    testCreateVolunteerNew()
+    testCreateStudentNew()
+
 
 # Create your tests here.
 
@@ -14,14 +36,17 @@ def startTest():
 
 def createTestData():
     tch.deleteTeacherAll()
-    dic = {'account': 'houyf1', 'password': 'mima', 'area': 'wuhan', 'email': 'a1@qq.com', 'phone': '11111111',
-           'realName': u'张三', 'volunteerList': ['a', 'b']}
+    dic = {'account': 'houyf1', 'password': 'mima', 'area': u'北京', 'email': 'a1@qq.com', 'phone': '18812341234',
+           'realName': u'张三', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf2', 'password': 'mima', 'area': 'wuhan', 'email': 'a2@qq.com', 'phone': '11111111',
-           'realName': u'李四', 'volunteerList': ['c', 'd']}
+    dic = {'account': 'houyf2', 'password': 'mima', 'area': u'广东', 'email': 'a1@qq.com', 'phone': '18812341234',
+           'realName': u'李四', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf3', 'password': 'mima', 'area': 'wuhan', 'email': 'a3@qq.com', 'phone': '11111111',
-           'realName': u'王五', 'volunteerList': ['e', 'f']}
+    dic = {'account': 'houyf3', 'password': 'mima', 'area': u'广西', 'email': 'a1@qq.com', 'phone': '18812341234',
+           'realName': u'王五', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
+    tch.createTeacher(dic)
+    dic = {'account': 'houyf4', 'password': 'mima', 'area': u'广西', 'email': 'a1@qq.com', 'phone': '18812341234',
+           'realName': u'张三', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
 
 def createAccountTest():

@@ -57,7 +57,6 @@
 		<td>白云仁</td>
 		<td>李昊阳完成，目前有些信息比如邮编等尚未加入数据库，故暂时不能get和set，是否保留此字段后续讨论</td>
 	</tr>
-	
 	<tr>
 		<td>student_info_show</td>
 		<td>通过传递student参数将学生信息显示在student_info.html中</td>
@@ -114,6 +113,7 @@
 	</tr>
 
 	<tr>
+
 		<td>logincheck</td>
 		<td>志愿者登录，需要向前端给出志愿者的ID</td>
 		<td>login/views.py</td>
@@ -249,9 +249,7 @@
 	 <td>POST</td>
 	 <td>段清楠</td>
 	 <td> 完成 </td>
-	 </tr>
-	 
-	 	</tr>
+	</tr>
 		<tr>
 		<td>student_info_show</td>
 		<td>显示志愿者可见的学生详细信息（说明：已将老师端同样部分的代码移植过来，后端决定是否需要做修改；另外，后端还需要根据学生id和志愿者id判断这个GET请求是否有权限，没有权限则返回到上一页面）</td>

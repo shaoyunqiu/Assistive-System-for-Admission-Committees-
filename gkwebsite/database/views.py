@@ -6,6 +6,7 @@ import student_backend as stu
 import teacher_backend as tch
 import volunteer_backend as vol
 import register_backend as reg
+from my_field import *
 
 
 # Create your views here.
@@ -134,11 +135,13 @@ def volunteer_list_all(request):
         for item in vol_list:
             dic = {'id': getattr(item, 'id'),
                    'name': getattr(item, Volunteer.REAL_NAME),
-                   'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)),
+                   'department': my_field.majorIntToString(getattr(item, Volunteer.MAJOR)[0]),
                    'class': getattr(item, Volunteer.CLASSROOM),
                    'student_id': getattr(item, Volunteer.STUDENT_ID),
                    }
-            t.append(dic)
+            # 没注册的志愿者不显示出来
+            if dic['name'] != '':
+                t.append(dic)
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
@@ -156,10 +159,21 @@ def add_student(request):
         # t.append(d)
         num = (int)(num)
         t = []
+        codelist = []
         for i in range(0, num):
-            c = {'code': str(reg.createNewRegisterCode())}
+            code = str(reg.createNewRegisterCode())
+            c = {'code': code}
             t.append(c)
-        # print t
+            codelist.append(code)
+        # print outputXLS('', 'registerCode.xls','sheet1',[codelist],[u'注册码哈哈'])
+        id = (str)(request.session['user_id'])
+        print '-----' + id
+        generateExcel(request, id, '', '', 'sheet1', [codelist],[u'注册码哈哈'])
+
+
+
+        #
+
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
