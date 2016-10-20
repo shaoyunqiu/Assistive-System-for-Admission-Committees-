@@ -77,7 +77,7 @@
 		<td>HttpResponese</td>
 		<td>post</td>
 		<td>邵韵秋</td>
-		<td> __尚未完成，无法获取account和id__ </td>
+		<td> Finished by lihy </td>
 	</tr>
 	<tr>
 		<td>get_teacher_name_by_id</td>
@@ -87,7 +87,7 @@
 		<td>HttpResponese</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>Finished by lihy</td>
 	</tr>
 	<tr>
 		<td>get_volunteer_name_by_id</td>
@@ -97,7 +97,7 @@
 		<td>HttpResponese</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>Finished by lihy</td>
 	</tr>
 	
 	<tr>
@@ -185,7 +185,7 @@
 	 <td>类型：JsonResponse ([{},{},{},...]) 包含新账号的注册码(code) 注意：后端请同时将注册码添加到数据库！</td>
 	 <td>POST</td>
 	 <td>段清楠</td>
-	 <td>后端已经实现，但是前端页面暂时未完成所以没有测试正确性</td>
+	 <td>finished but need to 优化 </td>
 	 </tr>
 
 	<tr>
