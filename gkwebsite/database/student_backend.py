@@ -5,14 +5,15 @@ import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
 
+
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
 
 def getAllInStudent():
     return Student.objects.all()
 
+
 def deleteStudentAll():
     getAllInStudent().delete()
-
 
 
 def idToAccountStudent(id):
@@ -43,8 +44,10 @@ def accountToIDStudent(account):
     '''
     return (str)(getStudent(account, 'id'))
 
+
 def removeStudentAccount(_account):
-    getAllInStudent().filter(account = _account).delete()
+    getAllInStudent().filter(account=_account).delete()
+
 
 def getStudentbyField(field, argc):
     '''
@@ -66,6 +69,7 @@ def checkField(field):
         return True
     print 'this column not exist'
     return False
+
 
 def getStudentAll(account):
     '''
@@ -92,21 +96,38 @@ def getStudentAllDictByAccount(account):
 
             return None
 
-    dict[Student.TYPE] = typeIntToString(dict[Student.TYPE])
-    dict[Student.SEX] = sexIntToString(dict[Student.SEX])
-    dict[Student.NATION] = nationIntToString(dict[Student.NATION])
-    dict[Student.PROVINCE] = provinceIntToString(dict[Student.PROVINCE])
+    dict[Student.TYPE] = {
+        'type': dict[Student.TYPE],
+        'typelist': TYPE_LIST
+    }
+    dict[Student.SEX] = {
+        'sex': dict[Student.SEX],
+        'sexlist': SEX_LIST
+    }
+    dict[Student.NATION] = {
+        'nation': dict[Student.NATION],
+        'nationlist': NATION_LIST}
+    dict[Student.PROVINCE] = {
+        'province': dict[Student.PROVINCE],
+        'provincelist': PROVINCE_LIST,
+    }
 
-    major_list = []
     major_int_list = dict[Student.MAJOR]
-    print major_int_list
+    for i in range(0, 10):
+        major_int_list.append(0)
+        dict[Student.TEST_SCORE_LIST].append(0)
+        dict[Student.RANK_LIST].append(0)
+        dict[Student.SUM_NUMBER_LIST].append(0)
+    dict[Volunteer.MAJOR] = []
     for item in major_int_list:
-        major_list.append(majorIntToString(item))
-    dict[Student.MAJOR] = major_list
+        numitem = (int)(item)
+        dict[Volunteer.MAJOR].append({'department': numitem,
+                                      'departmentlist': MAJOR_LIST})
 
-    dict[Student.ESTIMATE_SCORE] = dict[Student.ESTIMATE_SCORE]
-    dict[Student.REAL_SCORE] = dict[Student.REAL_SCORE]
-    dict[Student.ADMISSION_STATUS] = admissionStatusIntToString(dict[Student.ADMISSION_STATUS])
+    dict[Student.ADMISSION_STATUS] = {
+        'admissionstatus': dict[Student.ADMISSION_STATUS],
+        'admissionstatuslist': ADMISSION_STATUS_LIST
+    }
     return dict
 
 
@@ -122,6 +143,7 @@ def getStudent(account, field):
     if not getStudentAll(account):
         return None
     return getattr(getStudentAll(account), field, 'Error')
+
 
 def setStudent(account, field, value):
     '''
@@ -147,6 +169,7 @@ def setStudent(account, field, value):
         print "-------------------------------"
         print "can not saved!!"
         return False
+
 
 def createStudent(account, dict):
     '''
@@ -180,17 +203,3 @@ def createStudent(account, dict):
     student.save()
     print 'successfully create account'
     return True
-
-
-
-
-
-
-
-
-
-
-
-
-
-

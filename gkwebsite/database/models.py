@@ -19,21 +19,25 @@ class Teacher(models.Model):
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
+
     email = models.CharField(max_length=50, default='', blank=True, validators=[django.core.validators.EmailValidator()])
     area = models.CharField(max_length=50, default='', blank=True)
     volunteerList = my_field.ListField(default=[], blank=True)
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
+    comment = models.TextField(default='', blank=True)
 
     ACCOUNT = 'account'
     PASSWORD = 'password'
     REAL_NAME = 'realName'
     PHONE = 'phone'
     EMAIL = 'email'
+
     AREA = 'area'
     VOLUNTEER_LIST = 'volunteerList'
     WECHAT = 'wechat'
     FIXED_PHONE = 'fixedPhone'
+    COMMENT = 'comment'
 
     def __unicode__(self):
         import sys
@@ -90,6 +94,7 @@ class Student(models.Model):
     groupList = my_field.ListField(default=[], blank=True)
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
+    qq = models.CharField(max_length=50, default='', blank=True)
 
     ID = 'id'
 
@@ -133,6 +138,7 @@ class Student(models.Model):
     GROUP_LIST = 'groupList'
     WECHAT = 'wechat'
     FIXED_PHONE = 'fixedPhone'
+    QQ = 'qq'
 
 
     FIELD_LIST = [ID,
@@ -142,7 +148,7 @@ class Student(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE]
+                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ]
 
     def __unicode__(self):
         import sys
@@ -199,6 +205,7 @@ class Volunteer(models.Model):
     groupList = my_field.ListField(default=[], blank=True) #分管的组
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
+    qq = models.CharField(max_length=50, default='', blank=True)
 
     ID = 'id'
 
@@ -244,6 +251,8 @@ class Volunteer(models.Model):
     WECHAT = 'wechat'
     FIXED_PHONE = 'fixedPhone'
 
+    QQ = 'qq'
+
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
                   TYPE, SEX, NATION, SCHOOL, CLASSROOM,
@@ -251,7 +260,8 @@ class Volunteer(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED,STUDENT_ID, GROUP_LIST, WECHAT, FIXED_PHONE]
+                  IS_REGISTERED,STUDENT_ID, GROUP_LIST, WECHAT, FIXED_PHONE,
+                  QQ, ]
 
     def __unicode__(self):
         import sys
