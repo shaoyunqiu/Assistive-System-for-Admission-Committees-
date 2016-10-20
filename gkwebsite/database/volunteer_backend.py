@@ -34,6 +34,7 @@ def getVolunteerAllDictByAccount(account):
         dict[Volunteer.MAJOR].append({'department': item,
                                   'departmentlist':MAJOR_LIST,})
 
+
     dict[Volunteer.ESTIMATE_SCORE] = dict[Volunteer.ESTIMATE_SCORE]
     dict[Volunteer.REAL_SCORE] = dict[Volunteer.REAL_SCORE]
     dict[Volunteer.ADMISSION_STATUS] = admissionStatusIntToString(dict[Volunteer.ADMISSION_STATUS])

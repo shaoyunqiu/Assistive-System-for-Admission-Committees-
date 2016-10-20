@@ -98,16 +98,20 @@ def getStudentAllDictByAccount(account):
                             'nationlist':NATION_LIST}
     dict[Student.PROVINCE] = {'province':provinceIntToString(dict[Student.PROVINCE]),
                               'provincelist':PROVINCE_LIST,
-
                               }
 
+
     major_int_list = dict[Student.MAJOR]
-    print major_int_list
+    for i in range(0,10):
+        major_int_list.append(0)
+        dict[Student.TEST_SCORE_LIST].append(0)
+        dict[Student.RANK_LIST].append(0)
+        dict[Student.SUM_NUMBER_LIST].append(0)
     dict[Volunteer.MAJOR] = []
     for item in major_int_list:
-        dict[Volunteer.MAJOR].append({'department': item,
+        numitem = (int)(item)
+        dict[Volunteer.MAJOR].append({'department': numitem,
                                'departmentlist': MAJOR_LIST, })
-
     dict[Student.ESTIMATE_SCORE] = dict[Student.ESTIMATE_SCORE]
     dict[Student.REAL_SCORE] = dict[Student.REAL_SCORE]
     dict[Student.ADMISSION_STATUS] = admissionStatusIntToString(dict[Student.ADMISSION_STATUS])
