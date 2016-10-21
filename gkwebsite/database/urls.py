@@ -11,5 +11,6 @@ urlpatterns = [
 	url(r'^remove_volunteer_by_id/$', views.remove_volunteer_by_id, name="remove_volunteer_by_id"),
 	url(r'^volunteer_list_all/$', views.volunteer_list_all, name="volunteer_list_all"),
 	url(r'^add_student/$', views.add_student, name="add_student"),
-	url(r'^add_volunteer/$', views.add_volunteer, name="add_volunteer")
+	url(r'^add_volunteer/$', views.add_volunteer, name="add_volunteer"),
+    url(r'^export_registration_code/$', views.export_registration_code, name="export_registration_code"),
 	]

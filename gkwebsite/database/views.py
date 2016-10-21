@@ -192,3 +192,13 @@ def add_volunteer(request):
         return JsonResponse({'success': flag, 'username': username})
     else:
         return HttpResponse('Access denied.')
+
+def export_registration_code(request):
+    # by dqn14 Oct 22, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        list = request.POST.get('content')
+        t = {'filename':'a.xls'}
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
