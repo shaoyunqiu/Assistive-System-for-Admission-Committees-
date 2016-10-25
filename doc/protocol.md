@@ -371,6 +371,17 @@
 		<td>段清楠</td>
 		<td></td>
 	</tr>
+
+	<tr>
+		<td>get_all_tests</td>
+		<td>获得一个学生可以估分的试题</td>
+		<td>student/views.py</td>
+		<td>request.session.get('user_id')为学生id</td>
+		<td>JsonResponse({'tests',[【testname1】,【testname2】,...]})</td>
+		<td>GET</td>
+		<td>侯禺凡</td>
+		<td>h</td>
+	</tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
@@ -381,6 +392,7 @@
 		<td>g</td>
 		<td>h</td>
 	</tr>
+
 </table>
 
 ### 备注：前七列由前端填写，目的是给后端提出需求，在后端实现功能前，前段应该搭好框架。后端实现后，会在表格最后一列给予反馈。
