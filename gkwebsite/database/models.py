@@ -295,8 +295,8 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    account = models.CharField(max_length=150, unique=True,default='', blank=True)
-    img = models.ImageField(upload_to='exam_picture/', default='exam_picture/None/no-img.jpg')
+    account = models.CharField(max_length=150, unique=True, default='', blank=True)
+    img = models.ImageField(upload_to='student/static/images', default='student/static/images/None/no-img.jpg')
 
     ACCOUNT = 'account'
     IMG = 'img'

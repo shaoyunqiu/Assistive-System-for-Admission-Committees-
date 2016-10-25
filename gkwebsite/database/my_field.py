@@ -127,26 +127,29 @@ def outputXLS(path, filename, sheet, list, _titleList):
 
 
 def generateExcel(request,id, path, filename, sheet, list, _titleList):
+    filename = "files/%s_teacher.xls" % id
+    if os.path.exists(filename):
+        os.remove(filename)
+    outputXLS(path, filename, sheet, list, _titleList)
 
-    filename = "%s_Report.xls" % id
-
-    if os.path.exists('./%s_Report.xls' % id):
-        excel = open("%s_Report.xls" % id, "r")
-        output = StringIO.StringIO(excel.read())
-        out_content = output.getvalue()
-        output.close()
-        response = HttpResponse(out_content,content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = 'attachment; filename=%s_Report.xls' % id
-        return response
-    else:
-        result = outputXLS(path, filename, sheet, list, _titleList)
-        if result:
-            excel = open("%s_Report.xls" % id, "r")
-            output = StringIO.StringIO(excel.read())
-            out_content = output.getvalue()
-            output.close()
-            response = HttpResponse(out_content,content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = 'attachment; filename=%s_Report.xls' % id
-            return response
-        else:
-            return HttpResponse(json.dumps({"no":"excel","no one": "cries"}))
+    # if os.path.exists(filename):
+    #
+    #     excel = open(filename, "r")
+    #     output = StringIO.StringIO(excel.read())
+    #     out_content = output.getvalue()
+    #     output.close()
+    #     response = HttpResponse(out_content, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    #     response['Content-Disposition'] = 'attachment; filename='+filename;
+    #     return response
+    # else:
+    #     result = outputXLS(path, filename, sheet, list, _titleList)
+    #     if result:
+    #         excel = open(filename, "r")
+    #         output = StringIO.StringIO(excel.read())
+    #         out_content = output.getvalue()
+    #         output.close()
+    #         response = HttpResponse(out_content,content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    #         response['Content-Disposition'] = 'attachment; filename=' + filename;
+    #         return response
+    #     else:
+    #         return HttpResponse(json.dumps({"no": "excel", "no one": "cries"}))

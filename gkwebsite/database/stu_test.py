@@ -18,7 +18,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -57,7 +57,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -96,7 +96,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -135,7 +135,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -174,7 +174,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -213,7 +213,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -252,7 +252,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -291,7 +291,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -330,7 +330,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -369,7 +369,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
