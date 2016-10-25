@@ -18,7 +18,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -58,7 +58,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -98,7 +98,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -138,7 +138,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -178,7 +178,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -204,13 +204,6 @@ def testCreateVolunteerNew():
                             'groupList': [1, 2],
                              'student_id': '2014011419'
                             })
-
-
-
-
-
-
-
 
 
 

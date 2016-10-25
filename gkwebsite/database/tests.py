@@ -36,16 +36,16 @@ def startTest():
 
 def createTestData():
     tch.deleteTeacherAll()
-    dic = {'account': 'houyf1', 'password': 'mima', 'area': u'北京', 'email': 'a1@qq.com', 'phone': '18812341234',
+    dic = {'account': 'houyf1', 'password': 'mima', 'area': u'北京', 'email': 'alienlhy@163.com', 'phone': '18812341234',
            'realName': u'张三', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf2', 'password': 'mima', 'area': u'广东', 'email': 'a1@qq.com', 'phone': '18812341234',
+    dic = {'account': 'houyf2', 'password': 'mima', 'area': u'广东', 'email': 'alienlhy@163.com', 'phone': '18812341234',
            'realName': u'李四', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf3', 'password': 'mima', 'area': u'广西', 'email': 'a1@qq.com', 'phone': '18812341234',
+    dic = {'account': 'houyf3', 'password': 'mima', 'area': u'广西', 'email': 'alienlhy@163.com', 'phone': '18812341234',
            'realName': u'王五', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf4', 'password': 'mima', 'area': u'广西', 'email': 'a1@qq.com', 'phone': '18812341234',
+    dic = {'account': 'houyf4', 'password': 'mima', 'area': u'广西', 'email': 'alienlhy@163.com', 'phone': '18812341234',
            'realName': u'张三', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
 
@@ -53,49 +53,49 @@ def createAccountTest():
     print '*******************'
     print 'createAccount'
     print 'account bug here'
-    dic = {'account': 'houyf##', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf##', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf'}
     tch.createTeacher(dic)
-    dic = {'account': '#!@houyf', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': '#!@houyf', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    dic = {'account': 'hou@@yf', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'hou@@yf', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    dic = {'account': 'ho', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'ho', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
     print 'account right here'
-    dic = {'account': 'houyf1', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com',
+    dic = {'account': 'houyf1', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com',
            'realName': u'hehe', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf2', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf2', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': u'白仁', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf3', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf3', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': u'呵呵', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf4', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf4', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': u"李阳", 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
     print 'account occupied here'
-    dic = {'account': 'houyf3', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf3', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
 
     print '-------------------------------------------------'
     print 'email bug here'
-    dic = {'account': 'houyf141', 'password': 'mima', 'area': 'wuhan', 'email': '@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf141', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf142', 'password': 'mima', 'area': 'wuhan', 'email': 'a@qq', 'phone': '11111111',
+    dic = {'account': 'houyf142', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf143', 'password': 'mima', 'area': 'wuhan', 'email': 'aqq.com', 'phone': '11111111',
+    dic = {'account': 'houyf143', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
     print 'email right here'
-    dic = {'account': 'houyf144', 'password': 'mima', 'area': 'wuhan', 'email': '11112222@qq.com', 'phone': '11111111',
+    dic = {'account': 'houyf144', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
 
