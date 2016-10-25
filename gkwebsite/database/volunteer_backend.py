@@ -36,10 +36,10 @@ def getVolunteerAllDictByAccount(account):
         'province': dict[Volunteer.PROVINCE],
         'provincelist': PROVINCE_LIST,
     }
-    dict[Volunteer.ADMISSION_STATUS] = {
-        'admissionstatus': dict[Volunteer.ADMISSION_STATUS],
-        'admissionstatuslist': ADMISSION_STATUS_LIST
-    }
+    # dict[Volunteer.ADMISSION_STATUS] = {
+    #     'admissionstatus': dict[Volunteer.ADMISSION_STATUS],
+    #     'admissionstatuslist': ADMISSION_STATUS_LIST
+    # }
 
     major_int_list = dict[Volunteer.MAJOR]
     for i in range(0, MIN_LEN_FOR_LIST):

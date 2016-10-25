@@ -84,7 +84,7 @@ class Student(models.Model):
     sumNumberList = my_field.ListField(default=[], blank=True)
     estimateScore = models.IntegerField(default=-1, blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
-    admissionStatus = models.IntegerField(default=-1, blank=True)
+    admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
     registerCode = models.CharField(max_length=100, default='', blank=True)
     teacherList = my_field.ListField(default=[], blank=True)
@@ -194,7 +194,7 @@ class Volunteer(models.Model):
     sumNumberList = my_field.ListField(default=[], blank=True)
     estimateScore = models.IntegerField(default=-1, blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
-    admissionStatus = models.IntegerField(default=-1, blank=True)
+    admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
     registerCode = models.CharField(max_length=100, default='', blank=True)
     teacherList = my_field.ListField(default=[], blank=True) #对应的老师
