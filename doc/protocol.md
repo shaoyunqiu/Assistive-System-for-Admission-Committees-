@@ -77,7 +77,27 @@
 		<td>HttpResponese</td>
 		<td>post</td>
 		<td>邵韵秋</td>
-		<td> __尚未完成，无法获取account和id__ </td>
+		<td> Finished by lihy </td>
+	</tr>
+	<tr>
+		<td>get_teacher_name_by_id</td>
+		<td>根据ID返回教师姓名</td>
+		<td>database/views.py</td>
+		<td>request(POST['id']: ID)</td>
+		<td>HttpResponese</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>Finished by lihy</td>
+	</tr>
+	<tr>
+		<td>get_volunteer_name_by_id</td>
+		<td>根据ID返回志愿者姓名</td>
+		<td>database/views.py</td>
+		<td>request(POST['id']: ID)</td>
+		<td>HttpResponese</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>Finished by lihy</td>
 	</tr>
 	
 	<tr>
@@ -165,7 +185,7 @@
 	 <td>类型：JsonResponse ([{},{},{},...]) 包含新账号的注册码(code) 注意：后端请同时将注册码添加到数据库！</td>
 	 <td>POST</td>
 	 <td>段清楠</td>
-	 <td>后端已经实现，但是前端页面暂时未完成所以没有测试正确性</td>
+	 <td>finished but need to 优化 </td>
 	 </tr>
 
 	<tr>
@@ -215,6 +235,7 @@
 		<td>teacher/views.py</td>
 		<td>request</td>
 		<td>类型：JsonResponse(dict)  dict = {
+		'id':'',
 		'user_name' : '',
 		'realName' : '',
 		'idNumber' : '',
@@ -262,6 +283,94 @@
 	</tr>
 
 	 </tr>
+	 
+	 	</tr>
+		<tr>
+		<td>student_info_show</td>
+		<td>显示志愿者可见的学生详细信息（说明：已将老师端同样部分的代码移植过来，后端决定是否需要做修改；另外，后端还需要根据学生id和志愿者id判断这个GET请求是否有权限，没有权限则返回到上一页面）</td>
+		<td>volunteer/views.py</td>
+		<td>request(GET['stu_id'])</td>
+		<td>HttpResponse</td>
+		<td>GET</td>
+		<td>侯禺凡</td>
+		<td>finished</td>
+	</tr>
+	
+	
+	<tr>
+		<td>distribute_student</td>
+		<td>给学生分组</td>
+		<td>teacher/views.py</td>
+		<td>request(GET['id'])</td>
+		<td>JsonResponse({'success':1})student = {
+            'user_name':'',
+            'name':'',
+            'id':'',
+        }
+        team1 = {'teamname': 2,
+                'student1': student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        team2 = {'teamname': 3,
+                'student1': student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        team3 = {'teamname': 4,
+                'student1': student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        team = {'teamname':1,
+            'student1':student,
+                'student2': student,
+                'student3': student,
+                'student4': student,
+                'student5': student,
+                }
+        dict = [team, team1, team2, team3]</td>
+		<td>GET</td>
+		<td>白云仁</td>
+		<td>finished,but byr need to fix bug</td>
+	</tr>
+
+	<tr>
+		<td>upload</td>
+		<td>上传试题</td>
+		<td>teacher/views.py</td>
+		<td>request(GET['problem_upload'])</td>
+		<td>JsonResponse(dict) dict = {'result':''}</td>
+		<td>GET/POST</td>
+		<td>白云仁</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>export_registration_code</td>
+		<td>导出注册码信息到excel文件</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']：教师用户ID .POST['length']：导出的志愿者数量)</td>
+		<td>JsonResponse(dict) dict = {'filename':}</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>get_teacher_alert_by_id</td>
+		<td>获得用户的所有提醒数量</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']：教师用户ID )</td>
+		<td>JsonResponse(dict) dict = {'message': , 'score':}</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
