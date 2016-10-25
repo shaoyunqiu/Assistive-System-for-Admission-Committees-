@@ -3,6 +3,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django import forms
+
 import my_field
 import django.core.validators
 import datetime
@@ -17,17 +19,25 @@ class Teacher(models.Model):
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
+
     email = models.CharField(max_length=50, default='', blank=True, validators=[django.core.validators.EmailValidator()])
     area = models.CharField(max_length=50, default='', blank=True)
     volunteerList = my_field.ListField(default=[], blank=True)
+    wechat = models.CharField(max_length=50, default='', blank=True)
+    fixedPhone = models.CharField(max_length=50, default='', blank=True)
+    comment = models.TextField(default='', blank=True)
 
     ACCOUNT = 'account'
     PASSWORD = 'password'
     REAL_NAME = 'realName'
     PHONE = 'phone'
     EMAIL = 'email'
+
     AREA = 'area'
     VOLUNTEER_LIST = 'volunteerList'
+    WECHAT = 'wechat'
+    FIXED_PHONE = 'fixedPhone'
+    COMMENT = 'comment'
 
     def __unicode__(self):
         import sys
@@ -68,7 +78,7 @@ class Student(models.Model):
     tutorPhone = models.CharField(max_length=20, default='', blank=True,
                                   validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
     province = models.IntegerField(default=-1, blank=True)
-    major = models.IntegerField(default=-1, blank=True)
+    major = my_field.ListField(default=[], blank=True)
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
@@ -82,7 +92,9 @@ class Student(models.Model):
     isLogedin = models.IntegerField(default=0, blank=True)
     isRegistered = models.IntegerField(default=0, blank=True)
     groupList = my_field.ListField(default=[], blank=True)
-
+    wechat = models.CharField(max_length=50, default='', blank=True)
+    fixedPhone = models.CharField(max_length=50, default='', blank=True)
+    qq = models.CharField(max_length=50, default='', blank=True)
 
     ID = 'id'
 
@@ -124,6 +136,10 @@ class Student(models.Model):
 
     IS_REGISTERED = 'isRegistered'
     GROUP_LIST = 'groupList'
+    WECHAT = 'wechat'
+    FIXED_PHONE = 'fixedPhone'
+    QQ = 'qq'
+
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -132,7 +148,7 @@ class Student(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED, GROUP_LIST]
+                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ]
 
     def __unicode__(self):
         import sys
@@ -172,7 +188,7 @@ class Volunteer(models.Model):
     tutorPhone = models.CharField(max_length=20, default='', blank=True,
                                   validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
     province = models.IntegerField(default=-1, blank=True)
-    major = models.IntegerField(default=-1, blank=True)
+    major = my_field.ListField(default=[], blank=True)
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
@@ -187,7 +203,9 @@ class Volunteer(models.Model):
     isRegistered = models.IntegerField(default=0, blank=True)
     student_id = models.CharField(max_length=100, default='', blank=True) #学生卡卡号
     groupList = my_field.ListField(default=[], blank=True) #分管的组
-
+    wechat = models.CharField(max_length=50, default='', blank=True)
+    fixedPhone = models.CharField(max_length=50, default='', blank=True)
+    qq = models.CharField(max_length=50, default='', blank=True)
 
     ID = 'id'
 
@@ -230,6 +248,10 @@ class Volunteer(models.Model):
     IS_REGISTERED = 'isRegistered'
     STUDENT_ID = 'student_id'
     GROUP_LIST = 'groupList'
+    WECHAT = 'wechat'
+    FIXED_PHONE = 'fixedPhone'
+
+    QQ = 'qq'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -238,7 +260,8 @@ class Volunteer(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED,STUDENT_ID, GROUP_LIST]
+                  IS_REGISTERED,STUDENT_ID, GROUP_LIST, WECHAT, FIXED_PHONE,
+                  QQ, ]
 
     def __unicode__(self):
         import sys
@@ -272,6 +295,15 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    
+    account = models.CharField(max_length=150, unique=True,default='', blank=True)
     img = models.ImageField(upload_to='exam_picture/', default='exam_picture/None/no-img.jpg')
 
+    ACCOUNT = 'account'
+    IMG = 'img'
+
+    FIELD_LIST = [ACCOUNT, IMG]
+
+
+class ImageUploadForm(forms.Form):
+    """Image upload form."""
+    image = forms.ImageField()
