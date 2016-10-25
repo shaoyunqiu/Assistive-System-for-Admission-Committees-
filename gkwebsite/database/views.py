@@ -171,7 +171,7 @@ def add_student(request):
             t.append(c)
             codelist.append(code)
         id = (str)(request.session['user_id'])
-        generateExcel(request, id, '', '', 'sheet1', [codelist], [u'注册码哈哈'])
+        generateExcel(request, id, '', '', 'sheet1', [codelist], [u'注册码'])
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
@@ -199,7 +199,9 @@ def export_registration_code(request):
     if request.is_ajax() and request.method == 'POST':
         teacher = request.POST.get('id')
         length = request.POST.get('length')
-        t = {'filename':teacher+'.xls'}
+        filename = "%s_teacher.xls" % teacher
+        t = {'filename': filename}
+        print 'file xls ' + filename
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
