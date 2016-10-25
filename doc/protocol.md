@@ -338,6 +338,26 @@
 		<td>白云仁</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>export_registration_code</td>
+		<td>导出注册码信息到excel文件</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']：教师用户ID .POST['length']：导出的志愿者数量)</td>
+		<td>JsonResponse(dict) dict = {'filename':}</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>get_teacher_alert_by_id</td>
+		<td>获得用户的所有提醒数量</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']：教师用户ID )</td>
+		<td>JsonResponse(dict) dict = {'message': , 'score':}</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
