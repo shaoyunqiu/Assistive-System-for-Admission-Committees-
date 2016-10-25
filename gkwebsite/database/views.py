@@ -216,3 +216,5 @@ def get_teacher_alert_by_id(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+
+
