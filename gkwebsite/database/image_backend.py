@@ -50,6 +50,7 @@ def getPictureAll(account):
     if len(acc) > 1:
         print 'warning: account not unique!'
     return acc[0]
+
 def getPicture(account, field):
     '''
     通过account获得学生的field字段的值
@@ -121,6 +122,7 @@ def createPicture(account, dict):
     pic.save()
     print 'successfully create account'
     return True
+
 
 
 
