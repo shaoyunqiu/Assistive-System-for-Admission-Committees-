@@ -6,6 +6,8 @@ from django.core.exceptions import ValidationError
 from my_field import *
 
 
+MIN_LEN_FOR_LIST = 10
+
 def getAllInVolunteer():
     return Volunteer.objects.all()
 
@@ -19,26 +21,43 @@ def getVolunteerAllDictByAccount(account):
 
             return None
 
-    dict[Volunteer.TYPE] = typeIntToString(dict[Volunteer.TYPE])
-    dict[Volunteer.SEX] = sexIntToString(dict[Volunteer.SEX])
-    dict[Volunteer.NATION] = {'nation': nationIntToString(dict[Volunteer.NATION]),
-                            'nationlist': NATION_LIST}
-    dict[Volunteer.PROVINCE] = {'province': provinceIntToString(dict[Volunteer.PROVINCE]),
-                              'provincelist': PROVINCE_LIST,
-
-                              }
+    dict[Volunteer.TYPE] = {
+        'type': dict[Volunteer.TYPE],
+        'typelist': TYPE_LIST
+    }
+    dict[Volunteer.SEX] = {
+        'sex': dict[Volunteer.SEX],
+        'sexlist': SEX_LIST
+    }
+    dict[Volunteer.NATION] = {
+        'nation': dict[Volunteer.NATION],
+        'nationlist': NATION_LIST}
+    dict[Volunteer.PROVINCE] = {
+        'province': dict[Volunteer.PROVINCE],
+        'provincelist': PROVINCE_LIST,
+    }
+    dict[Volunteer.ADMISSION_STATUS] = {
+        'admissionstatus': dict[Volunteer.ADMISSION_STATUS],
+        'admissionstatuslist': ADMISSION_STATUS_LIST
+    }
 
     major_int_list = dict[Volunteer.MAJOR]
+    for i in range(0, MIN_LEN_FOR_LIST):
+        major_int_list.append(0)
+        dict[Volunteer.TEST_SCORE_LIST].append(0)
+        dict[Volunteer.RANK_LIST].append(0)
+        dict[Volunteer.SUM_NUMBER_LIST].append(0)
+
     dict[Volunteer.MAJOR] = []
     for item in major_int_list:
-        dict[Volunteer.MAJOR].append({'department': item,
-                                  'departmentlist':MAJOR_LIST,})
+        numitem = (int)(item)
+        dict[Volunteer.MAJOR].append({'department': numitem,
+                                      'departmentlist': MAJOR_LIST})
 
 
-    dict[Volunteer.ESTIMATE_SCORE] = dict[Volunteer.ESTIMATE_SCORE]
-    dict[Volunteer.REAL_SCORE] = dict[Volunteer.REAL_SCORE]
-    dict[Volunteer.ADMISSION_STATUS] = admissionStatusIntToString(dict[Volunteer.ADMISSION_STATUS])
+
     return dict
+
 
 
 def deleteVolunteerAll():

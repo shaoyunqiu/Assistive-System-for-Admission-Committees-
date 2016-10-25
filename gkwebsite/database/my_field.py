@@ -24,35 +24,35 @@ u'俄罗斯族', u'裕固族', u'乌孜别克族',  u'门巴族',  u'鄂伦春�
 ADMISSION_STATUS_LIST = [u'已录取', u'未投档', u'已投档']
 TYPE_LIST = [u'文科', u'理科']
 
-def majorIntToString(num):
-    return num
-    #index = num % len(MAJOR_LIST)
-    #return MAJOR_LIST[index]
-
-def sexIntToString(num):
-    return num
-    #index = num % len(SEX_LIST)
-    #return SEX_LIST[index]
-
-def provinceIntToString(num):
-    return num
-    #index = num % len(PROVINCE_LIST)
-    #return PROVINCE_LIST[index]
-
-def nationIntToString(num):
-    return num
-    #index = num % len(NATION_LIST)
-    #return NATION_LIST[index]
-
-def admissionStatusIntToString(num):
-    return num
-    #index = num % len(ADMISSION_STATUS_LIST)
-    #return ADMISSION_STATUS_LIST[index]
-
-def typeIntToString(num):
-    #index = num % len(TYPE_LIST)
-    return num
-    #return TYPE_LIST[index]
+# def majorIntToString(num):
+#     return num
+#     #index = num % len(MAJOR_LIST)
+#     #return MAJOR_LIST[index]
+#
+# def sexIntToString(num):
+#     return num
+#     #index = num % len(SEX_LIST)
+#     #return SEX_LIST[index]
+#
+# def provinceIntToString(num):
+#     return num
+#     #index = num % len(PROVINCE_LIST)
+#     #return PROVINCE_LIST[index]
+#
+# def nationIntToString(num):
+#     return num
+#     #index = num % len(NATION_LIST)
+#     #return NATION_LIST[index]
+#
+# def admissionStatusIntToString(num):
+#     return num
+#     #index = num % len(ADMISSION_STATUS_LIST)
+#     #return ADMISSION_STATUS_LIST[index]
+#
+# def typeIntToString(num):
+#     #index = num % len(TYPE_LIST)
+#     return num
+#     #return TYPE_LIST[index]
 
 
 
