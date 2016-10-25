@@ -200,11 +200,11 @@ def export_registration_code(request):
         teacher = request.POST.get('id')
         length = request.POST.get('length')
         t = {'filename':teacher+'.xls'}
-        return JsonResponse(t, safe=False)
+        return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
         
-def get_alert_by_id(request):
+def get_teacher_alert_by_id(request):
     # by dqn14 Oct 22, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':

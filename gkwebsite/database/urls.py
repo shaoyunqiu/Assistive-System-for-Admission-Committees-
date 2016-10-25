@@ -13,5 +13,5 @@ urlpatterns = [
 	url(r'^add_student/$', views.add_student, name="add_student"),
 	url(r'^add_volunteer/$', views.add_volunteer, name="add_volunteer"),
     url(r'^export_registration_code/$', views.export_registration_code, name="export_registration_code"),
-    url(r'^get_alert_by_id/$', views.get_alert_by_id, name="get_alert_by_id"),
+    url(r'^get_teacher_alert_by_id/$', views.get_teacher_alert_by_id, name="get_teacher_alert_by_id"),
 	]
