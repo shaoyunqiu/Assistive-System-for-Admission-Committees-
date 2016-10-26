@@ -429,6 +429,17 @@
 		<td>侯禺凡</td>
 		<td>h</td>
 	</tr>
+
+	<tr>
+		<td>submit_test_result</td>
+		<td>向数据库提交估分数据</td>
+		<td>student/views.py</td>
+		<td>request.POST.get('time_list')、request.POST.get('score_list')、request.POST.get('test_name')</td>
+		<td>JsonResponse({})（空JSON）</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td>h</td>
+	</tr>
 	
 		<tr>
 		<td>a</td>
