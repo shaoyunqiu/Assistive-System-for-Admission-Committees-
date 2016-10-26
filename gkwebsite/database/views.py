@@ -218,3 +218,55 @@ def get_teacher_alert_by_id(request):
         return HttpResponse('Access denied.')
 
 
+def test_list_all(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        c = {}
+        c["year"]="2016年"
+        c["place"]="全国II卷"
+        c["subject"]="理科综合"
+        #请注意，上面三个参数是直接显示在页面上的，请使其有可读性
+        c["id"]="2016_全国II_理科综合"
+        c["released"] = "N"
+        t.append(c)
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+        
+def release_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def withdraw_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def remove_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
