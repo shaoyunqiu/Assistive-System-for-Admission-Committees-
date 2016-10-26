@@ -418,6 +418,17 @@
 		<td>侯禺凡</td>
 		<td>h</td>
 	</tr>
+
+	<tr>
+		<td>get_problem_info</td>
+		<td>根据题目id获取题目的详细信息</td>
+		<td>student/views.py</td>
+		<td>request.POST.get('problem_id')</td>
+		<td>JsonResponse({'problem_info': dic})</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td>h</td>
+	</tr>
 	
 		<tr>
 		<td>a</td>
