@@ -18,7 +18,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -32,7 +32,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -58,7 +58,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -72,7 +72,6 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -98,7 +97,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -112,7 +111,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -138,7 +137,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -152,7 +151,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -178,7 +177,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -192,7 +191,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -204,13 +203,6 @@ def testCreateVolunteerNew():
                             'groupList': [1, 2],
                              'student_id': '2014011419'
                             })
-
-
-
-
-
-
-
 
 
 

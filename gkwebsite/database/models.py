@@ -84,7 +84,7 @@ class Student(models.Model):
     sumNumberList = my_field.ListField(default=[], blank=True)
     estimateScore = models.IntegerField(default=-1, blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
-    admissionStatus = models.IntegerField(default=-1, blank=True)
+    admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
     registerCode = models.CharField(max_length=100, default='', blank=True)
     teacherList = my_field.ListField(default=[], blank=True)
@@ -194,7 +194,7 @@ class Volunteer(models.Model):
     sumNumberList = my_field.ListField(default=[], blank=True)
     estimateScore = models.IntegerField(default=-1, blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
-    admissionStatus = models.IntegerField(default=-1, blank=True)
+    admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
     registerCode = models.CharField(max_length=100, default='', blank=True)
     teacherList = my_field.ListField(default=[], blank=True) #对应的老师
@@ -295,15 +295,21 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    account = models.CharField(max_length=150, unique=True,default='', blank=True)
-    img = models.ImageField(upload_to='exam_picture/', default='exam_picture/None/no-img.jpg')
+    ID = 'id'
 
-    ACCOUNT = 'account'
-    IMG = 'img'
+    year = models.IntegerField(default=0, blank=True) #年份
+    province = models.IntegerField(default=0, blank=True) #省份
+    subject = models.IntegerField(default=0, blank=True) #科目
+    number = models.IntegerField(default=0, blank=True) #题号
+    score = models.IntegerField(default=0, blank=True) #得分
+    category = models.IntegerField(default=0, blank=True) #主观客观
 
-    FIELD_LIST = [ACCOUNT, IMG]
+    YEAR = 'year'
+    PROVINCE = 'province'
+    SUBJECT = 'subject'
+    NUMBER = 'number'
+    SCORE = 'score'
+    CATEGORY = 'category'
 
+    FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY]
 
-class ImageUploadForm(forms.Form):
-    """Image upload form."""
-    image = forms.ImageField()
