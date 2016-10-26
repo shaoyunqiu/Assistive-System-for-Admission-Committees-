@@ -392,6 +392,22 @@
 		<td>侯禺凡</td>
 		<td>h</td>
 	</tr>
+	
+	
+		<tr>
+		<td>register</td>
+		<td>注册学生用户,注册成功后，给邮件发送欢迎的消息(这部分已实现)</td>
+		<td>student/views.py</td>
+		<td>request.POST username = request.POST.get('username')用户名
+    password = request.POST.get('password')密码
+    email = request.POST.get('email')邮箱
+    invited = request.POST.get('invited')邀请码</td>
+		<td>JsonResponse({'result': ''})</td>
+		<td>POST</td>
+		<td>白云仁</td>
+		<td>h</td>
+	</tr>
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
