@@ -193,6 +193,7 @@ def add_volunteer(request):
     else:
         return HttpResponse('Access denied.')
 
+
 def export_registration_code(request):
     # by dqn14 Oct 22, 2016
     # use this if-else to block violent access
@@ -205,16 +206,134 @@ def export_registration_code(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
+
 def get_teacher_alert_by_id(request):
     # by dqn14 Oct 22, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = {}
-        t["message"]="15"
-        t["score"]="4"
+        t["message"] = "15"
+        t["score"] = "4"
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
 
 
+def test_list_all(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        c = {}
+        c["year"] = "2016年"
+        c["place"] = "全国II卷"
+        c["subject"] = "理科综合"
+        # 请注意，上面三个参数是直接显示在页面上的，请使其有可读性
+        c["id"] = "2016_全国II_理科综合"
+        c["released"] = "N"
+        t.append(c)
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def release_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def withdraw_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def remove_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def add_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        year = request.POST.get('year')
+        place = request.POST.get('place')
+        subject = request.POST.get('subject')
+        # 以上三个参数都是序号
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def get_test_yearlist(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        t.append({'num': '0', 'str': '2017'})
+        t.append({'num': '1', 'str': '2018'})
+        t.append({'num': '2', 'str': '2019'})
+        t.append({'num': '3', 'str': '2020'})
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def get_test_placelist(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        t.append({'num': '0', 'str': '北京卷'})
+        t.append({'num': '1', 'str': '海南卷'})
+        t.append({'num': '2', 'str': '上海卷'})
+        t.append({'num': '3', 'str': '全国I卷'})
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def get_test_subjectlist(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        t.append({'num': '0', 'str': '语文'})
+        t.append({'num': '1', 'str': '数学'})
+        t.append({'num': '2', 'str': '英语'})
+        t.append({'num': '3', 'str': '理科综合'})
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
