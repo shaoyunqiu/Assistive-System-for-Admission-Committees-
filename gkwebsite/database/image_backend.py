@@ -17,6 +17,15 @@ def removePictureID(account):
     getAllInPicture().filter(account=account).delete()
 
 
+def getPictureAllDictByObject(picture):
+    dict = {}
+    for item in Picture.FIELD_LIST:
+        try:
+            dict[item] = getattr(picture, item)
+        except:
+            return None
+    return dict
+
 def getPicturebyField(field, argc):
     '''
     :param field:待查询的字段
