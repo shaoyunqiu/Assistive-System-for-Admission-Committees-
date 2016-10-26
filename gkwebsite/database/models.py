@@ -295,7 +295,7 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    ID = 'id'
+
 
     year = models.IntegerField(default=0, blank=True) #年份
     province = models.IntegerField(default=0, blank=True) #省份
@@ -303,6 +303,8 @@ class Picture(models.Model):
     number = models.IntegerField(default=0, blank=True) #题号
     score = models.IntegerField(default=0, blank=True) #得分
     category = models.IntegerField(default=0, blank=True) #主观客观
+
+    ID = 'id'
 
     YEAR = 'year'
     PROVINCE = 'province'
