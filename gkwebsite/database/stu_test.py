@@ -30,7 +30,7 @@ def testCreateStudentNew():
 
                             'rankList': [1, 2, 3],
                             'sumNumberList': [1000, 2000, 3000],
-                            'estimateScore': 690,
+                            
                             'realScore': 687,
                             'admissionStatus': ' ',
 

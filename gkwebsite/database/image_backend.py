@@ -45,11 +45,10 @@ def getPicturebyDict(dic):
 
 
 def createPicturebyDict(dict):
-    if len(dict.keys()) != (len(Picture.FIELD_LIST) - 1):
-        return False
-    if getPicturebyDict(dict):
-        print "account existed"
-        return False
+
+    # if getPicturebyDict(dict):
+    #     print "account existed"
+    #     return False
     try:
         pic = Picture.objects.model()
     except:
