@@ -345,7 +345,13 @@
 		<td>upload</td>
 		<td>上传试题</td>
 		<td>teacher/views.py</td>
-		<td>request(GET['problem_upload'])</td>
+		<td>request(POST:'year',年 
+        'province',省份
+        'subject',科目
+        'number',题号
+        'score',分数
+        'problem_upload': 试题， (已处理)
+        'category',主客观题)</td>
 		<td>JsonResponse(dict) dict = {'result':''}</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
