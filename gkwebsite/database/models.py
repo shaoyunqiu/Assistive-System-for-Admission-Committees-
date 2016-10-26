@@ -304,6 +304,9 @@ class Picture(models.Model):
     score = models.IntegerField(default=0, blank=True) #得分
     category = models.IntegerField(default=0, blank=True) #主观客观
 
+    isTitle = models.IntegerField(default=0, blank=True) #是否是纯标题
+    isDelivered = models.IntegerField(default=0, blank=True) #是否发布
+
     ID = 'id'
 
     YEAR = 'year'
@@ -313,5 +316,8 @@ class Picture(models.Model):
     SCORE = 'score'
     CATEGORY = 'category'
 
-    FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY]
+    IS_TITLE = 'isTitle'
+    IS_DELEVERED = 'isDelivered'
+
+    FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY, IS_TITLE, IS_DELEVERED]
 

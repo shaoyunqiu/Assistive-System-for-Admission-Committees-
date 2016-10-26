@@ -22,7 +22,9 @@ def getPictureAllDictByObject(picture):
     for item in Picture.FIELD_LIST:
         try:
             dict[item] = getattr(picture, item)
+            # print '******'
         except:
+            print '----', item
             return None
     return dict
 
@@ -37,6 +39,8 @@ def getPicturebyField(field, argc):
 
 
 def getPicturebyDict(dic):
+    if Picture.IS_TITLE in dic.keys():
+        dic[Picture.IS_TITLE] = 1
     return Picture.objects.filter(**dic)
 
 
