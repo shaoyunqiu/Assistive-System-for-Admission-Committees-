@@ -203,3 +203,24 @@ def createStudent(account, dict):
     student.save()
     print 'successfully create account'
     return True
+
+
+def checkStudentPassword(_account,_password):
+    '''
+    检查密码是否正确
+    暂时空出
+    :param _account: 用户名
+    :param _password: 传过来的密码，可能被加密过
+    :return:
+    '''
+
+    #if _password == hash(getData(_account, 'password')): #哈希
+    if not getStudent(_account, 'account'): #无重复，说明不存在这个用户
+        print '---------'
+        return (False , 'Account does not exist.')
+    if _password != getStudent(_account, 'password'):
+        print '*********'
+        return (False , 'Password is incorrect')
+    # 密码不正确
+    return (True, str(getStudent(_account,'id')))
+    #hash function should be applied here
