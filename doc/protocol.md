@@ -407,6 +407,17 @@
 		<td>白云仁</td>
 		<td>h</td>
 	</tr>
+
+	<tr>
+		<td>get_problem_list</td>
+		<td>根据套题名称获取对应的题目id列表</td>
+		<td>student/views.py</td>
+		<td>request.POST.get('test_name')</td>
+		<td>JsonResponse({'problem_list': []})</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td>h</td>
+	</tr>
 	
 		<tr>
 		<td>a</td>
