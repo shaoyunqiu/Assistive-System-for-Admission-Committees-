@@ -295,15 +295,21 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    account = models.CharField(max_length=150, unique=True, default='', blank=True)
-    img = models.ImageField(upload_to='student/static/images', default='student/static/images/None/no-img.jpg')
+    ID = 'id'
 
-    ACCOUNT = 'account'
-    IMG = 'img'
+    year = models.IntegerField(default=0, blank=True) #年份
+    province = models.IntegerField(default=0, blank=True) #省份
+    subject = models.IntegerField(default=0, blank=True) #科目
+    number = models.IntegerField(default=0, blank=True) #题号
+    score = models.IntegerField(default=0, blank=True) #得分
+    category = models.IntegerField(default=0, blank=True) #主观客观
 
-    FIELD_LIST = [ACCOUNT, IMG]
+    YEAR = 'year'
+    PROVINCE = 'province'
+    SUBJECT = 'subject'
+    NUMBER = 'number'
+    SCORE = 'score'
+    CATEGORY = 'category'
 
+    FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY]
 
-class ImageUploadForm(forms.Form):
-    """Image upload form."""
-    image = forms.ImageField()
