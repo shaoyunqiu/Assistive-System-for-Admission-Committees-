@@ -32,7 +32,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -71,7 +71,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -110,7 +110,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -149,7 +149,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -188,7 +188,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -227,7 +227,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -266,7 +266,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -305,7 +305,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -344,7 +344,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -383,7 +383,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
