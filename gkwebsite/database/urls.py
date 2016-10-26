@@ -18,4 +18,9 @@ urlpatterns = [
     url(r'^release_test/$', views.release_test, name="release_test"),
     url(r'^remove_test/$', views.remove_test, name="remove_test"),
     url(r'^withdraw_test/$', views.withdraw_test, name="withdraw_test"),
+    url(r'^add_test/$', views.add_test, name="add_test"),
+    url(r'^get_test_yearlist/$', views.get_test_yearlist, name="get_test_yearlist"),
+    url(r'^get_test_placelist/$', views.get_test_placelist, name="get_test_placelist"),
+    url(r'^get_test_subjectlist/$', views.get_test_subjectlist, name="get_test_subjectlist"),
+    
 	]

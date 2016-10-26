@@ -239,6 +239,7 @@ def release_test(request):
     # by dqn14 Oct 26, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
         t = {}
         # t['success'] = 'Y'
         t['success'] = 'N'
@@ -251,6 +252,7 @@ def withdraw_test(request):
     # by dqn14 Oct 26, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
         t = {}
         # t['success'] = 'Y'
         t['success'] = 'N'
@@ -263,10 +265,66 @@ def remove_test(request):
     # by dqn14 Oct 26, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
         t = {}
         # t['success'] = 'Y'
         t['success'] = 'N'
         t['message'] = '管理员正忙'
         return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def add_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        year = request.POST.get('year')
+        place = request.POST.get('place')
+        subject = request.POST.get('subject')
+        # 以上三个参数都是序号
+        t = {}
+        # t['success'] = 'Y'
+        t['success'] = 'N'
+        t['message'] = '管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def get_test_yearlist(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        t.append({'num':'0', 'str':'2017'})
+        t.append({'num':'1', 'str':'2018'})
+        t.append({'num':'2', 'str':'2019'})
+        t.append({'num':'3', 'str':'2020'})
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+        
+def get_test_placelist(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        t.append({'num':'0', 'str':'北京卷'})
+        t.append({'num':'1', 'str':'海南卷'})
+        t.append({'num':'2', 'str':'上海卷'})
+        t.append({'num':'3', 'str':'全国I卷'})
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+        
+def get_test_subjectlist(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        t.append({'num':'0', 'str':'语文'})
+        t.append({'num':'1', 'str':'数学'})
+        t.append({'num':'2', 'str':'英语'})
+        t.append({'num':'3', 'str':'理科综合'})
+        return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
