@@ -124,10 +124,10 @@ def getStudentAllDictByAccount(account):
         dict[Volunteer.MAJOR].append({'department': numitem,
                                       'departmentlist': MAJOR_LIST})
 
-    dict[Student.ADMISSION_STATUS] = {
-        'admissionstatus': dict[Student.ADMISSION_STATUS],
-        'admissionstatuslist': ADMISSION_STATUS_LIST
-    }
+    # dict[Student.ADMISSION_STATUS] = {
+    #     'admissionstatus': dict[Student.ADMISSION_STATUS],
+    #     'admissionstatuslist': ADMISSION_STATUS_LIST
+    # }
     return dict
 
 

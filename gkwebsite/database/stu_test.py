@@ -18,7 +18,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -32,7 +32,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -57,7 +57,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -71,7 +71,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -96,7 +96,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -110,7 +110,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -135,7 +135,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -149,7 +149,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -174,7 +174,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -188,7 +188,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -213,7 +213,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -227,7 +227,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -252,7 +252,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -266,7 +266,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -291,7 +291,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -305,7 +305,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -330,7 +330,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -344,7 +344,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -369,7 +369,7 @@ def testCreateStudentNew():
 
                             'address': u'广元市广元镇广元村',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -383,7 +383,7 @@ def testCreateStudentNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+                            'admissionStatus': ' ',
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
