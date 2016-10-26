@@ -441,6 +441,94 @@
 		<td>h</td>
 	</tr>
 	
+	<tr>
+		<td>test_list_all</td>
+		<td>列出所有估分测试的信息</td>
+		<td>database/views.py</td>
+		<td>无</td>
+		<td>JsonResponse 键：year, place, subject, id, released('Y'/'N')</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>release_test</td>
+		<td>发布一个测试</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']: 测试的ID)</td>
+		<td>JsonResponse 键：success('Y'/'N'), message</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>remove_test</td>
+		<td>删除一个测试</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']: 测试的ID)</td>
+		<td>JsonResponse 键：success('Y'/'N'), message</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>withdraw_test</td>
+		<td>撤回一个测试</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']: 测试的ID)</td>
+		<td>JsonResponse 键：success('Y'/'N'), message</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>add_test</td>
+		<td>新建一个测试</td>
+		<td>database/views.py</td>
+		<td>request(.POST['year']: 年份 .POST['place']: 地区 .POST['subject']: 科目)</td>
+		<td>JsonResponse 键：success('Y'/'N'), message</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>get_test_yearlist</td>
+		<td>获取测试年份的列表</td>
+		<td>database/views.py</td>
+		<td>无</td>
+		<td>JsonResponse [{}, {}, {},...] </td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>get_test_placelist</td>
+		<td>获取测试省份的列表</td>
+		<td>database/views.py</td>
+		<td>无</td>
+		<td>JsonResponse [{}, {}, {},...] </td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>get_test_subjectlist</td>
+		<td>获取测试科目的列表</td>
+		<td>database/views.py</td>
+		<td>无</td>
+		<td>JsonResponse [{}, {}, {},...] </td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
