@@ -321,3 +321,62 @@ class Picture(models.Model):
 
     FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY, IS_TITLE, IS_DELEVERED]
 
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Picture._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+class Notice(models.Model):
+    send = models.CharField(max_length=300, default='', blank=True)
+    receive_vol = models.CharField(max_length=500, default='', blank=True)
+    receive_stu = models.CharField(max_length=500, default='', blank=True)
+
+    ID = 'id'
+    SEND = 'send'
+    RECEIVE_VOL = 'receive_vol'
+    RECEIVE_STU = 'receive_stu'
+
+    FIELD_LIST = [ID, SEND, RECEIVE_VOL, RECEIVE_STU]
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Notice._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+class Group(models.Model):
+    vol_list = models.CharField(max_length=500, default='', blank=True)
+    stu_list = models.CharField(max_length=500, default='', blank=True)
+
+    ID = 'id'
+    VOL_LIST = 'vol_list'
+    STU_LIST = 'stu_list'
+
+    FIELD_LIST = [ID, VOL_LIST, STU_LIST]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Group._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+
+
+
+
+
+
