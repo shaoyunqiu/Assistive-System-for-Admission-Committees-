@@ -399,3 +399,29 @@ def get_test_subjectlist(request):
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
+
+def list_question(request):
+    # by dqn14 Oct 27, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        test_id = request.POST.get('id')
+        t = []
+        c = {}
+        c['num'] = '1'
+        c['type'] = '客观题'
+        c['maxscore'] = '6'
+        t.append(c)
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+        
+def remove_question(request):
+    # by dqn14 Oct 27, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = {}
+        t['success']='N'
+        t['message']='管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')

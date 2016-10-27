@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^get_test_yearlist/$', views.get_test_yearlist, name="get_test_yearlist"),
     url(r'^get_test_placelist/$', views.get_test_placelist, name="get_test_placelist"),
     url(r'^get_test_subjectlist/$', views.get_test_subjectlist, name="get_test_subjectlist"),
-    
+    url(r'^list_question/$', views.list_question, name="list_question"),
+    url(r'^remove_question/$', views.remove_question, name="remove_question"),
 	]
