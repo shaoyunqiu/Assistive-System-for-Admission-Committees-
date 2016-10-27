@@ -6,6 +6,7 @@ import student_backend as stu
 import teacher_backend as tch
 import volunteer_backend as vol
 import register_backend as reg
+import image_backend as pic
 from my_field import *
 
 
@@ -225,14 +226,29 @@ def test_list_all(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        c = {}
-        c["year"] = "2016年"
-        c["place"] = "全国II卷"
-        c["subject"] = "理科综合"
-        # 请注意，上面三个参数是直接显示在页面上的，请使其有可读性
-        c["id"] = "2016_全国II_理科综合"
-        c["released"] = "N"
-        t.append(c)
+        # c = {}
+        # c["year"] = "2016年"
+        # c["place"] = "全国II卷"
+        # c["subject"] = "理科综合"
+        # # 请注意，上面三个参数是直接显示在页面上的，请使其有可读性
+        # c["id"] = "2016_全国II_理科综合"
+        # c["released"] = "Y"
+        # t.append(c)
+
+        pic_list = pic.getPicturebyDict({Picture.IS_TITLE: 1})
+        print 'pic list ' ,len(pic_list)
+        for item in pic_list:
+            c = {}
+            dic = pic.getPictureAllDictByObject(item)
+            c['id'] = '%s_%s_%s' % (str(YEAR_LIST[dic[Picture.YEAR]]),
+                                    SHITI_LIST[dic[Picture.PROVINCE]],
+                                    SUBJECT_LIST[dic[Picture.SUBJECT]])
+            c["year"] = str(YEAR_LIST[dic[Picture.YEAR]])
+            c["place"] = SHITI_LIST[dic[Picture.PROVINCE]]
+            c["subject"] = SUBJECT_LIST[dic[Picture.SUBJECT]]
+            
+            c["released"] = "N"
+            t.append(c)
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
@@ -243,10 +259,28 @@ def release_test(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         id = request.POST.get('id')
+        print 'fabu ',id
+        list = id.split('_')
+        year = find_item_index_in_list(int(list[0]), YEAR_LIST)
+        province = find_item_index_in_list(list[1], SHITI_LIST)
+        subject = find_item_index_in_list(list[2], SUBJECT_LIST)
+
+        dic = {
+            Picture.YEAR: year,
+            Picture.PROVINCE: province,
+            Picture.SUBJECT: subject,
+        }
+        pic_list = pic.getPicturebyDict(dic)
         t = {}
-        # t['success'] = 'Y'
-        t['success'] = 'N'
-        t['message'] = '管理员正忙'
+        for item in pic_list:
+            flag = pic.setPicture(item, Picture.IS_DELEVERED, 1)
+            if flag == False:
+                t['success'] = 'N'
+                t['message'] = '管理员正忙'
+                return JsonResponse(t)
+
+        t['success'] = 'Y'
+        t['message'] = 'ok'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -257,6 +291,7 @@ def withdraw_test(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         id = request.POST.get('id')
+        print 'chehui ', id
         t = {}
         # t['success'] = 'Y'
         t['success'] = 'N'
@@ -287,11 +322,28 @@ def add_test(request):
         year = request.POST.get('year')
         place = request.POST.get('place')
         subject = request.POST.get('subject')
-        # 以上三个参数都是序号
+        # dict = {
+        #     Picture.YEAR : find_item_index_in_list(int(year), YEAR_LIST),
+        #     Picture.PROVINCE: find_item_index_in_list(place, SHITI_LIST),
+        #     Picture.subject: find_item_index_in_list(subject, SUBJECT_LIST),
+        #     Picture.isTitle: 1,
+        # }
+        dict = {
+            Picture.YEAR : int(year),
+            Picture.PROVINCE: int(place),
+            Picture.SUBJECT: int(subject),
+            Picture.IS_TITLE: 1,
+        }
+
+        flag = pic.createPicturebyDict(dict)
         t = {}
-        # t['success'] = 'Y'
-        t['success'] = 'N'
-        t['message'] = '管理员正忙'
+        if flag:
+            t['success'] = 'Y'
+            t['message'] = 'ok'
+        else:
+            t['success'] = 'N'
+            t['message'] = '管理员正忙'
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -302,10 +354,14 @@ def get_test_yearlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        t.append({'num': '0', 'str': '2017'})
-        t.append({'num': '1', 'str': '2018'})
-        t.append({'num': '2', 'str': '2019'})
-        t.append({'num': '3', 'str': '2020'})
+        # t.append({'num': '0', 'str': '2017'})
+        # t.append({'num': '1', 'str': '2018'})
+        # t.append({'num': '2', 'str': '2019'})
+        # t.append({'num': '3', 'str': '2020'})
+        year_len = len(YEAR_LIST)
+        for i in range(0, year_len):
+            t.append({'num': str(i), 'str': str(YEAR_LIST[i])})
+
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
@@ -316,10 +372,13 @@ def get_test_placelist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        t.append({'num': '0', 'str': '北京卷'})
-        t.append({'num': '1', 'str': '海南卷'})
-        t.append({'num': '2', 'str': '上海卷'})
-        t.append({'num': '3', 'str': '全国I卷'})
+        # t.append({'num': '0', 'str': '北京卷'})
+        # t.append({'num': '1', 'str': '海南卷'})
+        # t.append({'num': '2', 'str': '上海卷'})
+        # t.append({'num': '3', 'str': '全国I卷'})
+        yiti_len = len(SHITI_LIST)
+        for i in range(0, yiti_len):
+            t.append({'num': str(i), 'str': str(SHITI_LIST[i])})
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
@@ -330,10 +389,13 @@ def get_test_subjectlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        t.append({'num': '0', 'str': '语文'})
-        t.append({'num': '1', 'str': '数学'})
-        t.append({'num': '2', 'str': '英语'})
-        t.append({'num': '3', 'str': '理科综合'})
+        # t.append({'num': '0', 'str': '语文'})
+        # t.append({'num': '1', 'str': '数学'})
+        # t.append({'num': '2', 'str': '英语'})
+        # t.append({'num': '3', 'str': '理科综合'})
+        kemu_len = len(SUBJECT_LIST)
+        for i in range(0, kemu_len):
+            t.append({'num': str(i), 'str': str(SUBJECT_LIST[i])})
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
