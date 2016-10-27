@@ -82,7 +82,7 @@ class Student(models.Model):
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
-    estimateScore = models.IntegerField(default=-1, blank=True)
+    estimateScore = models.CharField(max_length=2000, default='', blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
     admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
@@ -192,7 +192,7 @@ class Volunteer(models.Model):
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
-    estimateScore = models.IntegerField(default=-1, blank=True)
+    estimateScore = models.CharField(max_length=2000, default='', blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
     admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
@@ -295,7 +295,7 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    ID = 'id'
+
 
     year = models.IntegerField(default=0, blank=True) #年份
     province = models.IntegerField(default=0, blank=True) #省份
@@ -304,6 +304,11 @@ class Picture(models.Model):
     score = models.IntegerField(default=0, blank=True) #得分
     category = models.IntegerField(default=0, blank=True) #主观客观
 
+    isTitle = models.IntegerField(default=0, blank=True) #是否是纯标题
+    isDelivered = models.IntegerField(default=0, blank=True) #是否发布
+
+    ID = 'id'
+
     YEAR = 'year'
     PROVINCE = 'province'
     SUBJECT = 'subject'
@@ -311,5 +316,8 @@ class Picture(models.Model):
     SCORE = 'score'
     CATEGORY = 'category'
 
-    FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY]
+    IS_TITLE = 'isTitle'
+    IS_DELEVERED = 'isDelivered'
+
+    FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY, IS_TITLE, IS_DELEVERED]
 

@@ -9,9 +9,15 @@ from django.core.exceptions import ValidationError
 def getAllInRegisterCode():
     return RegisterCode.objects.all()
 
+def removeRegisterCode(_account):
+    getAllInRegisterCode().filter(registerCode=_account).delete()
 
 def deleteRegisterCodeAll():
     getAllInRegisterCode().delete()
+
+
+def getRegisterCodebydic(dic):
+    return RegisterCode.objects.filter(**dic)
 
 def getRegisterCodebyField(field, argc):
     '''
@@ -24,16 +30,16 @@ def getRegisterCodebyField(field, argc):
 
 def setRegisterCode(code, field, value):
     try:
-        if isExistRegisterCode(code):
-            return False
         if (field in RegisterCode.FIELD_LIST) == False:
+            print 'are not'
             return False
         if field == RegisterCode.REGISTER_CODE:
             print 'can not modify code'
             return False
+        print 'start set'
         register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)
         setattr(register, field, value)
-        register.full_clean()
+        # register.full_clean()
         register.save()
         return True
     except:
