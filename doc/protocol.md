@@ -528,6 +528,29 @@
 		<td>段清楠</td>
 		<td>h</td>
 	</tr>
+	
+	<tr>
+		<td>list_question</td>
+		<td>获得一套测试中的所有题目</td>
+		<td>database/views.py</td>
+		<td>request(.POST['id']:测试的ID)</td>
+		<td>JsonResponse [{}, {}, {},...] 键：num, type, maxscore（均为字符串）</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
+	<tr>
+		<td>remove_question</td>
+		<td>删除一道题目，将后面的题号前移</td>
+		<td>database/views.py</td>
+		<td>request(.POST['test_id']:测试的ID .POST['num']:题号)</td>
+		<td>JsonResponse 键：success('Y'/'N'), message</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td>h</td>
+	</tr>
+	
 		<tr>
 		<td>profile</td>
 		<td>查看、修改学生的信息</td>
