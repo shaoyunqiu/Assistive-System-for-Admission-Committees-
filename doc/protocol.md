@@ -397,7 +397,7 @@
 		<tr>
 		<td>register</td>
 		<td>注册学生用户,注册成功后，给邮件发送欢迎的消息(这部分已实现)</td>
-		<td>student/views.py</td>
+		<td> login/views.py</td>
 		<td>request.POST username = request.POST.get('username')用户名
     password = request.POST.get('password')密码
     email = request.POST.get('email')邮箱
@@ -528,7 +528,56 @@
 		<td>段清楠</td>
 		<td>h</td>
 	</tr>
-	
+		<tr>
+		<td>profile</td>
+		<td>查看、修改学生的信息</td>
+		<td>student/views.py</td>
+		<td>request</td>
+		<td>类型：JsonResponse(dict)  dict = {
+        'name': 'name',
+        'identification': 'identification',
+        'sex': 'sex',
+        'nation': 'nation',
+        'birth': 'birth',
+        'province': 'province',
+        'phone': 'phone',
+        'email': 'email',
+        'wenli': 'wenli',
+        'address': 'address',
+        'dadName': 'dadName',
+        'dadPhone': 'dadPhone',
+        'momName': 'momName',
+        'momPhone': 'momPhone',
+        'school': 'school',
+        'stu_class': 'stu_class',
+        'tutorName': 'tutorName',
+        'tutorPhone': 'tutorPhone',
+        'majorSelect1': 'majorSelect1',
+        'majorSelect2': 'majorSelect2',
+        'majorSelect3': 'majorSelect3',
+        'majorSelect4': 'majorSelect4',
+        'majorSelect5': 'majorSelect5',
+        'majorSelect6': 'majorSelect6',
+        'testScore1': 'testScore1',
+        'testScore2': 'testScore2',
+        'testScore3': 'testScore3',
+        'rank1': 'rank1',
+        'rank11': 'rank11',
+        'rank2': 'rank2',
+        'rank22': 'rank22',
+        'rank3': 'rank3',
+        'rank33': 'rank33',
+                        'realScore': 'realScore',
+                          'relTeacher': 'relTeacher',
+                       'comment': 'comment',
+        'estimateScore': 'estimateScore',
+        'estimateRank': 'estimateRank',
+    }
+                GET直接返回字典 POST返回JSON</td>
+		<td>GET/POST</td>
+		<td>白云仁</td>
+		<td></td>
+	</tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
