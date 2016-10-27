@@ -39,8 +39,16 @@ def getPicturebyField(field, argc):
 
 
 def getPicturebyDict(dic):
+    '''
+    如果在这里有关于isTitle的字段就返回所有isTitile==1的
+    :param dic:
+    :return:
+    '''
     if Picture.IS_TITLE in dic.keys():
         dic[Picture.IS_TITLE] = 1
+    else:
+        dic[Picture.IS_TITLE] = 0
+
     return Picture.objects.filter(**dic)
 
 
@@ -69,6 +77,23 @@ def createPicturebyDict(dict):
     print 'successfully create account'
     return True
 
+
+def setPicture(picture, field, value):
+    '''
+    设置某个账户某个字段的值
+    :param account:账户
+    :param field:字段
+    :return:字段对应的值
+    '''
+    try:
+        setattr(picture, field, value)
+        picture.full_clean()
+        picture.save()
+        return True
+    except:
+        print "-------------------------------"
+        print "can not saved!!"
+        return False
 
 
 
