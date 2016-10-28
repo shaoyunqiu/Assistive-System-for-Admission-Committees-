@@ -4,6 +4,7 @@ from models import *
 import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
+import backend as back
 
 
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
@@ -224,3 +225,30 @@ def checkStudentPassword(_account,_password):
     # 密码不正确
     return (True, str(getStudent(_account,'id')))
     #hash function should be applied here
+
+# def getStudentGroupIDList(student):
+#     stu_id = 0
+#     try:
+#         stu_id = getattr(student, Student.ID)
+#     except:
+#         stu_id = 1
+#
+#     group_all_list = back.getGroupbyDict({})
+#     id_list = []
+#     for group in group_all_list:
+#         stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+#         if str(stu_id) in
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -95,6 +95,7 @@ def getGroupAllDictByObject(group):
     dict = {}
     for item in Group.FIELD_LIST:
         try:
+            # print 'ri ', getattr(group, item)
             dict[item] = getattr(group, item)
         except:
 

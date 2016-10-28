@@ -354,14 +354,16 @@ class Notice(models.Model):
 
 
 class Group(models.Model):
+    name = models.CharField(max_length=500, default='', blank=True)
     vol_list = models.CharField(max_length=500, default='', blank=True)
     stu_list = models.CharField(max_length=500, default='', blank=True)
 
     ID = 'id'
+    NAME = 'name'
     VOL_LIST = 'vol_list'
     STU_LIST = 'stu_list'
 
-    FIELD_LIST = [ID, VOL_LIST, STU_LIST]
+    FIELD_LIST = [ID, NAME, VOL_LIST, STU_LIST]
 
     def __unicode__(self):
         import sys
