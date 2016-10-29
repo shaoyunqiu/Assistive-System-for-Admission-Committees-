@@ -471,7 +471,7 @@
 		<td>JsonResponse 键：success('Y'/'N'), message</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -482,7 +482,7 @@
 		<td>JsonResponse 键：success('Y'/'N'), message</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -537,7 +537,7 @@
 		<td>JsonResponse [{}, {}, {},...] 键：num, type, maxscore（均为字符串）</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
