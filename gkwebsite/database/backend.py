@@ -52,8 +52,7 @@ def getNoticeAllDictByObject(notice):
             return None
     return dict
 
-#------------------------------------------------------------------------------------------------
-
+# ------------------------------------------------------------------------------------------------
 def createGroupbyDict(dict):
     try:
         group = Group.objects.model()
