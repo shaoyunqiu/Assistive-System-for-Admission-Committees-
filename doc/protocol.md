@@ -449,7 +449,7 @@
 		<td>JsonResponse 键：year, place, subject, id, released('Y'/'N')</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -460,7 +460,7 @@
 		<td>JsonResponse 键：success('Y'/'N'), message</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -493,7 +493,7 @@
 		<td>JsonResponse 键：success('Y'/'N'), message</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
