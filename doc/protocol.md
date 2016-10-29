@@ -227,7 +227,7 @@
                 GET直接返回字典 POST返回JSON</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
-	 <td>   尚未完成 前端传过来的信息不全   </td>
+	 <td>   finished   </td>
 	 </tr>
 	<tr>
 	<td>volunteer_info</td>
@@ -279,7 +279,7 @@
 		<td>HttpResponse</td>
 		<td>GET</td>
 		<td>侯禺凡</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 
 	 </tr>
@@ -342,7 +342,7 @@
         dict = [team, team1, team2, team3]</td>
 		<td>GET</td>
 		<td>白云仁</td>
-		<td>finished,but byr need to fix bug</td>
+		<td>finished</td>
 	</tr>
 
 	<tr>
@@ -359,7 +359,7 @@
 		<td>JsonResponse(dict) dict = {'result':''}</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 	<tr>
 		<td>export_registration_code</td>
@@ -369,7 +369,7 @@
 		<td>JsonResponse(dict) dict = {'filename':}</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 	<tr>
 		<td>get_teacher_alert_by_id</td>
@@ -390,7 +390,7 @@
 		<td>JsonResponse({'tests',[【testname1】,【testname2】,...]})</td>
 		<td>GET</td>
 		<td>侯禺凡</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	
@@ -405,7 +405,7 @@
 		<td>JsonResponse({'result': ''})</td>
 		<td>POST</td>
 		<td>白云仁</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 
 	<tr>
@@ -416,7 +416,7 @@
 		<td>JsonResponse({'problem_list': []})</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 
 	<tr>
@@ -427,7 +427,7 @@
 		<td>JsonResponse({'problem_info': dic})</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 
 	<tr>
@@ -438,7 +438,7 @@
 		<td>JsonResponse({})（空JSON）</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -504,7 +504,7 @@
 		<td>JsonResponse [{}, {}, {},...] </td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -515,7 +515,7 @@
 		<td>JsonResponse [{}, {}, {},...] </td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -526,7 +526,7 @@
 		<td>JsonResponse [{}, {}, {},...] </td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -599,7 +599,7 @@
                 GET直接返回字典 POST返回JSON</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 		<tr>
 		<td>a</td>
