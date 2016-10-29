@@ -399,3 +399,74 @@ def get_test_subjectlist(request):
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
+
+def list_question(request):
+    # by dqn14 Oct 27, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        test_id = request.POST.get('id')
+        t = []
+        c = {}
+        c['num'] = '1'
+        c['type'] = '客观题'
+        c['maxscore'] = '6'
+        d = {}
+        d['num'] = '2'
+        d['type'] = '客观题'
+        d['maxscore'] = '3'
+        t.append(c)
+        t.append(d)
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+        
+def remove_question(request):
+    # by dqn14 Oct 27, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        test_id = request.POST.get('test_id')
+        num = request.POST.get('num')
+        t = {}
+        t['success']='N'
+        t['message']='管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def get_next_question_num(request):
+    # by dqn14 Oct 27, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        test_id = request.POST.get('test_id')
+        t = {'num':'4'}
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def move_question_up(request):
+    # by dqn14 Oct 27, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        test_id = request.POST.get('test_id')
+        num = request.POST.get('num')
+        # Caution: please check the boundary
+        t = {}
+        t['success']='N'
+        t['message']='管理员正忙，没空上移'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def move_question_down(request):
+    # by dqn14 Oct 27, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        test_id = request.POST.get('test_id')
+        num = request.POST.get('num')
+        # Caution: please check the boundary
+        t = {}
+        t['success']='N'
+        t['message']='管理员正忙，没空下移'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
