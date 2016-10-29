@@ -95,6 +95,8 @@ class Student(models.Model):
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     qq = models.CharField(max_length=50, default='', blank=True)
+    dadName = models.CharField(max_length=50, default='', blank=True)
+    momName = models.CharField(max_length=50, default='', blank=True)
 
     ID = 'id'
 
@@ -140,6 +142,9 @@ class Student(models.Model):
     FIXED_PHONE = 'fixedPhone'
     QQ = 'qq'
 
+    DAD_NAME = 'dadName'
+    MOM_NAME = 'momName'
+
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -148,7 +153,8 @@ class Student(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ]
+                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
+                  DAD_NAME, MOM_NAME]
 
     def __unicode__(self):
         import sys

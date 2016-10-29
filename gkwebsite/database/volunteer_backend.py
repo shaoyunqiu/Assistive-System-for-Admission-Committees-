@@ -4,7 +4,7 @@ from models import *
 import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
-
+import backend as back
 
 MIN_LEN_FOR_LIST = 10
 
@@ -216,6 +216,20 @@ def checkVolunteerPassword(_account,_password):
     if _password != getVolunteer(_account, Volunteer.PASSWORD): # 密码不正确
         return (False , 'Password is incorrect')
     return (True, str(getVolunteer(_account, Volunteer.ID)))
+
+
+def getVolunteerGroupIDListString(volunteer):
+    try:
+        vol_id = getattr(volunteer, Volunteer.ID)
+    except:
+        vol_id = 1
+    group_all_list = back.getGroupbyDict({})
+    id_list = []
+    for group in group_all_list:
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if str(vol_id) in vol_list:
+            id_list.append(str(getattr(group, Group.ID)))
+    return ' '.join(id_list)
 
 
 

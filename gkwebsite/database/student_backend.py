@@ -226,18 +226,20 @@ def checkStudentPassword(_account,_password):
     return (True, str(getStudent(_account,'id')))
     #hash function should be applied here
 
-# def getStudentGroupIDList(student):
-#     stu_id = 0
-#     try:
-#         stu_id = getattr(student, Student.ID)
-#     except:
-#         stu_id = 1
-#
-#     group_all_list = back.getGroupbyDict({})
-#     id_list = []
-#     for group in group_all_list:
-#         stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
-#         if str(stu_id) in
+def getStudentGroupIDListString(student):
+    stu_id = 0
+    try:
+        stu_id = getattr(student, Student.ID)
+    except:
+        stu_id = 1
+
+    group_all_list = back.getGroupbyDict({})
+    id_list = []
+    for group in group_all_list:
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if str(stu_id) in stu_list:
+            id_list.append(str(getattr(group, Group.ID)))
+    return ' '.join(id_list)
 
 
 
