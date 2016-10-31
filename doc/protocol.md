@@ -634,6 +634,22 @@
 		<td>白云仁</td>
 		<td></td>
 	</tr>
+			<tr>
+		<td>student_contact</td>
+		<td>学生查看老师的信息</td>
+		<td>student/views.py</td>
+		<td>request</td>
+		<td>list = []
+    dict1 = {'name':'李三胖','phone':'123','email':'@1','address':'包头'}
+    list.append(dict1)
+    list.append(dict1)
+                GET直接返录取信息回</td>
+		<td>GET</td>
+		<td>白云仁</td>
+		<td></td>
+	</tr>
+	
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
