@@ -385,7 +385,34 @@ class Group(models.Model):
         return ret
 
 
+class Timer(models.Model):
 
+    teacher_id = models.IntegerField(default=0, blank=True)
+    name = models.CharField(max_length=50, default='', blank=True)
+    start_time = models.CharField(max_length=100, default='', blank=True)
+    end_time = models.CharField(max_length=100, default='', blank=True)
+    volunteer_dic = models.CharField(max_length=1000, default='{}', blank=True)
+
+    ID = 'id'
+
+    TEACHER_ID = 'teacher_id'
+    NAME = 'name'
+    START_TIME = 'start_time'
+    END_TIME = 'end_time'
+    VOLUNTEER_DIC = 'volunteer_dic'
+
+    FIELD_LIST = [ID, TEACHER_ID, NAME, START_TIME, END_TIME,
+                  VOLUNTEER_DIC]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Timer._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
 
 
 
