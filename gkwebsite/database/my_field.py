@@ -6,6 +6,7 @@ from django.db import models
 import ast
 import xlwt
 import os
+from models import *
 
 from django.http import HttpResponse
 
@@ -118,3 +119,31 @@ def generateExcel(request,id, path, filename, sheet, list, _titleList):
     if os.path.exists(filename):
         os.remove(filename)
     outputXLS(path, filename, sheet, list, _titleList)
+
+
+def getStudentEstimateScore(student):
+    tmp_dic = getattr(student, 'estimate', '{}')
+    try:
+        tmp_dic = eval(tmp_dic)
+    except:
+        tmp_dic = eval('{}')
+    sum_score = 0
+    for key in tmp_dic.keys():
+        if 'shenhe' in tmp_dic[key].keys():
+            sum_score += tmp_dic[key]['score']
+    return str(sum_score)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
