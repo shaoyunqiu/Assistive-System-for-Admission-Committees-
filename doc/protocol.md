@@ -601,6 +601,28 @@
 		<td>白云仁</td>
 		<td>finish</td>
 	</tr>
+	
+			<tr>
+		<td>checkscore</td>
+		<td>估分审核</td>
+		<td>teacher/views.py</td>
+		<td>request</td>
+		<td>list = []
+    dict = {'name':'李三胖',
+            'sex': '女',
+            'province': '内蒙古',
+            'school': '北重军校三中',
+            'ident': '12345678901234X231154',
+            'testname': '内蒙包头二卷2013英语',
+            'time': '2分钟',
+    }
+    list[dict1,dict2,...]
+                GET直接返回列表 列表中是字典</td>
+		<td>GET</td>
+		<td>白云仁</td>
+		<td></td>
+	</tr>
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
