@@ -681,6 +681,17 @@
 		<td>侯禺凡</td>
 		<td></td>
 	</tr>
+	
+	<tr>
+		<td>get_next_question_num</td>
+		<td>获取测试下一题题号</td>
+		<td>database/views.py</td>
+		<td>request(.POST['test_id']:测试的ID)</td>
+		<td>JsonResponse 键：num 下一题题号</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
 
 		<tr>
 		<td>a</td>
