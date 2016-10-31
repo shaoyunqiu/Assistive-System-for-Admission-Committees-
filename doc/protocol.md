@@ -623,6 +623,17 @@
 		<td></td>
 	</tr>
 	
+				<tr>
+		<td>student_admit</td>
+		<td>学生查看自己录取信息</td>
+		<td>student/views.py</td>
+		<td>request</td>
+		<td>admition = '李三胖同学，你已被朝鲜大学成功录取'
+                GET直接返录取信息回</td>
+		<td>GET</td>
+		<td>白云仁</td>
+		<td></td>
+	</tr>
 		<tr>
 		<td>a</td>
 		<td>b</td>
