@@ -649,7 +649,39 @@
 		<td></td>
 	</tr>
 	
-	
+	<tr>
+		<td>get_all_activity</td>
+		<td>获取该志愿者可填的所有时间问卷信息</td>
+		<td>volunteer/views.py</td>
+		<td>request，session里有志愿者id可供使用</td>
+		<td>dic = {'activity' : [{'name':'第一次组会','proposer':'李三胖','state':'未写','activity_id':'12'},...]}</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>	
+
+	<tr>
+		<td>get_activity_time</td>
+		<td>获取某个问卷含有的全部可选时间</td>
+		<td>volunteer/views.py</td>
+		<td>request，session里有志愿者id可供使用，request.POST.get('activity_id')是问卷id</td>
+		<td>dic = {'time': ['2016/9/1','2016/9/2','2016/9/3',...]}</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>	
+
+	<tr>
+		<td>submit_time</td>
+		<td>提交问卷填写结果</td>
+		<td>volunteer/views.py</td>
+		<td>request，session里有志愿者id可供使用，request.POST.get('activity_id')是问卷id，time_list = request.POST.get('time_list').split(',')是志愿者有空的时段列表</td>
+		<td>提交成功则返回JsonResponse({'success': 'true'})</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+
 		<tr>
 		<td>a</td>
 		<td>b</td>
