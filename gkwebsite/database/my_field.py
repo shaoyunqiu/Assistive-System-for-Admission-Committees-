@@ -122,7 +122,7 @@ def generateExcel(request,id, path, filename, sheet, list, _titleList):
 
 
 def getStudentEstimateScore(student):
-    tmp_dic = getattr(student, Student.ESTIMATE_SCORE, '{}')
+    tmp_dic = getattr(student, 'estimate', '{}')
     try:
         tmp_dic = eval(tmp_dic)
     except:
