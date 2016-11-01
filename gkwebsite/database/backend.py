@@ -162,8 +162,28 @@ def removeTimerByDic(dic):
 def generateTimerXLS(id, filename, sheet, _list, _titleList):
     day_list = [] #横向
     vol_list = [] #纵向
+    for day in day_list:
+        this_day_list = []
+        for volunteer in vol_list:
+            
 
     pass
+
+def date_start_to_end(start, end):
+    if start > end:
+        print 'time error'
+        return None
+    date_list = []
+    while True:
+        date_list.append(start.strftime("%Y-%m-%d"))
+        start = start + datetime.timedelta(days=1)
+        if start > end:
+            break
+    valid_list = []
+    for item in date_list:
+        valid_list.append('1')
+    return (date_list, valid_list)
+
 
 
 

@@ -7,6 +7,7 @@ import ast
 import xlwt
 import os
 from models import *
+import student_backend as stu
 
 from django.http import HttpResponse
 
@@ -133,6 +134,25 @@ def getStudentEstimateScore(student):
             sum_score += tmp_dic[key]['score']
     return str(sum_score)
 
+def getStudentEstimateRank(student):
+    score = int(getStudentEstimateScore(student))
+    if score == 0:
+        return 'You do not have score!'
+    all_student_estimate_score = [999999]
+    student_list = stu.getAllInStudent()
+    for item in student_list:
+        all_student_estimate_score.append(getStudentEstimateScore(item))
+
+    rank = 1
+    ranked_score_list = sorted(all_student_estimate_score, reverse=True)
+
+    length = len(ranked_score_list)
+    for i in range(0, length):
+        if score >= ranked_score_list[i]:
+            rank = i
+            break
+
+    return str(rank)
 
 
 
