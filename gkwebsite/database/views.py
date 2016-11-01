@@ -139,7 +139,7 @@ def volunteer_list_all(request):
     if request.is_ajax() and request.method == 'POST':
         t = []
         vol_list = vol.getAllInVolunteer()
-        print vol_list, '***********'
+        # print vol_list, '***********'
         for item in vol_list:
             account = getattr(item, Volunteer.ACCOUNT)
             vol_dic = vol.getVolunteerAllDictByAccount(account)
@@ -152,7 +152,7 @@ def volunteer_list_all(request):
             # 没注册的志愿者不显示出来
             if dic['name'] != '':
                 t.append(dic)
-        print t
+        # print t
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
