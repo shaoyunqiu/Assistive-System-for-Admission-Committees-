@@ -13,8 +13,8 @@ def deletePictureAll():
     getAllInPicture().delete()
 
 
-def removePictureID(account):
-    getAllInPicture().filter(account=account).delete()
+def removePictureIDByDic(dic):
+    getAllInPicture().filter(**dic).delete()
 
 
 def getPictureAllDictByObject(picture):

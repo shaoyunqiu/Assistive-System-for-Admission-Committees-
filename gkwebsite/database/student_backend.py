@@ -125,10 +125,6 @@ def getStudentAllDictByAccount(account):
         dict[Volunteer.MAJOR].append({'department': numitem,
                                       'departmentlist': MAJOR_LIST})
 
-    # dict[Student.ADMISSION_STATUS] = {
-    #     'admissionstatus': dict[Student.ADMISSION_STATUS],
-    #     'admissionstatuslist': ADMISSION_STATUS_LIST
-    # }
     return dict
 
 
@@ -259,6 +255,8 @@ def setStudentGroupbyList(student, id_list):
 
     for new_id in id_list:
         new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
         if stu_id in stu_list:
