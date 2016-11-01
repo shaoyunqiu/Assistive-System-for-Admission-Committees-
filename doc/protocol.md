@@ -657,7 +657,7 @@
 		<td>dic = {'activity' : [{'name':'第一次组会','proposer':'李三胖','state':'未写','activity_id':'12'},...]}</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>finish</td>
 	</tr>	
 
 	<tr>
@@ -668,7 +668,7 @@
 		<td>dic = {'time': ['2016/9/1','2016/9/2','2016/9/3',...]}</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>finish</td>
 	</tr>	
 
 	<tr>
@@ -679,7 +679,7 @@
 		<td>提交成功则返回JsonResponse({'success': 'true'})</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
