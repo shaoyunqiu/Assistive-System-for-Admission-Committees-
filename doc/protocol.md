@@ -599,7 +599,7 @@
                 GET直接返回字典 POST返回JSON</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
-		<td>finish</td>
+		<td></td>
 	</tr>
 	
 			<tr>
@@ -632,7 +632,7 @@
                 GET直接返录取信息回</td>
 		<td>GET</td>
 		<td>白云仁</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 			<tr>
 		<td>student_contact</td>
@@ -646,7 +646,7 @@
                 GET直接返录取信息回</td>
 		<td>GET</td>
 		<td>白云仁</td>
-		<td></td>
+		<td> finish</td>
 	</tr>
 	
 	<tr>
