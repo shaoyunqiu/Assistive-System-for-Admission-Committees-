@@ -176,13 +176,13 @@ def date_start_to_end(start, end):
         return None
     date_list = []
     while True:
-        date_list.append(start.strftime("%Y-%m-%d"))
+        date_list.append(start.strftime("%Y/%m/%d"))
         start = start + datetime.timedelta(days=1)
         if start > end:
             break
     valid_list = []
     for item in date_list:
-        valid_list.append('1')
+        valid_list.append('0')
     return (date_list, valid_list)
 
 
