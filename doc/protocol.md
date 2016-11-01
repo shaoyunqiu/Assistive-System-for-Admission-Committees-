@@ -50,12 +50,12 @@
 		<td>查看、修改教师的信息</td>
 		<td>teacher/views.py</td>
 		<td>request</td>
-		<td>类型：JsonResponse(dict)  dict = {'teacher_name': '', 'email': '', 'work_address': '', 'home_address': '', 'postcode': '',
-                'homephone': '', 'phone': '', 'qqn': '', 'weichat': '', 'describe': '', }
-                GET直接返回字典 POST返回JSON</td>
+		<td>类型：JsonResponse(dict)  dict = {'teacher_name': '', 'email': '', 'work_address': '', 'phone': '', , 'describe': '', }
+				POST返回['success']='Y'/'N' 如果='N'则有['message']描述错误信息
+                GET直接返回字典 POST返回JSON 特别说明：禁止后端向前端传送密码！</td>
 		<td>GET/POST</td>
-		<td>白云仁</td>
-		<td>李昊阳完成，目前有些信息比如邮编等尚未加入数据库，故暂时不能get和set，是否保留此字段后续讨论</td>
+		<td>白云仁、段清楠</td>
+		<td>ALERT! 李昊阳完成了白云仁的需求，现在段清楠更改了接口</td>
 	</tr>
 	
 	<tr>
