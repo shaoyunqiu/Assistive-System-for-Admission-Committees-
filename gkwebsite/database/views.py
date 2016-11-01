@@ -475,7 +475,7 @@ def get_next_question_num(request):
             if i not in num_list:
                 num = i
                 break
-        t = {'num':num}
+        t = {'num': num}
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
