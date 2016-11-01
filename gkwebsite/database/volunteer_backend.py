@@ -248,6 +248,8 @@ def setVolunteerGroupbyList(volunteer, id_list):
 
     for new_id in id_list:
         new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
         if vol_id in vol_list:
