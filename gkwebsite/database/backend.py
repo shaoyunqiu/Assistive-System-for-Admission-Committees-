@@ -48,7 +48,6 @@ def getNoticeAllDictByObject(notice):
         try:
             dict[item] = getattr(notice, item)
         except:
-
             return None
     return dict
 
@@ -87,6 +86,8 @@ def setGroup(group, field, value):
 
 
 def getGroupbyDict(dic):
+    if len(dic.keys()) <= 0:
+        return Group.objects.all()
     return Group.objects.filter(**dic)
 
 
@@ -159,15 +160,15 @@ def getTimerAllDictByObject(timer):
 def removeTimerByDic(dic):
     Timer.objects.all().filter(**dic).delete()
 
-def generateTimerXLS(id, filename, sheet, _list, _titleList):
-    day_list = [] #横向
-    vol_list = [] #纵向
-    for day in day_list:
-        this_day_list = []
-        for volunteer in vol_list:
-            
-
-    pass
+# def generateTimerXLS(id, filename, sheet, _list, _titleList):
+#     day_list = [] #横向
+#     vol_list = [] #纵向
+#     for day in day_list:
+#         this_day_list = []
+#         for volunteer in vol_list:
+#
+#
+#     pass
 
 def date_start_to_end(start, end):
     if start > end:
