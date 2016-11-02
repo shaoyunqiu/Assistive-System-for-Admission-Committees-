@@ -286,3 +286,5 @@ class Testcheckstudentpassword(TestCase):
 
     def test_checkpassword_ok(self):
         self.assertEqual(checkStudentPassword("test_stu_1", "mima"), (True, "1"))
+
+
