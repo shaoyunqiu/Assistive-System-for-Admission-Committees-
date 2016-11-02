@@ -24,7 +24,6 @@ def createData():
     testCreateVolunteerNew()
     testCreateStudentNew()
 
-
 # Create your tests here.
 
 def startTest():
