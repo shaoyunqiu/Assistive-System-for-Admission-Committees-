@@ -61,3 +61,27 @@ class TestRemoveStudentAccount(TestCase):
     def test_delete_illegal_student(self):
         removeStudentAccount("test_stu_2")
         self.assertEqual(len(Student.objects.filter(account="test_stu_2")), 0)
+
+
+class TestgetordeleteAllStudent(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        stu2.full_clean()
+        stu2.save()
+
+    def test_getAllStudent(self):
+        self.assertEqual(len(getAllInStudent()), 2)
+
+    def test_deleteStudentAll(self):
+        deleteStudentAll()
+        self.assertEqual(len(Student.objects.filter(account="test_stu_1")), 0)
+        self.assertEqual(len(Student.objects.filter(account="test_stu_2")), 0)
+
+    def test_getAllStudent_after_delete(self):
+        deleteStudentAll()
+        self.assertEqual(len(getAllInStudent()), 0)
