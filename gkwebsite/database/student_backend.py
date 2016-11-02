@@ -59,10 +59,15 @@ def getStudentbyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
-    :return:返回一个student对象
+    :return:返回一个student对象列表
+    modified by shao 2016/11/2
     '''
-    dic = {field: argc}
-    return Student.objects.filter(**dic)
+    if(checkField(field) == True):
+        dic = {field: argc}
+        return Student.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):

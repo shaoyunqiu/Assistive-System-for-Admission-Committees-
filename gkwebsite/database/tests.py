@@ -120,3 +120,39 @@ class TestCheckField(TestCase):
     def test_nonexist_field(self):
         self.assertEqual(checkField('nickname'), False)
 
+
+class TestgetStudentByField(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.REAL_NAME, "lihy1")
+        setattr(stu1, Student.PROVINCE, 1)
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        setattr(stu2, Student.REAL_NAME, "lihy2")
+        stu2.full_clean()
+        stu2.save()
+        stu3 = Student.objects.model()
+        setattr(stu3, Student.ACCOUNT, "test_stu_3")
+        setattr(stu3, Student.REAL_NAME, "lihy3")
+        setattr(stu3, Student.PROVINCE, 1)
+        stu3.full_clean()
+        stu3.save()
+
+    def test_getstudentbyfield_unique(self):
+        self.assertEqual(len(getStudentbyField("account", "test_stu_1")), 1)
+        self.assertEqual(len(getStudentbyField("realName", "lihy1")), 1)
+
+    def test_getstudentbyfield_many(self):
+        self.assertEqual(len(getStudentbyField("province", 1)), 2)
+
+    def test_getstudentbyfield_noexist_value(self):
+        self.assertEqual(len(getStudentbyField("account","lsp")), 0)
+
+    def test_getstudentbyfield_illegal_field(self):
+        self.assertEqual(len(getStudentbyField("trick", "hhh")), 0)
+
+
+
