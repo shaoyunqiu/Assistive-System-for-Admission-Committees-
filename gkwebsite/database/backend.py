@@ -48,7 +48,6 @@ def getNoticeAllDictByObject(notice):
         try:
             dict[item] = getattr(notice, item)
         except:
-
             return None
     return dict
 
@@ -87,6 +86,8 @@ def setGroup(group, field, value):
 
 
 def getGroupbyDict(dic):
+    if len(dic.keys()) <= 0:
+        return Group.objects.all()
     return Group.objects.filter(**dic)
 
 
@@ -159,11 +160,35 @@ def getTimerAllDictByObject(timer):
 def removeTimerByDic(dic):
     Timer.objects.all().filter(**dic).delete()
 
-def generateTimerXLS(id, filename, sheet, _list, _titleList):
-    day_list = [] #横向
-    vol_list = [] #纵向
 
-    pass
+
+def date_start_to_end(start, end):
+    if start > end:
+        print 'time error'
+        return None
+    date_list = []
+    while True:
+        date_list.append(start.strftime("%Y/%m/%d"))
+        start = start + datetime.timedelta(days=1)
+        if start > end:
+            break
+    valid_list = []
+    for item in date_list:
+        valid_list.append('0')
+    return (date_list, valid_list)
+
+
+def check_volunteerID_date(timer_id, vol_id, date):
+    timer = getTimerbyDict({Timer.ID:int(timer_id)})[0]
+    info_dic = getTimerAllDictByObject(timer)
+    vol_dic = info_dic[Timer.VOLUNTEER_DIC]
+    if date < info_dic[Timer.START_TIME] or date > info_dic[Timer.END_TIME]:
+        return False
+    delta_day = int((date - info_dic[Timer.START_TIME]).days)
+    if str(vol_id) in vol_dic.keys():
+        if vol_dic[str(vol_id)][delta_day] == '1':
+            return True
+    return False
 
 
 

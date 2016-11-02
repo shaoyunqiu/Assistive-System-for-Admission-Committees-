@@ -454,7 +454,28 @@ def get_next_question_num(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         test_id = request.POST.get('test_id')
-        t = {'num':'4'}
+        info = test_id
+        info_list = info.split('_')
+        print info_list
+        year = int(info_list[0]) - YEAR_LIST[1] + 1
+        province = find_item_index_in_list(info_list[1], PROVINCE_LIST)
+        subject = find_item_index_in_list(info_list[2], SUBJECT_LIST)
+        dict = {
+            Picture.YEAR: year,
+            Picture.PROVINCE: province,
+            Picture.SUBJECT: subject,
+        }
+        pic_list = pic.getPicturebyDict(dict)
+        num_list = []
+        for picture in pic_list:
+            info_dic = pic.getPictureAllDictByObject(picture)
+            num_list.append(info_dic[Picture.NUMBER])
+        num = 1
+        for i in range(1, 99999):
+            if i not in num_list:
+                num = i
+                break
+        t = {'num': num}
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

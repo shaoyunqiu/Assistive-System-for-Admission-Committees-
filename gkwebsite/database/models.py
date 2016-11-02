@@ -389,8 +389,8 @@ class Timer(models.Model):
 
     teacher_id = models.IntegerField(default=0, blank=True)
     name = models.CharField(max_length=50, default='', blank=True)
-    start_time = models.CharField(max_length=100, default='', blank=True)
-    end_time = models.CharField(max_length=100, default='', blank=True)
+    start_time = models.DateField(default=datetime.date.today, blank=True)
+    end_time = models.DateField(default=datetime.date.today, blank=True)
     volunteer_dic = models.CharField(max_length=1000, default='{}', blank=True)
 
     ID = 'id'
