@@ -516,15 +516,15 @@ def add_activity(request):
         name = request.POST.get('name')
         date_begin = request.POST.get('date_begin')
         date_end = request.POST.get('date_end')
-
-
+        teacher_id = request.POST.get('teacher_id')
         print name, date_begin, date_end
         try:
             begin_list = date_begin.split('-')
             end_list = date_end.split('-')
             back.createTimerbyDict({Timer.NAME:name,
                                     Timer.START_TIME: datetime.date(int(begin_list[0]), int(begin_list[1]), int(begin_list[2])),
-                                    Timer.END_TIME: datetime.date(int(end_list[0]), int(end_list[1]), int(end_list[2]))
+                                    Timer.END_TIME: datetime.date(int(end_list[0]), int(end_list[1]), int(end_list[2])), 
+                                    Timer.TEACHER_ID: int(teacher_id)
                                     })
             t = {}
             t['success']='Y'
