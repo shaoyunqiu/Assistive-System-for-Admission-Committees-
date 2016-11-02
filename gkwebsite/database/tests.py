@@ -45,3 +45,19 @@ class TestAccountToStudentId(TestCase):
 
     def test_not_existing_id(self):
         self.assertEqual(accountToIDStudent("lihy1"), None)
+
+
+class TestRemoveStudentAccount(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        stu1.full_clean()
+        stu1.save()
+
+    def test_delete_legal_student(self):
+        removeStudentAccount("test_stu_1")
+        self.assertEqual(len(Student.objects.filter(account="test_stu_1")), 0)
+
+    def test_delete_illegal_student(self):
+        removeStudentAccount("test_stu_2")
+        self.assertEqual(len(Student.objects.filter(account="test_stu_2")), 0)
