@@ -10,6 +10,7 @@ from back_test import *
 
 setup_test_environment()
 
+
 class TestIdtoAccountStudent(TestCase):
     def setUp(self):
         stu1 = Student.objects.model()
@@ -30,3 +31,17 @@ class TestIdtoAccountStudent(TestCase):
 
     def test_ok_id(self):
         self.assertEqual(idToAccountStudent(1), "test_stu_1")
+
+
+class TestAccountToStudentId(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        stu1.full_clean()
+        stu1.save()
+
+    def test_legal_id(self):
+        self.assertEqual(accountToIDStudent("test_stu_1"), "1")
+
+    def test_not_existing_id(self):
+        self.assertEqual(accountToIDStudent("lihy1"), None)

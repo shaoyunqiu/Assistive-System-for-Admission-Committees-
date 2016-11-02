@@ -43,7 +43,12 @@ def accountToIDStudent(account):
     :param account: string类型的account
     :return: string类型的id
     '''
-    return (str)(getStudent(account, 'id'))
+    # modified by shaoyunqiu 2016/11/2
+    if(getStudent(account, 'id') == None):
+        return None
+    else:
+        return (str)(getStudent(account, 'id'))
+    #return (str)(getStudent(account, 'id'))
 
 
 def removeStudentAccount(_account):
