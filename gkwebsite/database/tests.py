@@ -243,3 +243,29 @@ class Testsetstudent(TestCase):
         self.assertEqual(stu.id, 1)
 
 
+class Testcreatestudent(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.REAL_NAME, "lihy1")
+        setattr(stu1, Student.PROVINCE, 1)
+        stu1.full_clean()
+        stu1.save()
+
+    def test_create_account_exist(self):
+        self.assertEqual(createStudent("test_stu_1",{}), False)
+
+    def test_create_account_change_id(self):
+        self.assertEqual(createStudent("test_2", {Student.ID: 1}), False)
+        self.assertEqual(len(Student.objects.filter(account="test_2")), 0)
+
+    def test_create_account_change_account(self):
+        self.assertEqual(createStudent("test_3", {Student.ACCOUNT: "test0"}), False)
+        self.assertEqual(len(Student.objects.filter(account="test0")), 0)
+        self.assertEqual(len(Student.objects.filter(account="test_3")), 0)
+
+    def test_create_ok(self):
+        self.assertEqual(createStudent("test_4", {Student.REAL_NAME:"lihy"}), True)
+        stu = (Student.objects.filter(account="test_4"))[0]
+        self.assertEqual(stu.realName, "lihy")
+

@@ -188,6 +188,11 @@ def createStudent(account, dict):
         print "account existed"
         return False
 
+    # confirm that accout == dict[Student.ACCOUNT]
+    if dict.has_key(Student.ACCOUNT):
+        if dict[Student.ACCOUNT] != account:
+            print "args conflict"
+            return False
     try:
         student = Student.objects.model()
     except:
