@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^get_next_question_num/$', views.get_next_question_num, name="get_next_question_num"),
     url(r'^move_question_up/$', views.move_question_up, name="move_question_up"),
     url(r'^move_question_down/$', views.move_question_down, name="move_question_down"),
+    url(r'^add_activity/$', views.add_activity, name="add_activity"),
+    url(r'^export_activity_result/$', views.export_activity_result, name="export_activity_result"),
 	]
