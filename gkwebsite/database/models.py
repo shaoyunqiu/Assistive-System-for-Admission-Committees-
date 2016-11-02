@@ -82,7 +82,7 @@ class Student(models.Model):
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
-    estimateScore = models.CharField(max_length=2000, default='', blank=True)
+    estimateScore = models.CharField(max_length=2000, default='{}', blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
     admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
@@ -95,6 +95,10 @@ class Student(models.Model):
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     qq = models.CharField(max_length=50, default='', blank=True)
+    dadName = models.CharField(max_length=50, default='', blank=True)
+    momName = models.CharField(max_length=50, default='', blank=True)
+
+    duiyingTeacher = models.CharField(max_length=500, default='', blank=True)
 
     ID = 'id'
 
@@ -140,6 +144,10 @@ class Student(models.Model):
     FIXED_PHONE = 'fixedPhone'
     QQ = 'qq'
 
+    DAD_NAME = 'dadName'
+    MOM_NAME = 'momName'
+    DUIYING_TEACHER = 'duiyingTeacher'
+
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -148,7 +156,8 @@ class Student(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ]
+                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
+                  DAD_NAME, MOM_NAME, DUIYING_TEACHER]
 
     def __unicode__(self):
         import sys
@@ -320,4 +329,92 @@ class Picture(models.Model):
     IS_DELEVERED = 'isDelivered'
 
     FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY, IS_TITLE, IS_DELEVERED]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Picture._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+class Notice(models.Model):
+    send = models.CharField(max_length=300, default='', blank=True)
+    receive_vol = models.CharField(max_length=500, default='', blank=True)
+    receive_stu = models.CharField(max_length=500, default='', blank=True)
+
+    ID = 'id'
+    SEND = 'send'
+    RECEIVE_VOL = 'receive_vol'
+    RECEIVE_STU = 'receive_stu'
+
+    FIELD_LIST = [ID, SEND, RECEIVE_VOL, RECEIVE_STU]
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Notice._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=500, default='', blank=True)
+    vol_list = models.CharField(max_length=500, default='', blank=True)
+    stu_list = models.CharField(max_length=500, default='', blank=True)
+
+    ID = 'id'
+    NAME = 'name'
+    VOL_LIST = 'vol_list'
+    STU_LIST = 'stu_list'
+
+    FIELD_LIST = [ID, NAME, VOL_LIST, STU_LIST]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Group._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+class Timer(models.Model):
+
+    teacher_id = models.IntegerField(default=0, blank=True)
+    name = models.CharField(max_length=50, default='', blank=True)
+    start_time = models.CharField(max_length=100, default='', blank=True)
+    end_time = models.CharField(max_length=100, default='', blank=True)
+    volunteer_dic = models.CharField(max_length=1000, default='{}', blank=True)
+
+    ID = 'id'
+
+    TEACHER_ID = 'teacher_id'
+    NAME = 'name'
+    START_TIME = 'start_time'
+    END_TIME = 'end_time'
+    VOLUNTEER_DIC = 'volunteer_dic'
+
+    FIELD_LIST = [ID, TEACHER_ID, NAME, START_TIME, END_TIME,
+                  VOLUNTEER_DIC]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Timer._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+
+
 

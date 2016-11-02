@@ -4,7 +4,7 @@ from models import *
 import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
-
+import backend as back
 
 MIN_LEN_FOR_LIST = 10
 
@@ -217,5 +217,46 @@ def checkVolunteerPassword(_account,_password):
         return (False , 'Password is incorrect')
     return (True, str(getVolunteer(_account, Volunteer.ID)))
 
+
+def getVolunteerGroupIDListString(volunteer):
+    try:
+        vol_id = getattr(volunteer, Volunteer.ID)
+    except:
+        vol_id = 1
+    group_all_list = back.getGroupbyDict({})
+    id_list = []
+    for group in group_all_list:
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if str(vol_id) in vol_list:
+            id_list.append(str(getattr(group, Group.ID)))
+    return ' '.join(id_list)
+
+
+def setVolunteerGroupbyList(volunteer, id_list):
+    try:
+        vol_id = str(getattr(volunteer, Volunteer.ID))
+    except:
+        vol_id = str(1)
+
+    group_all_list = back.getGroupbyDict({})
+    for group in group_all_list:
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if vol_id in vol_list:
+            vol_list.remove(vol_id)
+        vol_string = '_'.join(vol_list)
+        back.setGroup(group, Group.VOL_LIST, vol_string)
+
+    for new_id in id_list:
+        new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
+        group = back.getGroupbyDict({Group.ID: new_id})[0]
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if vol_id in vol_list:
+            print 'Big bug!'
+        else:
+            vol_list.append(vol_id)
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+    return True
 
 

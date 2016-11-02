@@ -4,6 +4,7 @@ from models import *
 import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
+import backend as back
 
 
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
@@ -124,10 +125,6 @@ def getStudentAllDictByAccount(account):
         dict[Volunteer.MAJOR].append({'department': numitem,
                                       'departmentlist': MAJOR_LIST})
 
-    # dict[Student.ADMISSION_STATUS] = {
-    #     'admissionstatus': dict[Student.ADMISSION_STATUS],
-    #     'admissionstatuslist': ADMISSION_STATUS_LIST
-    # }
     return dict
 
 
@@ -224,3 +221,61 @@ def checkStudentPassword(_account,_password):
     # 密码不正确
     return (True, str(getStudent(_account,'id')))
     #hash function should be applied here
+
+
+def getStudentGroupIDListString(student):
+    stu_id = 0
+    try:
+        stu_id = getattr(student, Student.ID)
+    except:
+        stu_id = 1
+
+    group_all_list = back.getGroupbyDict({})
+    id_list = []
+    for group in group_all_list:
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if str(stu_id) in stu_list:
+            id_list.append(str(getattr(group, Group.ID)))
+    return ' '.join(id_list)
+
+
+def setStudentGroupbyList(student, id_list):
+    try:
+        stu_id = str(getattr(student, Student.ID))
+    except:
+        stu_id = str(1)
+
+    group_all_list = back.getGroupbyDict({})
+    for group in group_all_list:
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if stu_id in stu_list:
+            stu_list.remove(stu_id)
+        stu_string = '_'.join(stu_list)
+        back.setGroup(group, Group.STU_LIST, stu_string)
+
+    for new_id in id_list:
+        new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
+        group = back.getGroupbyDict({Group.ID: new_id})[0]
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if stu_id in stu_list:
+            print 'Big bug!'
+        else:
+            stu_list.append(stu_id)
+        back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
+    return True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
