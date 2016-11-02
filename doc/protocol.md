@@ -693,6 +693,28 @@
 		<td></td>
 	</tr>
 
+	<tr>
+		<td>get_all_activity</td>
+		<td>获取全部的活动</td>
+		<td>teacher/views.py</td>
+		<td>request，空</td>
+		<td>JsonResponse，键值对见代码测试样例</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<td>delete_activity</td>
+		<td>删除某个活动</td>
+		<td>teacher/views.py</td>
+		<td>request(.POST['activity_id']:活动的ID)</td>
+		<td>JsonResponse返回空即可</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+
 		<tr>
 		<td>a</td>
 		<td>b</td>
