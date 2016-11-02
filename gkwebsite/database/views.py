@@ -523,7 +523,7 @@ def add_activity(request):
             end_list = date_end.split('-')
             back.createTimerbyDict({Timer.NAME:name,
                                     Timer.START_TIME: datetime.date(int(begin_list[0]), int(begin_list[1]), int(begin_list[2])),
-                                    Timer.END_TIME: datetime.date(int(end_list[0]), int(end_list[1]), int(end_list[2])), 
+                                    Timer.END_TIME: datetime.date(int(end_list[0]), int(end_list[1]), int(end_list[2])),
                                     Timer.TEACHER_ID: int(teacher_id)
                                     })
             t = {}
@@ -543,7 +543,11 @@ def export_activity_result(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
+        id = int(request.POST.get('id'))
+        teacher_id = int(request.POST.get('teacher_id'))
+       
+
+
         t = {}
         t['success']='Y'
         t['filename']='a.xls'
