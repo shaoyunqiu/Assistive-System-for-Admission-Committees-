@@ -701,7 +701,7 @@
 		<td>JsonResponse，键值对见代码测试样例</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 
 	<tr>
@@ -712,7 +712,7 @@
 		<td>JsonResponse返回空即可</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 
 		<tr>
