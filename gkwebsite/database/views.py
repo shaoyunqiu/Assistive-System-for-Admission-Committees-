@@ -507,3 +507,29 @@ def move_question_down(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+        
+def add_activity(request):
+    # by dqn14 Nov 2, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        name = request.POST.get('name')
+        date_begin = request.POST.get('date_begin')
+        date_end = request.POST.get('date_end')
+        t = {}
+        t['success']='N'
+        t['message']='管理员外出'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def export_activity_result(request):
+    # by dqn14 Nov 2, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
+        t = {}
+        t['success']='Y'
+        t['filename']='a.xls'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
