@@ -342,7 +342,6 @@ def getStudentEstimateRank(student):
 
     rank = 1
     ranked_score_list = sorted(all_student_estimate_score, reverse=True)
-
     length = len(ranked_score_list)
     for i in range(0, length):
         if score >= ranked_score_list[i]:
