@@ -273,7 +273,7 @@ def getStudentEstimateRank(student):
     if score == 0:
         return 'You do not have score!'
     all_student_estimate_score = [999999]
-    student_list = getAllInStudent()
+    student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
     for item in student_list:
         all_student_estimate_score.append(getStudentEstimateScore(item))
 
