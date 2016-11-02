@@ -8,6 +8,7 @@ import volunteer_backend as vol
 import register_backend as reg
 import image_backend as pic
 from my_field import *
+import backend as back
 
 
 # Create your views here.
@@ -515,10 +516,26 @@ def add_activity(request):
         name = request.POST.get('name')
         date_begin = request.POST.get('date_begin')
         date_end = request.POST.get('date_end')
-        t = {}
-        t['success']='N'
-        t['message']='管理员外出'
-        return JsonResponse(t)
+
+
+        print name, date_begin, date_end
+        try:
+            begin_list = date_begin.split('-')
+            end_list = date_end.split('-')
+            back.createTimerbyDict({Timer.NAME:name,
+                                    Timer.START_TIME: datetime.date(int(begin_list[0]), int(begin_list[1]), int(begin_list[2])),
+                                    Timer.END_TIME: datetime.date(int(end_list[0]), int(end_list[1]), int(end_list[2]))
+                                    })
+            t = {}
+            t['success']='Y'
+            t['message']= u'活动创建成功'
+            print 't', t
+            return JsonResponse(t)
+        except:
+            t = {}
+            t['success']='N'
+            t['message']='管理员外出'
+            return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
         

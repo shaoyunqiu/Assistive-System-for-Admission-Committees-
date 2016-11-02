@@ -415,6 +415,24 @@ class Timer(models.Model):
         return ret
 
 
+class WechatURL(models.Model):
 
+    picture_url = models.CharField(max_length=1000, default='{}', blank=True)
+    message_url = models.CharField(max_length=1000, default='{}', blank=True)
 
+    ID = 'id'
+    PICTURE_URL = 'picture_url'
+    MESSAGE_URL = 'message_url'
+
+    FIELD_LIST = [ID, PICTURE_URL, MESSAGE_URL]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in WechatURL._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
 
