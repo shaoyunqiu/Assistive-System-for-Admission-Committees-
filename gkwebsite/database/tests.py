@@ -196,4 +196,25 @@ class Testgetstudentalldictbyacount(TestCase):
         self.assertEqual(result[Student.PROVINCE]['provincelist'], PROVINCE_LIST)
 
 
+class Testgetstudent(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.REAL_NAME, "lihy1")
+        setattr(stu1, Student.PROVINCE, 1)
+        stu1.full_clean()
+        stu1.save()
+
+    def test_getstudent_error_field(self):
+        self.assertEqual(getStudent("test_stu_1", "hehe"), None)
+
+    def test_getstudent_error_account(self):
+        self.assertEqual(getStudent("test", "account"), None)
+
+    def test_getstudent_correct(self):
+        self.assertEqual(getStudent("test_stu_1", "id"), 1)
+        self.assertEqual(getStudent("test_stu_1", Student.REAL_NAME), "lihy1")
+        self.assertEqual(getStudent("test_stu_1", Student.PROVINCE), 1)
+
+
 
