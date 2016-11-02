@@ -85,3 +85,38 @@ class TestgetordeleteAllStudent(TestCase):
     def test_getAllStudent_after_delete(self):
         deleteStudentAll()
         self.assertEqual(len(getAllInStudent()), 0)
+
+
+class TestRemoveStudentAccount(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        stu2.full_clean()
+        stu2.save()
+
+    def test_remove_legal_id(self):
+        removeStudentAccount("test_stu_1")
+        self.assertEqual(len(Student.objects.filter(account="test_stu_1")), 0)
+
+    def test_remove_illegal_id(self):
+        removeStudentAccount("lhy")
+        self.assertEqual(len(Student.objects.all()), 2)
+
+
+class TestCheckField(TestCase):
+    def test_exist_field(self):
+        field_list = ['id','account', 'password', 'realName', 'birth', 'idNumber', 'type', 'sex', 'nation', 'school',
+                      'classroom', 'address', 'phone', 'email', 'dadPhone', 'momPhone', 'tutorName', 'tutorPhone', 'province',
+                      'major',  'testScoreList', 'rankList', 'sumNumberList', 'estimateScore', 'realScore', 'admissionStatus',
+                      'comment', 'registerCode', 'teacherList', 'volunteerAccountList', 'isLogedin', 'isRegistered', 'groupList',
+                      'wechat', 'fixedPhone', 'qq', 'dadName', 'momName', 'duiyingTeacher']
+        for field in field_list:
+            self.assertEqual(checkField(field), True)
+
+    def test_nonexist_field(self):
+        self.assertEqual(checkField('nickname'), False)
+
