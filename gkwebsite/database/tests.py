@@ -217,4 +217,29 @@ class Testgetstudent(TestCase):
         self.assertEqual(getStudent("test_stu_1", Student.PROVINCE), 1)
 
 
+class Testsetstudent(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.REAL_NAME, "lihy1")
+        setattr(stu1, Student.PROVINCE, 1)
+        stu1.full_clean()
+        stu1.save()
+
+    def test_setstudent_errorfield(self):
+        self.assertEqual(setStudent("test_stu_1", "hehe", "hh"), False)
+
+    def test_setstudent_erroraccount(self):
+        self.assertEqual(setStudent("test", Student.REAL_NAME,"hh"), False)
+
+    def test_setstudent_correct(self):
+        self.assertEqual(setStudent("test_stu_1", Student.REAL_NAME,"hehe"), True)
+        stu = (Student.objects.filter(account="test_stu_1"))[0]
+        self.assertEqual(stu.realName, "hehe")
+
+    def test_setstudent_id(self):
+        self.assertEqual(setStudent("test_stu_1", Student.ID, 0), False)
+        stu = (Student.objects.filter(account="test_stu_1"))[0]
+        self.assertEqual(stu.id, 1)
+
 
