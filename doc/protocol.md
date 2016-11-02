@@ -690,7 +690,7 @@
 		<td>JsonResponse 键：num 下一题题号</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 
 	<tr>
