@@ -269,3 +269,20 @@ class Testcreatestudent(TestCase):
         stu = (Student.objects.filter(account="test_4"))[0]
         self.assertEqual(stu.realName, "lihy")
 
+
+class Testcheckstudentpassword(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.PASSWORD, "mima")
+        stu1.full_clean()
+        stu1.save()
+
+    def test_checkpassword_illegal_account(self):
+        self.assertEqual(checkStudentPassword("test", "mima"), (False , 'Account does not exist.'))
+
+    def test_checkpassword_wronf(self):
+        self.assertEqual(checkStudentPassword("test_stu_1", "wrong"), (False , 'Password is incorrect'))
+
+    def test_checkpassword_ok(self):
+        self.assertEqual(checkStudentPassword("test_stu_1", "mima"), (True, "1"))
