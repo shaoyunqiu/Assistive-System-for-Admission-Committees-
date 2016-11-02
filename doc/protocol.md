@@ -736,6 +736,17 @@
 		<td>段清楠</td>
 		<td></td>
 	</tr>
+	
+	<tr>
+		<td>set_volunteer</td>
+		<td>给学生组分配志愿者</td>
+		<td>database/views.py</td>
+		<td>request(.POST['student_num']:志愿者学号 .POST['group_id']:组号？)</td>
+		<td>JsonResponse 返回success:'Y'/'N' message:错误信息 </td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
 
 		<tr>
 		<td>a</td>
