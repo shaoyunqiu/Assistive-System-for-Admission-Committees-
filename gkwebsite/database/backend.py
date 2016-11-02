@@ -162,6 +162,58 @@ def removeTimerByDic(dic):
 
 
 
+# ------------------------------------------------------------------------------------------------
+def createWechatURLbyDict(dict):
+    try:
+        wechatURL = WechatURL.objects.model()
+    except:
+        print "create object fail"
+        traceback.print_exc()
+        return False
+    try:
+        for item in dict.keys():
+            setattr(wechatURL, item, dict[item])
+        print 'full_clean ing...'
+        wechatURL.full_clean()
+    except ValidationError:
+        print 'validation fail...'
+        traceback.print_exc()
+        return False
+    wechatURL.save()
+    print 'successfully create account'
+    return True
+
+
+def setWechatURL(wechatURL, field, value):
+    try:
+        setattr(wechatURL, field, value)
+        wechatURL.full_clean()
+        wechatURL.save()
+        return True
+    except:
+        print "-------------------------------"
+        print "can not saved!!"
+        return False
+
+
+def getWechatURLbyDict(dic):
+    return WechatURL.objects.filter(**dic)
+
+
+def getWechatURLAllDictByObject(wechatURL):
+    dict = {}
+    for item in WechatURL.FIELD_LIST:
+        try:
+            dict[item] = getattr(wechatURL, item)
+        except:
+            return None
+    return dict
+
+
+def removeWechatURLByDic(dic):
+    WechatURL.objects.all().filter(**dic).delete()
+
+
 def date_start_to_end(start, end):
     if start > end:
         print 'time error'

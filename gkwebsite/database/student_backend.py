@@ -39,11 +39,15 @@ def idToAccountStudent(id):
 
 def accountToIDStudent(account):
     '''
-
     :param account: string类型的account
     :return: string类型的id
     '''
-    return (str)(getStudent(account, 'id'))
+    # modified by shaoyunqiu 2016/11/2
+    if(getStudent(account, 'id') == None):
+        return None
+    else:
+        return (str)(getStudent(account, 'id'))
+    #return (str)(getStudent(account, 'id'))
 
 
 def removeStudentAccount(_account):
@@ -54,10 +58,15 @@ def getStudentbyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
-    :return:返回一个student对象
+    :return:返回一个student对象列表
+    modified by shao 2016/11/2
     '''
-    dic = {field: argc}
-    return Student.objects.filter(**dic)
+    if(checkField(field) == True):
+        dic = {field: argc}
+        return Student.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):
@@ -94,7 +103,6 @@ def getStudentAllDictByAccount(account):
         try:
             dict[item] = getattr(student, item)
         except:
-
             return None
 
     dict[Student.TYPE] = {
@@ -179,6 +187,11 @@ def createStudent(account, dict):
         print "account existed"
         return False
 
+    # confirm that accout == dict[Student.ACCOUNT]
+    if dict.has_key(Student.ACCOUNT):
+        if dict[Student.ACCOUNT] != account:
+            print "args conflict"
+            return False
     try:
         student = Student.objects.model()
     except:
@@ -270,10 +283,11 @@ def setStudentGroupbyList(student, id_list):
 
 def getStudentEstimateRank(student):
     score = int(getStudentEstimateScore(student))
-    if score == 0:
-        return 'You do not have score!'
+
     all_student_estimate_score = [999999]
     student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
+    if score == 0:
+        return  str(len(student_list)), str(len(student_list))
     for item in student_list:
         all_student_estimate_score.append(getStudentEstimateScore(item))
 
@@ -286,7 +300,7 @@ def getStudentEstimateRank(student):
             rank = i
             break
 
-    return str(rank)
+    return str(rank), str(len(student_list))
 
 
 

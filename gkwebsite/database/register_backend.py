@@ -39,7 +39,7 @@ def setRegisterCode(code, field, value):
         print 'start set'
         register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)
         setattr(register, field, value)
-        # register.full_clean()
+        register.full_clean()
         register.save()
         return True
     except:
