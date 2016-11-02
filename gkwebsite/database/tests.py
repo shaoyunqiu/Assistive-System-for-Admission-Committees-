@@ -155,4 +155,27 @@ class TestgetStudentByField(TestCase):
         self.assertEqual(len(getStudentbyField("trick", "hhh")), 0)
 
 
+class Testgetstudentall(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.REAL_NAME, "lihy1")
+        setattr(stu1, Student.PROVINCE, 1)
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        setattr(stu2, Student.REAL_NAME, "lihy2")
+        stu2.full_clean()
+        stu2.save()
+
+    def test_getstudentall_correct(self):
+        stu = getStudentAll("test_stu_1")
+        self.assertEqual(stu.realName, "lihy1")
+
+    def test_getstudentall_noexisting_account(self):
+        self.assertEqual(getStudentAll("lsp"), None)
+
+
+
 
