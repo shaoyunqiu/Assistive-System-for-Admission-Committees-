@@ -709,10 +709,32 @@
 		<td>删除某个活动</td>
 		<td>teacher/views.py</td>
 		<td>request(.POST['activity_id']:活动的ID)</td>
-		<td>JsonResponse返回空即可</td>
+		<td>JsonResponse 返回success:'Y'/'N' message:错误信息</td>
 		<td>POST</td>
 		<td>侯禺凡</td>
-		<td>finish</td>
+		<td>ALERT! modified</td>
+	</tr>
+	
+	<tr>
+		<td>add_activity</td>
+		<td>添加一个活动</td>
+		<td>database/views.py</td>
+		<td>request(.POST['name']:活动名称 .POST['date_begin']:开始日期 .POST['date_end']:结束日期)</td>
+		<td>JsonResponse 返回success:'Y'/'N' message:错误信息</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
+	
+	<tr>
+		<td>export_activity_result</td>
+		<td>导出活动统计结果</td>
+		<td>database/views.py</td>
+		<td>request(.POST['activity_id']:活动的ID)</td>
+		<td>JsonResponse 返回success:'Y'/'N' message:错误信息 filename:导出结果文件名</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
 	</tr>
 
 		<tr>
