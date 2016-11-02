@@ -177,5 +177,23 @@ class Testgetstudentall(TestCase):
         self.assertEqual(getStudentAll("lsp"), None)
 
 
+class Testgetstudentalldictbyacount(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.REAL_NAME, "lihy1")
+        setattr(stu1, Student.PROVINCE, 1)
+        stu1.full_clean()
+        stu1.save()
+
+    def test_getstudentalldictbyaccount_illegal_account(self):
+        self.assertEqual(getStudentAllDictByAccount("test"), None)
+
+    def test_getstudentalldictbyaccount_correct(self):
+        result = getStudentAllDictByAccount("test_stu_1")
+        self.assertEqual(result[Student.REAL_NAME], "lihy1")
+        self.assertEqual(result[Student.PROVINCE]['province'], 1)
+        self.assertEqual(result[Student.PROVINCE]['provincelist'], PROVINCE_LIST)
+
 
 

@@ -102,9 +102,11 @@ def getStudentAllDictByAccount(account):
     dict = {}
     for item in Student.FIELD_LIST:
         try:
+           # print item
             dict[item] = getattr(student, item)
+            print dict[item]
         except:
-
+            #print "except"
             return None
 
     dict[Student.TYPE] = {
