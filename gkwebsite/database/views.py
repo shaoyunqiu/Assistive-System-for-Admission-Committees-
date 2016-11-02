@@ -533,3 +533,16 @@ def export_activity_result(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+        
+def set_volunteer(request):
+    # by dqn14 Nov 2, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        group_teamleader = request.POST.get('group_id')
+        student_id_num = request.POST.get('student_num')
+        t = {}
+        t['success']='N'
+        t['message']='管理员正忙'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
