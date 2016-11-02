@@ -10,6 +10,8 @@ import image_backend as pic
 from my_field import *
 import backend as back
 
+from teacher.views import generateTimerXLS
+
 
 # Create your views here.
 
@@ -543,14 +545,17 @@ def export_activity_result(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = int(request.POST.get('id'))
-        teacher_id = int(request.POST.get('teacher_id'))
-       
-
-
-        t = {}
-        t['success']='Y'
-        t['filename']='a.xls'
+        try:
+            id = int(request.POST.get('id'))
+            teacher_id = int(request.POST.get('teacher_id'))
+            filename = 'files/%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
+            generateTimerXLS(id, teacher_id, filename)
+            t = {}
+            t['success']='Y'
+            t['filename']='%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
+        except:
+            t['success'] = 'N'
+            t['filename'] = 'no'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

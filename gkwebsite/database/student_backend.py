@@ -39,7 +39,6 @@ def idToAccountStudent(id):
 
 def accountToIDStudent(account):
     '''
-
     :param account: string类型的account
     :return: string类型的id
     '''
@@ -270,10 +269,11 @@ def setStudentGroupbyList(student, id_list):
 
 def getStudentEstimateRank(student):
     score = int(getStudentEstimateScore(student))
-    if score == 0:
-        return 'You do not have score!'
+
     all_student_estimate_score = [999999]
     student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
+    if score == 0:
+        return  str(len(student_list)), str(len(student_list))
     for item in student_list:
         all_student_estimate_score.append(getStudentEstimateScore(item))
 
@@ -286,7 +286,7 @@ def getStudentEstimateRank(student):
             rank = i
             break
 
-    return str(rank)
+    return str(rank), str(len(student_list))
 
 
 
