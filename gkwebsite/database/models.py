@@ -83,7 +83,7 @@ class Student(models.Model):
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
-    estimateScore = models.CharField(max_length=2000, default='{}', blank=True)
+    estimateScore = models.TextField(default='{}', blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
     admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
