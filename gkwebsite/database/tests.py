@@ -334,3 +334,22 @@ class Testidtoaccountteacher(TestCase):
     def test_ok_id_teacher(self):
         self.assertEqual(idToAccountTeacher(1), "test_tea_1")
 
+
+class Testcheckteacheraccount(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        tea1.full_clean()
+        tea1.save()
+        tea2 = Teacher.objects.model()
+        setattr(tea2, Teacher.ACCOUNT, "test_tea_2")
+        tea2.full_clean()
+        tea2.save()
+
+    def test_checkaccount_ok(self):
+        self.assertEqual(checkTeacherAccount("test_tea_1"), False)
+        self.assertEqual(checkTeacherAccount("test_tea_2"), False)
+
+    def test_checkaccount_nonexist(self):
+        self.assertEqual(checkTeacherAccount("test"), True)
+
