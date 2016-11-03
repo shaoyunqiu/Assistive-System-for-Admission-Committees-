@@ -36,7 +36,7 @@ CATEGORY_LIST = [u' ', u'主观', u'客观']
 SHITI_LIST = PROVINCE_LIST
 
 def get_picture_path(year, province, subject, number, score, category):
-    return str(year) + '_' + str(province) + '_' + str(subject) + '_' + str(number) + '_' + str(score) + '_' + str(category)
+    return str(year) + '_' + str(province) + '_' + str(subject) + '_' + str(number) + '_' + str(score) + '_' + str(category) + '.pic'
 
 def find_item_index_in_list(item, list):
     chang = len(list)

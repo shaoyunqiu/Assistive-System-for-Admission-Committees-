@@ -64,6 +64,17 @@ def deleteVolunteerAll():
     getAllInVolunteer().delete()
 
 
+def is_have_permission(_id):
+    if type(_id) == str:
+        _id = int(_id)
+    account = idToAccountVolunteer(_id)
+    ret = getVolunteer(account, Volunteer.QUANXIAN)
+    if ret == 1:
+        return True
+    else:
+        return False
+
+
 def idToAccountVolunteer(id):
     '''
 
