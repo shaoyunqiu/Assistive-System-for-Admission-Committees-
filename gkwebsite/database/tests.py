@@ -429,3 +429,23 @@ class Testgetteacherall(TestCase):
     def test_getteacherall_noexisting_account(self):
         self.assertEqual(getTeacherAll("lsp"), None)
 
+
+class Testgetteacher(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        setattr(tea1, Teacher.REAL_NAME, "houyf1")
+        setattr(tea1, Teacher.PASSWORD, "mima")
+        tea1.full_clean()
+        tea1.save()
+
+    def test_getstudent_error_field(self):
+        self.assertEqual(getTeacher("test_tea_1", "hehe"), None)
+
+    def test_getstudent_error_account(self):
+        self.assertEqual(getTeacher("test", "account"), None)
+
+    def test_getstudent_correct(self):
+        self.assertEqual(getTeacher("test_tea_1", "id"), 1)
+        self.assertEqual(getTeacher("test_tea_1", Student.REAL_NAME), "houyf1")
+        self.assertEqual(getTeacher("test_tea_1", Student.PASSWORD), "mima")
