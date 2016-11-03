@@ -297,8 +297,17 @@ def getStudentEstimateRank(student):
 
     all_student_estimate_score = [999999]
     student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
+    no_gufen_number = 0
+    for student in student_list:
+        estimate_dic = eval(getattr(student, Student.ESTIMATE_SCORE))
+        tmp = 0
+        for key in estimate_dic.keys():
+            tmp = tmp + int(estimate_dic[key]['score'])
+        if tmp == 0:
+            no_gufen_number = no_gufen_number + 1
+
     if score == 0:
-        return  str(len(student_list)), str(len(student_list))
+        return str(len(student_list)-no_gufen_number), str(len(student_list)-no_gufen_number)
     for item in student_list:
         all_student_estimate_score.append(getStudentEstimateScore(item))
 
@@ -311,7 +320,7 @@ def getStudentEstimateRank(student):
             rank = i
             break
 
-    return str(rank), str(len(student_list))
+    return str(rank), str(len(student_list)-no_gufen_number)
 
 
 
