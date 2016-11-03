@@ -378,3 +378,23 @@ class Testcreateteacher(TestCase):
     def test_create_illegal_key(self):
         self.assertEqual(createTeacher({Teacher.ACCOUNT:"test", "nonexist": 1}), True)
 
+
+class Testcheckteacherpassword(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        setattr(tea1, Teacher.PASSWORD, "mima")
+        tea1.full_clean()
+        tea1.save()
+        tea2 = Teacher.objects.model()
+        setattr(tea2, Teacher.ACCOUNT, "test_tea_2")
+        setattr(tea2, Teacher.PASSWORD, "mmimi")
+        tea2.full_clean()
+        tea2.save()
+
+    def test_illegal_account(self):
+        self.assertEqual(checkTeacherPassword("test", "mima"), (False , 'Account does not exist.'))
+
+    def test_correct_account(self):
+        self.assertEqual(checkTeacherPassword("test_tea_1","mima"), (True, "1"))
+        self.assertEqual(checkTeacherPassword("test_tea_1", "mimi"), (False, 'Password is incorrect'))
