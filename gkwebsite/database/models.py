@@ -27,6 +27,7 @@ class Teacher(models.Model):
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
 
+    ID = 'id'
     ACCOUNT = 'account'
     PASSWORD = 'password'
     REAL_NAME = 'realName'
