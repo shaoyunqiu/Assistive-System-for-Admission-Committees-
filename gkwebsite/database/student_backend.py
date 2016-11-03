@@ -4,15 +4,17 @@ from models import *
 import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
+import backend as back
+
 
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
 
 def getAllInStudent():
     return Student.objects.all()
 
+
 def deleteStudentAll():
     getAllInStudent().delete()
-
 
 
 def idToAccountStudent(id):
@@ -37,23 +39,34 @@ def idToAccountStudent(id):
 
 def accountToIDStudent(account):
     '''
-
     :param account: string类型的account
     :return: string类型的id
     '''
-    return (str)(getStudent(account, 'id'))
+    # modified by shaoyunqiu 2016/11/2
+    if(getStudent(account, 'id') == None):
+        return None
+    else:
+        return (str)(getStudent(account, 'id'))
+    #return (str)(getStudent(account, 'id'))
+
 
 def removeStudentAccount(_account):
-    getAllInStudent().filter(account = _account).delete()
+    getAllInStudent().filter(account=_account).delete()
+
 
 def getStudentbyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
-    :return:返回一个student对象
+    :return:返回一个student对象列表
+    modified by shao 2016/11/2
     '''
-    dic = {field: argc}
-    return Student.objects.filter(**dic)
+    if(checkField(field) == True):
+        dic = {field: argc}
+        return Student.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):
@@ -66,6 +79,7 @@ def checkField(field):
         return True
     print 'this column not exist'
     return False
+
 
 def getStudentAll(account):
     '''
@@ -89,20 +103,26 @@ def getStudentAllDictByAccount(account):
         try:
             dict[item] = getattr(student, item)
         except:
-
             return None
 
-    dict[Student.TYPE] = typeIntToString(dict[Student.TYPE])
-    dict[Student.SEX] = sexIntToString(dict[Student.SEX])
-    dict[Student.NATION] = {'nation':nationIntToString(dict[Student.NATION]),
-                            'nationlist':NATION_LIST}
-    dict[Student.PROVINCE] = {'province':provinceIntToString(dict[Student.PROVINCE]),
-                              'provincelist':PROVINCE_LIST,
-                              }
-
+    dict[Student.TYPE] = {
+        'type': dict[Student.TYPE],
+        'typelist': TYPE_LIST
+    }
+    dict[Student.SEX] = {
+        'sex': dict[Student.SEX],
+        'sexlist': SEX_LIST
+    }
+    dict[Student.NATION] = {
+        'nation': dict[Student.NATION],
+        'nationlist': NATION_LIST}
+    dict[Student.PROVINCE] = {
+        'province': dict[Student.PROVINCE],
+        'provincelist': PROVINCE_LIST,
+    }
 
     major_int_list = dict[Student.MAJOR]
-    for i in range(0,10):
+    for i in range(0, 10):
         major_int_list.append(0)
         dict[Student.TEST_SCORE_LIST].append(0)
         dict[Student.RANK_LIST].append(0)
@@ -111,10 +131,8 @@ def getStudentAllDictByAccount(account):
     for item in major_int_list:
         numitem = (int)(item)
         dict[Volunteer.MAJOR].append({'department': numitem,
-                               'departmentlist': MAJOR_LIST, })
-    dict[Student.ESTIMATE_SCORE] = dict[Student.ESTIMATE_SCORE]
-    dict[Student.REAL_SCORE] = dict[Student.REAL_SCORE]
-    dict[Student.ADMISSION_STATUS] = admissionStatusIntToString(dict[Student.ADMISSION_STATUS])
+                                      'departmentlist': MAJOR_LIST})
+
     return dict
 
 
@@ -130,6 +148,7 @@ def getStudent(account, field):
     if not getStudentAll(account):
         return None
     return getattr(getStudentAll(account), field, 'Error')
+
 
 def setStudent(account, field, value):
     '''
@@ -156,6 +175,7 @@ def setStudent(account, field, value):
         print "can not saved!!"
         return False
 
+
 def createStudent(account, dict):
     '''
     在数据库中增加一个学生
@@ -167,6 +187,11 @@ def createStudent(account, dict):
         print "account existed"
         return False
 
+    # confirm that accout == dict[Student.ACCOUNT]
+    if dict.has_key(Student.ACCOUNT):
+        if dict[Student.ACCOUNT] != account:
+            print "args conflict"
+            return False
     try:
         student = Student.objects.model()
     except:
@@ -190,8 +215,92 @@ def createStudent(account, dict):
     return True
 
 
+def checkStudentPassword(_account,_password):
+    '''
+    检查密码是否正确
+    暂时空出
+    :param _account: 用户名
+    :param _password: 传过来的密码，可能被加密过
+    :return:
+    '''
+
+    #if _password == hash(getData(_account, 'password')): #哈希
+    if not getStudent(_account, 'account'): #无重复，说明不存在这个用户
+        print '---------'
+        return (False , 'Account does not exist.')
+    if _password != getStudent(_account, 'password'):
+        print '*********'
+        return (False , 'Password is incorrect')
+    # 密码不正确
+    return (True, str(getStudent(_account,'id')))
+    #hash function should be applied here
 
 
+def getStudentGroupIDListString(student):
+    stu_id = 0
+    try:
+        stu_id = getattr(student, Student.ID)
+    except:
+        stu_id = 1
+
+    group_all_list = back.getGroupbyDict({})
+    id_list = []
+    for group in group_all_list:
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if str(stu_id) in stu_list:
+            id_list.append(str(getattr(group, Group.ID)))
+    return ' '.join(id_list)
+
+
+def setStudentGroupbyList(student, id_list):
+    try:
+        stu_id = str(getattr(student, Student.ID))
+    except:
+        stu_id = str(1)
+
+    group_all_list = back.getGroupbyDict({})
+    for group in group_all_list:
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if stu_id in stu_list:
+            stu_list.remove(stu_id)
+        stu_string = '_'.join(stu_list)
+        back.setGroup(group, Group.STU_LIST, stu_string)
+
+    for new_id in id_list:
+        new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
+        group = back.getGroupbyDict({Group.ID: new_id})[0]
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if stu_id in stu_list:
+            print 'Big bug!'
+        else:
+            stu_list.append(stu_id)
+        back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
+    return True
+
+
+
+def getStudentEstimateRank(student):
+    score = int(getStudentEstimateScore(student))
+
+    all_student_estimate_score = [999999]
+    student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
+    if score == 0:
+        return  str(len(student_list)), str(len(student_list))
+    for item in student_list:
+        all_student_estimate_score.append(getStudentEstimateScore(item))
+
+    rank = 1
+    ranked_score_list = sorted(all_student_estimate_score, reverse=True)
+
+    length = len(ranked_score_list)
+    for i in range(0, length):
+        if score >= ranked_score_list[i]:
+            rank = i
+            break
+
+    return str(rank), str(len(student_list))
 
 
 

@@ -9,9 +9,15 @@ from django.core.exceptions import ValidationError
 def getAllInRegisterCode():
     return RegisterCode.objects.all()
 
+def removeRegisterCode(_account):
+    getAllInRegisterCode().filter(registerCode=_account).delete()
 
 def deleteRegisterCodeAll():
     getAllInRegisterCode().delete()
+
+
+def getRegisterCodebydic(dic):
+    return RegisterCode.objects.filter(**dic)
 
 def getRegisterCodebyField(field, argc):
     '''
@@ -24,13 +30,13 @@ def getRegisterCodebyField(field, argc):
 
 def setRegisterCode(code, field, value):
     try:
-        if isExistRegisterCode(code):
-            return False
         if (field in RegisterCode.FIELD_LIST) == False:
+            print 'are not'
             return False
         if field == RegisterCode.REGISTER_CODE:
             print 'can not modify code'
             return False
+        print 'start set'
         register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)
         setattr(register, field, value)
         register.full_clean()
@@ -49,9 +55,8 @@ def isExistRegisterCode(code):
 
 def tmpcreateNewRegisterCode():
     code = ''
-    code = code + time.strftime('%Y',time.localtime(time.time()))
-    # code = code + '-Thu-'
-    code = code + (str)((int)(time.time()))
+    code = code + time.strftime('%Y', time.localtime(time.time()))
+    code = code + str(str(len(getAllInRegisterCode())).zfill(7))
     code = code + random_str(9)
     return code
 
@@ -70,8 +75,8 @@ def createRegisterCode(code):
 def createNewRegisterCode():
     # 产生code直到不重复
     code = tmpcreateNewRegisterCode()
-    while(isExistRegisterCode(code)):
-        code = tmpcreateNewRegisterCode()
+    # while(isExistRegisterCode(code)):
+    #     code = tmpcreateNewRegisterCode()
 
     # 将生成的code加入数据库
     createRegisterCode(code)

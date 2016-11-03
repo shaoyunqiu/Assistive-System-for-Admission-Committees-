@@ -18,7 +18,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -32,7 +32,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -42,6 +42,7 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
+                             'student_id': '2014011401'
                             })
 
     createVolunteer('vol2', {'password': 'mima',
@@ -57,7 +58,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -71,7 +72,6 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -81,6 +81,7 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
+                             'student_id': '2014011402'
                             })
 
     createVolunteer('vol3', {'password': 'mima',
@@ -96,7 +97,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -110,7 +111,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -120,6 +121,7 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
+                             'student_id': '2014011403'
                             })
 
     createVolunteer('vol4', {'password': 'mima',
@@ -135,7 +137,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -149,7 +151,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -159,6 +161,7 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
+                             'student_id': '2014011404'
                             })
 
     createVolunteer('vol5', {'password': 'mima',
@@ -174,7 +177,7 @@ def testCreateVolunteerNew():
 
                             'address': u'武汉长江大桥下',
                             'phone': '18812344321',
-                            'email': 'a@qq.com',
+                            'email': 'alienlhy@163.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -188,7 +191,7 @@ def testCreateVolunteerNew():
                             'sumNumberList': [1000, 2000, 3000],
                             'estimateScore': 690,
                             'realScore': 687,
-                            'admissionStatus': 1,
+
 
                             'comment': u'娃是好娃，就是成绩不太好',
                             # 'registerCode': ,
@@ -198,39 +201,33 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
+                             'student_id': '2014011405'
                             })
-
-
-
-
-
-
-
 
 
 
 def testCreateVolunteer():
     createVolunteer("vol1", {Volunteer.ID_NUMBER: '123456789123456789',Volunteer.SCHOOL:u'南山中学', Volunteer.PROVINCE:12,
-                             Volunteer.CLASSROOM: u'高一1班', Volunteer.REAL_NAME: u'李昊阳',
+                             Volunteer.CLASSROOM: u'计45', Volunteer.REAL_NAME: u'李昊阳',
                              Volunteer.SEX:1,Volunteer.BIRTH: datetime.datetime(2015, 1, 12),
                              Volunteer.STUDENT_ACCOUNT_LIST: ['lihaoyang1', 'baiyunren1']})
     createVolunteer('vol2', {Volunteer.ID_NUMBER: '123456789123456789', Volunteer.SCHOOL: u'南山中学', Volunteer.PROVINCE: 0,
-                                 Volunteer.CLASSROOM: u'高一1班', Volunteer.REAL_NAME: u'侯禺凡', Volunteer.SEX: 1,
+                                 Volunteer.CLASSROOM: u'计45', Volunteer.REAL_NAME: u'侯禺凡', Volunteer.SEX: 1,
                                  Volunteer.BIRTH: datetime.datetime(2015, 1, 12),
                              Volunteer.STUDENT_ACCOUNT_LIST: ['lihaoyang2', 'baiyunren2']})
     createVolunteer('vol3', {Volunteer.ID_NUMBER: '123456789123456789', Volunteer.SCHOOL: u'南山中学', Volunteer.PROVINCE: 0,
-                                 Volunteer.CLASSROOM: u'高一2班', Volunteer.REAL_NAME: u'邵韵秋', Volunteer.SEX: 2,
+                                 Volunteer.CLASSROOM: u'计45', Volunteer.REAL_NAME: u'邵韵秋', Volunteer.SEX: 2,
                                  Volunteer.BIRTH: datetime.datetime(2018, 1, 12),
                                  Volunteer.STUDENT_ACCOUNT_LIST: ['lihaoyang3', 'baiyunren3']})
     createVolunteer('vol4', {Volunteer.ID_NUMBER: '123456789123456789', Volunteer.SCHOOL: u'南山中学', Volunteer.PROVINCE: 1,
-                                 Volunteer.CLASSROOM: u'高一1班', Volunteer.REAL_NAME: u'侯禺凡', Volunteer.SEX: 1,
+                                 Volunteer.CLASSROOM: u'计45', Volunteer.REAL_NAME: u'侯禺凡', Volunteer.SEX: 1,
                                  Volunteer.BIRTH: datetime.datetime(2015, 1, 12),
                              Volunteer.STUDENT_ACCOUNT_LIST: ['lihaoyang4', 'baiyunren4']})
     createVolunteer('vol5', {Volunteer.ID_NUMBER: '123456789123456789', Volunteer.SCHOOL: u'南山中学', Volunteer.PROVINCE: 1,
-                                 Volunteer.CLASSROOM: u'高一2班', Volunteer.REAL_NAME: u'邵韵秋', Volunteer.SEX: 2,
+                                 Volunteer.CLASSROOM: u'计45', Volunteer.REAL_NAME: u'邵韵秋', Volunteer.SEX: 2,
                                  Volunteer.BIRTH: datetime.datetime(2018, 1, 12),
                              Volunteer.STUDENT_ACCOUNT_LIST: ['lihaoyang5', 'baiyunren5']})
     createVolunteer('vol6', {Volunteer.ID_NUMBER: '123456789123456789', Volunteer.SCHOOL: u'南山中学', Volunteer.PROVINCE: 2,
-                                 Volunteer.CLASSROOM: u'高一1班', Volunteer.REAL_NAME: u'侯禺凡', Volunteer.SEX: 1,
+                                 Volunteer.CLASSROOM: u'计45', Volunteer.REAL_NAME: u'侯禺凡', Volunteer.SEX: 1,
                                  Volunteer.BIRTH: datetime.datetime(2015, 1, 12),
                                  Volunteer.STUDENT_ACCOUNT_LIST: ['lihaoyang6', 'baiyunren6']})
