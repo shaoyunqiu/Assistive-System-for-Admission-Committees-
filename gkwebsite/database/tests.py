@@ -398,3 +398,11 @@ class Testcheckteacherpassword(TestCase):
     def test_correct_account(self):
         self.assertEqual(checkTeacherPassword("test_tea_1","mima"), (True, "1"))
         self.assertEqual(checkTeacherPassword("test_tea_1", "mimi"), (False, 'Password is incorrect'))
+
+class Testcheckteacherfield(TestCase):
+    def test_legal_field(self):
+        self.assertEqual(checkTeacherField(Teacher.ACCOUNT), True)
+        self.assertEqual(checkTeacherField(Teacher.COMMENT), True)
+
+    def test_illegal_field(self):
+        self.assertEqual(checkTeacherField("esitimate"), False)
