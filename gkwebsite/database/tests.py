@@ -270,6 +270,9 @@ class Testcreatestudent(TestCase):
         stu = (Student.objects.filter(account="test_4"))[0]
         self.assertEqual(stu.realName, "lihy")
 
+    def test_create_wrong_attr(self):
+        self.assertEqual(createStudent("test_5", {Student.PROVINCE:"jiang"}), False)
+
 
 class Testcheckstudentpassword(TestCase):
     def setUp(self):
@@ -352,4 +355,26 @@ class Testcheckteacheraccount(TestCase):
 
     def test_checkaccount_nonexist(self):
         self.assertEqual(checkTeacherAccount("test"), True)
+
+
+class Testcreateteacher(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        tea1.full_clean()
+        tea1.save()
+
+    def test_create_exist_account(self):
+        self.assertEqual(createTeacher({Teacher.ACCOUNT:"test_tea_1"}), False)
+
+    def test_create_no_account_key(self):
+        self.assertEqual(createTeacher({Teacher.REAL_NAME:"houyf"}), False)
+
+    def test_create_OK(self):
+        self.assertEqual(createTeacher({Teacher.ACCOUNT:"test", Teacher.REAL_NAME: "houyf"}), True)
+        self.assertEqual(len(Teacher.objects.filter(account="test")), 1)
+        self.assertEqual(len(Teacher.objects.filter(realName="houyf")), 1)
+
+    def test_create_illegal_key(self):
+        self.assertEqual(createTeacher({Teacher.ACCOUNT:"test", "nonexist": 1}), True)
 

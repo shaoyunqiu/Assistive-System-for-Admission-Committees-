@@ -43,6 +43,12 @@ def createTeacher(kwargs):
     '''
     #varList = tuple(vars(item)['column'] for item in Teacher._meta.get_fields()[1:])
     # 获取所有Teacher类的field名
+
+    # shaoyunqiu
+    if not kwargs.has_key('account'):
+        print 'account is required'
+        return False
+
     if not checkTeacherAccount(kwargs['account']):
         print 'account has been occupied'
         return False
