@@ -229,10 +229,31 @@ def get_teacher_alert_by_id(request):
     if request.is_ajax() and request.method == 'POST':
         t = {}
         t["message"] = "15"
-        t["score"] = "4"
+        t["score"] = get_num_teacher_shenhe_estimate()
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+
+def get_num_teacher_shenhe_estimate():
+    '''
+    获得老师应该审核的学生估分数目
+    :return:
+    '''
+    student_list = stu.getAllInStudent()
+    num = 0
+    for student in student_list:
+        account = getattr(student, Student.ACCOUNT)
+        try:
+            esti_dic = eval(stu.getStudent(account, Student.ESTIMATE_SCORE))
+        except:
+            esti_dic = {}
+        for key in esti_dic.keys():
+            info_dic = esti_dic[key]
+            if 'shenhe' not in info_dic.keys():
+                num = num + 1
+
+    return num
+
 
 
 def test_list_all(request):
