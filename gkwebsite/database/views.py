@@ -239,8 +239,12 @@ def test_list_all(request):
             c["year"] = str(YEAR_LIST[dic[Picture.YEAR]])
             c["place"] = SHITI_LIST[dic[Picture.PROVINCE]]
             c["subject"] = SUBJECT_LIST[dic[Picture.SUBJECT]]
-            
-            c["released"] = "N"
+
+
+            if dic[Picture.IS_DELEVERED] == 1:
+                c["released"] = "Y"
+            else:
+                c["released"] = "N"
             t.append(c)
         return JsonResponse(t, safe=False)
     else:
@@ -263,7 +267,6 @@ def release_test(request):
             Picture.SUBJECT: subject,
         }
         pic_list = pic.getPicturebyDict(dic)
-        print 'pic_list len', len(pic_list)
         t = {}
         for item in pic_list:
             flag = pic.setPicture(item, Picture.IS_DELEVERED, 1)
@@ -274,6 +277,7 @@ def release_test(request):
 
         t['success'] = 'Y'
         t['message'] = 'ok'
+        print 'ttt ', t
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -413,6 +417,7 @@ def list_question(request):
             Picture.YEAR: year,
             Picture.PROVINCE: province,
             Picture.SUBJECT: subject,
+            Picture.IS_TITLE: 0
         }
         pic_list = pic.getPicturebyDict(dic)
         t = []
@@ -467,6 +472,7 @@ def get_next_question_num(request):
             Picture.YEAR: year,
             Picture.PROVINCE: province,
             Picture.SUBJECT: subject,
+            Picture.IS_TITLE: 0
         }
         pic_list = pic.getPicturebyDict(dict)
         num_list = []
