@@ -88,26 +88,6 @@ class TestgetordeleteAllStudent(TestCase):
         self.assertEqual(len(getAllInStudent()), 0)
 
 
-class TestRemoveStudentAccount(TestCase):
-    def setUp(self):
-        stu1 = Student.objects.model()
-        setattr(stu1, Student.ACCOUNT, "test_stu_1")
-        stu1.full_clean()
-        stu1.save()
-        stu2 = Student.objects.model()
-        setattr(stu2, Student.ACCOUNT, "test_stu_2")
-        stu2.full_clean()
-        stu2.save()
-
-    def test_remove_legal_id(self):
-        removeStudentAccount("test_stu_1")
-        self.assertEqual(len(Student.objects.filter(account="test_stu_1")), 0)
-
-    def test_remove_illegal_id(self):
-        removeStudentAccount("lhy")
-        self.assertEqual(len(Student.objects.all()), 2)
-
-
 class TestCheckField(TestCase):
     def test_exist_field(self):
         field_list = ['id','account', 'password', 'realName', 'birth', 'idNumber', 'type', 'sex', 'nation', 'school',
@@ -399,6 +379,7 @@ class Testcheckteacherpassword(TestCase):
         self.assertEqual(checkTeacherPassword("test_tea_1","mima"), (True, "1"))
         self.assertEqual(checkTeacherPassword("test_tea_1", "mimi"), (False, 'Password is incorrect'))
 
+
 class Testcheckteacherfield(TestCase):
     def test_legal_field(self):
         self.assertEqual(checkTeacherField(Teacher.ACCOUNT), True)
@@ -406,6 +387,7 @@ class Testcheckteacherfield(TestCase):
 
     def test_illegal_field(self):
         self.assertEqual(checkTeacherField("esitimate"), False)
+
 
 class Testgetteacherall(TestCase):
     def setUp(self):
@@ -449,3 +431,35 @@ class Testgetteacher(TestCase):
         self.assertEqual(getTeacher("test_tea_1", "id"), 1)
         self.assertEqual(getTeacher("test_tea_1", Student.REAL_NAME), "houyf1")
         self.assertEqual(getTeacher("test_tea_1", Student.PASSWORD), "mima")
+
+
+class Testsetteacher(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        setattr(tea1, Teacher.REAL_NAME, "houyf1")
+        setattr(tea1, Teacher.PASSWORD, "mima")
+        tea1.full_clean()
+        tea1.save()
+
+    def test_setteacher_error_field(self):
+        self.assertEqual(setTeacher("test_tea_1", "hehe", "hh"), False)
+
+    def test_setteacher_erroraccount(self):
+        self.assertEqual(setTeacher("test", Teacher.REAL_NAME,"hh"), False)
+
+    def test_setteacher_correct(self):
+        self.assertEqual(setTeacher("test_tea_1", Teacher.REAL_NAME,"hehe"), True)
+        tea = (Teacher.objects.filter(account="test_tea_1"))[0]
+        self.assertEqual(tea.realName, "hehe")
+
+    def test_setteacher_id(self):
+        self.assertEqual(setTeacher("test_tea_1", "id", 0), False)
+        tea = (Teacher.objects.filter(account="test_tea_1"))[0]
+        self.assertEqual(tea.id, 1)
+
+    def test_setteacher_illegal_value(self):
+        self.assertEqual(setTeacher("test_tea_1", Teacher.PASSWORD, 1), False)
+        tea = (Teacher.objects.filter(account="test_tea_1"))[0]
+        self.assertEqual(tea.password, "mima")
+
