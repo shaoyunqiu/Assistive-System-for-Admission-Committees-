@@ -313,3 +313,24 @@ class Testgetallteacheranddelete(TestCase):
         self.assertEqual(len(getAllInTeacher()), 0)
 
 
+class Testidtoaccountteacher(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        tea1.full_clean()
+        tea1.save()
+        tea2 = Teacher.objects.model()
+        setattr(tea2, Teacher.ACCOUNT, "test_tea_2")
+        tea2.full_clean()
+        tea2.save()
+
+    def test_illegal_id_teacher(self):
+        self.assertEqual(idToAccountStudent(-1), None)
+        self.assertEqual(idToAccountStudent(100000), None)
+
+    def test_not_int_id_teacher(self):
+        self.assertEqual(idToAccountStudent("hhhh"), False)
+
+    def test_ok_id_teacher(self):
+        self.assertEqual(idToAccountTeacher(1), "test_tea_1")
+
