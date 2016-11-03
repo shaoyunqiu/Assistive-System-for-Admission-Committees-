@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from my_field import *
 import backend as back
 from student_backend import *
+from teacher_backend import *
 from back_test import *
 
 setup_test_environment()
@@ -286,5 +287,29 @@ class Testcheckstudentpassword(TestCase):
 
     def test_checkpassword_ok(self):
         self.assertEqual(checkStudentPassword("test_stu_1", "mima"), (True, "1"))
+
+
+class Testgetallteacheranddelete(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        tea1.full_clean()
+        tea1.save()
+        tea2 = Teacher.objects.model()
+        setattr(tea2, Teacher.ACCOUNT, "test_tea_2")
+        tea2.full_clean()
+        tea2.save()
+
+    def test_getallteacer_ok(self):
+        self.assertEqual(len(getAllInTeacher()), 2)
+
+    def test_deleteall(self):
+        deleteTeacherAll()
+        self.assertEqual(len(Teacher.objects.filter(account="test_tea_1")), 0)
+        self.assertEqual(len(Teacher.objects.filter(account="test_tea_2")), 0)
+
+    def test_getallteahcer_emoty(self):
+        deleteTeacherAll()
+        self.assertEqual(len(getAllInTeacher()), 0)
 
 
