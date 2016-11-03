@@ -406,3 +406,26 @@ class Testcheckteacherfield(TestCase):
 
     def test_illegal_field(self):
         self.assertEqual(checkTeacherField("esitimate"), False)
+
+class Testgetteacherall(TestCase):
+    def setUp(self):
+        tea1 = Teacher.objects.model()
+        setattr(tea1, Teacher.ACCOUNT, "test_tea_1")
+        setattr(tea1, Teacher.REAL_NAME, "houyf1")
+        tea1.full_clean()
+        tea1.save()
+        tea2 = Teacher.objects.model()
+        setattr(tea2, Teacher.ACCOUNT, "test_tea_2")
+        setattr(tea2, Teacher.REAL_NAME, "houyf2")
+        tea2.full_clean()
+        tea2.save()
+
+    def test_getteacherall_correct(self):
+        tea1 = getTeacherAll("test_tea_1")
+        self.assertEqual(tea1.realName, "houyf1")
+        tea2 = getTeacherAll("test_tea_2")
+        self.assertEqual(tea2.realName, "houyf2")
+
+    def test_getteacherall_noexisting_account(self):
+        self.assertEqual(getTeacherAll("lsp"), None)
+
