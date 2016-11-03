@@ -106,8 +106,10 @@ def get_student_name_by_id(request):
     # by dqn14 Nov 3, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
-        t = {'name': '酒坛宝宝'}
+        id = int(request.POST.get('id'))
+        account = stu.idToAccountStudent(id)
+        name = stu.getStudent(account, Student.REAL_NAME)
+        t = {'name': name}
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -579,11 +581,39 @@ def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        group_teamleader = request.POST.get('group_id')
+        group_id = int(request.POST.get('group_id'))
         student_id_num = request.POST.get('student_num')
+
+        vol_list = vol.getVolunteerbyField(Volunteer.STUDENT_ID, student_id_num)
+        if len(vol_list) == 0:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'不存在这个志愿者，请重新输入学号，亲'
+            return JsonResponse(t)
+
+        volunteer = vol_list[0]
+        vol_id = getattr(volunteer, Volunteer.ID)
+        try:
+            group = back.getGroupbyDict({Group.ID: group_id})[0]
+        except:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'真的有这个组吗，老师？'
+            return JsonResponse(t)
+
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if '' in vol_list:
+            vol_list.remove('')
+
+        if str(vol_id) not in vol_list:
+            vol_list.append(str(vol_id))
+
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+
+
         t = {}
-        t['success']='N'
-        t['message']='管理员正忙'
+        t['success']='Y'
+        t['message']=u'设置成功'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
