@@ -101,7 +101,16 @@ def get_volunteer_name_by_id(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-
+        
+def get_student_name_by_id(request):
+    # by dqn14 Nov 3, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
+        t = {'name': '酒坛宝宝'}
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
 
 def search_volunteer_by_name(request):
     # by dqn14 Oct 15, 2016
@@ -562,6 +571,19 @@ def export_activity_result(request):
         except:
             t['success'] = 'N'
             t['filename'] = 'no'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def set_volunteer(request):
+    # by dqn14 Nov 2, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        group_teamleader = request.POST.get('group_id')
+        student_id_num = request.POST.get('student_num')
+        t = {}
+        t['success']='N'
+        t['message']='管理员正忙'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
