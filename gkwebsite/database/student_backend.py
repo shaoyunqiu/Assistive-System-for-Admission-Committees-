@@ -17,6 +17,17 @@ def deleteStudentAll():
     getAllInStudent().delete()
 
 
+def is_have_permission(_id):
+    if type(_id) == str:
+        _id = int(_id)
+    account = idToAccountStudent(_id)
+    ret = getStudent(account, Student.QUANXIAN)
+    if ret == 1:
+        return True
+    else:
+        return False
+
+
 def idToAccountStudent(id):
     '''
 
