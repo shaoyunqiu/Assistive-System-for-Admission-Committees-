@@ -44,10 +44,8 @@ def getPicturebyDict(dic):
     :param dic:
     :return:
     '''
-    if Picture.IS_TITLE in dic.keys():
-        dic[Picture.IS_TITLE] = 1
-    else:
-        dic[Picture.IS_TITLE] = 0
+    # if Picture.IS_TITLE not in dic.keys():
+    #     dic[Picture.IS_TITLE] = 0
 
     return Picture.objects.filter(**dic)
 
