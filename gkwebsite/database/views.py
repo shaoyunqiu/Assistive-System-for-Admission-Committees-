@@ -342,6 +342,18 @@ def withdraw_test(request):
 
         t['success'] = 'Y'
         t['message'] = 'ok'
+
+
+
+        student_list = stu.getAllInStudent()
+        for student in student_list:
+            account = getattr(student, Student.ACCOUNT)
+            estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
+            if id in estimate.keys():
+                estimate.pop(id)
+            stu.setStudent(account, Student.ESTIMATE_SCORE, estimate)
+
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -365,6 +377,17 @@ def remove_test(request):
         t={}
         t['success'] = 'Y'
         t['message'] = 'ok'
+
+
+        student_list = stu.getAllInStudent()
+        for student in student_list:
+            account = getattr(student, Student.ACCOUNT)
+            estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
+            if id in estimate.keys():
+                estimate.pop(id)
+            stu.setStudent(account, Student.ESTIMATE_SCORE, estimate)
+
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -592,7 +615,7 @@ def add_activity(request):
         except:
             t = {}
             t['success']='N'
-            t['message']='管理员外出'
+            t['message']=u'创建失败'
             return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
