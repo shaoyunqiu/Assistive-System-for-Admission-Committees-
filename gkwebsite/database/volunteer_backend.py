@@ -234,6 +234,7 @@ def getVolunteerGroupIDListString(volunteer):
         vol_id = getattr(volunteer, Volunteer.ID)
     except:
         vol_id = 1
+
     group_all_list = back.getGroupbyDict({})
     id_list = []
     for group in group_all_list:
@@ -254,6 +255,8 @@ def setVolunteerGroupbyList(volunteer, id_list):
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
         if vol_id in vol_list:
             vol_list.remove(vol_id)
+        if '' in vol_list:
+            vol_list.remove('')
         vol_string = '_'.join(vol_list)
         back.setGroup(group, Group.VOL_LIST, vol_string)
 
@@ -263,6 +266,8 @@ def setVolunteerGroupbyList(volunteer, id_list):
             continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if '' in vol_list:
+            vol_list.remove('')
         if vol_id in vol_list:
             print 'Big bug!'
         else:

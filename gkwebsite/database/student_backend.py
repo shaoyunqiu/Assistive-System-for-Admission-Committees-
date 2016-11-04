@@ -274,6 +274,8 @@ def setStudentGroupbyList(student, id_list):
         stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
         if stu_id in stu_list:
             stu_list.remove(stu_id)
+        if '' in stu_list:
+            stu_list.remove('')
         stu_string = '_'.join(stu_list)
         back.setGroup(group, Group.STU_LIST, stu_string)
 
@@ -283,6 +285,8 @@ def setStudentGroupbyList(student, id_list):
             continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if '' in stu_list:
+            stu_list.remove('')
         if stu_id in stu_list:
             print 'Big bug!'
         else:
