@@ -343,6 +343,21 @@ def getStudentEstimateScore_Every(student, test_id):
     return str(score)
 
 
+def getStudentEstimateScore_Every_no_shenhe(student, test_id):
+    tmp_dic = getattr(student, 'estimateScore', '{}')
+    try:
+        tmp_dic = eval(tmp_dic)
+    except:
+        tmp_dic = eval('{}')
+
+    score = 0
+    if test_id not in tmp_dic.keys():
+        return str(score)
+
+    score = tmp_dic[test_id]['score']
+    return str(score)
+
+
 def getStudentEstimateRank_Every(student, test_id):
     score = int(getStudentEstimateScore_Every(student, test_id))
 
