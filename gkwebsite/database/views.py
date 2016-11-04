@@ -377,14 +377,28 @@ def add_test(request):
         year = request.POST.get('year')
         place = request.POST.get('place')
         subject = request.POST.get('subject')
+        t = {}
+        # print year, place, subject
+        if year.strip() == '0' or place.strip() == '0' or subject.strip() == '0':
+            t['success'] = 'N'
+            t['message'] = u'请补全信息'
+            return JsonResponse(t)
         dict = {
             Picture.YEAR : int(year),
             Picture.PROVINCE: int(place),
             Picture.SUBJECT: int(subject),
             Picture.IS_TITLE: 1,
         }
+
+        if pic.getPicturebyDict(dict):
+            t['success'] = 'N'
+            t['message'] = u'创建失败，试卷已经存在'
+            return JsonResponse(t)
+
+
+
         flag = pic.createPicturebyDict(dict)
-        t = {}
+
         if flag:
             t['success'] = 'Y'
             t['message'] = 'ok'
@@ -402,8 +416,9 @@ def get_test_yearlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
+        t.append({'num': '', 'str': ''})
         year_len = len(YEAR_LIST)
-        for i in range(0, year_len):
+        for i in range(1, year_len):
             t.append({'num': str(i), 'str': str(YEAR_LIST[i])})
 
         return JsonResponse(t, safe=False)
@@ -416,8 +431,9 @@ def get_test_placelist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
+        t.append({'num': '', 'str': ''})
         yiti_len = len(SHITI_LIST)
-        for i in range(0, yiti_len):
+        for i in range(1, yiti_len):
             t.append({'num': str(i), 'str': str(SHITI_LIST[i])})
         return JsonResponse(t, safe=False)
     else:
@@ -429,12 +445,14 @@ def get_test_subjectlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
+        t.append({'num': '', 'str': ''})
         kemu_len = len(SUBJECT_LIST)
-        for i in range(0, kemu_len):
+        for i in range(1, kemu_len):
             t.append({'num': str(i), 'str': str(SUBJECT_LIST[i])})
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
+
 
 def list_question(request):
     # by dqn14 Oct 27, 2016
