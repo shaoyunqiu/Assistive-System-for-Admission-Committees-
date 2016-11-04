@@ -125,6 +125,7 @@ def generateExcel(request,id, path, filename, sheet, list, _titleList):
     outputXLS(path, filename, sheet, list, _titleList)
 
 
+
 def getStudentEstimateScore(student):
     tmp_dic = getattr(student, 'estimateScore', '{}')
     try:
