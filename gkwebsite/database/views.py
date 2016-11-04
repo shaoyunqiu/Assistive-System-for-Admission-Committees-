@@ -377,14 +377,21 @@ def add_test(request):
         year = request.POST.get('year')
         place = request.POST.get('place')
         subject = request.POST.get('subject')
+        t = {}
+        # print year, place, subject
+        if year.strip() == '0' or place.strip() == '0' or subject.strip() == '0':
+            t['success'] = 'N'
+            t['message'] = u'请补全信息'
+            return JsonResponse(t)
         dict = {
             Picture.YEAR : int(year),
             Picture.PROVINCE: int(place),
             Picture.SUBJECT: int(subject),
             Picture.IS_TITLE: 1,
         }
+
         flag = pic.createPicturebyDict(dict)
-        t = {}
+
         if flag:
             t['success'] = 'Y'
             t['message'] = 'ok'

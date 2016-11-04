@@ -323,6 +323,48 @@ def getStudentEstimateRank(student):
     return str(rank), str(len(student_list)-no_gufen_number)
 
 
+def getStudentEstimateScore_Every(student, test_id):
+    tmp_dic = getattr(student, 'estimateScore', '{}')
+    try:
+        tmp_dic = eval(tmp_dic)
+    except:
+        tmp_dic = eval('{}')
+
+    score = 0
+    if test_id not in tmp_dic.keys():
+        return str(score)
+
+    if 'shenhe' in tmp_dic[test_id]:
+        score = tmp_dic[test_id]['score']
+    return str(score)
+
+
+def getStudentEstimateRank_Every(student, test_id):
+    score = int(getStudentEstimateScore_Every(student, test_id))
+
+    choose_student__score_list = [999999]
+    all_student_list = getAllInStudent()
+    for student in all_student_list:
+        tmp_dic = eval(getattr(student, 'estimateScore'))
+        if test_id in tmp_dic.keys():
+            if 'shenhe' in tmp_dic[test_id]:
+                choose_student__score_list.append(int(tmp_dic[test_id]['score']))
+
+    rank = 1
+    ranked_score_list = sorted(choose_student__score_list, reverse=True)
+    length = len(ranked_score_list)
+    for i in range(0, length):
+        if score >= ranked_score_list[i]:
+            rank = i
+            break
+
+    return str(rank), str(len(ranked_score_list)-1)
+
+
+
+
+
+
 
 
 

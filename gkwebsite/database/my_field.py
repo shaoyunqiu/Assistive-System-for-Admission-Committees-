@@ -24,7 +24,7 @@ u'俄罗斯族', u'裕固族', u'乌孜别克族',  u'门巴族',  u'鄂伦春�
 
 ADMISSION_STATUS_LIST = [u'已录取', u'未投档', u'已投档']
 TYPE_LIST = [u' ', u'文科', u'理科']
-YEAR_LIST = [u' ', 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027]
+YEAR_LIST = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027]
 SUBJECT_LIST = [u' ', u'语文', u'数学', u'英语', u'物理', u'化学', u'生物', u'理综', u'文综', u'生活', u'其他']
 NUMBER_LIST = [u' ', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
                27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
@@ -35,8 +35,10 @@ SCORE_LIST = [u' ', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1
 CATEGORY_LIST = [u' ', u'主观', u'客观']
 SHITI_LIST = PROVINCE_LIST
 
+
 def get_picture_path(year, province, subject, number, score, category):
     return str(year) + '_' + str(province) + '_' + str(subject) + '_' + str(number) + '_' + str(score) + '_' + str(category) + '.pic'
+
 
 def find_item_index_in_list(item, list):
     chang = len(list)
@@ -132,6 +134,8 @@ def getStudentEstimateScore(student):
         if 'shenhe' in tmp_dic[key].keys():
             sum_score += tmp_dic[key]['score']
     return str(sum_score)
+
+
 
 
 
