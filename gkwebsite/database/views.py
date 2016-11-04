@@ -106,8 +106,10 @@ def get_student_name_by_id(request):
     # by dqn14 Nov 3, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
-        t = {'name': '酒坛宝宝'}
+        id = int(request.POST.get('id'))
+        account = stu.idToAccountStudent(id)
+        name = stu.getStudent(account, Student.REAL_NAME)
+        t = {'name': name}
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -227,10 +229,31 @@ def get_teacher_alert_by_id(request):
     if request.is_ajax() and request.method == 'POST':
         t = {}
         t["message"] = "15"
-        t["score"] = "4"
+        t["score"] = get_num_teacher_shenhe_estimate()
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+
+def get_num_teacher_shenhe_estimate():
+    '''
+    获得老师应该审核的学生估分数目
+    :return:
+    '''
+    student_list = stu.getAllInStudent()
+    num = 0
+    for student in student_list:
+        account = getattr(student, Student.ACCOUNT)
+        try:
+            esti_dic = eval(stu.getStudent(account, Student.ESTIMATE_SCORE))
+        except:
+            esti_dic = {}
+        for key in esti_dic.keys():
+            info_dic = esti_dic[key]
+            if 'shenhe' not in info_dic.keys():
+                num = num + 1
+
+    return num
+
 
 
 def test_list_all(request):
@@ -248,8 +271,12 @@ def test_list_all(request):
             c["year"] = str(YEAR_LIST[dic[Picture.YEAR]])
             c["place"] = SHITI_LIST[dic[Picture.PROVINCE]]
             c["subject"] = SUBJECT_LIST[dic[Picture.SUBJECT]]
-            
-            c["released"] = "N"
+
+
+            if dic[Picture.IS_DELEVERED] == 1:
+                c["released"] = "Y"
+            else:
+                c["released"] = "N"
             t.append(c)
         return JsonResponse(t, safe=False)
     else:
@@ -272,7 +299,6 @@ def release_test(request):
             Picture.SUBJECT: subject,
         }
         pic_list = pic.getPicturebyDict(dic)
-        print 'pic_list len', len(pic_list)
         t = {}
         for item in pic_list:
             flag = pic.setPicture(item, Picture.IS_DELEVERED, 1)
@@ -283,6 +309,7 @@ def release_test(request):
 
         t['success'] = 'Y'
         t['message'] = 'ok'
+        print 'ttt ', t
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -422,6 +449,7 @@ def list_question(request):
             Picture.YEAR: year,
             Picture.PROVINCE: province,
             Picture.SUBJECT: subject,
+            Picture.IS_TITLE: 0
         }
         pic_list = pic.getPicturebyDict(dic)
         t = []
@@ -476,6 +504,7 @@ def get_next_question_num(request):
             Picture.YEAR: year,
             Picture.PROVINCE: province,
             Picture.SUBJECT: subject,
+            Picture.IS_TITLE: 0
         }
         pic_list = pic.getPicturebyDict(dict)
         num_list = []
@@ -573,11 +602,39 @@ def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        group_teamleader = request.POST.get('group_id')
+        group_id = int(request.POST.get('group_id'))
         student_id_num = request.POST.get('student_num')
+
+        vol_list = vol.getVolunteerbyField(Volunteer.STUDENT_ID, student_id_num)
+        if len(vol_list) == 0:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'不存在这个志愿者，请重新输入学号，亲'
+            return JsonResponse(t)
+
+        volunteer = vol_list[0]
+        vol_id = getattr(volunteer, Volunteer.ID)
+        try:
+            group = back.getGroupbyDict({Group.ID: group_id})[0]
+        except:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'真的有这个组吗，老师？'
+            return JsonResponse(t)
+
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if '' in vol_list:
+            vol_list.remove('')
+
+        if str(vol_id) not in vol_list:
+            vol_list.append(str(vol_id))
+
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+
+
         t = {}
-        t['success']='N'
-        t['message']='管理员正忙'
+        t['success']='Y'
+        t['message']=u'设置成功'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
