@@ -185,7 +185,7 @@ def add_student(request):
             c = {'code': code}
             t.append(c)
             codelist.append(code)
-        id = (str)(request.session['user_id'])
+        id = (str)(request.session['teacher_id'])
         generateExcel(request, id, '', '', 'sheet1', [codelist], [u'注册码'])
         return JsonResponse(t, safe=False)
     else:
