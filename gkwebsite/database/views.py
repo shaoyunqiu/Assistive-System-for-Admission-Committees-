@@ -8,6 +8,9 @@ import volunteer_backend as vol
 import register_backend as reg
 import image_backend as pic
 from my_field import *
+import backend as back
+
+from teacher.views import generateTimerXLS
 
 
 # Create your views here.
@@ -98,7 +101,18 @@ def get_volunteer_name_by_id(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-
+        
+def get_student_name_by_id(request):
+    # by dqn14 Nov 3, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        id = int(request.POST.get('id'))
+        account = stu.idToAccountStudent(id)
+        name = stu.getStudent(account, Student.REAL_NAME)
+        t = {'name': name}
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
 
 def search_volunteer_by_name(request):
     # by dqn14 Oct 15, 2016
@@ -139,7 +153,7 @@ def volunteer_list_all(request):
     if request.is_ajax() and request.method == 'POST':
         t = []
         vol_list = vol.getAllInVolunteer()
-        print vol_list, '***********'
+        # print vol_list, '***********'
         for item in vol_list:
             account = getattr(item, Volunteer.ACCOUNT)
             vol_dic = vol.getVolunteerAllDictByAccount(account)
@@ -152,7 +166,7 @@ def volunteer_list_all(request):
             # 没注册的志愿者不显示出来
             if dic['name'] != '':
                 t.append(dic)
-        print t
+        # print t
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
@@ -215,10 +229,31 @@ def get_teacher_alert_by_id(request):
     if request.is_ajax() and request.method == 'POST':
         t = {}
         t["message"] = "15"
-        t["score"] = "4"
+        t["score"] = get_num_teacher_shenhe_estimate()
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+
+def get_num_teacher_shenhe_estimate():
+    '''
+    获得老师应该审核的学生估分数目
+    :return:
+    '''
+    student_list = stu.getAllInStudent()
+    num = 0
+    for student in student_list:
+        account = getattr(student, Student.ACCOUNT)
+        try:
+            esti_dic = eval(stu.getStudent(account, Student.ESTIMATE_SCORE))
+        except:
+            esti_dic = {}
+        for key in esti_dic.keys():
+            info_dic = esti_dic[key]
+            if 'shenhe' not in info_dic.keys():
+                num = num + 1
+
+    return num
+
 
 
 def test_list_all(request):
@@ -226,17 +261,7 @@ def test_list_all(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        # c = {}
-        # c["year"] = "2016年"
-        # c["place"] = "全国II卷"
-        # c["subject"] = "理科综合"
-        # # 请注意，上面三个参数是直接显示在页面上的，请使其有可读性
-        # c["id"] = "2016_全国II_理科综合"
-        # c["released"] = "Y"
-        # t.append(c)
-
         pic_list = pic.getPicturebyDict({Picture.IS_TITLE: 1})
-        print 'pic list ' ,len(pic_list)
         for item in pic_list:
             c = {}
             dic = pic.getPictureAllDictByObject(item)
@@ -246,8 +271,12 @@ def test_list_all(request):
             c["year"] = str(YEAR_LIST[dic[Picture.YEAR]])
             c["place"] = SHITI_LIST[dic[Picture.PROVINCE]]
             c["subject"] = SUBJECT_LIST[dic[Picture.SUBJECT]]
-            
-            c["released"] = "N"
+
+
+            if dic[Picture.IS_DELEVERED] == 1:
+                c["released"] = "Y"
+            else:
+                c["released"] = "N"
             t.append(c)
         return JsonResponse(t, safe=False)
     else:
@@ -264,7 +293,6 @@ def release_test(request):
         year = find_item_index_in_list(int(list[0]), YEAR_LIST)
         province = find_item_index_in_list(list[1], SHITI_LIST)
         subject = find_item_index_in_list(list[2], SUBJECT_LIST)
-
         dic = {
             Picture.YEAR: year,
             Picture.PROVINCE: province,
@@ -274,6 +302,39 @@ def release_test(request):
         t = {}
         for item in pic_list:
             flag = pic.setPicture(item, Picture.IS_DELEVERED, 1)
+            if flag is False:
+                t['success'] = 'N'
+                t['message'] = '管理员正忙'
+                return JsonResponse(t)
+
+        t['success'] = 'Y'
+        t['message'] = 'ok'
+        print 'ttt ', t
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+
+def withdraw_test(request):
+    # by dqn14 Oct 26, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        id = request.POST.get('id')
+        print 'chehui ', id
+        list = id.split('_')
+        year = find_item_index_in_list(int(list[0]), YEAR_LIST)
+        province = find_item_index_in_list(list[1], SHITI_LIST)
+        subject = find_item_index_in_list(list[2], SUBJECT_LIST)
+
+        dic = {
+            Picture.YEAR: year,
+            Picture.PROVINCE: province,
+            Picture.SUBJECT: subject,
+        }
+        pic_list = pic.getPicturebyDict(dic)
+        t = {}
+        for item in pic_list:
+            flag = pic.setPicture(item, Picture.IS_DELEVERED, 0)
             if flag == False:
                 t['success'] = 'N'
                 t['message'] = '管理员正忙'
@@ -286,30 +347,24 @@ def release_test(request):
         return HttpResponse('Access denied.')
 
 
-def withdraw_test(request):
-    # by dqn14 Oct 26, 2016
-    # use this if-else to block violent access
-    if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
-        print 'chehui ', id
-        t = {}
-        # t['success'] = 'Y'
-        t['success'] = 'N'
-        t['message'] = '管理员正忙'
-        return JsonResponse(t)
-    else:
-        return HttpResponse('Access denied.')
-
-
 def remove_test(request):
     # by dqn14 Oct 26, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         id = request.POST.get('id')
-        t = {}
-        # t['success'] = 'Y'
-        t['success'] = 'N'
-        t['message'] = '管理员正忙'
+        list = id.split('_')
+        year = find_item_index_in_list(int(list[0]), YEAR_LIST)
+        province = find_item_index_in_list(list[1], SHITI_LIST)
+        subject = find_item_index_in_list(list[2], SUBJECT_LIST)
+        dic = {
+            Picture.YEAR: year,
+            Picture.PROVINCE: province,
+            Picture.SUBJECT: subject,
+        }
+        pic.removePictureIDByDic(dic)
+        t={}
+        t['success'] = 'Y'
+        t['message'] = 'ok'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -322,19 +377,12 @@ def add_test(request):
         year = request.POST.get('year')
         place = request.POST.get('place')
         subject = request.POST.get('subject')
-        # dict = {
-        #     Picture.YEAR : find_item_index_in_list(int(year), YEAR_LIST),
-        #     Picture.PROVINCE: find_item_index_in_list(place, SHITI_LIST),
-        #     Picture.subject: find_item_index_in_list(subject, SUBJECT_LIST),
-        #     Picture.isTitle: 1,
-        # }
         dict = {
             Picture.YEAR : int(year),
             Picture.PROVINCE: int(place),
             Picture.SUBJECT: int(subject),
             Picture.IS_TITLE: 1,
         }
-
         flag = pic.createPicturebyDict(dict)
         t = {}
         if flag:
@@ -354,10 +402,6 @@ def get_test_yearlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        # t.append({'num': '0', 'str': '2017'})
-        # t.append({'num': '1', 'str': '2018'})
-        # t.append({'num': '2', 'str': '2019'})
-        # t.append({'num': '3', 'str': '2020'})
         year_len = len(YEAR_LIST)
         for i in range(0, year_len):
             t.append({'num': str(i), 'str': str(YEAR_LIST[i])})
@@ -372,10 +416,6 @@ def get_test_placelist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        # t.append({'num': '0', 'str': '北京卷'})
-        # t.append({'num': '1', 'str': '海南卷'})
-        # t.append({'num': '2', 'str': '上海卷'})
-        # t.append({'num': '3', 'str': '全国I卷'})
         yiti_len = len(SHITI_LIST)
         for i in range(0, yiti_len):
             t.append({'num': str(i), 'str': str(SHITI_LIST[i])})
@@ -389,10 +429,6 @@ def get_test_subjectlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
-        # t.append({'num': '0', 'str': '语文'})
-        # t.append({'num': '1', 'str': '数学'})
-        # t.append({'num': '2', 'str': '英语'})
-        # t.append({'num': '3', 'str': '理科综合'})
         kemu_len = len(SUBJECT_LIST)
         for i in range(0, kemu_len):
             t.append({'num': str(i), 'str': str(SUBJECT_LIST[i])})
@@ -405,17 +441,25 @@ def list_question(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         test_id = request.POST.get('id')
+        list = test_id.split('_')
+        year = find_item_index_in_list(int(list[0]), YEAR_LIST)
+        province = find_item_index_in_list(list[1], SHITI_LIST)
+        subject = find_item_index_in_list(list[2], SUBJECT_LIST)
+        dic = {
+            Picture.YEAR: year,
+            Picture.PROVINCE: province,
+            Picture.SUBJECT: subject,
+            Picture.IS_TITLE: 0
+        }
+        pic_list = pic.getPicturebyDict(dic)
         t = []
-        c = {}
-        c['num'] = '1'
-        c['type'] = '客观题'
-        c['maxscore'] = '6'
-        d = {}
-        d['num'] = '2'
-        d['type'] = '客观题'
-        d['maxscore'] = '3'
-        t.append(c)
-        t.append(d)
+        for item in pic_list:
+            pic_dic = pic.getPictureAllDictByObject(item)
+            c = {}
+            c['num'] = pic_dic[Picture.NUMBER]
+            c['type'] = CATEGORY_LIST[pic_dic[Picture.CATEGORY]]
+            c['maxscore'] = pic_dic[Picture.SCORE]
+            t.append(c)
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
@@ -425,10 +469,22 @@ def remove_question(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         test_id = request.POST.get('test_id')
-        num = request.POST.get('num')
+        list = test_id.split('_')
+        year = find_item_index_in_list(int(list[0]), YEAR_LIST)
+        province = find_item_index_in_list(list[1], SHITI_LIST)
+        subject = find_item_index_in_list(list[2], SUBJECT_LIST)
+        num = int(request.POST.get('num'))
+        dic = {
+            Picture.YEAR: year,
+            Picture.PROVINCE: province,
+            Picture.SUBJECT: subject,
+            Picture.NUMBER: num,
+        }
+        pic.removePictureIDByDic(dic)
+
         t = {}
-        t['success']='N'
-        t['message']='管理员正忙'
+        t['success']='Y'
+        t['message']='ok'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -438,7 +494,29 @@ def get_next_question_num(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         test_id = request.POST.get('test_id')
-        t = {'num':'4'}
+        info = test_id
+        info_list = info.split('_')
+        print info_list
+        year = int(info_list[0]) - YEAR_LIST[1] + 1
+        province = find_item_index_in_list(info_list[1], PROVINCE_LIST)
+        subject = find_item_index_in_list(info_list[2], SUBJECT_LIST)
+        dict = {
+            Picture.YEAR: year,
+            Picture.PROVINCE: province,
+            Picture.SUBJECT: subject,
+            Picture.IS_TITLE: 0
+        }
+        pic_list = pic.getPicturebyDict(dict)
+        num_list = []
+        for picture in pic_list:
+            info_dic = pic.getPictureAllDictByObject(picture)
+            num_list.append(info_dic[Picture.NUMBER])
+        num = 1
+        for i in range(1, 99999):
+            if i not in num_list:
+                num = i
+                break
+        t = {'num': num}
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -467,6 +545,96 @@ def move_question_down(request):
         t = {}
         t['success']='N'
         t['message']='管理员正忙，没空下移'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def add_activity(request):
+    # by dqn14 Nov 2, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        name = request.POST.get('name')
+        date_begin = request.POST.get('date_begin')
+        date_end = request.POST.get('date_end')
+        teacher_id = request.POST.get('teacher_id')
+        print name, date_begin, date_end
+        try:
+            begin_list = date_begin.split('-')
+            end_list = date_end.split('-')
+            back.createTimerbyDict({Timer.NAME:name,
+                                    Timer.START_TIME: datetime.date(int(begin_list[0]), int(begin_list[1]), int(begin_list[2])),
+                                    Timer.END_TIME: datetime.date(int(end_list[0]), int(end_list[1]), int(end_list[2])),
+                                    Timer.TEACHER_ID: int(teacher_id)
+                                    })
+            t = {}
+            t['success']='Y'
+            t['message']= u'活动创建成功'
+            print 't', t
+            return JsonResponse(t)
+        except:
+            t = {}
+            t['success']='N'
+            t['message']='管理员外出'
+            return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def export_activity_result(request):
+    # by dqn14 Nov 2, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        try:
+            id = int(request.POST.get('id'))
+            teacher_id = int(request.POST.get('teacher_id'))
+            filename = 'files/%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
+            generateTimerXLS(id, teacher_id, filename)
+            t = {}
+            t['success']='Y'
+            t['filename']='%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
+        except:
+            t['success'] = 'N'
+            t['filename'] = 'no'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def set_volunteer(request):
+    # by dqn14 Nov 2, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        group_id = int(request.POST.get('group_id'))
+        student_id_num = request.POST.get('student_num')
+
+        vol_list = vol.getVolunteerbyField(Volunteer.STUDENT_ID, student_id_num)
+        if len(vol_list) == 0:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'不存在这个志愿者，请重新输入学号，亲'
+            return JsonResponse(t)
+
+        volunteer = vol_list[0]
+        vol_id = getattr(volunteer, Volunteer.ID)
+        try:
+            group = back.getGroupbyDict({Group.ID: group_id})[0]
+        except:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'真的有这个组吗，老师？'
+            return JsonResponse(t)
+
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if '' in vol_list:
+            vol_list.remove('')
+
+        if str(vol_id) not in vol_list:
+            vol_list.append(str(vol_id))
+
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+
+
+        t = {}
+        t['success']='Y'
+        t['message']=u'设置成功'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

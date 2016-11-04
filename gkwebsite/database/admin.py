@@ -9,4 +9,8 @@ admin.site.register(models.RegisterCode)
 admin.site.register(models.Picture)
 admin.site.register(models.Notice)
 admin.site.register(models.Group)
+admin.site.register(models.Timer)
+
+
+
 

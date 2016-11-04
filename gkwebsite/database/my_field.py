@@ -36,7 +36,7 @@ CATEGORY_LIST = [u' ', u'主观', u'客观']
 SHITI_LIST = PROVINCE_LIST
 
 def get_picture_path(year, province, subject, number, score, category):
-    return str(year) + '_' + str(province) + '_' + str(subject) + '_' + str(number) + '_' + str(score) + '_' + str(category)
+    return str(year) + '_' + str(province) + '_' + str(subject) + '_' + str(number) + '_' + str(score) + '_' + str(category) + '.pic'
 
 def find_item_index_in_list(item, list):
     chang = len(list)
@@ -122,7 +122,7 @@ def generateExcel(request,id, path, filename, sheet, list, _titleList):
 
 
 def getStudentEstimateScore(student):
-    tmp_dic = getattr(student, 'estimate', '{}')
+    tmp_dic = getattr(student, 'estimateScore', '{}')
     try:
         tmp_dic = eval(tmp_dic)
     except:

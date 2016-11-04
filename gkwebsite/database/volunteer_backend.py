@@ -64,6 +64,17 @@ def deleteVolunteerAll():
     getAllInVolunteer().delete()
 
 
+def is_have_permission(_id):
+    if type(_id) == str:
+        _id = int(_id)
+    account = idToAccountVolunteer(_id)
+    ret = getVolunteer(account, Volunteer.QUANXIAN)
+    if ret == 1:
+        return True
+    else:
+        return False
+
+
 def idToAccountVolunteer(id):
     '''
 
@@ -248,6 +259,8 @@ def setVolunteerGroupbyList(volunteer, id_list):
 
     for new_id in id_list:
         new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
         if vol_id in vol_list:
@@ -256,5 +269,7 @@ def setVolunteerGroupbyList(volunteer, id_list):
             vol_list.append(vol_id)
         back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
     return True
+
+
 
 

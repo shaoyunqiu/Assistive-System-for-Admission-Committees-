@@ -17,6 +17,17 @@ def deleteStudentAll():
     getAllInStudent().delete()
 
 
+def is_have_permission(_id):
+    if type(_id) == str:
+        _id = int(_id)
+    account = idToAccountStudent(_id)
+    ret = getStudent(account, Student.QUANXIAN)
+    if ret == 1:
+        return True
+    else:
+        return False
+
+
 def idToAccountStudent(id):
     '''
 
@@ -39,11 +50,15 @@ def idToAccountStudent(id):
 
 def accountToIDStudent(account):
     '''
-
     :param account: string类型的account
     :return: string类型的id
     '''
-    return (str)(getStudent(account, 'id'))
+    # modified by shaoyunqiu 2016/11/2
+    if(getStudent(account, 'id') == None):
+        return None
+    else:
+        return (str)(getStudent(account, 'id'))
+    #return (str)(getStudent(account, 'id'))
 
 
 def removeStudentAccount(_account):
@@ -54,10 +69,15 @@ def getStudentbyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
-    :return:返回一个student对象
+    :return:返回一个student对象列表
+    modified by shao 2016/11/2
     '''
-    dic = {field: argc}
-    return Student.objects.filter(**dic)
+    if(checkField(field) == True):
+        dic = {field: argc}
+        return Student.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):
@@ -94,7 +114,6 @@ def getStudentAllDictByAccount(account):
         try:
             dict[item] = getattr(student, item)
         except:
-
             return None
 
     dict[Student.TYPE] = {
@@ -125,10 +144,6 @@ def getStudentAllDictByAccount(account):
         dict[Volunteer.MAJOR].append({'department': numitem,
                                       'departmentlist': MAJOR_LIST})
 
-    # dict[Student.ADMISSION_STATUS] = {
-    #     'admissionstatus': dict[Student.ADMISSION_STATUS],
-    #     'admissionstatuslist': ADMISSION_STATUS_LIST
-    # }
     return dict
 
 
@@ -183,6 +198,11 @@ def createStudent(account, dict):
         print "account existed"
         return False
 
+    # confirm that accout == dict[Student.ACCOUNT]
+    if dict.has_key(Student.ACCOUNT):
+        if dict[Student.ACCOUNT] != account:
+            print "args conflict"
+            return False
     try:
         student = Student.objects.model()
     except:
@@ -259,6 +279,8 @@ def setStudentGroupbyList(student, id_list):
 
     for new_id in id_list:
         new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
         if stu_id in stu_list:
@@ -270,7 +292,35 @@ def setStudentGroupbyList(student, id_list):
 
 
 
+def getStudentEstimateRank(student):
+    score = int(getStudentEstimateScore(student))
 
+    all_student_estimate_score = [999999]
+    student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
+    no_gufen_number = 0
+    for student in student_list:
+        estimate_dic = eval(getattr(student, Student.ESTIMATE_SCORE))
+        tmp = 0
+        for key in estimate_dic.keys():
+            tmp = tmp + int(estimate_dic[key]['score'])
+        if tmp == 0:
+            no_gufen_number = no_gufen_number + 1
+
+    if score == 0:
+        return str(len(student_list)-no_gufen_number), str(len(student_list)-no_gufen_number)
+    for item in student_list:
+        all_student_estimate_score.append(getStudentEstimateScore(item))
+
+    rank = 1
+    ranked_score_list = sorted(all_student_estimate_score, reverse=True)
+
+    length = len(ranked_score_list)
+    for i in range(0, length):
+        if score >= ranked_score_list[i]:
+            rank = i
+            break
+
+    return str(rank), str(len(student_list)-no_gufen_number)
 
 
 
