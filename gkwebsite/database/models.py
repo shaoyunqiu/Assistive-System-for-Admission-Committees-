@@ -103,6 +103,8 @@ class Student(models.Model):
 
     quanxian = models.IntegerField(default=1, blank=True)
 
+    openid = models.CharField(max_length=500, default='', blank=True)
+
     ID = 'id'
 
     ACCOUNT = 'account'
@@ -151,6 +153,7 @@ class Student(models.Model):
     MOM_NAME = 'momName'
     DUIYING_TEACHER = 'duiyingTeacher'
     QUANXIAN = 'quanxian'
+    OPEN_ID = 'openid'
 
 
     FIELD_LIST = [ID,
@@ -161,7 +164,7 @@ class Student(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
-                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN]
+                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID]
 
     def __unicode__(self):
         import sys
