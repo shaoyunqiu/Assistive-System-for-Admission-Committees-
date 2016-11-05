@@ -6,6 +6,10 @@ from django.core.exceptions import ValidationError
 from my_field import *
 import backend as back
 from student_backend import *
+from my_field import *
+import ast
+import xlwt
+import os
 from teacher_backend import *
 from back_test import *
 
@@ -464,4 +468,12 @@ class Testsetteacher(TestCase):
         self.assertEqual(tea.password, "mima")
 
 
+class TestMyfieldget(TestCase):
+    def test_get_picture_path(self):
+        self.assertEqual(get_picture_path("2016","beijing","chinese","1","1","wen"), "2016_beijing_chinese_1_1_wen.pic")
+
+    def test_find_item_in_list(self):
+        mylist = range(0,10)
+        self.assertEqual(find_item_index_in_list(0, mylist), 0)
+        self.assertEqual(find_item_index_in_list(10, mylist), -1)
 
