@@ -406,6 +406,10 @@ def add_test(request):
             t['success'] = 'N'
             t['message'] = u'请补全信息'
             return JsonResponse(t)
+        if year.strip() == '' or place.strip() == '' or subject.strip() == '':
+            t['success'] = 'N'
+            t['message'] = u'请补全信息'
+            return JsonResponse(t)
         dict = {
             Picture.YEAR : int(year),
             Picture.PROVINCE: int(place),
