@@ -463,3 +463,5 @@ class Testsetteacher(TestCase):
         tea = (Teacher.objects.filter(account="test_tea_1"))[0]
         self.assertEqual(tea.password, "mima")
 
+
+
