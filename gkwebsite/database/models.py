@@ -15,7 +15,7 @@ import datetime
 class Teacher(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
@@ -54,7 +54,7 @@ class Teacher(models.Model):
 class Student(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
@@ -176,8 +176,8 @@ class Student(models.Model):
 class Volunteer(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
-    # password validation : 4个或以上的数字或字母
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
+   # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
     idNumber = models.CharField(max_length=40, default='', blank=True,
