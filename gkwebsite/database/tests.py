@@ -1,3 +1,4 @@
+# coding:utf8
 from django.test import TestCase
 from django.test.utils import setup_test_environment
 from models import *
@@ -468,7 +469,24 @@ class Testsetteacher(TestCase):
         self.assertEqual(tea.password, "mima")
 
 
-class TestMyfieldget(TestCase):
+class TestMyfield(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.ESTIMATE_SCORE, {u'2016_北京_语文':{"time":111, "score":90,"shenhe":1},u'2016_北京_英语':{'time':222,'score':10}})
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        setattr(stu2, Student.ESTIMATE_SCORE, {u'2016_北京_数学':{'time':0000,'shenhe':''}})
+        stu2.full_clean()
+        stu2.save()
+        stu3 = Student.objects.model()
+        setattr(stu3, Student.ACCOUNT, "test_stu_3")
+        setattr(stu3, Student.ESTIMATE_SCORE, {u'2016_北京_英语':{'time':222, 'score':99, 'shenhe':1}, u'2016':{'time':111, 'score':"0", 'shenhe':0}, u'2016_':{'time':233, 'score':90, 'shenhe':1}})
+        stu3.full_clean()
+        stu3.save()
+
     def test_get_picture_path(self):
         self.assertEqual(get_picture_path("2016","beijing","chinese","1","1","wen"), "2016_beijing_chinese_1_1_wen.pic")
 
@@ -476,4 +494,13 @@ class TestMyfieldget(TestCase):
         mylist = range(0,10)
         self.assertEqual(find_item_index_in_list(0, mylist), 0)
         self.assertEqual(find_item_index_in_list(10, mylist), -1)
+
+    def test_getstudent_estimate_socre(self):
+        stu1 = (Student.objects.filter(account="test_stu_1"))[0]
+        stu2 = (Student.objects.filter(account="test_stu_2"))[0]
+        stu3 = (Student.objects.filter(account="test_stu_3"))[0]
+        self.assertEqual(getStudentEstimateScore(stu1), "90")
+        self.assertEqual(getStudentEstimateScore(stu2), "0")
+        self.assertEqual(getStudentEstimateScore(stu3), "189")
+
 
