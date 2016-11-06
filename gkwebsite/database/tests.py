@@ -607,11 +607,13 @@ class TestVolBases(TestCase):
         setattr(vol1, Volunteer.ACCOUNT, "test_vol_1")
         setattr(vol1, Volunteer.REAL_NAME, "lihy1")
         setattr(vol1, Volunteer.QUANXIAN, 1)
+        setattr(vol1, Volunteer.PASSWORD, "mima")
         vol1.full_clean()
         vol1.save()
         vol2 = Volunteer.objects.model()
         setattr(vol2, Volunteer.ACCOUNT, "test_vol_2")
         setattr(vol2, Volunteer.NATION, 1)
+        setattr(vol2, Volunteer.PASSWORD, "mimimi")
         vol2.full_clean()
         vol2.save()
 
@@ -673,8 +675,17 @@ class TestVolBases(TestCase):
         self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ACCOUNT:"vol"}),False)
         #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.NATION:1000}), False)
         #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ID:3}), False)
+        # cannot pass the above two tests
         self.assertEqual(createVolunteer("test_vol_3", {Volunteer.REAL_NAME:"lihy1"}),True)
         self.assertEqual(len(Volunteer.objects.filter(realName="lihy1")), 2)
+
+
+    def test_checkpassword(self):
+        self.assertEqual(checkVolunteerPassword("test_vol_1", "mima"), (True,"1"))
+        self.assertEqual(checkVolunteerPassword("test_vol_1", "mimimi"), (False , 'Password is incorrect'))
+        self.assertEqual(checkVolunteerPassword("test", "mima"), (False , 'Account does not exist.'))
+        self.assertEqual(checkVolunteerPassword("test", "mima"), (False , 'Account does not exist.'))
+
 
 
 
