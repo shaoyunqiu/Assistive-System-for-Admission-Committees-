@@ -468,6 +468,7 @@ class Testsetteacher(TestCase):
         tea = (Teacher.objects.filter(account="test_tea_1"))[0]
         self.assertEqual(tea.password, "mima")
 
+
 class TestMyfield(TestCase):
     def setUp(self):
         stu1 = Student.objects.model()
@@ -503,3 +504,45 @@ class TestMyfield(TestCase):
         self.assertEqual(getStudentEstimateScore(stu3), "189")
 
 
+class Testgetestimate(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        setattr(stu1, Student.PROVINCE, 1)
+        setattr(stu1, Student.ESTIMATE_SCORE,
+                {u'2016_北京_语文': {"time": 111, "score": 90, "shenhe": 1}, u'2016_北京_英语': {'time': 222, 'score': 80, 'shenhe':1}})
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        setattr(stu2, Student.PROVINCE, 1)
+        setattr(stu2, Student.ESTIMATE_SCORE, {u'2016_北京_数学': {'time': 0000, 'shenhe': ''}})
+        stu2.full_clean()
+        stu2.save()
+        stu3 = Student.objects.model()
+        setattr(stu3, Student.ACCOUNT, "test_stu_3")
+        setattr(stu3, Student.PROVINCE, 1)
+        setattr(stu3, Student.ESTIMATE_SCORE, {u'2016_北京_英语': {'time': 222, 'score': 99, 'shenhe': 1},
+                                               u'2016_北京_语文': {'time': 111, 'score': "0", 'shenhe': 0},
+                                               u'2016_北京_数学': {'time': 233, 'score': 90, 'shenhe': 1}})
+        stu3.full_clean()
+        stu3.save()
+        print "--------------------------------create stu4"
+        stu4 = Student.objects.model()
+        setattr(stu4, Student.ACCOUNT, "test_stu_4")
+        setattr(stu4, Student.PROVINCE, 2)
+        setattr(stu4, Student.ESTIMATE_SCORE,
+                {u'2016_北京_语文': {"time": 111, "score": 90, "shenhe": 1}, u'2016_北京_英语': {'time': 222, 'score': 80, 'shenhe':1}})
+        stu4.full_clean()
+        stu4.save()
+
+
+    def test_getesitimaterank(self):
+        stu1 = Student.objects.filter(account="test_stu_1")[0]
+        stu2 = Student.objects.filter(account="test_stu_2")[0]
+        stu3 = Student.objects.filter(account="test_stu_3")[0]
+        stu4 = Student.objects.filter(account="test_stu_4")[0]
+        self.assertEqual(getStudentEstimateRank(stu1), ("2", "2"))
+        self.assertEqual(getStudentEstimateRank(stu2), ("2", "2"))
+        self.assertEqual(getStudentEstimateRank(stu3), ("1", "2"))
+        self.assertEqual(getStudentEstimateRank(stu4), ("1", "1"))
