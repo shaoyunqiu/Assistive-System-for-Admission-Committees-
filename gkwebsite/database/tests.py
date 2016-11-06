@@ -650,6 +650,32 @@ class TestVolBases(TestCase):
         self.assertEqual(getVolunteerbyField(Volunteer.NATION, 1)[0], vol[1])
         self.assertEqual(len(getVolunteerbyField("tsinghua", 1)), 0)
 
+    def test_getvolunteerall(self):
+        vol = getAllInVolunteer()
+        self.assertEqual(getVolunteerAll("test_vol_1"), vol[0])
+        self.assertEqual(getVolunteerAll("test_vol_2"), vol[1])
+        self.assertEqual(getVolunteerAll("test"), None)
+
+    def test_setVolunteer(self):
+        vol = getAllInVolunteer()
+        self.assertEqual(setVolunteer("test_vol_1", Volunteer.ACCOUNT, "test"), False)
+        self.assertEqual(setVolunteer("test_vol_1", Volunteer.REAL_NAME, "lisanpang"), True)
+        self.assertEqual(getattr(vol[0], Volunteer.REAL_NAME, "Error"), "lisanpang")
+        self.assertEqual(setVolunteer("test_vol_1", "tsinghua", "beida"), False)
+        self.assertEqual(setVolunteer("test_vol_1", Volunteer.NATION, 2), True)
+        self.assertEqual(getattr(vol[0], Volunteer.NATION, -1), 2)
+        self.assertEqual(setVolunteer("test", "test", "test"), False)
+        self.assertEqual(setVolunteer("test_vol_1", Volunteer.ID, 0), False)
+        self.assertEqual(getattr(vol[0], Volunteer.ID, -1), 1)
+
+    def test_createVolunteer(self):
+        self.assertEqual(createVolunteer("test_vol_1",{Volunteer.NATION:10}), False)
+        self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ACCOUNT:"vol"}),False)
+        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.NATION:1000}), False)
+        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ID:3}), False)
+        self.assertEqual(createVolunteer("test_vol_3", {Volunteer.REAL_NAME:"lihy1"}),True)
+        self.assertEqual(len(Volunteer.objects.filter(realName="lihy1")), 2)
+
 
 
 
