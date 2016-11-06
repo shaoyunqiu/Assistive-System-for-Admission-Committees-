@@ -556,3 +556,14 @@ class Testgetestimate(TestCase):
         self.assertEqual(getStudentEstimateScore_Every(stu2, u'2016_北京_数学'),"0")
         self.assertEqual(getStudentEstimateScore_Every(stu3, u'2016_北京_语文'),"1")
         self.assertEqual(getStudentEstimateScore_Every(stu4, u'2016_北京_英语'), "0")
+
+    def test_getestimatescoreeverynoshenhe(self):
+        stu1 = Student.objects.filter(account="test_stu_1")[0]
+        stu2 = Student.objects.filter(account="test_stu_2")[0]
+        stu3 = Student.objects.filter(account="test_stu_3")[0]
+        stu4 = Student.objects.filter(account="test_stu_4")[0]
+        self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu1,u'2016_北京_语文'), "90")
+        self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu1, u'2016'), "0")
+        self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu2, u'2016_北京_数学'), "0")
+        self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu3, u'2016_北京_语文'), "1")
+        self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu4, u'2016_北京_英语'), "80")

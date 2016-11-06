@@ -421,8 +421,9 @@ def getStudentEstimateScore_Every_no_shenhe(student, test_id):
     score = 0
     if test_id not in tmp_dic.keys():
         return str(score)
-
-    score = tmp_dic[test_id]['score']
+    # shaoyunqiu
+    if 'score' in tmp_dic[test_id].keys():
+        score = tmp_dic[test_id]['score']
     return str(score)
 
 
