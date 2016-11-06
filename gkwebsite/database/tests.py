@@ -13,6 +13,7 @@ import xlwt
 import os
 from teacher_backend import *
 from back_test import *
+from volunteer_backend import *
 
 setup_test_environment()
 
@@ -578,6 +579,7 @@ class Testgetestimate(TestCase):
         self.assertEqual(getStudentEstimateRank_Every(stu4, u'2016_天津_英语'), ("1", "0"))
 
 
+# unfinished can't pass the test
 class Testnotice(TestCase):
     def setUp(self):
         no1 = Notice.objects.model()
@@ -591,9 +593,33 @@ class Testnotice(TestCase):
         no2.full_clean()
         no2.save()
 
+     #cannot pass the test, need to modify
     def testcreatenotice(self):
         self.assertEqual(back.createNoticebyDict({"send":"notice3", "id": 0}), False)
         self.assertEqual(len(Notice.objects.filter(id=0)), 0)
         self.assertEqual(back.createNoticebyDict({"send":"notice4", "receive_stu":"stu1"}), True)
         self.assertEqual(len(Notice.objects.filter(receive_stu="stu1")), 2)
+
+
+class TestVolBases(TestCase):
+    def setUp(self):
+        vol1 = Volunteer.objects.model()
+        setattr(vol1, Volunteer.ACCOUNT, "test_vol_1")
+        setattr(vol1, Volunteer.REAL_NAME, "lihy1")
+        vol1.full_clean()
+        vol1.save()
+        vol2 = Volunteer.objects.model()
+        setattr(vol2, Volunteer.ACCOUNT, "test_vol_2")
+        setattr(vol2, Volunteer.NATION, 1)
+        vol2.full_clean()
+        vol2.save()
+
+    def test_getallvolunteer(self):
+        vol = getAllInVolunteer()
+        self.assertEqual(len(vol), 2)
+        self.assertEqual(getattr(vol[0], Volunteer.ACCOUNT, "error"), "test_vol_1")
+        self.assertEqual(getattr(vol[1], Volunteer.ACCOUNT, "error"), "test_vol_2")
+
+
+
 
