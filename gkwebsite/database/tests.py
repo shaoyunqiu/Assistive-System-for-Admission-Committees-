@@ -468,7 +468,6 @@ class Testsetteacher(TestCase):
         tea = (Teacher.objects.filter(account="test_tea_1"))[0]
         self.assertEqual(tea.password, "mima")
 
-
 class TestMyfield(TestCase):
     def setUp(self):
         stu1 = Student.objects.model()
