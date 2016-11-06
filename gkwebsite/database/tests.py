@@ -576,3 +576,24 @@ class Testgetestimate(TestCase):
         self.assertEqual(getStudentEstimateRank_Every(stu2, u'2016_北京_数学'),("1","1"))
         self.assertEqual(getStudentEstimateRank_Every(stu3, u'2016_北京_数学'), ("1","1"))
         self.assertEqual(getStudentEstimateRank_Every(stu4, u'2016_天津_英语'), ("1", "0"))
+
+
+class Testnotice(TestCase):
+    def setUp(self):
+        no1 = Notice.objects.model()
+        setattr(no1, Notice.SEND, "notice1")
+        setattr(no1, Notice.RECEIVE_STU, "stu1")
+        setattr(no1, Notice.RECEIVE_VOL, "vol1")
+        no1.full_clean()
+        no1.save()
+        no2 = Notice.objects.model()
+        setattr(no2, Notice.SEND, "notice2")
+        no2.full_clean()
+        no2.save()
+
+    def testcreatenotice(self):
+        self.assertEqual(back.createNoticebyDict({"send":"notice3", "id": 0}), False)
+        self.assertEqual(len(Notice.objects.filter(id=0)), 0)
+        self.assertEqual(back.createNoticebyDict({"send":"notice4", "receive_stu":"stu1"}), True)
+        self.assertEqual(len(Notice.objects.filter(receive_stu="stu1")), 2)
+
