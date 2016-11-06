@@ -523,7 +523,7 @@ class Testgetestimate(TestCase):
         setattr(stu3, Student.ACCOUNT, "test_stu_3")
         setattr(stu3, Student.PROVINCE, 1)
         setattr(stu3, Student.ESTIMATE_SCORE, {u'2016_北京_英语': {'time': 222, 'score': 99, 'shenhe': 1},
-                                               u'2016_北京_语文': {'time': 111, 'score': "0", 'shenhe': 0},
+                                               u'2016_北京_语文': {'time': 111, 'score': "1", 'shenhe': 0},
                                                u'2016_北京_数学': {'time': 233, 'score': 90, 'shenhe': 1}})
         stu3.full_clean()
         stu3.save()
@@ -532,10 +532,9 @@ class Testgetestimate(TestCase):
         setattr(stu4, Student.ACCOUNT, "test_stu_4")
         setattr(stu4, Student.PROVINCE, 2)
         setattr(stu4, Student.ESTIMATE_SCORE,
-                {u'2016_北京_语文': {"time": 111, "score": 90, "shenhe": 1}, u'2016_北京_英语': {'time': 222, 'score': 80, 'shenhe':1}})
+                {u'2016_北京_语文': {"time": 111, "score": 90, "shenhe": 1}, u'2016_北京_英语': {'time': 222, 'score': 80}})
         stu4.full_clean()
         stu4.save()
-
 
     def test_getesitimaterank(self):
         stu1 = Student.objects.filter(account="test_stu_1")[0]
@@ -546,3 +545,14 @@ class Testgetestimate(TestCase):
         self.assertEqual(getStudentEstimateRank(stu2), ("2", "2"))
         self.assertEqual(getStudentEstimateRank(stu3), ("1", "2"))
         self.assertEqual(getStudentEstimateRank(stu4), ("1", "1"))
+
+    def test_getestumatescore_every(self):
+        stu1 = Student.objects.filter(account="test_stu_1")[0]
+        stu2 = Student.objects.filter(account="test_stu_2")[0]
+        stu3 = Student.objects.filter(account="test_stu_3")[0]
+        stu4 = Student.objects.filter(account="test_stu_4")[0]
+        self.assertEqual(getStudentEstimateScore_Every(stu1, u'2016_北京_语文'), "90")
+        self.assertEqual(getStudentEstimateScore_Every(stu1, u'2016'), "0")
+        self.assertEqual(getStudentEstimateScore_Every(stu2, u'2016_北京_数学'),"0")
+        self.assertEqual(getStudentEstimateScore_Every(stu3, u'2016_北京_语文'),"1")
+        self.assertEqual(getStudentEstimateScore_Every(stu4, u'2016_北京_英语'), "0")

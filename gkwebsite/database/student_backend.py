@@ -405,8 +405,8 @@ def getStudentEstimateScore_Every(student, test_id):
     score = 0
     if test_id not in tmp_dic.keys():
         return str(score)
-
-    if 'shenhe' in tmp_dic[test_id]:
+    # shaoyunqiu
+    if 'shenhe' in tmp_dic[test_id] and 'score' in tmp_dic[test_id]:
         score = tmp_dic[test_id]['score']
     return str(score)
 
