@@ -606,6 +606,7 @@ class TestVolBases(TestCase):
         vol1 = Volunteer.objects.model()
         setattr(vol1, Volunteer.ACCOUNT, "test_vol_1")
         setattr(vol1, Volunteer.REAL_NAME, "lihy1")
+        setattr(vol1, Volunteer.QUANXIAN, 1)
         vol1.full_clean()
         vol1.save()
         vol2 = Volunteer.objects.model()
@@ -619,6 +620,37 @@ class TestVolBases(TestCase):
         self.assertEqual(len(vol), 2)
         self.assertEqual(getattr(vol[0], Volunteer.ACCOUNT, "error"), "test_vol_1")
         self.assertEqual(getattr(vol[1], Volunteer.ACCOUNT, "error"), "test_vol_2")
+
+    def test_deletvolall(self):
+        deleteVolunteerAll()
+        vol = getAllInVolunteer()
+        self.assertEqual(len(vol), 0)
+
+    def test_ishapermission(self):
+        self.assertEqual(is_have_permission(1), True)
+        self.assertEqual(is_have_permission(2), False)
+
+    def test_idtoaccount(self):
+        self.assertEqual(idToAccountVolunteer("a"), False)
+        self.assertEqual(idToAccountVolunteer(-1), None)
+        self.assertEqual(idToAccountVolunteer(1), 'test_vol_1')
+
+    def test_accounttoid(self):
+        self.assertEqual(accountToIDVolunteer('test_vol_1'), '1')
+        self.assertEqual(accountToIDVolunteer('test_vol_2'), '2')
+        self.assertEqual(accountToIDStudent('test'), None)
+
+    def test_checkfield(self):
+        self.assertEqual(checkField(Volunteer.REAL_NAME), True)
+        self.assertEqual(checkField("tsinghua"), False)
+
+    def test_getvolbyfied(self):
+        vol = getAllInVolunteer()
+        self.assertEqual(len(getVolunteerbyField(Volunteer.REAL_NAME, "lihy")), 0)
+        self.assertEqual(getVolunteerbyField(Volunteer.NATION, 1)[0], vol[1])
+        self.assertEqual(len(getVolunteerbyField("tsinghua", 1)), 0)
+
+
 
 
 
