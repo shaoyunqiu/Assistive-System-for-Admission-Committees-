@@ -435,7 +435,8 @@ def getStudentEstimateRank_Every(student, test_id):
     for student in all_student_list:
         tmp_dic = eval(getattr(student, 'estimateScore'))
         if test_id in tmp_dic.keys():
-            if 'shenhe' in tmp_dic[test_id]:
+            # shaoyunqiu
+            if 'shenhe' in tmp_dic[test_id] and 'score' in tmp_dic[test_id]:
                 choose_student__score_list.append(int(tmp_dic[test_id]['score']))
 
     rank = 1

@@ -527,12 +527,11 @@ class Testgetestimate(TestCase):
                                                u'2016_北京_数学': {'time': 233, 'score': 90, 'shenhe': 1}})
         stu3.full_clean()
         stu3.save()
-        print "--------------------------------create stu4"
         stu4 = Student.objects.model()
         setattr(stu4, Student.ACCOUNT, "test_stu_4")
         setattr(stu4, Student.PROVINCE, 2)
         setattr(stu4, Student.ESTIMATE_SCORE,
-                {u'2016_北京_语文': {"time": 111, "score": 90, "shenhe": 1}, u'2016_北京_英语': {'time': 222, 'score': 80}})
+                {u'2016_天津_语文': {"time": 111, "score": 90, "shenhe": 1}, u'2016_天津_英语': {'time': 222, 'score': 80}})
         stu4.full_clean()
         stu4.save()
 
@@ -555,7 +554,7 @@ class Testgetestimate(TestCase):
         self.assertEqual(getStudentEstimateScore_Every(stu1, u'2016'), "0")
         self.assertEqual(getStudentEstimateScore_Every(stu2, u'2016_北京_数学'),"0")
         self.assertEqual(getStudentEstimateScore_Every(stu3, u'2016_北京_语文'),"1")
-        self.assertEqual(getStudentEstimateScore_Every(stu4, u'2016_北京_英语'), "0")
+        self.assertEqual(getStudentEstimateScore_Every(stu4, u'2016_天津_英语'), "0")
 
     def test_getestimatescoreeverynoshenhe(self):
         stu1 = Student.objects.filter(account="test_stu_1")[0]
@@ -566,4 +565,14 @@ class Testgetestimate(TestCase):
         self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu1, u'2016'), "0")
         self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu2, u'2016_北京_数学'), "0")
         self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu3, u'2016_北京_语文'), "1")
-        self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu4, u'2016_北京_英语'), "80")
+        self.assertEqual(getStudentEstimateScore_Every_no_shenhe(stu4, u'2016_天津_英语'), "80")
+
+    def test_getstudentestimaterankevery(self):
+        stu1 = Student.objects.filter(account="test_stu_1")[0]
+        stu2 = Student.objects.filter(account="test_stu_2")[0]
+        stu3 = Student.objects.filter(account="test_stu_3")[0]
+        stu4 = Student.objects.filter(account="test_stu_4")[0]
+        self.assertEqual(getStudentEstimateRank_Every(stu1, u'2016_北京_语文'),("1","2"))
+        self.assertEqual(getStudentEstimateRank_Every(stu2, u'2016_北京_数学'),("1","1"))
+        self.assertEqual(getStudentEstimateRank_Every(stu3, u'2016_北京_数学'), ("1","1"))
+        self.assertEqual(getStudentEstimateRank_Every(stu4, u'2016_天津_英语'), ("1", "0"))
