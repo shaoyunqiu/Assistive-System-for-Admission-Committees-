@@ -101,7 +101,7 @@ def createPicturebyDict(dict):
     print 'successfully create account'
     return True
 
-
+# modified bt shaoyunqiu
 def setPicture(picture, field, value):
     '''
     设置某个账户某个字段的值
@@ -109,13 +109,20 @@ def setPicture(picture, field, value):
     :param field:字段
     :return:字段对应的值
     '''
+    if field == Picture.ID :
+        print "cannot change the id"
+        return False
+    if field not in Picture.FIELD_LIST:
+        print "illegal field, cannot set"
+        return False
     try:
         setattr(picture, field, value)
         picture.full_clean()
         picture.save()
+        print "before return true"
         return True
     except:
-        print "-------------------------------"
+        print "---------------------"
         print "can not saved!!"
         return False
 

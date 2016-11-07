@@ -760,6 +760,19 @@ class TestImageBases(TestCase):
         self.assertEqual(len(img_back.getPicturebyField(Picture.PROVINCE,20)), 0)
         self.assertEqual(len(img_back.getPicturebyField("hh", 0)), 0)
 
+    def test_setpicture(self):
+        img_all = img_back.getAllInPicture()
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.IS_DELEVERED, 1), True)
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.IS_DELEVERED, "false"), False)
+        self.assertEqual(getattr(img_all[0],Picture.IS_DELEVERED, "Error"), 1)
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.YEAR, 2015), True)
+        self.assertEqual(getattr(img_all[0], Picture.YEAR, "Error"), 2015)
+        self.assertEqual(img_back.setPicture(img_all[0], "hehe", 0), False)
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.ID, 0), False)
+        self.assertEqual(getattr(img_all[0], Picture.ID, "Error"), 1)
+
+
+
 
 
 
