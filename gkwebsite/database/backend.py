@@ -32,7 +32,14 @@ def createNoticebyDict(dict):
     return True
 
 
+# modified by shaoyunqiu, cannot set the id, and check the field is legal.
 def setNotice(notice, field, value):
+    if field == Notice.ID :
+        print "cannot set the id, fail"
+        return False
+    if field not in Notice.FIELD_LIST:
+        print "illegal field"
+        return False
     try:
         setattr(notice, field, value)
         notice.full_clean()

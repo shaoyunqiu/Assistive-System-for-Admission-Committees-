@@ -597,12 +597,21 @@ class Testnotice(TestCase):
         no2.full_clean()
         no2.save()
 
-     #cannot pass the test, need to modify
+     #already modified by shaoyunqiu to pass the test
     def testcreatenotice(self):
         self.assertEqual(back.createNoticebyDict({"send":"notice3", "id": 0}), False)
         self.assertEqual(len(Notice.objects.filter(id=0)), 0)
         self.assertEqual(back.createNoticebyDict({"send":"notice4", "receive_stu":"stu1"}), True)
         self.assertEqual(len(Notice.objects.filter(receive_stu="stu1")), 2)
+
+    def test_setnotice(self):
+        no_all = Notice.objects.all()
+        self.assertEqual(back.setNotice(no_all[0], Notice.SEND, "change"), True)
+        self.assertEqual(getattr(no_all[0], Notice.SEND, "Error"), "change")
+        self.assertEqual(back.setNotice(no_all[0], Notice.ID, 0), False)
+        self.assertEqual(getattr(no_all[0], Notice.ID, "Error"), 1)
+        self.assertEqual(back.setNotice(no_all[0], "hahaha", 0), False)
+
 
 
 class TestVolBases(TestCase):
