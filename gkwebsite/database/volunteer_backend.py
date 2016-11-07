@@ -128,8 +128,14 @@ def getVolunteerbyField(field, argc):
     :param argc:字段的值
     :return:返回一个volunteer对象
     '''
-    dic = {field: argc}
-    return Volunteer.objects.filter(**dic)
+
+    #shaoyunqiu need to checkfield
+    if (checkField(field) == True):
+        dic = {field: argc}
+        return Volunteer.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):
