@@ -142,7 +142,6 @@ def getGroupAllDictByObject(group):
             # print 'ri ', getattr(group, item)
             dict[item] = getattr(group, item)
         except:
-
             return None
     return dict
 

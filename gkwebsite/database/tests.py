@@ -911,6 +911,13 @@ class TestGroupBases(TestCase):
         self.assertEqual(back.getGroupbyDict({Group.NAME: "group1", Group.VOL_LIST: "houyf1"})[0], g_all[0])
         self.assertEqual(len(back.getGroupbyDict({"haha": 0})), 0)
 
+    def test_getgroupalldicbyobject(self):
+        g_all = Group.objects.all()
+        dic = back.getGroupAllDictByObject(g_all[0])
+        self.assertEqual(dic[Group.NAME], "group1")
+        self.assertEqual(dic[Group.VOL_LIST], "houyf1")
+        self.assertEqual(back.getGroupAllDictByObject(None), None)
+
 
 
 
