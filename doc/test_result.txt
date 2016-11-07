@@ -20,6 +20,7 @@
 19. database/register_backend.py, createNewRegisterCode, 根据上一个函数修改，保证产生的注册码被存入数据库再返回注册码，已修改。
 20. database/register_backend.py, random_str,对输入的length限定在了ascii码范围内，之前不会报错，但貌似是返回空串，观察进行的修改，如果不需要，可删。
 21. database/backend.py, 不能修改ID，也不能设立不存在的field，对程序加了特判，已修改。
+22. database/backend.py, 检查dic中的key合法，已修改。
 
 
 

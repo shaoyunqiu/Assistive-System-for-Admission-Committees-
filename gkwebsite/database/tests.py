@@ -612,6 +612,13 @@ class Testnotice(TestCase):
         self.assertEqual(getattr(no_all[0], Notice.ID, "Error"), 1)
         self.assertEqual(back.setNotice(no_all[0], "hahaha", 0), False)
 
+    def test_getnoticebydic(self):
+        no_all = Notice.objects.all()
+        self.assertEqual(back.getNoticebyDict({Notice.SEND:"notice1", Notice.RECEIVE_STU:"stu1"})[0], no_all[0])
+        self.assertEqual(len(back.getNoticebyDict({Notice.ID:3})), 0)
+        self.assertEqual(len(back.getNoticebyDict({Notice.SEND:"notice2", Notice.ID:0})), 0)
+        self.assertEqual(len(back.getNoticebyDict({"hehe":0})), 0)
+
 
 
 class TestVolBases(TestCase):

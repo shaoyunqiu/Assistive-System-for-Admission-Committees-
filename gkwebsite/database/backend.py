@@ -49,8 +49,12 @@ def setNotice(notice, field, value):
         print "can not saved!!"
         return False
 
-
+# modified by shaoyunqiu, check the field
 def getNoticebyDict(dic):
+    for field in dic.keys():
+        if field not in Notice.FIELD_LIST:
+            print "illegal field"
+            return []
     return Notice.objects.filter(**dic)
 
 
