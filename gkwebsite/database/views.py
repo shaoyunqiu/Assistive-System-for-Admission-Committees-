@@ -688,7 +688,7 @@ def batch_add_to_group(request):
     # by dqn14 Nov 7, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        stu_num = request.POST.get('student_num') # This is a dict
+        stu_num = request.POST.get('student_num')
         stu_0_id = request.POST.get('student_id_0')
         stu_1_id = request.POST.get('student_id_1')
         target_group = request.POST.get('group')    # This is a string
@@ -698,6 +698,19 @@ def batch_add_to_group(request):
         else:
             t['success']='N'
             t['message']='该组已满'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+def push_stack(request):
+    # by dqn14 Nov 7, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        pic_url = request.POST.get('pic_url')
+        msg_url = request.POST.get('msg_url')
+        t = {}
+        t['success']='N'
+        t['message']='服务器未响应'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

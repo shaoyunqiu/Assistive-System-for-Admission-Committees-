@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^export_activity_result/$', views.export_activity_result, name="export_activity_result"),
     url(r'^set_volunteer/$', views.set_volunteer, name="set_volunteer"),
     url(r'^batch_add_to_group/$', views.batch_add_to_group, name="batch_add_to_group"),
+    url(r'^push_stack/$', views.push_stack, name="push_stack"),
 	]
