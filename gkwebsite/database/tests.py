@@ -14,6 +14,7 @@ import os
 from teacher_backend import *
 from back_test import *
 from volunteer_backend import *
+import image_backend as img_back
 
 setup_test_environment()
 
@@ -685,6 +686,48 @@ class TestVolBases(TestCase):
         self.assertEqual(checkVolunteerPassword("test_vol_1", "mimimi"), (False , 'Password is incorrect'))
         self.assertEqual(checkVolunteerPassword("test", "mima"), (False , 'Account does not exist.'))
         self.assertEqual(checkVolunteerPassword("test", "mima"), (False , 'Account does not exist.'))
+
+
+class TestImageBases(TestCase):
+    def setUp(self):
+        img1 = Picture.objects.model()
+        setattr(img1, Picture.YEAR, 2016)
+        setattr(img1, Picture.PROVINCE, 1)
+        setattr(img1, Picture.CATEGORY, 1)
+        img1.full_clean()
+        img1.save()
+        img2 = Picture.objects.model()
+        setattr(img2, Picture.YEAR, 2015)
+        setattr(img2, Picture.PROVINCE, 1)
+        setattr(img2, Picture.CATEGORY, 1)
+        setattr(img2, Picture.IS_DELEVERED, 1)
+        img2.full_clean()
+        img2.save()
+
+    def test_getallinpicture(self):
+        img = img_back.getAllInPicture()
+        self.assertEqual(len(img), 2)
+
+    def test_deletepictureall(self):
+        img_back.deletePictureAll()
+        img = img_back.getAllInPicture()
+        self.assertEqual(len(img), 0)
+
+    def test_removepictureidbydic(self):
+        img_back.removePictureIDByDic({Picture.YEAR: 2016, Picture.CATEGORY: 1})
+        img1 = Picture.objects.filter(year=2016)
+        self.assertEqual(len(img1), 0)
+        img_back.removePictureIDByDic({Picture.YEAR:2016})
+        img1 = Picture.objects.filter(year=2016)
+        self.assertEqual(len(img1), 0)
+        img_back.removePictureIDByDic({Picture.YEAR:2015, Picture.PROVINCE:0})
+        img1 = Picture.objects.filter(year=2015)
+        self.assertEqual(len(img1), 1)
+        img_back.removePictureIDByDic({Picture.YEAR:2015, "haha":0})
+        img1 = Picture.objects.filter(year=2015)
+        self.assertEqual(len(img1), 1)
+
+
 
 
 

@@ -12,10 +12,28 @@ def getAllInPicture():
 def deletePictureAll():
     getAllInPicture().delete()
 
-
+# shaoyunqiu
+'''
 def removePictureIDByDic(dic):
     getAllInPicture().filter(**dic).delete()
-
+'''
+# create and rewrite by shaoyunqiu
+def removePictureIDByDic(dic):
+    for key in dic.keys():
+        if key not in Picture.FIELD_LIST:
+            print "illegal key, can't remove"
+            return False
+    toremove = Picture.objects.filter(**dic)
+    if len(toremove) == 0:
+        print "cant not find the picture"
+        return False
+    else:
+        try:
+            toremove.delete()
+            return True
+        except:
+            print "cannot remove"
+            return False
 
 def getPictureAllDictByObject(picture):
     dict = {}
