@@ -101,7 +101,7 @@ def get_volunteer_name_by_id(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def get_student_name_by_id(request):
     # by dqn14 Nov 3, 2016
     # use this if-else to block violent access
@@ -481,7 +481,7 @@ def list_question(request):
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
-        
+
 def remove_question(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -506,7 +506,7 @@ def remove_question(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def get_next_question_num(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -538,7 +538,7 @@ def get_next_question_num(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def move_question_up(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -552,7 +552,7 @@ def move_question_up(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def move_question_down(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -566,7 +566,7 @@ def move_question_down(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def add_activity(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
@@ -596,7 +596,7 @@ def add_activity(request):
             return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def export_activity_result(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
@@ -615,7 +615,7 @@ def export_activity_result(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
@@ -653,6 +653,24 @@ def set_volunteer(request):
         t = {}
         t['success']='Y'
         t['message']=u'设置成功'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+def batch_add_to_group(request):
+    # by dqn14 Nov 7, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        stu_num = request.POST.get('student_num') # This is a dict
+        stu_0_id = request.POST.get('student_id_0')
+        stu_1_id = request.POST.get('student_id_1')
+        target_group = request.POST.get('group')    # This is a string
+        t = {}
+        if stu_num > 0:
+            t['success'] = 'Y'
+        else:
+            t['success']='N'
+            t['message']='该组已满'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
