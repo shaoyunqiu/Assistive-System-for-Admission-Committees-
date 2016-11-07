@@ -829,6 +829,23 @@ class TestRegisterBases(TestCase):
         self.assertEqual(getattr(reg_all[0], RegisterCode.STATE, 0), 1)
         self.assertEqual(reg_back.setRegisterCode("2014011426", "hehe", 0), False)
 
+    def test_isExistregistercode(self):
+        self.assertEqual(reg_back.isExistRegisterCode("2014011426"), True)
+        self.assertEqual(reg_back.isExistRegisterCode("2015011426"), False)
+
+    def test_creatregistercode(self):
+        self.assertEqual(reg_back.createRegisterCode("2011011111"), True)
+        self.assertEqual(len(RegisterCode.objects.filter(registerCode="2011011111")), 1)
+        self.assertEqual(reg_back.createRegisterCode("2014011426"), False)
+        self.assertEqual(len(RegisterCode.objects.filter(registerCode="2014011426")), 1)
+
+    def test_createnewregistercode(self):
+        code1 = reg_back.createNewRegisterCode()
+        code2 = reg_back.createNewRegisterCode()
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(reg_all), 4)
+        self.assertEqual(getattr(reg_all[2], RegisterCode.REGISTER_CODE, "error"), code1)
+        self.assertEqual(getattr(reg_all[3], RegisterCode.REGISTER_CODE, "error"), code2)
 
 
 

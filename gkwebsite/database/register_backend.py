@@ -68,6 +68,11 @@ def tmpcreateNewRegisterCode():
 
 def createRegisterCode(code):
     obj = RegisterCode.objects.model()
+    # modified by shaoyunqiu, registercode need to be unique
+    if isExistRegisterCode(code):
+        print "the registercode already exist, can not save"
+        return False
+
     try:
         setattr(obj, RegisterCode.REGISTER_CODE, code)
         obj.full_clean()
@@ -81,12 +86,18 @@ def createRegisterCode(code):
 def createNewRegisterCode():
     # 产生code直到不重复
     code = tmpcreateNewRegisterCode()
-    # while(isExistRegisterCode(code)):
+    #while(isExistRegisterCode(code)):
     #     code = tmpcreateNewRegisterCode()
 
     # 将生成的code加入数据库
-    createRegisterCode(code)
-
+    # modified by shaoyunqiu, to confirm the registercode have been add to database successfully
+    while(True):
+        flag = createRegisterCode(code)
+        if flag == True:
+            break
+        else:
+            print "try again"
+            code = tmpcreateNewRegisterCode()
     return code
 
 def random_str(randomlength=8):

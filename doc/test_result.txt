@@ -15,6 +15,8 @@
 15. database/image_backedn.py, setPicture, 如果field值不合法也可以修改，同时可以修改ID，目前是在函数里面加了特判，暂时通过测试，不过建议还是在数据库中加入权限设定。
 16. database/register_backend.py, getRegisterCodeByField, 同12, 加了对field合法性的检查，已修改
 17. database/register_backend.py, setReigisterCode, 函数本身有错误，register应该是一个对象而不是列表，否则永远都是会出现error，而无法修改属性值，以修改。
+18. database/register_backend.py, createRegisterCode, 与其相关的函数都没有检查code的唯一性，虽然产生方式随机，但安全起见还是应该先检测唯一性，所以加了是否已存在的判断，已修改。
+19. database/register_backend.py, createNewRegisterCode, 根据上一个函数修改，保证产生的注册码被存入数据库再返回注册码，已修改。
 
 
 
@@ -24,3 +26,4 @@
 my_field.py中未测的函数：class ListField创建数据库的类不大好测，类中的函数也没测，outputExcels和generateexcels没法测
 volunteer.py 中getVolunteerAllDictByAccount(account)这个函数字典太大，不大好测，请观察是否有问题。
 volunteer.py中的 removeVolunteerAccount未测，需要先测group和timer,之后再测
+register_backend.py中的tmpcreateNewRegisterCode()函数，返回值的随机性太强，没办法测，请直接观察函数调用方面是否会有问题。
