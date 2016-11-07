@@ -583,7 +583,6 @@ class Testgetestimate(TestCase):
         self.assertEqual(getStudentEstimateRank_Every(stu4, u'2016_天津_英语'), ("1", "0"))
 
 
-# unfinished can't pass the test
 class Testnotice(TestCase):
     def setUp(self):
         no1 = Notice.objects.model()
@@ -619,6 +618,12 @@ class Testnotice(TestCase):
         self.assertEqual(len(back.getNoticebyDict({Notice.SEND:"notice2", Notice.ID:0})), 0)
         self.assertEqual(len(back.getNoticebyDict({"hehe":0})), 0)
 
+    def test_getnoticeallbyobject(self):
+        no_all = Notice.objects.all()
+        self.assertEqual(back.getNoticeAllDictByObject(no_all[0])[Notice.SEND], "notice1")
+        self.assertEqual(back.getNoticeAllDictByObject(no_all[0])[Notice.ID], 1)
+        self.assertEqual(back.getNoticeAllDictByObject(no_all[0])[Notice.RECEIVE_STU], "stu1")
+        self.assertEqual(back.getNoticeAllDictByObject(None), None)
 
 
 class TestVolBases(TestCase):
