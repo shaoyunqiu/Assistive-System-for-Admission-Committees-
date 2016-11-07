@@ -61,8 +61,8 @@ def accountToIDStudent(account):
     #return (str)(getStudent(account, 'id'))
 
 
-def removeStudentAccount(_account):
 
+def removeStudentAccount(_account):
     stu_id = str(accountToIDStudent(_account))
     group_list = back.getGroupbyDict({})
     for group in group_list:
@@ -73,7 +73,6 @@ def removeStudentAccount(_account):
             stu_list.remove('')
         back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
     getAllInStudent().filter(account=_account).delete()
-
 
 
 def getStudentbyField(field, argc):
