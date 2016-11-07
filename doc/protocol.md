@@ -792,6 +792,21 @@
 		<td></td>
 	</tr>
 
+<tr>
+		<td>checkscoredetail</td>
+		<td>学生用时详情</td>
+		<td>teacher/views.py</td>
+		<td>requestGET 'name',     'testname',     'stu_id',</td>
+		<td>timelist = [{"label": "1", "value": "100s"}, {"label": "2", "value": "810s"}, ];
+		JsonResponse  dict = {
+        'timelist':timelist,
+        'subject':'语文',
+    } </td>
+		<td>GET</td>
+		<td>白云仁</td>
+		<td></td>
+	</tr>
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
