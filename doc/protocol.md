@@ -758,6 +758,17 @@
 		<td>段清楠</td>
 		<td></td>
 	</tr>
+	
+	<tr>
+		<td>batch_add_to_group</td>
+		<td>批量添加学生到学生组</td>
+		<td>database/views.py</td>
+		<td>request.POST 比较复杂，键：student_num 学生数量; group 目标组; student_id_* 第xx个学生ID</td>
+		<td>JsonResponse 返回success:'Y'/'N' message:错误信息 </td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
 
 		<tr>
 		<td>a</td>
