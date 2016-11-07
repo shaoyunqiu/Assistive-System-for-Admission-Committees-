@@ -793,7 +793,7 @@ class TestRegisterBases(TestCase):
         reg1.save()
         reg2 = RegisterCode.objects.model()
         setattr(reg2, RegisterCode.ACCOUNT, "test_reg_2")
-        setattr(reg2, RegisterCode.ACCOUNT, "2014011425")
+        setattr(reg2, RegisterCode.REGISTER_CODE, "2014011425")
         setattr(reg2, RegisterCode.STATE, 1)
         reg2.full_clean()
         reg2.save()
@@ -811,7 +811,16 @@ class TestRegisterBases(TestCase):
         reg_all = reg_back.getAllInRegisterCode()
         self.assertEqual(len(reg_all), 1)
 
-        
+    def test_deleteregisterall(self):
+        reg_back.deleteRegisterCodeAll()
+        self.assertEqual(len(reg_back.getAllInRegisterCode()), 0)
+
+    def test_getregisterbyfield(self):
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(reg_back.getRegisterCodebyField(RegisterCode.ACCOUNT, "test_reg_1")[0], reg_all[0])
+        self.assertEqual(reg_back.getRegisterCodebyField(RegisterCode.REGISTER_CODE, "2014011425")[0], reg_all[1])
+        self.assertEqual(len(reg_back.getRegisterCodebyField("haha", 0)), 0)
+
 
 
 

@@ -23,10 +23,15 @@ def getRegisterCodebyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
-    :return:返回一个student对象
+    :return:返回一个对象列表
     '''
-    dic = {field: argc}
-    return RegisterCode.objects.filter(**dic)
+    # modified by shaoyunqiu
+    if field not in RegisterCode.FIELD_LIST:
+        print "illegal field"
+        return []
+    else:
+        dic = {field: argc}
+        return RegisterCode.objects.filter(**dic)
 
 def setRegisterCode(code, field, value):
     try:
