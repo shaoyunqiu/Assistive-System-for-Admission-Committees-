@@ -17,7 +17,7 @@
 17. database/register_backend.py, setReigisterCode, 函数本身有错误，register应该是一个对象而不是列表，否则永远都是会出现error，而无法修改属性值，以修改。
 18. database/register_backend.py, createRegisterCode, 与其相关的函数都没有检查code的唯一性，虽然产生方式随机，但安全起见还是应该先检测唯一性，所以加了是否已存在的判断，已修改。
 19. database/register_backend.py, createNewRegisterCode, 根据上一个函数修改，保证产生的注册码被存入数据库再返回注册码，已修改。
-
+20. database/register_backend.py, random_str,对输入的length限定在了ascii码范围内，之前不会报错，但貌似是返回空串，观察进行的修改，如果不需要，可删。
 
 
 

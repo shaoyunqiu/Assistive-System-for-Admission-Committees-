@@ -847,6 +847,12 @@ class TestRegisterBases(TestCase):
         self.assertEqual(getattr(reg_all[2], RegisterCode.REGISTER_CODE, "error"), code1)
         self.assertEqual(getattr(reg_all[3], RegisterCode.REGISTER_CODE, "error"), code2)
 
+    def test_randomstr(self):
+        str1 = reg_back.random_str(-100)
+        print str1
+        str2 = reg_back.random_str(100)
+        print str2
+
 
 
 

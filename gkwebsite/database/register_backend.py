@@ -100,7 +100,11 @@ def createNewRegisterCode():
             code = tmpcreateNewRegisterCode()
     return code
 
+
 def random_str(randomlength=8):
+    # modified by shaoyunqiu
+    if randomlength < 1 or randomlength > 255 :
+        randomlength = 8
     a = list(string.ascii_letters)
     random.shuffle(a)
     return ''.join(a[:randomlength])
