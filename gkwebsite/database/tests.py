@@ -11,10 +11,13 @@ from my_field import *
 import ast
 import xlwt
 import os
+import time
+import random, string
 from teacher_backend import *
 from back_test import *
 from volunteer_backend import *
 import image_backend as img_back
+import register_backend as reg_back
 
 setup_test_environment()
 
@@ -778,6 +781,38 @@ class TestImageBases(TestCase):
         self.assertEqual(img_back.createPicturebyDict({"hahah", 0}), False)
         self.assertEqual(img_back.createPicturebyDict({Picture.ID, 0}), False)
         self.assertEqual(len(Picture.objects.filter(id=0)), 0)
+
+
+class TestRegisterBases(TestCase):
+    def setUp(self):
+        reg1 = RegisterCode.objects.model()
+        setattr(reg1, RegisterCode.ACCOUNT, "test_reg_1")
+        setattr(reg1, RegisterCode.REGISTER_CODE, "2014011426")
+        setattr(reg1, RegisterCode.STATE, 0)
+        reg1.full_clean()
+        reg1.save()
+        reg2 = RegisterCode.objects.model()
+        setattr(reg2, RegisterCode.ACCOUNT, "test_reg_2")
+        setattr(reg2, RegisterCode.ACCOUNT, "2014011425")
+        setattr(reg2, RegisterCode.STATE, 1)
+        reg2.full_clean()
+        reg2.save()
+
+    def test_getallinregestercode(self):
+        tmp_reg = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(tmp_reg), 2)
+        self.assertEqual(getattr(tmp_reg[0], RegisterCode.REGISTER_CODE, "Error"), "2014011426")
+
+    def test_removeregistercode(self):
+        reg_back.removeRegisterCode("2014011426")
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(reg_all), 1)
+        reg_back.removeRegisterCode("test")
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(reg_all), 1)
+
+        
+
 
 
 
