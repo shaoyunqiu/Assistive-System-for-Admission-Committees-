@@ -714,3 +714,18 @@ def push_stack(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+        
+def get_grouplist(request):
+    # by dqn14 Nov 7, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        b = {'value':'', 'string':''}
+        c = {'value':'1', 'string':'1'}
+        d = {'value':'2', 'string':'2'}
+        t.append(b)
+        t.append(c)
+        t.append(d)
+        return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
