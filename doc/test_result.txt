@@ -13,7 +13,8 @@
 13. database/image_backend.py, getPicturebyDict(dic)与12同样的问题，已修改，加上键值的判断。
 14. database/image_backend.py, getPicturebyField(field, argc)与12有同样的问题，已修改
 15. database/image_backedn.py, setPicture, 如果field值不合法也可以修改，同时可以修改ID，目前是在函数里面加了特判，暂时通过测试，不过建议还是在数据库中加入权限设定。
-
+16. database/register_backend.py, getRegisterCodeByField, 同12, 加了对field合法性的检查，已修改
+17. database/register_backend.py, setReigisterCode, 函数本身有错误，register应该是一个对象而不是列表，否则永远都是会出现error，而无法修改属性值，以修改。
 
 
 

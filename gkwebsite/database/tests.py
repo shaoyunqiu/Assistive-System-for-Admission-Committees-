@@ -821,6 +821,15 @@ class TestRegisterBases(TestCase):
         self.assertEqual(reg_back.getRegisterCodebyField(RegisterCode.REGISTER_CODE, "2014011425")[0], reg_all[1])
         self.assertEqual(len(reg_back.getRegisterCodebyField("haha", 0)), 0)
 
+    def test_setRegisterCode(self):
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(reg_back.setRegisterCode("2014011426", RegisterCode.REGISTER_CODE, "2016011426"), False)
+        self.assertEqual(getattr(reg_all[0], RegisterCode.REGISTER_CODE, "Error"), "2014011426")
+        self.assertEqual(reg_back.setRegisterCode("2014011426", RegisterCode.STATE, 1), True)
+        self.assertEqual(getattr(reg_all[0], RegisterCode.STATE, 0), 1)
+        self.assertEqual(reg_back.setRegisterCode("2014011426", "hehe", 0), False)
+
+
 
 
 

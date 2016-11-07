@@ -42,7 +42,8 @@ def setRegisterCode(code, field, value):
             print 'can not modify code'
             return False
         print 'start set'
-        register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)
+        # modified by shaoyunqiu. register need to be an object
+        register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)[0]
         setattr(register, field, value)
         register.full_clean()
         register.save()
