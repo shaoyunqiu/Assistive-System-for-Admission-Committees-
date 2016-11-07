@@ -780,6 +780,17 @@
 		<td>段清楠</td>
 		<td></td>
 	</tr>
+	
+	<tr>
+		<td>get_grouplist</td>
+		<td>获得所有分组名称</td>
+		<td>database/views.py</td>
+		<td>request.POST 空</td>
+		<td>JsonResponse 返回 <value, string>对，value用于html中下拉选项的value属性，请保证空选项的value为空 </td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
 
 		<tr>
 		<td>a</td>
