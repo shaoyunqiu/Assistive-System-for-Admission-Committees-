@@ -714,18 +714,30 @@ class TestImageBases(TestCase):
         self.assertEqual(len(img), 0)
 
     def test_removepictureidbydic(self):
-        img_back.removePictureIDByDic({Picture.YEAR: 2016, Picture.CATEGORY: 1})
+        ans = img_back.removePictureIDByDic({Picture.YEAR: 2016, Picture.CATEGORY: 1})
         img1 = Picture.objects.filter(year=2016)
         self.assertEqual(len(img1), 0)
-        img_back.removePictureIDByDic({Picture.YEAR:2016})
+        self.assertEqual(ans, True)
+        ans = img_back.removePictureIDByDic({Picture.YEAR:2016})
         img1 = Picture.objects.filter(year=2016)
         self.assertEqual(len(img1), 0)
-        img_back.removePictureIDByDic({Picture.YEAR:2015, Picture.PROVINCE:0})
+        self.assertEqual(ans, False)
+        ans = img_back.removePictureIDByDic({Picture.YEAR:2015, Picture.PROVINCE:0})
         img1 = Picture.objects.filter(year=2015)
         self.assertEqual(len(img1), 1)
-        img_back.removePictureIDByDic({Picture.YEAR:2015, "haha":0})
+        self.assertEqual(ans, False)
+        ans = img_back.removePictureIDByDic({Picture.YEAR:2015, "haha":0})
         img1 = Picture.objects.filter(year=2015)
         self.assertEqual(len(img1), 1)
+        self.assertEqual(ans, False)
+
+    def test_getallpicturebydic(self):
+        img_all = img_back.getAllInPicture()
+        self.assertEqual(img_back.getPicturebyDict({Picture.PROVINCE:1})[0], img_all[0])
+        self.assertEqual(img_back.getPicturebyDict({Picture.PROVINCE: 1})[1], img_all[1])
+        self.assertEqual(len(img_back.getPicturebyDict({Picture.YEAR: 2016, "haha": 0})), 0)
+        self.assertEqual(len(img_back.getPicturebyDict({Picture.YEAR: 2016, Picture.CATEGORY:0})), 0)
+        self.assertEqual(img_back.getPicturebyDict({Picture.YEAR: 2015})[0], img_all[1])
 
 
 

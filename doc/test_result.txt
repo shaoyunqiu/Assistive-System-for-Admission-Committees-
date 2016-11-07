@@ -10,6 +10,7 @@
 10.datanase/volunteer.py, getVolunteerByField,没有检查键值是否有效，加了checkfield的检查，已修改
 11.datanase/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
 12.database/image_backend.py, removePictureIDByDic(dic)如果有不合法的键值，程序会炸，加上键值的判断，且返回bool值判断是否修改成功。
+13. database/image_backend.py, getPicturebyDict(dic)与12同样的问题，已修改，加上键值的判断。
 
 
 

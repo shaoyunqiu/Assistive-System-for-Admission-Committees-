@@ -56,6 +56,7 @@ def getPicturebyField(field, argc):
     return Picture.objects.filter(**dic)
 
 
+# modified by shaoyunqiu
 def getPicturebyDict(dic):
     '''
     如果在这里有关于isTitle的字段就返回所有isTitile==1的
@@ -64,7 +65,10 @@ def getPicturebyDict(dic):
     '''
     # if Picture.IS_TITLE not in dic.keys():
     #     dic[Picture.IS_TITLE] = 0
-
+    for key in dic.keys():
+        if key not in Picture.FIELD_LIST:
+            print "illegal key, cannot find"
+            return []
     return Picture.objects.filter(**dic)
 
 
