@@ -92,7 +92,7 @@ def createPicturebyDict(dict):
             setattr(pic, item, dict[item])
         print 'full_clean ing...'
         pic.full_clean()
-    except ValidationError:
+    except:
         print 'validation fail...'
         traceback.print_exc()
         return False

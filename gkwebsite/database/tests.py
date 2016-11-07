@@ -771,6 +771,15 @@ class TestImageBases(TestCase):
         self.assertEqual(img_back.setPicture(img_all[0], Picture.ID, 0), False)
         self.assertEqual(getattr(img_all[0], Picture.ID, "Error"), 1)
 
+    def test_createpicture(self):
+        self.assertEqual(img_back.createPicturebyDict({Picture.YEAR: 2016, Picture.PROVINCE:2}), True)
+        self.assertEqual(len(Picture.objects.filter(year=2016)), 2)
+        self.assertEqual(img_back.createPicturebyDict({Picture.CATEGORY: "Chinese"}), False)
+        self.assertEqual(img_back.createPicturebyDict({"hahah", 0}), False)
+        self.assertEqual(img_back.createPicturebyDict({Picture.ID, 0}), False)
+        self.assertEqual(len(Picture.objects.filter(id=0)), 0)
+
+
 
 
 
