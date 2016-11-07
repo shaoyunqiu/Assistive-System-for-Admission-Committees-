@@ -46,14 +46,18 @@ def getPictureAllDictByObject(picture):
             return None
     return dict
 
+# modified by shaoyunqiu
 def getPicturebyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
     :return:返回一个Picture对象
     '''
-    dic = {field: argc}
-    return Picture.objects.filter(**dic)
+    if field not in Picture.FIELD_LIST:
+        return []
+    else:
+        dic = {field: argc}
+        return Picture.objects.filter(**dic)
 
 
 # modified by shaoyunqiu

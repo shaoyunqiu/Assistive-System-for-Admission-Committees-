@@ -731,13 +731,35 @@ class TestImageBases(TestCase):
         self.assertEqual(len(img1), 1)
         self.assertEqual(ans, False)
 
-    def test_getallpicturebydic(self):
+    def test_getpicturebydic(self):
         img_all = img_back.getAllInPicture()
         self.assertEqual(img_back.getPicturebyDict({Picture.PROVINCE:1})[0], img_all[0])
         self.assertEqual(img_back.getPicturebyDict({Picture.PROVINCE: 1})[1], img_all[1])
         self.assertEqual(len(img_back.getPicturebyDict({Picture.YEAR: 2016, "haha": 0})), 0)
         self.assertEqual(len(img_back.getPicturebyDict({Picture.YEAR: 2016, Picture.CATEGORY:0})), 0)
         self.assertEqual(img_back.getPicturebyDict({Picture.YEAR: 2015})[0], img_all[1])
+
+    def test_getalldictbyobject(self):
+        img_all = img_back.getAllInPicture()
+        dict_0 = img_back.getPictureAllDictByObject(img_all[0])
+        dict_1 = img_back.getPictureAllDictByObject(img_all[1])
+        self.assertEqual(dict_0[Picture.YEAR], 2016)
+        self.assertEqual(dict_1[Picture.IS_DELEVERED], 1)
+        for field in Picture.FIELD_LIST:
+            if field in dict_0.keys():
+                self.assertEqual(dict_0[field], getattr(img_all[0], field, "Error"))
+            if field in dict_1.keys():
+                self.assertEqual(dict_1[field], getattr(img_all[1], field, "Error"))
+
+    def test_getpicturebyfield(self):
+        img_all = img_back.getAllInPicture()
+        self.assertEqual(img_back.getPicturebyField(Picture.YEAR, 2016)[0], img_all[0])
+        self.assertEqual(img_back.getPicturebyField(Picture.IS_DELEVERED, 1)[0], img_all[1])
+        self.assertEqual(img_back.getPicturebyField(Picture.PROVINCE, 1)[0], img_all[0])
+        self.assertEqual(img_back.getPicturebyField(Picture.PROVINCE, 1)[1], img_all[1])
+        self.assertEqual(len(img_back.getPicturebyField(Picture.PROVINCE,20)), 0)
+        self.assertEqual(len(img_back.getPicturebyField("hh", 0)), 0)
+
 
 
 
