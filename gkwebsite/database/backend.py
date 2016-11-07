@@ -13,6 +13,11 @@ def createNoticebyDict(dict):
         print "create object fail"
         traceback.print_exc()
         return False
+    # modified by shaoyunqiu, cannot set the id
+    if Notice.ID in dict.keys():
+        print "cannot set the id, cannot create"
+        return False
+
     try:
         for item in dict.keys():
             setattr(notice, item, dict[item])
