@@ -103,8 +103,24 @@ def accountToIDVolunteer(account):
     return (str)(getVolunteer(account, 'id'))
 
 def removeVolunteerAccount(_account):
-    getAllInVolunteer().filter(account= _account).delete()
 
+    vol_id = str(accountToIDVolunteer(_account))
+    group_list = back.getGroupbyDict({})
+    for group in group_list:
+        vol_list = getattr(group, Group.VOL_LIST).split('_')
+        if vol_id in vol_list:
+            vol_list.remove(vol_id)
+        if '' in vol_list:
+            vol_list.remove('')
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+
+    timer_list = back.getTimerbyDict({})
+    for timer in timer_list:
+        timer_dic = eval(getattr(timer, Timer.VOLUNTEER_DIC, '{}'))
+        if vol_id in timer_dic.keys():
+            timer_dic.pop(vol_id)
+        back.setTimer(timer, Timer.VOLUNTEER_DIC, timer_dic)
+    getAllInVolunteer().filter(account=_account).delete()
 
 def getVolunteerbyField(field, argc):
     '''
@@ -234,6 +250,7 @@ def getVolunteerGroupIDListString(volunteer):
         vol_id = getattr(volunteer, Volunteer.ID)
     except:
         vol_id = 1
+
     group_all_list = back.getGroupbyDict({})
     id_list = []
     for group in group_all_list:
@@ -254,6 +271,8 @@ def setVolunteerGroupbyList(volunteer, id_list):
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
         if vol_id in vol_list:
             vol_list.remove(vol_id)
+        if '' in vol_list:
+            vol_list.remove('')
         vol_string = '_'.join(vol_list)
         back.setGroup(group, Group.VOL_LIST, vol_string)
 
@@ -263,12 +282,34 @@ def setVolunteerGroupbyList(volunteer, id_list):
             continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if '' in vol_list:
+            vol_list.remove('')
         if vol_id in vol_list:
             print 'Big bug!'
         else:
             vol_list.append(vol_id)
         back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
     return True
+
+def get_can_see_students(vol_id):
+    all_group = back.getGroupbyDict({})
+    stu_id_list = []
+    for group in all_group:
+        vol_list = getattr(group, Group.VOL_LIST).split('_')
+        if '' in vol_list:
+            vol_list.remove('')
+        if str(vol_id) in vol_list:
+            tmp_list = getattr(group, Group.STU_LIST).split('_')
+            stu_id_list = stu_id_list + tmp_list
+
+    ret = []
+    for _id in stu_id_list:
+        if _id != '':
+            try:
+                ret.append(int(_id))
+            except:
+                pass
+    return ret
 
 
 

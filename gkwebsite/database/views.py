@@ -101,7 +101,7 @@ def get_volunteer_name_by_id(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def get_student_name_by_id(request):
     # by dqn14 Nov 3, 2016
     # use this if-else to block violent access
@@ -185,7 +185,7 @@ def add_student(request):
             c = {'code': code}
             t.append(c)
             codelist.append(code)
-        id = (str)(request.session['user_id'])
+        id = (str)(request.session['teacher_id'])
         generateExcel(request, id, '', '', 'sheet1', [codelist], [u'注册码'])
         return JsonResponse(t, safe=False)
     else:
@@ -342,6 +342,18 @@ def withdraw_test(request):
 
         t['success'] = 'Y'
         t['message'] = 'ok'
+
+
+
+        student_list = stu.getAllInStudent()
+        for student in student_list:
+            account = getattr(student, Student.ACCOUNT)
+            estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
+            if id in estimate.keys():
+                estimate.pop(id)
+            stu.setStudent(account, Student.ESTIMATE_SCORE, estimate)
+
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -365,6 +377,17 @@ def remove_test(request):
         t={}
         t['success'] = 'Y'
         t['message'] = 'ok'
+
+
+        student_list = stu.getAllInStudent()
+        for student in student_list:
+            account = getattr(student, Student.ACCOUNT)
+            estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
+            if id in estimate.keys():
+                estimate.pop(id)
+            stu.setStudent(account, Student.ESTIMATE_SCORE, estimate)
+
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -377,14 +400,32 @@ def add_test(request):
         year = request.POST.get('year')
         place = request.POST.get('place')
         subject = request.POST.get('subject')
+        t = {}
+        # print year, place, subject
+        if year.strip() == '0' or place.strip() == '0' or subject.strip() == '0':
+            t['success'] = 'N'
+            t['message'] = u'请补全信息'
+            return JsonResponse(t)
+        if year.strip() == '' or place.strip() == '' or subject.strip() == '':
+            t['success'] = 'N'
+            t['message'] = u'请补全信息'
+            return JsonResponse(t)
         dict = {
             Picture.YEAR : int(year),
             Picture.PROVINCE: int(place),
             Picture.SUBJECT: int(subject),
             Picture.IS_TITLE: 1,
         }
+
+        if pic.getPicturebyDict(dict):
+            t['success'] = 'N'
+            t['message'] = u'创建失败，试卷已经存在'
+            return JsonResponse(t)
+
+
+
         flag = pic.createPicturebyDict(dict)
-        t = {}
+
         if flag:
             t['success'] = 'Y'
             t['message'] = 'ok'
@@ -402,8 +443,9 @@ def get_test_yearlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
+        t.append({'num': '', 'str': ''})
         year_len = len(YEAR_LIST)
-        for i in range(0, year_len):
+        for i in range(1, year_len):
             t.append({'num': str(i), 'str': str(YEAR_LIST[i])})
 
         return JsonResponse(t, safe=False)
@@ -416,8 +458,9 @@ def get_test_placelist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
+        t.append({'num': '', 'str': ''})
         yiti_len = len(SHITI_LIST)
-        for i in range(0, yiti_len):
+        for i in range(1, yiti_len):
             t.append({'num': str(i), 'str': str(SHITI_LIST[i])})
         return JsonResponse(t, safe=False)
     else:
@@ -429,12 +472,14 @@ def get_test_subjectlist(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = []
+        t.append({'num': '', 'str': ''})
         kemu_len = len(SUBJECT_LIST)
-        for i in range(0, kemu_len):
+        for i in range(1, kemu_len):
             t.append({'num': str(i), 'str': str(SUBJECT_LIST[i])})
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
+
 
 def list_question(request):
     # by dqn14 Oct 27, 2016
@@ -463,7 +508,7 @@ def list_question(request):
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
-        
+
 def remove_question(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -488,7 +533,7 @@ def remove_question(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def get_next_question_num(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -520,7 +565,7 @@ def get_next_question_num(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def move_question_up(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -534,7 +579,7 @@ def move_question_up(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def move_question_down(request):
     # by dqn14 Oct 27, 2016
     # use this if-else to block violent access
@@ -548,7 +593,7 @@ def move_question_down(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def add_activity(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
@@ -574,11 +619,11 @@ def add_activity(request):
         except:
             t = {}
             t['success']='N'
-            t['message']='管理员外出'
+            t['message']=u'创建失败'
             return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def export_activity_result(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
@@ -597,7 +642,7 @@ def export_activity_result(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
-        
+
 def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
@@ -635,6 +680,24 @@ def set_volunteer(request):
         t = {}
         t['success']='Y'
         t['message']=u'设置成功'
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+
+def batch_add_to_group(request):
+    # by dqn14 Nov 7, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        stu_num = request.POST.get('student_num') # This is a dict
+        stu_0_id = request.POST.get('student_id_0')
+        stu_1_id = request.POST.get('student_id_1')
+        target_group = request.POST.get('group')    # This is a string
+        t = {}
+        if stu_num > 0:
+            t['success'] = 'Y'
+        else:
+            t['success']='N'
+            t['message']='该组已满'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

@@ -15,7 +15,7 @@ import datetime
 class Teacher(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
@@ -54,7 +54,7 @@ class Teacher(models.Model):
 class Student(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
@@ -102,6 +102,8 @@ class Student(models.Model):
     duiyingTeacher = models.CharField(max_length=500, default='', blank=True)
 
     quanxian = models.IntegerField(default=1, blank=True)
+
+    openid = models.CharField(max_length=500, default='', blank=True)
 
     ID = 'id'
 
@@ -151,6 +153,7 @@ class Student(models.Model):
     MOM_NAME = 'momName'
     DUIYING_TEACHER = 'duiyingTeacher'
     QUANXIAN = 'quanxian'
+    OPEN_ID = 'openid'
 
 
     FIELD_LIST = [ID,
@@ -161,7 +164,7 @@ class Student(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
-                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN]
+                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID]
 
     def __unicode__(self):
         import sys
@@ -176,8 +179,8 @@ class Student(models.Model):
 class Volunteer(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
-    # password validation : 4个或以上的数字或字母
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
+   # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
     idNumber = models.CharField(max_length=40, default='', blank=True,
