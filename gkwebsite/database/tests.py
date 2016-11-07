@@ -909,7 +909,8 @@ class TestGroupBases(TestCase):
         self.assertEqual(len(back.getGroupbyDict({})), 2)
         self.assertEqual(len(back.getGroupbyDict({Group.NAME:"group1", Group.STU_LIST:"stu1"})), 0)
         self.assertEqual(back.getGroupbyDict({Group.NAME: "group1", Group.VOL_LIST: "houyf1"})[0], g_all[0])
-        self.assertEqual(len(back.getGroupbyDict({"haha", 0})), 0)
+        self.assertEqual(len(back.getGroupbyDict({"haha": 0})), 0)
+
 
 
 
