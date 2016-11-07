@@ -342,6 +342,18 @@ def withdraw_test(request):
 
         t['success'] = 'Y'
         t['message'] = 'ok'
+
+
+
+        student_list = stu.getAllInStudent()
+        for student in student_list:
+            account = getattr(student, Student.ACCOUNT)
+            estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
+            if id in estimate.keys():
+                estimate.pop(id)
+            stu.setStudent(account, Student.ESTIMATE_SCORE, estimate)
+
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -365,6 +377,17 @@ def remove_test(request):
         t={}
         t['success'] = 'Y'
         t['message'] = 'ok'
+
+
+        student_list = stu.getAllInStudent()
+        for student in student_list:
+            account = getattr(student, Student.ACCOUNT)
+            estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
+            if id in estimate.keys():
+                estimate.pop(id)
+            stu.setStudent(account, Student.ESTIMATE_SCORE, estimate)
+
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -380,6 +403,10 @@ def add_test(request):
         t = {}
         # print year, place, subject
         if year.strip() == '0' or place.strip() == '0' or subject.strip() == '0':
+            t['success'] = 'N'
+            t['message'] = u'请补全信息'
+            return JsonResponse(t)
+        if year.strip() == '' or place.strip() == '' or subject.strip() == '':
             t['success'] = 'N'
             t['message'] = u'请补全信息'
             return JsonResponse(t)
@@ -592,7 +619,7 @@ def add_activity(request):
         except:
             t = {}
             t['success']='N'
-            t['message']='管理员外出'
+            t['message']=u'创建失败'
             return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

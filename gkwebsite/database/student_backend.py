@@ -62,7 +62,18 @@ def accountToIDStudent(account):
 
 
 def removeStudentAccount(_account):
+
+    stu_id = str(accountToIDStudent(_account))
+    group_list = back.getGroupbyDict({})
+    for group in group_list:
+        stu_list = getattr(group, Group.STU_LIST).split('_')
+        if stu_id in stu_list:
+            stu_list.remove(stu_id)
+        if '' in stu_list:
+            stu_list.remove('')
+        back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
     getAllInStudent().filter(account=_account).delete()
+
 
 
 def getStudentbyField(field, argc):
@@ -245,6 +256,20 @@ def checkStudentPassword(_account,_password):
     # 密码不正确
     return (True, str(getStudent(_account,'id')))
     #hash function should be applied here
+
+
+def checkStudentOpenID(open_id):
+    if open_id.strip() == '':
+        return False, 'OPEN ID IS EMPTY'
+    all_student_list = getAllInStudent()
+    for student in all_student_list:
+        stu_open_id = getattr(student, Student.OPEN_ID, '')
+        if stu_open_id == open_id:
+            _id = getattr(student, Student.ID, '')
+            if _id.strip() != '':
+                return True, str(_id)
+    return False, 'not exist this open id'
+
 
 
 def getStudentGroupIDListString(student):
