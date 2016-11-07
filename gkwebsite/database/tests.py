@@ -875,6 +875,36 @@ class TestRegisterBases(TestCase):
         print str2
 
 
+class TestGroupBases(TestCase):
+    def setUp(self):
+        g1 = Group.objects.model()
+        setattr(g1, Group.NAME, "group1")
+        setattr(g1, Group.STU_LIST, "lihy1")
+        setattr(g1, Group.VOL_LIST, "houyf1")
+        g1.full_clean()
+        g1.save()
+        g2 = Group.objects.model()
+        setattr(g2, Group.NAME, "group2")
+        g2.full_clean()
+        g2.save()
+
+    def test_creategroup(self):
+        self.assertEqual(back.createGroupbyDict({Group.NAME: "group3", Group.STU_LIST: "lihy2"}), True)
+        self.assertEqual(len(Group.objects.all()), 3)
+        self.assertEqual(back.createGroupbyDict({Group.ID: 0, Group.NAME: "group0"}), False)
+        self.assertEqual(back.createGroupbyDict({Group.NAME: "group4", "hahah": 0}), False)
+        self.assertEqual(len(Group.objects.all()), 3)
+
+    def test_setgroup(self):
+        g_all = Group.objects.all()
+        self.assertEqual(back.setGroup(g_all[0], Group.NAME, "change"), True)
+        self.assertEqual(getattr(g_all[0], Group.NAME, "Error"), "change")
+        self.assertEqual(back.setGroup(g_all[0], Group.ID, 0), False)
+        self.assertEqual(getattr(g_all[0], Group.ID, "Error"), 1)
+        self.assertEqual(back.setGroup(g_all[0], "haha", 0), False)
+        self.assertEqual(back.setGroup(None, Group.NAME, "name"), False)
+
+
 
 
 

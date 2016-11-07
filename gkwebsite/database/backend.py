@@ -69,6 +69,14 @@ def getNoticeAllDictByObject(notice):
 
 # ------------------------------------------------------------------------------------------------
 def createGroupbyDict(dict):
+    # modified by shaoyunqiu to forbiden set the id and illegal field
+    if Group.ID in dict.keys():
+        print "cannot set the id, failed"
+        return False
+    for field in dict.keys():
+        if field not in Group.FIELD_LIST:
+            print "illegal field, failed"
+            return False
     try:
         group = Group.objects.model()
     except:
@@ -88,8 +96,14 @@ def createGroupbyDict(dict):
     print 'successfully create account'
     return True
 
-
+# modified by shaoyunqiu, cannot set the id, and check the field is legal.
 def setGroup(group, field, value):
+    if field == Group.ID :
+        print "cannot set the id, fail"
+        return False
+    if field not in Group.FIELD_LIST:
+        print "illegal field"
+        return False
     try:
         setattr(group, field, value)
         group.full_clean()
