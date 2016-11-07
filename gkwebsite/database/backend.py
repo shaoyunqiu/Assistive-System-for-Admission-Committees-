@@ -115,10 +115,26 @@ def setGroup(group, field, value):
         return False
 
 
+# modified by shaoyunqiu, check the field, and confirm it is the type of dict
 def getGroupbyDict(dic):
-    if len(dic.keys()) <= 0:
+    '''if len(dic.keys()) <= 0:
+        return Group.objects.all()'''
+    if dic == None:
         return Group.objects.all()
-    return Group.objects.filter(**dic)
+    try:
+        for field in dic.keys():
+            if field not in Group.FIELD_LIST:
+                print "illegal key"
+                return []
+    except:
+        print "dict error"
+        return []
+    try:
+        ans = Group.objects.filter(**dic)
+        return  ans
+    except:
+        print "failed"
+        return []
 
 
 def getGroupAllDictByObject(group):

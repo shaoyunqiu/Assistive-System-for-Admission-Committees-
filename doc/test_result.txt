@@ -22,7 +22,8 @@
 21. database/backend.py, setNotice不能修改ID，也不能设立不存在的field，对程序加了特判，已修改。
 22. database/backend.py, getNoticebyDict(dic)检查dic中的key合法，已修改。
 23. database/backend.py, createGroupbyDict,检查key 合法，同时不能修改id, 已修改。
-24. datanase/backend.py, setGroup,修改同notice, 已修改。
+24. database/backend.py, setGroup,修改同notice, 已修改。
+25. database/backend.py, getGroupbyDict(dic),对传进去的参数如果是None进行特判，同时把如果传进去的参数不是字典进行异常处理，检查字典的键值是否合法，并对返回值进行异常处理，测试的时候临时想到，以此推广到所有的getbydic函数。.
 
 
 
