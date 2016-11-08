@@ -244,10 +244,10 @@ class Testcreatestudent(TestCase):
         stu1.save()
 
     def test_create_account_exist(self):
-        self.assertEqual(createStudent("test_stu_1",{}), False)
+        self.assertEqual(createStudent("test_stu_1",{Student.ACCOUNT:"test_stu_1"}), False)
 
     def test_create_account_change_id(self):
-        self.assertEqual(createStudent("test_2", {Student.ID: 1}), False)
+        self.assertEqual(createStudent("test_2", {Student.ID: 1, Student.ACCOUNT:"test_2"}), False)
         self.assertEqual(len(Student.objects.filter(account="test_2")), 0)
 
     def test_create_account_change_account(self):
@@ -262,6 +262,7 @@ class Testcreatestudent(TestCase):
 
     def test_create_wrong_attr(self):
         self.assertEqual(createStudent("test_5", {Student.PROVINCE:"jiang"}), False)
+        self.assertEqual(createStudent("test_6", {"haha":0}), False)
 
 
 class Testcheckstudentpassword(TestCase):
@@ -367,6 +368,9 @@ class Testcreateteacher(TestCase):
 
     def test_create_illegal_key(self):
         self.assertEqual(createTeacher({Teacher.ACCOUNT:"test", "nonexist": 1}), True)
+
+    def test_set_id(self):
+        self.assertEqual(createTeacher({Teacher.ACCOUNT: "test_id", Teacher.ID: 5}), False)
 
 
 class Testcheckteacherpassword(TestCase):
@@ -597,11 +601,12 @@ class Testnotice(TestCase):
         no2.save()
 
      #already modified by shaoyunqiu to pass the test
-    def testcreatenotice(self):
+    def test_createnotice(self):
         self.assertEqual(back.createNoticebyDict({"send":"notice3", "id": 0}), False)
         self.assertEqual(len(Notice.objects.filter(id=0)), 0)
         self.assertEqual(back.createNoticebyDict({"send":"notice4", "receive_stu":"stu1"}), True)
         self.assertEqual(len(Notice.objects.filter(receive_stu="stu1")), 2)
+        self.assertEqual(back.createNoticebyDict({"haha": 0}), False)
 
     def test_setnotice(self):
         no_all = Notice.objects.all()
@@ -626,6 +631,7 @@ class Testnotice(TestCase):
         self.assertEqual(back.getNoticeAllDictByObject(None), None)
 
 
+# create vol need to be changed.
 class TestVolBases(TestCase):
     def setUp(self):
         vol1 = Volunteer.objects.model()
@@ -799,8 +805,8 @@ class TestImageBases(TestCase):
         self.assertEqual(img_back.createPicturebyDict({Picture.YEAR: 2016, Picture.PROVINCE:2}), True)
         self.assertEqual(len(Picture.objects.filter(year=2016)), 2)
         self.assertEqual(img_back.createPicturebyDict({Picture.CATEGORY: "Chinese"}), False)
-        self.assertEqual(img_back.createPicturebyDict({"hahah", 0}), False)
-        self.assertEqual(img_back.createPicturebyDict({Picture.ID, 0}), False)
+        self.assertEqual(img_back.createPicturebyDict({"hahah": 0}), False)
+        self.assertEqual(img_back.createPicturebyDict({Picture.ID: 0}), False)
         self.assertEqual(len(Picture.objects.filter(id=0)), 0)
 
 

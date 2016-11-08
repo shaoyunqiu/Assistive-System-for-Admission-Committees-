@@ -214,6 +214,14 @@ def createStudent(account, dict):
         if dict[Student.ACCOUNT] != account:
             print "args conflict"
             return False
+    #modified by shaoyunqiu cannot changeid and ckeck the field
+    if dict.has_key(Student.ID):
+        print "cannot set the id, failed"
+        return False
+    for field in dict.keys():
+        if field not in Student.FIELD_LIST:
+            print "illegal field"
+            return False
     try:
         student = Student.objects.model()
     except:

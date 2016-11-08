@@ -7,7 +7,7 @@
 7. database/student_backend.py getStudentEstimateScore_Every_no_shenhe, 对keyerror进行判断，已修改
 8. database/student_backend.py getStudentEstimateRank_Every, 加了key的判断，但在排名时有一些不合理的地方，建议修改返回值，返回值还未修改。
 9. database/backend.py, notice 的id可以人为设定和修改，不合要求，需要修改，测试未能通过。
-(修改，目前是在建立的时候加特判字典里是否设置id,若设置，则不能创立，返回False)
+(修改，目前是在建立的时候加特判字典里是否设置id,若设置，则不能创立，返回Falsem以及加入field检查。)
 10.datanase/volunteer.py, getVolunteerByField,没有检查键值是否有效，加了checkfield的检查，已修改
 11.datanase/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
 12.database/image_backend.py, removePictureIDByDic(dic)如果有不合法的键值，程序会炸，加上键值的判断，且返回bool值判断是否修改成功。
@@ -24,6 +24,7 @@
 23. database/backend.py, createGroupbyDict,检查key 合法，同时不能修改id, 已修改。
 24. database/backend.py, setGroup,修改同notice, 已修改。
 25. database/backend.py, getGroupbyDict(dic),根据三胖建议，一开始的特判是没必要的，所以去掉了。
+26. 补充：student_backend.py 和 teacher_backend.py, image_backend.py中加了不能修改id 和 field的检查，之前没有发现，现在统一补上, volteer的create要加范围限定，所以待修改。
 
 
 

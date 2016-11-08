@@ -81,6 +81,14 @@ def createPicturebyDict(dict):
     # if getPicturebyDict(dict):
     #     print "account existed"
     #     return False
+    # modify by shaoyunqiu
+    if Picture.ID in dict.keys():
+        print "cannot set id, failed"
+        return False
+    for field in dict.keys():
+        if field not in Picture.FIELD_LIST:
+            print "illegal field, failed"
+            return False
     try:
         pic = Picture.objects.model()
     except:
@@ -101,7 +109,7 @@ def createPicturebyDict(dict):
     print 'successfully create account'
     return True
 
-# modified bt shaoyunqiu
+# modified by shaoyunqiu
 def setPicture(picture, field, value):
     '''
     设置某个账户某个字段的值

@@ -13,10 +13,14 @@ def createNoticebyDict(dict):
         print "create object fail"
         traceback.print_exc()
         return False
-    # modified by shaoyunqiu, cannot set the id
+    # modified by shaoyunqiu, cannot set the id and chedk field
     if Notice.ID in dict.keys():
         print "cannot set the id, cannot create"
         return False
+    for field in dict.keys():
+        if field not in Notice.FIELD_LIST:
+            print "illegal, field"
+            return False
 
     try:
         for item in dict.keys():
@@ -148,6 +152,14 @@ def getGroupAllDictByObject(group):
 
 # ------------------------------------------------------------------------------------------------
 def createTimerbyDict(dict):
+    # modified by shaoyunqiu, cannot set id and illegal field
+    if Timer.ID in dict.keys():
+        print "cannot set the id, failed"
+        return False
+    for field in dict.keys():
+        if field not in Timer.FIELD_LIST:
+            print "illegal field, failed"
+            return False
     try:
         timer = Timer.objects.model()
     except:

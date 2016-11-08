@@ -44,9 +44,12 @@ def createTeacher(kwargs):
     #varList = tuple(vars(item)['column'] for item in Teacher._meta.get_fields()[1:])
     # 获取所有Teacher类的field名
 
-    # shaoyunqiu
+    # shaoyunqiu cannot sat the id
     if not kwargs.has_key('account'):
         print 'account is required'
+        return False
+    if kwargs.has_key(Teacher.ID):
+        print "cannot set the id"
         return False
 
     if not checkTeacherAccount(kwargs['account']):
