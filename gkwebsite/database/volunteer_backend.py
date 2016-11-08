@@ -4,7 +4,7 @@ from models import *
 import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
-
+import backend as back
 
 MIN_LEN_FOR_LIST = 10
 
@@ -36,10 +36,10 @@ def getVolunteerAllDictByAccount(account):
         'province': dict[Volunteer.PROVINCE],
         'provincelist': PROVINCE_LIST,
     }
-    dict[Volunteer.ADMISSION_STATUS] = {
-        'admissionstatus': dict[Volunteer.ADMISSION_STATUS],
-        'admissionstatuslist': ADMISSION_STATUS_LIST
-    }
+    # dict[Volunteer.ADMISSION_STATUS] = {
+    #     'admissionstatus': dict[Volunteer.ADMISSION_STATUS],
+    #     'admissionstatuslist': ADMISSION_STATUS_LIST
+    # }
 
     major_int_list = dict[Volunteer.MAJOR]
     for i in range(0, MIN_LEN_FOR_LIST):
@@ -62,6 +62,17 @@ def getVolunteerAllDictByAccount(account):
 
 def deleteVolunteerAll():
     getAllInVolunteer().delete()
+
+
+def is_have_permission(_id):
+    if type(_id) == str:
+        _id = int(_id)
+    account = idToAccountVolunteer(_id)
+    ret = getVolunteer(account, Volunteer.QUANXIAN)
+    if ret == 1:
+        return True
+    else:
+        return False
 
 
 def idToAccountVolunteer(id):
@@ -92,8 +103,24 @@ def accountToIDVolunteer(account):
     return (str)(getVolunteer(account, 'id'))
 
 def removeVolunteerAccount(_account):
-    getAllInVolunteer().filter(account= _account).delete()
 
+    vol_id = str(accountToIDVolunteer(_account))
+    group_list = back.getGroupbyDict({})
+    for group in group_list:
+        vol_list = getattr(group, Group.VOL_LIST).split('_')
+        if vol_id in vol_list:
+            vol_list.remove(vol_id)
+        if '' in vol_list:
+            vol_list.remove('')
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+
+    timer_list = back.getTimerbyDict({})
+    for timer in timer_list:
+        timer_dic = eval(getattr(timer, Timer.VOLUNTEER_DIC, '{}'))
+        if vol_id in timer_dic.keys():
+            timer_dic.pop(vol_id)
+        back.setTimer(timer, Timer.VOLUNTEER_DIC, timer_dic)
+    getAllInVolunteer().filter(account=_account).delete()
 
 def getVolunteerbyField(field, argc):
     '''
@@ -216,6 +243,74 @@ def checkVolunteerPassword(_account,_password):
     if _password != getVolunteer(_account, Volunteer.PASSWORD): # 密码不正确
         return (False , 'Password is incorrect')
     return (True, str(getVolunteer(_account, Volunteer.ID)))
+
+
+def getVolunteerGroupIDListString(volunteer):
+    try:
+        vol_id = getattr(volunteer, Volunteer.ID)
+    except:
+        vol_id = 1
+
+    group_all_list = back.getGroupbyDict({})
+    id_list = []
+    for group in group_all_list:
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if str(vol_id) in vol_list:
+            id_list.append(str(getattr(group, Group.ID)))
+    return ' '.join(id_list)
+
+
+def setVolunteerGroupbyList(volunteer, id_list):
+    try:
+        vol_id = str(getattr(volunteer, Volunteer.ID))
+    except:
+        vol_id = str(1)
+
+    group_all_list = back.getGroupbyDict({})
+    for group in group_all_list:
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if vol_id in vol_list:
+            vol_list.remove(vol_id)
+        if '' in vol_list:
+            vol_list.remove('')
+        vol_string = '_'.join(vol_list)
+        back.setGroup(group, Group.VOL_LIST, vol_string)
+
+    for new_id in id_list:
+        new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
+        group = back.getGroupbyDict({Group.ID: new_id})[0]
+        vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if '' in vol_list:
+            vol_list.remove('')
+        if vol_id in vol_list:
+            print 'Big bug!'
+        else:
+            vol_list.append(vol_id)
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+    return True
+
+def get_can_see_students(vol_id):
+    all_group = back.getGroupbyDict({})
+    stu_id_list = []
+    for group in all_group:
+        vol_list = getattr(group, Group.VOL_LIST).split('_')
+        if '' in vol_list:
+            vol_list.remove('')
+        if str(vol_id) in vol_list:
+            tmp_list = getattr(group, Group.STU_LIST).split('_')
+            stu_id_list = stu_id_list + tmp_list
+
+    ret = []
+    for _id in stu_id_list:
+        if _id != '':
+            try:
+                ret.append(int(_id))
+            except:
+                pass
+    return ret
+
 
 
 

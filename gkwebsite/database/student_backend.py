@@ -4,6 +4,7 @@ from models import *
 import traceback
 from django.core.exceptions import ValidationError
 from my_field import *
+import backend as back
 
 
 # dic = {'account':'houyf','password':'mima','area':'wuhan','email':'a@qq.com','phone':'11111111','realName':'hyf','volunteerList':['a','b']}
@@ -14,6 +15,17 @@ def getAllInStudent():
 
 def deleteStudentAll():
     getAllInStudent().delete()
+
+
+def is_have_permission(_id):
+    if type(_id) == str:
+        _id = int(_id)
+    account = idToAccountStudent(_id)
+    ret = getStudent(account, Student.QUANXIAN)
+    if ret == 1:
+        return True
+    else:
+        return False
 
 
 def idToAccountStudent(id):
@@ -38,25 +50,45 @@ def idToAccountStudent(id):
 
 def accountToIDStudent(account):
     '''
-
     :param account: string类型的account
     :return: string类型的id
     '''
-    return (str)(getStudent(account, 'id'))
+    # modified by shaoyunqiu 2016/11/2
+    if(getStudent(account, 'id') == None):
+        return None
+    else:
+        return (str)(getStudent(account, 'id'))
+    #return (str)(getStudent(account, 'id'))
 
 
 def removeStudentAccount(_account):
+
+    stu_id = str(accountToIDStudent(_account))
+    group_list = back.getGroupbyDict({})
+    for group in group_list:
+        stu_list = getattr(group, Group.STU_LIST).split('_')
+        if stu_id in stu_list:
+            stu_list.remove(stu_id)
+        if '' in stu_list:
+            stu_list.remove('')
+        back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
     getAllInStudent().filter(account=_account).delete()
+
 
 
 def getStudentbyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
-    :return:返回一个student对象
+    :return:返回一个student对象列表
+    modified by shao 2016/11/2
     '''
-    dic = {field: argc}
-    return Student.objects.filter(**dic)
+    if(checkField(field) == True):
+        dic = {field: argc}
+        return Student.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):
@@ -93,7 +125,6 @@ def getStudentAllDictByAccount(account):
         try:
             dict[item] = getattr(student, item)
         except:
-
             return None
 
     dict[Student.TYPE] = {
@@ -124,10 +155,6 @@ def getStudentAllDictByAccount(account):
         dict[Volunteer.MAJOR].append({'department': numitem,
                                       'departmentlist': MAJOR_LIST})
 
-    dict[Student.ADMISSION_STATUS] = {
-        'admissionstatus': dict[Student.ADMISSION_STATUS],
-        'admissionstatuslist': ADMISSION_STATUS_LIST
-    }
     return dict
 
 
@@ -182,6 +209,11 @@ def createStudent(account, dict):
         print "account existed"
         return False
 
+    # confirm that accout == dict[Student.ACCOUNT]
+    if dict.has_key(Student.ACCOUNT):
+        if dict[Student.ACCOUNT] != account:
+            print "args conflict"
+            return False
     try:
         student = Student.objects.model()
     except:
@@ -203,3 +235,185 @@ def createStudent(account, dict):
     student.save()
     print 'successfully create account'
     return True
+
+
+def checkStudentPassword(_account,_password):
+    '''
+    检查密码是否正确
+    暂时空出
+    :param _account: 用户名
+    :param _password: 传过来的密码，可能被加密过
+    :return:
+    '''
+
+    #if _password == hash(getData(_account, 'password')): #哈希
+    if not getStudent(_account, 'account'): #无重复，说明不存在这个用户
+        print '---------'
+        return (False , 'Account does not exist.')
+    if _password != getStudent(_account, 'password'):
+        print '*********'
+        return (False , 'Password is incorrect')
+    # 密码不正确
+    return (True, str(getStudent(_account,'id')))
+    #hash function should be applied here
+
+
+def checkStudentOpenID(open_id):
+    if open_id.strip() == '':
+        return False, 'OPEN ID IS EMPTY'
+    all_student_list = getAllInStudent()
+    for student in all_student_list:
+        stu_open_id = getattr(student, Student.OPEN_ID, '')
+        if stu_open_id == open_id:
+            _id = getattr(student, Student.ID, '')
+            if _id.strip() != '':
+                return True, str(_id)
+    return False, 'not exist this open id'
+
+
+
+def getStudentGroupIDListString(student):
+    stu_id = 0
+    try:
+        stu_id = getattr(student, Student.ID)
+    except:
+        stu_id = 1
+
+    group_all_list = back.getGroupbyDict({})
+    id_list = []
+    for group in group_all_list:
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if str(stu_id) in stu_list:
+            id_list.append(str(getattr(group, Group.ID)))
+    return ' '.join(id_list)
+
+
+def setStudentGroupbyList(student, id_list):
+    try:
+        stu_id = str(getattr(student, Student.ID))
+    except:
+        stu_id = str(1)
+
+    group_all_list = back.getGroupbyDict({})
+    for group in group_all_list:
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if stu_id in stu_list:
+            stu_list.remove(stu_id)
+        if '' in stu_list:
+            stu_list.remove('')
+        stu_string = '_'.join(stu_list)
+        back.setGroup(group, Group.STU_LIST, stu_string)
+
+    for new_id in id_list:
+        new_id = str(new_id)
+        if len(back.getGroupbyDict({Group.ID: new_id})) <= 0:
+            continue
+        group = back.getGroupbyDict({Group.ID: new_id})[0]
+        stu_list = back.getGroupAllDictByObject(group)[Group.STU_LIST].split('_')
+        if '' in stu_list:
+            stu_list.remove('')
+        if stu_id in stu_list:
+            print 'Big bug!'
+        else:
+            stu_list.append(stu_id)
+        back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
+    return True
+
+
+
+def getStudentEstimateRank(student):
+    score = int(getStudentEstimateScore(student))
+
+    all_student_estimate_score = [999999]
+    student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
+    no_gufen_number = 0
+    for student in student_list:
+        estimate_dic = eval(getattr(student, Student.ESTIMATE_SCORE))
+        tmp = 0
+        for key in estimate_dic.keys():
+            tmp = tmp + int(estimate_dic[key]['score'])
+        if tmp == 0:
+            no_gufen_number = no_gufen_number + 1
+
+    if score == 0:
+        return str(len(student_list)-no_gufen_number), str(len(student_list)-no_gufen_number)
+    for item in student_list:
+        all_student_estimate_score.append(getStudentEstimateScore(item))
+
+    rank = 1
+    ranked_score_list = sorted(all_student_estimate_score, reverse=True)
+
+    length = len(ranked_score_list)
+    for i in range(0, length):
+        if score >= ranked_score_list[i]:
+            rank = i
+            break
+
+    return str(rank), str(len(student_list)-no_gufen_number)
+
+
+def getStudentEstimateScore_Every(student, test_id):
+    tmp_dic = getattr(student, 'estimateScore', '{}')
+    try:
+        tmp_dic = eval(tmp_dic)
+    except:
+        tmp_dic = eval('{}')
+
+    score = 0
+    if test_id not in tmp_dic.keys():
+        return str(score)
+
+    if 'shenhe' in tmp_dic[test_id]:
+        score = tmp_dic[test_id]['score']
+    return str(score)
+
+
+def getStudentEstimateScore_Every_no_shenhe(student, test_id):
+    tmp_dic = getattr(student, 'estimateScore', '{}')
+    try:
+        tmp_dic = eval(tmp_dic)
+    except:
+        tmp_dic = eval('{}')
+
+    score = 0
+    if test_id not in tmp_dic.keys():
+        return str(score)
+
+    score = tmp_dic[test_id]['score']
+    return str(score)
+
+
+def getStudentEstimateRank_Every(student, test_id):
+    score = int(getStudentEstimateScore_Every(student, test_id))
+
+    choose_student__score_list = [999999]
+    all_student_list = getAllInStudent()
+    for student in all_student_list:
+        tmp_dic = eval(getattr(student, 'estimateScore'))
+        if test_id in tmp_dic.keys():
+            if 'shenhe' in tmp_dic[test_id]:
+                choose_student__score_list.append(int(tmp_dic[test_id]['score']))
+
+    rank = 1
+    ranked_score_list = sorted(choose_student__score_list, reverse=True)
+    length = len(ranked_score_list)
+    for i in range(0, length):
+        if score >= ranked_score_list[i]:
+            rank = i
+            break
+
+    return str(rank), str(len(ranked_score_list)-1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

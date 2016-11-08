@@ -15,7 +15,7 @@ import datetime
 class Teacher(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
@@ -27,6 +27,7 @@ class Teacher(models.Model):
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
 
+    ID = 'id'
     ACCOUNT = 'account'
     PASSWORD = 'password'
     REAL_NAME = 'realName'
@@ -53,7 +54,7 @@ class Teacher(models.Model):
 class Student(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
@@ -82,9 +83,9 @@ class Student(models.Model):
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
-    estimateScore = models.IntegerField(default=-1, blank=True)
+    estimateScore = models.TextField(default='{}', blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
-    admissionStatus = models.IntegerField(default=-1, blank=True)
+    admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
     registerCode = models.CharField(max_length=100, default='', blank=True)
     teacherList = my_field.ListField(default=[], blank=True)
@@ -95,6 +96,14 @@ class Student(models.Model):
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     qq = models.CharField(max_length=50, default='', blank=True)
+    dadName = models.CharField(max_length=50, default='', blank=True)
+    momName = models.CharField(max_length=50, default='', blank=True)
+
+    duiyingTeacher = models.CharField(max_length=500, default='', blank=True)
+
+    quanxian = models.IntegerField(default=1, blank=True)
+
+    openid = models.CharField(max_length=500, default='', blank=True)
 
     ID = 'id'
 
@@ -140,6 +149,12 @@ class Student(models.Model):
     FIXED_PHONE = 'fixedPhone'
     QQ = 'qq'
 
+    DAD_NAME = 'dadName'
+    MOM_NAME = 'momName'
+    DUIYING_TEACHER = 'duiyingTeacher'
+    QUANXIAN = 'quanxian'
+    OPEN_ID = 'openid'
+
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -148,7 +163,8 @@ class Student(models.Model):
                   TUTOR_NAME, TUTOR_PHONE, PROVINCE, MAJOR, TEST_SCORE_LIST,
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
-                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ]
+                  IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
+                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID]
 
     def __unicode__(self):
         import sys
@@ -163,8 +179,8 @@ class Student(models.Model):
 class Volunteer(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
-    # password validation : 4个或以上的数字或字母
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
+   # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
     idNumber = models.CharField(max_length=40, default='', blank=True,
@@ -192,9 +208,9 @@ class Volunteer(models.Model):
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
-    estimateScore = models.IntegerField(default=-1, blank=True)
+    estimateScore = models.CharField(max_length=2000, default='', blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
-    admissionStatus = models.IntegerField(default=-1, blank=True)
+    admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
     registerCode = models.CharField(max_length=100, default='', blank=True)
     teacherList = my_field.ListField(default=[], blank=True) #对应的老师
@@ -206,6 +222,8 @@ class Volunteer(models.Model):
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     qq = models.CharField(max_length=50, default='', blank=True)
+
+    quanxian = models.IntegerField(default=0, blank=True)
 
     ID = 'id'
 
@@ -252,6 +270,7 @@ class Volunteer(models.Model):
     FIXED_PHONE = 'fixedPhone'
 
     QQ = 'qq'
+    QUANXIAN = 'quanxian'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -261,7 +280,7 @@ class Volunteer(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED,STUDENT_ID, GROUP_LIST, WECHAT, FIXED_PHONE,
-                  QQ, ]
+                  QQ, QUANXIAN]
 
     def __unicode__(self):
         import sys
@@ -295,15 +314,135 @@ class RegisterCode(models.Model):
         return ret
 
 class Picture(models.Model):
-    account = models.CharField(max_length=150, unique=True,default='', blank=True)
-    img = models.ImageField(upload_to='exam_picture/', default='exam_picture/None/no-img.jpg')
-
-    ACCOUNT = 'account'
-    IMG = 'img'
-
-    FIELD_LIST = [ACCOUNT, IMG]
 
 
-class ImageUploadForm(forms.Form):
-    """Image upload form."""
-    image = forms.ImageField()
+    year = models.IntegerField(default=0, blank=True) #年份
+    province = models.IntegerField(default=0, blank=True) #省份
+    subject = models.IntegerField(default=0, blank=True) #科目
+    number = models.IntegerField(default=0, blank=True) #题号
+    score = models.IntegerField(default=0, blank=True) #得分
+    category = models.IntegerField(default=0, blank=True) #主观客观
+
+    isTitle = models.IntegerField(default=0, blank=True) #是否是纯标题
+    isDelivered = models.IntegerField(default=0, blank=True) #是否发布
+
+    ID = 'id'
+
+    YEAR = 'year'
+    PROVINCE = 'province'
+    SUBJECT = 'subject'
+    NUMBER = 'number'
+    SCORE = 'score'
+    CATEGORY = 'category'
+
+    IS_TITLE = 'isTitle'
+    IS_DELEVERED = 'isDelivered'
+
+    FIELD_LIST = [ID, YEAR, PROVINCE, SUBJECT, NUMBER, SCORE, CATEGORY, IS_TITLE, IS_DELEVERED]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Picture._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+class Notice(models.Model):
+    send = models.CharField(max_length=300, default='', blank=True)
+    receive_vol = models.CharField(max_length=500, default='', blank=True)
+    receive_stu = models.CharField(max_length=500, default='', blank=True)
+
+    ID = 'id'
+    SEND = 'send'
+    RECEIVE_VOL = 'receive_vol'
+    RECEIVE_STU = 'receive_stu'
+
+    FIELD_LIST = [ID, SEND, RECEIVE_VOL, RECEIVE_STU]
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Notice._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=500, default='', blank=True)
+    vol_list = models.CharField(max_length=500, default='', blank=True)
+    stu_list = models.CharField(max_length=500, default='', blank=True)
+
+    ID = 'id'
+    NAME = 'name'
+    VOL_LIST = 'vol_list'
+    STU_LIST = 'stu_list'
+
+    FIELD_LIST = [ID, NAME, VOL_LIST, STU_LIST]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Group._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+class Timer(models.Model):
+
+    teacher_id = models.IntegerField(default=0, blank=True)
+    name = models.CharField(max_length=50, default='', blank=True)
+    start_time = models.DateField(default=datetime.date.today, blank=True)
+    end_time = models.DateField(default=datetime.date.today, blank=True)
+    volunteer_dic = models.CharField(max_length=1000, default='{}', blank=True)
+
+    ID = 'id'
+
+    TEACHER_ID = 'teacher_id'
+    NAME = 'name'
+    START_TIME = 'start_time'
+    END_TIME = 'end_time'
+    VOLUNTEER_DIC = 'volunteer_dic'
+
+    FIELD_LIST = [ID, TEACHER_ID, NAME, START_TIME, END_TIME,
+                  VOLUNTEER_DIC]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in Timer._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
+
+class WechatURL(models.Model):
+
+    picture_url = models.CharField(max_length=1000, default='{}', blank=True)
+    message_url = models.CharField(max_length=1000, default='{}', blank=True)
+
+    ID = 'id'
+    PICTURE_URL = 'picture_url'
+    MESSAGE_URL = 'message_url'
+
+    FIELD_LIST = [ID, PICTURE_URL, MESSAGE_URL]
+
+    def __unicode__(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        varList = (vars(item)['column'] for item in WechatURL._meta.get_fields()[1:])
+        ret = ''
+        for item in varList:
+            ret = ret + str(getattr(self, item, 'None')) + ' || '
+        return ret
+
