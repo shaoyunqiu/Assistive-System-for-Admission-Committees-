@@ -774,7 +774,7 @@
 		<td>push_stack</td>
 		<td>微信消息压栈</td>
 		<td>database/views.py</td>
-		<td>request.POST 两个URL，pic_url, msg_url</td>
+		<td>request.POST 两个URL，pic_url, msg_url 新增标题title和摘要abstract</td>
 		<td>JsonResponse 返回success:'Y'/'N' message:错误信息 </td>
 		<td>POST</td>
 		<td>段清楠</td>
