@@ -5,24 +5,24 @@ import datetime
 def testCreateStudentNew():
     deleteStudentAll()
     createStudent('lihy1', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'李昊阳',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
+                                     Student.REAL_NAME: u'田旭',
+                                     Student.BIRTH: datetime.datetime(1999, 8, 2),
+                                     Student.ID_NUMBER: '500234199908020014',
 
                                      'type': 1,
                                      'sex': 1,
                                      'nation': 1,
-                                     'school': u'广元市南山中学',
+                                     'school': u'重庆市第一中学',
                                      'classroom': u'高三5班',
 
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
+                                     'address': u'重庆市江北区',
+                                     'phone': '18290278879',
+                                     'email': '1053872424@qq.com',
+                                     'dadPhone': '13436230900',
+                                     'momPhone': '13983542066',
 
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
+                                     'tutorName': u'',
+                                     'tutorPhone': '',
                                      'province': 1,
                                      'major': [1, 2, 3],
                                      'testScoreList': [100, 99, 98],
@@ -44,24 +44,24 @@ def testCreateStudentNew():
                                      })
 
     createStudent('lihy2' , {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'白云仁',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
+                                     Student.REAL_NAME: u'林澳恒',
+                                     Student.BIRTH: datetime.datetime(1999, 6, 13),
+                                     Student.ID_NUMBER: '33102119990613185X',
 
                                      'type': 2,
-                                     'sex': 2,
-                                     'nation': 3,
-                                     'school': u'广元市南山中学',
+                                     'sex': 1,
+                                     'nation': 1,
+                                     'school': u'浙江省台州市玉环中学',
                                      'classroom': u'高三5班',
 
                                      'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
+                                     'phone': '13736674021',
+                                     'email': '949551109@qq.com',
+                                     'dadPhone': '13967673595',
+                                     'momPhone': '13989693319',
 
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
+                                     'tutorName': u'',
+                                     'tutorPhone': '',
                                      'province': 4,
                                      'major': [1, 2, 3],
                                      'testScoreList': [100, 99, 98],
@@ -83,24 +83,24 @@ def testCreateStudentNew():
                                      })
 
     createStudent('lihy3', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'李昊阳',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
+                                     Student.REAL_NAME: u'谢可为',
+                                     Student.BIRTH: datetime.datetime(1999, 2, 11),
+                                     Student.ID_NUMBER: '110108199902113024',
 
-                                     'type': 2,
-                                     'sex': 1,
-                                     'nation': 3,
-                                     'school': u'广元市南山中学',
-                                     'classroom': u'高三5班',
+                                     'type': 1,
+                                     'sex': 2,
+                                     'nation': 3,   #满族
+                                     'school': u'清华大学附属中学',
+                                     'classroom': u'高三11班',
 
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
+                                     'address': u'北京市海淀区苏州街19号1205',
+                                     'phone': '13701161501',
+                                     'email': 'wangyankun@petrochina.com.cn',
+                                     'dadPhone': '18601062026',
+                                     'momPhone': '13701161501',
 
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
+                                     'tutorName': u'',
+                                     'tutorPhone': '',
                                      'province': 1,
                                      'major': [1, 2, 3],
                                      'testScoreList': [100, 99, 98],
@@ -121,639 +121,7 @@ def testCreateStudentNew():
                                      'groupList': [1, 2],
                                      })
 
-    createStudent('lihy4', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'邵韵秋',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
-
-                                     'type': 1,
-                                     'sex': 1,
-                                     'nation': 6,
-                                     'school': u'广元市南山中学',
-                                     'classroom': u'高三5班',
-
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
-
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
-                                     'province': 1,
-                                     'major': [1, 2, 3],
-                                     'testScoreList': [100, 99, 98],
-
-                                     'rankList': [1, 2, 3],
-                                     'sumNumberList': [1000, 2000, 3000],
-                                      
-                                     'realScore': 687,
-                                     'admissionStatus': ' ',
-
-
-                                     # 'registerCode': ,
-                                     'teacherList': ['houyf1', 'houyf2'],
-                                     'volunteerAccountList': ['vol1', 'vol2'],
-                                     'isLogedin': 0,
-
-                                     'isRegistered': 0,
-                                     'groupList': [1, 2],
-                                     })
-
-    createStudent('lihy5', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'李昊阳',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
-
-                                     'type': 1,
-                                     'sex': 1,
-                                     'nation': 1,
-                                     'school': u'广元市南山中学',
-                                     'classroom': u'高三5班',
-
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
-
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
-                                     'province': 1,
-                                     'major': [1, 2, 3],
-                                     'testScoreList': [100, 99, 98],
-
-                                     'rankList': [1, 2, 3],
-                                     'sumNumberList': [1000, 2000, 3000],
-                                      
-                                     'realScore': 687,
-                                     'admissionStatus': ' ',
-
-
-                                     # 'registerCode': ,
-                                     'teacherList': ['houyf1', 'houyf2'],
-                                     'volunteerAccountList': ['vol1', 'vol2'],
-                                     'isLogedin': 0,
-
-                                     'isRegistered': 0,
-                                     'groupList': [1, 2],
-                                     })
-
-    createStudent('lihy6', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'白云仁',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
-
-                                     'type': 1,
-                                     'sex': 1,
-                                     'nation': 1,
-                                     'school': u'广元市南山中学',
-                                     'classroom': u'高三5班',
-
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
-
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
-                                     'province': 1,
-                                     'major': [4, 5, 6],
-                                     'testScoreList': [100, 99, 98],
-
-                                     'rankList': [1, 2, 3],
-                                     'sumNumberList': [1000, 2000, 3000],
-                                      
-                                     'realScore': 687,
-                                     'admissionStatus': ' ',
-
-
-                                     # 'registerCode': ,
-                                     'teacherList': ['houyf1', 'houyf2'],
-                                     'volunteerAccountList': ['vol1', 'vol2'],
-                                     'isLogedin': 0,
-
-                                     'isRegistered': 0,
-                                     'groupList': [1, 2],
-                                     })
-
-    createStudent('lihy7', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'邵韵秋',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
-
-                                     'type': 1,
-                                     'sex': 1,
-                                     'nation': 1,
-                                     'school': u'广元市南山中学',
-                                     'classroom': u'高三5班',
-
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
-
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
-                                     'province': 1,
-                                     'major': [4, 5, 6],
-                                     'testScoreList': [100, 99, 98],
-
-                                     'rankList': [1, 2, 3],
-                                     'sumNumberList': [1000, 2000, 3000],
-                                      
-                                     'realScore': 687,
-                                     'admissionStatus': ' ',
-
-
-                                     # 'registerCode': ,
-                                     'teacherList': ['houyf1', 'houyf2'],
-                                     'volunteerAccountList': ['vol1', 'vol2'],
-                                     'isLogedin': 0,
-
-                                     'isRegistered': 0,
-                                     'groupList': [1, 2],
-                                     })
-
-    createStudent('lihy8', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'王恒志',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
-
-                                     'type': 1,
-                                     'sex': 1,
-                                     'nation': 1,
-                                     'school': u'广元市南山中学',
-                                     'classroom': u'高三5班',
-
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
-
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
-                                     'province': 1,
-                                     'major': [4, 5, 6],
-                                     'testScoreList': [100, 99, 98],
-
-                                     'rankList': [1, 2, 3],
-                                     'sumNumberList': [1000, 2000, 3000],
-                                      
-                                     'realScore': 687,
-                                     'admissionStatus': ' ',
-
-
-                                     # 'registerCode': ,
-                                     'teacherList': ['houyf1', 'houyf2'],
-                                     'volunteerAccountList': ['vol1', 'vol2'],
-                                     'isLogedin': 0,
-
-                                     'isRegistered': 0,
-                                     'groupList': [1, 2],
-                                     })
-
-    createStudent('lihy9', {Student.PASSWORD: 'mima',
-                                     Student.REAL_NAME: u'李昊阳',
-                                     Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                     Student.ID_NUMBER: '123456789123456789',
-
-                                     'type': 1,
-                                     'sex': 1,
-                                     'nation': 10,
-                                     'school': u'广元市南山中学',
-                                     'classroom': u'高三5班',
-
-                                     'address': u'广元市广元镇广元村',
-                                     'phone': '18812344321',
-                                     'email': 'alienlhy@163.com',
-                                     'dadPhone': '17845699654',
-                                     'momPhone': '17845699654',
-
-                                     'tutorName': u'王恒志',
-                                     'tutorPhone': '13800000000',
-                                     'province': 3,
-                                     'major': [4, 5, 6],
-                                     'testScoreList': [100, 99, 98],
-
-                                     'rankList': [1, 2, 3],
-                                     'sumNumberList': [1000, 2000, 3000],
-                                      
-                                     'realScore': 687,
-                                     'admissionStatus': ' ',
-
-
-                                     # 'registerCode': ,
-                                     'teacherList': ['houyf1', 'houyf2'],
-                                     'volunteerAccountList': ['vol1', 'vol2'],
-                                     'isLogedin': 0,
-
-                                     'isRegistered': 0,
-                                     'groupList': [1, 2],
-                                     })
-
-
-    for i in range(0, 10):
-        createStudent('lihy1'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'李昊阳',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 1,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [1,2,3],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy2'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'白云仁',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 2,
-                                'sex': 2,
-                                'nation': 3,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 4,
-                                'major': [1,2,3],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf2', 'houyf3'],
-                                'volunteerAccountList': ['vol2', 'vol3'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy3'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'李昊阳',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 2,
-                                'sex': 1,
-                                'nation': 3,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [1,2,3],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy4'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'邵韵秋',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 6,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [1,2,3],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy5'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'李昊阳',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 1,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [1,2,3],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy6'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'白云仁',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 1,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [4, 5, 6],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy7'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'邵韵秋',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 1,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [4, 5, 6],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy8'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'王恒志',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 1,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [4, 5, 6],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy9'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'李昊阳',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 10,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 3,
-                                'major': [4, 5, 6],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-        createStudent('lihy10'+ str(i), {Student.PASSWORD: 'mima',
-                                Student.REAL_NAME: u'李昊阳',
-                                Student.BIRTH: datetime.datetime(2015, 1, 12),
-                                Student.ID_NUMBER: '123456789123456789',
-
-                                'type': 1,
-                                'sex': 1,
-                                'nation': 1,
-                                'school': u'广元市南山中学',
-                                'classroom': u'高三5班',
-
-                                'address': u'广元市广元镇广元村',
-                                'phone': '18812344321',
-                                'email': 'alienlhy@163.com',
-                                'dadPhone': '17845699654',
-                                'momPhone': '17845699654',
-
-                                'tutorName': u'王恒志',
-                                'tutorPhone': '13800000000',
-                                'province': 1,
-                                'major': [4, 5, 6],
-                                'testScoreList': [100, 99, 98],
-
-                                'rankList': [1, 2, 3],
-                                'sumNumberList': [1000, 2000, 3000],
-                                 
-                                'realScore': 687,
-                                'admissionStatus': ' ',
-
-
-                                # 'registerCode': ,
-                                'teacherList': ['houyf1', 'houyf2'],
-                                'volunteerAccountList': ['vol1', 'vol2'],
-                                'isLogedin': 0,
-
-                                'isRegistered': 0,
-                                'groupList': [1,2],
-                                })
-
-
-
-
-
-
-
-
+  
 
 
 
