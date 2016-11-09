@@ -723,8 +723,13 @@ def push_stack(request):
     if request.is_ajax() and request.method == 'POST':
         pic_url = request.POST.get('pic_url')
         msg_url = request.POST.get('msg_url')
+        title = request.POST.get('title')
+        text = request.POST.get('abstract')
         try:
-            back.createWechatURLbyDict({WechatURL.PICTURE_URL: pic_url, WechatURL.MESSAGE_URL: msg_url})
+            back.createWechatURLbyDict({WechatURL.PICTURE_URL: pic_url,
+                                        WechatURL.MESSAGE_URL: msg_url,
+                                        WechatURL.TITLE: title,
+                                        WechatURL.TEXT: text})
             t = {}
             t['success']='Y'
             t['message']=u'微信消息发布成功'
