@@ -2,8 +2,74 @@
 from student_backend import *
 import datetime
 
+'''
+by byr 20161109
+'''
+def addStudent():
+    dict = {Student.PASSWORD: 'mima',
+ Student.REAL_NAME: u'田旭',
+ Student.BIRTH: datetime.datetime(1999, 8, 2),
+ Student.ID_NUMBER: '500234199908020014',
+ 'type': 1,
+ 'sex': 1,
+ 'nation': 1,
+ 'school': u'重庆市第一中学',
+ 'classroom': u'高三5班',
+ 'address': u'重庆市江北区',
+ 'phone': '18290278879',
+ 'email': '1053872424@qq.com',
+ 'dadPhone': '13436230900',
+ 'momPhone': '13983542066',
+
+ 'tutorName': u'',
+ 'tutorPhone': '',
+ 'province': 1,
+ 'major': [1, 2, 3],
+ 'testScoreList': [100, 99, 98],
+
+ 'rankList': [1, 2, 3],
+ 'sumNumberList': [1000, 2000, 3000],
+
+ 'realScore': 687,
+ 'admissionStatus': ' ',
+
+
+ # 'registerCode': ,
+ 'teacherList': ['houyf1', 'houyf2'],
+ 'volunteerAccountList': ['vol1', 'vol2'],
+ 'isLogedin': 0,
+
+ 'isRegistered': 0,
+ 'groupList': [1, 2],
+ }
+    file = open("students_data.txt")
+    i = 0
+    while (True):
+    #for i in range(0, 3):
+        lines = file.readline()
+        if not lines:
+            break
+        lineslist = lines.split(',')
+        dict[Student.REAL_NAME] = lineslist[1].decode('gbk')
+        if lineslist[2].decode('gbk') == u'男':
+            dict['sex'] = 0
+        else:
+            dict['sex'] = 1
+        dict[Student.ID_NUMBER] = lineslist[9].decode('gbk')
+        dict['email'] = lineslist[12].decode('gbk')
+        dict['school'] = lineslist[14].decode('gbk')
+        dict['phone'] = lineslist[15].decode('gbk')
+        dict[Student.DAD_NAME] = lineslist[17].decode('gbk')
+        dict['dadPhone'] = lineslist[18].decode('gbk')
+        dict[Student.MOM_NAME] = lineslist[19].decode('gbk')
+        dict['momPhone'] = lineslist[20].decode('gbk')
+
+        createStudent('lihy_xjj_%s'%str(i), dict)
+        i = i + 1
+
 def testCreateStudentNew():
     deleteStudentAll()
+    addStudent()
     createStudent('lihy1', {Student.PASSWORD: 'mima',
                                      Student.REAL_NAME: u'田旭',
                                      Student.BIRTH: datetime.datetime(1999, 8, 2),
