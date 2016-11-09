@@ -8,7 +8,7 @@ from django import forms
 import my_field
 import django.core.validators
 import datetime
-
+import django.utils.timezone as timezone
 
 # Create your models here.
 
@@ -359,7 +359,7 @@ class Notice(models.Model):
     title = models.CharField(max_length=300, default='', blank=True)
     text = models.TextField(default='', blank=True)
     teacher_id = models.CharField(max_length=300, default='', blank=True)
-    send_date = models.DateField(default=datetime.date.today, blank=True)
+    send_date = models.DateTimeField(default=timezone.now, blank=True)
     receive_stu = models.TextField(default='[]', blank=True)
 
     ID = 'id'
