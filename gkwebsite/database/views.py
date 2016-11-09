@@ -723,8 +723,13 @@ def push_stack(request):
     if request.is_ajax() and request.method == 'POST':
         pic_url = request.POST.get('pic_url')
         msg_url = request.POST.get('msg_url')
+        title = request.POST.get('title')
+        text = request.POST.get('abstract')
         try:
-            back.createWechatURLbyDict({WechatURL.PICTURE_URL: pic_url, WechatURL.MESSAGE_URL: msg_url})
+            back.createWechatURLbyDict({WechatURL.PICTURE_URL: pic_url,
+                                        WechatURL.MESSAGE_URL: msg_url,
+                                        WechatURL.TITLE: title,
+                                        WechatURL.TEXT: text})
             t = {}
             t['success']='Y'
             t['message']=u'微信消息发布成功'
@@ -747,8 +752,43 @@ def get_grouplist(request):
             group_info = back.getGroupAllDictByObject(group)
             group_id = group_info[Group.ID]
             group_name = group_info[Group.NAME]
-            ret_list.append('%s:%s'%(str(group_id), str(group_name)))
-            t.append({'value': str(group_id), 'string': group_name})
+            t.append({'value': str(group_id), 'string': '%s:%s'%(str(group_id), str(group_name))})
         return JsonResponse(t, safe=False)
+    else:
+        return HttpResponse('Access denied.')
+        
+def new_message_to_group(request):
+    # by dqn14 Nov 7, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        try:
+            title = request.POST.get('title')
+            target_group = request.POST.get('group_val')
+            text = request.POST.get('maintext')
+            teacher_id = request.session.get('teacher_id', -1)
+            print title, target_group, text, teacher_id
+
+            group = back.getGroupbyDict({Group.ID: int(target_group)})[0]
+            stu_id_list_str = getattr(group, Group.STU_LIST).split('_')
+            if '' in stu_id_list_str:
+                stu_id_list_str.remove('')
+            stu_id_list = []
+            for item in stu_id_list_str:
+                stu_id_list.append(int(item))
+
+            back.createNoticebyDict({Notice.TITLE: title,
+                                     Notice.TEXT: text,
+                                     Notice.TEACHER_ID: int(teacher_id),
+                                     Notice.RECEIVE_STU: stu_id_list})
+            t = {}
+            t['success']='Y'
+            t['message']=u'发布成功'
+            return JsonResponse(t)
+
+        except:
+            t = {}
+            t['success']='N'
+            t['message']=u'发布失败'
+            return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

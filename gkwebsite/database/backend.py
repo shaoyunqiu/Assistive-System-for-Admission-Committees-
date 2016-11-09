@@ -53,6 +53,8 @@ def getNoticeAllDictByObject(notice):
         try:
             dict[item] = getattr(notice, item)
         except:
+            # print 'item ',item
+            # print getattr(notice, item)
             return None
     return dict
 

@@ -8,7 +8,7 @@ from django import forms
 import my_field
 import django.core.validators
 import datetime
-
+import django.utils.timezone as timezone
 
 # Create your models here.
 
@@ -105,6 +105,8 @@ class Student(models.Model):
 
     openid = models.CharField(max_length=500, default='', blank=True)
 
+    readed = models.TextField(default='[]', blank=True)
+
     ID = 'id'
 
     ACCOUNT = 'account'
@@ -155,6 +157,8 @@ class Student(models.Model):
     QUANXIAN = 'quanxian'
     OPEN_ID = 'openid'
 
+    READED = 'readed'
+
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -164,7 +168,8 @@ class Student(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
-                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID]
+                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID,
+                  READED]
 
     def __unicode__(self):
         import sys
@@ -354,7 +359,7 @@ class Notice(models.Model):
     title = models.CharField(max_length=300, default='', blank=True)
     text = models.TextField(default='', blank=True)
     teacher_id = models.CharField(max_length=300, default='', blank=True)
-    send_date = models.DateField(default=datetime.date.today, blank=True)
+    send_date = models.DateTimeField(default=timezone.now, blank=True)
     receive_stu = models.TextField(default='[]', blank=True)
 
     ID = 'id'
