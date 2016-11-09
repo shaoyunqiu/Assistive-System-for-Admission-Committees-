@@ -740,14 +740,6 @@ def get_grouplist(request):
     # by dqn14 Nov 7, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        # t = []
-        # b = {'value':'', 'string':''}
-        # c = {'value':'1', 'string':'1'}
-        # d = {'value':'2', 'string':'2'}
-        # t.append(b)
-        # t.append(c)
-        # t.append(d)
-        # print '-----------------------------'
         group_list = back.getGroupbyDict({})
         ret_list = []
         t = [{'value':'', 'string':''}]
@@ -756,12 +748,7 @@ def get_grouplist(request):
             group_id = group_info[Group.ID]
             group_name = group_info[Group.NAME]
             ret_list.append('%s:%s'%(str(group_id), str(group_name)))
-
-        length = len(ret_list)
-        for i in range(0, length):
-            dic = {'value': str(i+1), 'string': ret_list[i]}
-            t.append(dic)
-
+            t.append({'value': str(group_id), 'string': group_name})
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
