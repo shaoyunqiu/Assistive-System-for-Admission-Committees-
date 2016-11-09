@@ -108,7 +108,7 @@
 		<td>JsonResponse(['name']: 学生姓名)</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -390,7 +390,7 @@
 		<td>JsonResponse(dict) dict = {'message': , 'score':}</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>finished</td>
 	</tr>
 
 	<tr>
@@ -553,13 +553,13 @@
 	
 	<tr>
 		<td>remove_question</td>
-		<td>删除一道题目，将后面的题号前移</td>
+		<td>删除一道题目</td>
 		<td>database/views.py</td>
 		<td>request(.POST['test_id']:测试的ID .POST['num']:题号)</td>
 		<td>JsonResponse 键：success('Y'/'N'), message</td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td>h</td>
+		<td>finished</td>
 	</tr>
 	
 		<tr>
@@ -610,7 +610,7 @@
                 GET直接返回字典 POST返回JSON</td>
 		<td>GET/POST</td>
 		<td>白云仁</td>
-		<td></td>
+		<td>finished</td>
 	</tr>
 	
 			<tr>
@@ -631,7 +631,7 @@
                 GET直接返回列表 列表中是字典</td>
 		<td>GET</td>
 		<td>白云仁</td>
-		<td></td>
+		<td>finished</td>
 	</tr>
 	
 				<tr>
