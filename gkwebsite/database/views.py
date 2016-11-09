@@ -83,7 +83,9 @@ def get_teacher_name_by_id(request):
     :return:
     '''
     if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
+        id = request.session.get('teacher_id', -1)
+        if id == -1:
+            return JsonResponse({'name':'', 'success':'N'})
         account = tch.idToAccountTeacher(id)
         t = {'name': tch.getTeacher(account, 'realName')}
         return JsonResponse(t)
@@ -95,7 +97,9 @@ def get_volunteer_name_by_id(request):
     # by dqn14 Oct 19, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
+        id = request.session.get('volunteer_id', -1)
+        if id == -1:
+            return JsonResponse({'name':'', 'success':'N'})
         account = vol.idToAccountVolunteer(id)
         t = {'name': vol.getVolunteer(account, 'realName')}
         return JsonResponse(t)
@@ -106,7 +110,9 @@ def get_student_name_by_id(request):
     # by dqn14 Nov 3, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = int(request.POST.get('id'))
+        id = request.session.get('student_id', -1)
+        if id == -1:
+            return JsonResponse({'name':'', 'success':'N'})
         account = stu.idToAccountStudent(id)
         name = stu.getStudent(account, Student.REAL_NAME)
         t = {'name': name}
@@ -213,7 +219,9 @@ def export_registration_code(request):
     # by dqn14 Oct 22, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        teacher = request.POST.get('id')
+        teacher = request.session.get('teacher_id', -1)
+        if teacher == -1:
+            return JsonResponse({'success':'N'})
         length = request.POST.get('length')
         filename = "%s_teacher.xls" % teacher
         t = {'filename': filename}
@@ -601,7 +609,9 @@ def add_activity(request):
         name = request.POST.get('name')
         date_begin = request.POST.get('date_begin')
         date_end = request.POST.get('date_end')
-        teacher_id = request.POST.get('teacher_id')
+        teacher_id = request.session.get('teacher_id', -1)
+        if teacher_id == -1:
+            return JsonResponse({'success':'N'})
         print name, date_begin, date_end
         try:
             begin_list = date_begin.split('-')
@@ -630,7 +640,9 @@ def export_activity_result(request):
     if request.is_ajax() and request.method == 'POST':
         try:
             id = int(request.POST.get('id'))
-            teacher_id = int(request.POST.get('teacher_id'))
+            teacher_id = int(request.session.get('teacher_id', -1))
+            if teacher_id == -1:
+                return JsonResponse({'success':'N'})
             filename = 'files/%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
             generateTimerXLS(id, teacher_id, filename)
             t = {}
