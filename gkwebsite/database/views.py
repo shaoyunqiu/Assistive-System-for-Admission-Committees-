@@ -729,3 +729,22 @@ def get_grouplist(request):
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
+        
+def new_message_to_group(request):
+    # by dqn14 Nov 7, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        title = request.POST.get('title')
+        target_group = request.POST.get('group_val')
+        text = request.POST.get('maintext')
+        # time = getServerTimeNow
+        # teacher_id = request.session.get('teacher_id', -1)
+        # if teacher_id == -1:
+        #   return xxx
+        
+        t = {}
+        t['success']='N'
+        t['message']=text
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
