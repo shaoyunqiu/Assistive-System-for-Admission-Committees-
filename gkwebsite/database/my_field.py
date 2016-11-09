@@ -134,8 +134,13 @@ def getStudentEstimateScore(student):
         tmp_dic = eval('{}')
     sum_score = 0
     for key in tmp_dic.keys():
-        if 'shenhe' in tmp_dic[key].keys():
-            sum_score += tmp_dic[key]['score']
+        # shaoyunqiu check keyerror and typeerror, if not int, then skip
+        if 'shenhe' in tmp_dic[key].keys() and 'score' in tmp_dic[key].keys():
+            try:
+                sum_score += tmp_dic[key]['score']
+            except:
+                print "int error"
+                continue
     return str(sum_score)
 
 

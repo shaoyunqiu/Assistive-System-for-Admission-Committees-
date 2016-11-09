@@ -704,6 +704,9 @@ def batch_add_to_group(request):
         stu_0_id = request.POST.get('student_id_0')
         stu_1_id = request.POST.get('student_id_1')
         target_group = request.POST.get('group')    # This is a string
+        print 'tiaoshi ', stu_num, stu_0_id, stu_1_id, target_group
+
+
         t = {}
         if stu_num > 0:
             t['success'] = 'Y'
@@ -720,9 +723,15 @@ def push_stack(request):
     if request.is_ajax() and request.method == 'POST':
         pic_url = request.POST.get('pic_url')
         msg_url = request.POST.get('msg_url')
-        t = {}
-        t['success']='N'
-        t['message']='服务器未响应'
+        try:
+            back.createWechatURLbyDict({WechatURL.PICTURE_URL: pic_url, WechatURL.MESSAGE_URL: msg_url})
+            t = {}
+            t['success']='Y'
+            t['message']=u'微信消息发布成功'
+        except:
+            t = {}
+            t['success']='N'
+            t['message']='服务器未响应'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -731,13 +740,15 @@ def get_grouplist(request):
     # by dqn14 Nov 7, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        t = []
-        b = {'value':'', 'string':''}
-        c = {'value':'1', 'string':'1'}
-        d = {'value':'2', 'string':'2'}
-        t.append(b)
-        t.append(c)
-        t.append(d)
+        group_list = back.getGroupbyDict({})
+        ret_list = []
+        t = [{'value':'', 'string':''}]
+        for group in group_list:
+            group_info = back.getGroupAllDictByObject(group)
+            group_id = group_info[Group.ID]
+            group_name = group_info[Group.NAME]
+            ret_list.append('%s:%s'%(str(group_id), str(group_name)))
+            t.append({'value': str(group_id), 'string': group_name})
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')

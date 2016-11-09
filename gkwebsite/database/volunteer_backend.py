@@ -128,8 +128,15 @@ def getVolunteerbyField(field, argc):
     :param argc:字段的值
     :return:返回一个volunteer对象
     '''
-    dic = {field: argc}
-    return Volunteer.objects.filter(**dic)
+
+    #shaoyunqiu need to checkfield
+    # checked by lihy 2016/11/07
+    if (checkField(field) == True):
+        dic = {field: argc}
+        return Volunteer.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):
@@ -178,6 +185,8 @@ def setVolunteer(account, field, value):
     :param field:字段
     :return:字段对应的值
     '''
+    if field == 'id':
+        return False
     try:
         if not checkField(field):
             return False
@@ -203,6 +212,9 @@ def createVolunteer(account, dict):
     :param dict:其余信息的键值对
     :return:是否成功添加
     '''
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     if getVolunteerAll(account):
         print "account existed"
         return False
