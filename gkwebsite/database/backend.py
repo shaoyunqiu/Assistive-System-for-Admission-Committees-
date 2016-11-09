@@ -7,6 +7,9 @@ from django.core.exceptions import ValidationError
 
 
 def createNoticebyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     try:
         notice = Notice.objects.model()
     except:
@@ -28,6 +31,8 @@ def createNoticebyDict(dict):
 
 
 def setNotice(notice, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(notice, field, value)
         notice.full_clean()
@@ -53,6 +58,9 @@ def getNoticeAllDictByObject(notice):
 
 # ------------------------------------------------------------------------------------------------
 def createGroupbyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     try:
         group = Group.objects.model()
     except:
@@ -74,6 +82,8 @@ def createGroupbyDict(dict):
 
 
 def setGroup(group, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(group, field, value)
         group.full_clean()
@@ -105,6 +115,8 @@ def getGroupAllDictByObject(group):
 
 # ------------------------------------------------------------------------------------------------
 def createTimerbyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
     try:
         timer = Timer.objects.model()
     except:
@@ -126,6 +138,8 @@ def createTimerbyDict(dict):
 
 
 def setTimer(timer, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(timer, field, value)
         timer.full_clean()
@@ -164,6 +178,8 @@ def removeTimerByDic(dic):
 
 # ------------------------------------------------------------------------------------------------
 def createWechatURLbyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
     try:
         wechatURL = WechatURL.objects.model()
     except:
@@ -185,6 +201,8 @@ def createWechatURLbyDict(dict):
 
 
 def setWechatURL(wechatURL, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(wechatURL, field, value)
         wechatURL.full_clean()
@@ -241,6 +259,29 @@ def check_volunteerID_date(timer_id, vol_id, date):
         if vol_dic[str(vol_id)][delta_day] == '1':
             return True
     return False
+
+
+def getLastOneWechatURL():
+    all_wechat_url = getWechatURLbyDict({})
+    if len(all_wechat_url) <= 0:
+        return None
+    info_dic = getWechatURLAllDictByObject(all_wechat_url[-1])
+    return info_dic
+
+
+def getLastTenWechatURL():
+    all_wechat_url = getWechatURLbyDict({})
+    end = len(all_wechat_url)
+    start = len(all_wechat_url) - 10
+    ret_list = []
+    for i in range(start, end):
+        if i >= 0 and i < len(all_wechat_url):
+            info_dic = getWechatURLAllDictByObject(all_wechat_url[i])
+            ret_list.append(info_dic)
+    return ret_list
+
+
+
 
 
 
