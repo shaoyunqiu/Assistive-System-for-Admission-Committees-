@@ -829,6 +829,17 @@
 		<td></td>
 	</tr>
 	
+	<tr>
+		<td>new_message_to_group</td>
+		<td>新建对分组的消息</td>
+		<td>database/views.py</td>
+		<td>request.POST 'title'标题 'group_val'目标组的value 'maintext'正文</td>
+		<td>返回success:'Y'/'N' message:错误信息</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
