@@ -7,6 +7,9 @@ from django.core.exceptions import ValidationError
 
 
 def createNoticebyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     try:
         notice = Notice.objects.model()
     except:
@@ -28,6 +31,8 @@ def createNoticebyDict(dict):
 
 
 def setNotice(notice, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(notice, field, value)
         notice.full_clean()
@@ -53,6 +58,9 @@ def getNoticeAllDictByObject(notice):
 
 # ------------------------------------------------------------------------------------------------
 def createGroupbyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     try:
         group = Group.objects.model()
     except:
@@ -74,6 +82,8 @@ def createGroupbyDict(dict):
 
 
 def setGroup(group, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(group, field, value)
         group.full_clean()
@@ -105,6 +115,8 @@ def getGroupAllDictByObject(group):
 
 # ------------------------------------------------------------------------------------------------
 def createTimerbyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
     try:
         timer = Timer.objects.model()
     except:
@@ -126,6 +138,8 @@ def createTimerbyDict(dict):
 
 
 def setTimer(timer, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(timer, field, value)
         timer.full_clean()
@@ -164,6 +178,8 @@ def removeTimerByDic(dic):
 
 # ------------------------------------------------------------------------------------------------
 def createWechatURLbyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
     try:
         wechatURL = WechatURL.objects.model()
     except:
@@ -185,6 +201,8 @@ def createWechatURLbyDict(dict):
 
 
 def setWechatURL(wechatURL, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(wechatURL, field, value)
         wechatURL.full_clean()

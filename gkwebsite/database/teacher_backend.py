@@ -45,7 +45,8 @@ def createTeacher(kwargs):
     # 获取所有Teacher类的field名
 
     # shaoyunqiu
-    if not kwargs.has_key('account'):
+    # checked by lihy 2016/11/7
+    if 'account' not in kwargs.keys():
         print 'account is required'
         return False
 

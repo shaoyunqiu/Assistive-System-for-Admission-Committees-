@@ -54,6 +54,7 @@ def accountToIDStudent(account):
     :return: string类型的id
     '''
     # modified by shaoyunqiu 2016/11/2
+    # checked by lihy 2016/11/7
     if(getStudent(account, 'id') == None):
         return None
     else:
@@ -82,6 +83,7 @@ def getStudentbyField(field, argc):
     :return:返回一个student对象列表
     modified by shao 2016/11/2
     '''
+    # checked by lihy 2016/11/7
     if(checkField(field) == True):
         dic = {field: argc}
         return Student.objects.filter(**dic)
@@ -209,10 +211,12 @@ def createStudent(account, dict):
         return False
 
     # confirm that accout == dict[Student.ACCOUNT]
-    if dict.has_key(Student.ACCOUNT):
+    # checked by lihy 2016/11/7
+    if Student.ACCOUNT in dict.keys():
         if dict[Student.ACCOUNT] != account:
             print "args conflict"
             return False
+
     try:
         student = Student.objects.model()
     except:
@@ -405,6 +409,7 @@ def getStudentEstimateScore_Every(student, test_id):
     if test_id not in tmp_dic.keys():
         return str(score)
     # shaoyunqiu
+    #checked by lihy 2016/11/07
     if 'shenhe' in tmp_dic[test_id] and 'score' in tmp_dic[test_id]:
         score = tmp_dic[test_id]['score']
     return str(score)
@@ -421,6 +426,7 @@ def getStudentEstimateScore_Every_no_shenhe(student, test_id):
     if test_id not in tmp_dic.keys():
         return str(score)
     # shaoyunqiu
+    #checked by lihy 2016/11/07
     if 'score' in tmp_dic[test_id].keys():
         score = tmp_dic[test_id]['score']
     return str(score)
