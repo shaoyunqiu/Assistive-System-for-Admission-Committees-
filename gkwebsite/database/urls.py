@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^batch_add_to_group/$', views.batch_add_to_group, name="batch_add_to_group"),
     url(r'^push_stack/$', views.push_stack, name="push_stack"),
     url(r'^get_grouplist/$', views.get_grouplist, name="get_grouplist"),
+    url(r'^new_message_to_group/$', views.new_message_to_group, name="new_message_to_group"),
 	]
