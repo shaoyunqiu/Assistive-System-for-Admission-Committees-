@@ -354,8 +354,8 @@ class Notice(models.Model):
     title = models.CharField(max_length=300, default='', blank=True)
     text = models.TextField(default='', blank=True)
     teacher_id = models.CharField(max_length=300, default='', blank=True)
-    send_date = models.DateField(default=datetime.date.today(), blank=True)
-    receive_stu = models.TextField(default='', blank=True)
+    send_date = models.DateField(default=datetime.date.today, blank=True)
+    receive_stu = models.TextField(default='[]', blank=True)
 
     ID = 'id'
     TITLE = 'title'
