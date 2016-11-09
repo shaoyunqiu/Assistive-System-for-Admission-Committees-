@@ -806,6 +806,28 @@
 		<td>白云仁</td>
 		<td></td>
 	</tr>
+
+	<tr>
+		<td>get_all_message</td>
+		<td>获取学生可见的全部消息列表</td>
+		<td>student/views.py</td>
+		<td>session里的student_id</td>
+		<td>[{'sender': '...', 'title':'...', 'state':'...', 'message_id':'...'},...]</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<td>get_message_info</td>
+		<td>获取某个消息的详情</td>
+		<td>student/views.py</td>
+		<td>request.POST.get('message_id')</td>
+		<td>{'sender': '...', 'title':'...', 'time':'...', 'text': '...'}</td>
+		<td>POST</td>
+		<td>侯禺凡</td>
+		<td></td>
+	</tr>
 	
 		<tr>
 		<td>a</td>
