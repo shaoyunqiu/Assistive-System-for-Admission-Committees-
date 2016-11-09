@@ -433,14 +433,19 @@ class Timer(models.Model):
 
 class WechatURL(models.Model):
 
-    picture_url = models.CharField(max_length=1000, default='{}', blank=True)
-    message_url = models.CharField(max_length=1000, default='{}', blank=True)
+    title = models.CharField(max_length=1000, default='', blank=True)
+    text = models.CharField(max_length=1000, default='', blank=True)
+    picture_url = models.CharField(max_length=1000, default='', blank=True)
+    message_url = models.CharField(max_length=1000, default='', blank=True)
+
 
     ID = 'id'
+    TITLE = 'title'
+    TEXT = 'text'
     PICTURE_URL = 'picture_url'
     MESSAGE_URL = 'message_url'
 
-    FIELD_LIST = [ID, PICTURE_URL, MESSAGE_URL]
+    FIELD_LIST = [ID, TITLE, TEXT, PICTURE_URL, MESSAGE_URL]
 
     def __unicode__(self):
         import sys
