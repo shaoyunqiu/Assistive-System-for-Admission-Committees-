@@ -261,6 +261,18 @@ def checkStudentPassword(_account,_password):
     #hash function should be applied here
 
 
+def checkStudentOpenID(openid):
+    student_list = getStudentbyField(Student.OPEN_ID, openid)
+    if len(student_list) <= 0:
+        return (False , 'openid not exist')
+    student = student_list[0]
+    try:
+        student_id = getattr(student, Student.ID)
+        return (True, str(student_id))
+    except:
+        return (False, 'id not exist')
+
+
 def checkStudentOpenID(open_id):
     if open_id.strip() == '':
         return False, 'OPEN ID IS EMPTY'
