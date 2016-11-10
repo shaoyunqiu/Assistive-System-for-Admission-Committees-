@@ -282,24 +282,28 @@ def profile(request):
 
         info_dict = request.POST.copy()
         print info_dict
+
+        if info_dict['password'].strip() != '':
+            stu.setStudent(account, Student.PASSWORD, info_dict['password'])
+
         for i in range(1, 7):
             if info_dict['majorSelect' + str(i)].strip() == '':
                 info_dict['majorSelect' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['testScore' + str(i)].strip() == '':
-                info_dict['testScore' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['rank' + str(i) + str(i)].strip() == '':
-                info_dict['rank' + str(i) + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['testScore' + str(i)].strip() == '':
+        #         info_dict['testScore' + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['rank' + str(i)].strip() == '':
+        #         info_dict['rank' + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['rank' + str(i)].strip() == '':
+        #         info_dict['rank' + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['rank' + str(i) + str(i)].strip() == '':
+        #         info_dict['rank' + str(i) + str(i)] = '0'
         if info_dict['realScore'].strip() == '':
             info_dict['realScore'] = '0'
-
+        print 'phone ', info_dict.get('tutorPhone')
         dic = {
             'name': info_dict.get('name'),
             'identification': info_dict.get('identification'),
@@ -330,16 +334,16 @@ def profile(request):
             'majorSelect5': int(info_dict.get('majorSelect5')),
             'majorSelect6': int(info_dict.get('majorSelect6')),
 
-            'testScore1': int(info_dict.get('testScore1')),
-            'testScore2': int(info_dict.get('testScore2')),
-            'testScore3': int(info_dict.get('testScore3')),
+            # 'testScore1': int(info_dict.get('testScore1')),
+            # 'testScore2': int(info_dict.get('testScore2')),
+            # 'testScore3': int(info_dict.get('testScore3')),
 
-            'rank1': int(info_dict.get('rank1')),
-            'rank11': int(info_dict.get('rank11')),
-            'rank2': int(info_dict.get('rank2')),
-            'rank22': int(info_dict.get('rank22')),
-            'rank3': int(info_dict.get('rank3')),
-            'rank33': int(info_dict.get('rank33')),
+            # 'rank1': int(info_dict.get('rank1')),
+            # 'rank11': int(info_dict.get('rank11')),
+            # 'rank2': int(info_dict.get('rank2')),
+            # 'rank22': int(info_dict.get('rank22')),
+            # 'rank3': int(info_dict.get('rank3')),
+            # 'rank33': int(info_dict.get('rank33')),
 
             'realScore': int(info_dict.get('realScore')),
             # 'relTeacher': info_dict.get('relTeacher'),
@@ -376,8 +380,9 @@ def profile(request):
 
         stu.setStudent(account, Student.CLASSROOM, dic['stu_class'])
         stu.setStudent(account, Student.TUTOR_NAME, dic['tutorName'])
-        stu.setStudent(account, Student.TUTOR_PHONE, dic['tutorPhone'])
-
+        # print '09090909090909090'
+        # print stu.setStudent(account, Student.TUTOR_PHONE, dic['tutorPhone'])
+        # print '0909090------------9090909090'
         stu.setStudent(account,
                        Student.MAJOR,
                        [dic['majorSelect1'],
@@ -386,22 +391,23 @@ def profile(request):
                         dic['majorSelect4'],
                         dic['majorSelect5'],
                         dic['majorSelect6']])
+        # print '0909090-222222222229090'
+        # stu.setStudent(
+        #     account, Student.TEST_SCORE_LIST, [
+        #         dic['testScore1'], dic['testScore2'], dic['testScore3']])
 
-        stu.setStudent(
-            account, Student.TEST_SCORE_LIST, [
-                dic['testScore1'], dic['testScore2'], dic['testScore3']])
-
-        stu.setStudent(
-            account, Student.RANK_LIST, [
-                dic['rank1'], dic['rank2'], dic['rank3']])
-
-        stu.setStudent(
-            account, Student.SUM_NUMBER_LIST, [
-                dic['rank11'], dic['rank22'], dic['rank33']])
+        # stu.setStudent(
+        #     account, Student.RANK_LIST, [
+        #         dic['rank1'], dic['rank2'], dic['rank3']])
+        #
+        # stu.setStudent(
+        #     account, Student.SUM_NUMBER_LIST, [
+        #         dic['rank11'], dic['rank22'], dic['rank33']])
 
         stu.setStudent(account, Student.REAL_SCORE, dic['realScore'])
-        stu.setStudent(account, Student.COMMENT, dic['comment'])
-
+        # print '0909090-----333---9090909090'
+        # stu.setStudent(account, Student.COMMENT, dic['comment'])
+        # print '0909090-----35553---9090909090'
 
         return JsonResponse(dic)
     else:
