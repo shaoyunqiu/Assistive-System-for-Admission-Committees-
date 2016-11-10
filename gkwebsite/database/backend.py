@@ -7,6 +7,9 @@ from django.core.exceptions import ValidationError
 
 
 def createNoticebyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     try:
         notice = Notice.objects.model()
     except:
@@ -43,7 +46,6 @@ def setNotice(notice, field, value):
         return False
     if field not in Notice.FIELD_LIST:
         print "illegal field"
-        return False
     try:
         setattr(notice, field, value)
         notice.full_clean()
@@ -68,19 +70,24 @@ def getNoticeAllDictByObject(notice):
         try:
             dict[item] = getattr(notice, item)
         except:
+            # print 'item ',item
+            # print getattr(notice, item)
             return None
     return dict
 
 # ------------------------------------------------------------------------------------------------
 def createGroupbyDict(dict):
     # modified by shaoyunqiu to forbiden set the id and illegal field
-    if Group.ID in dict.keys():
+    '''if Group.ID in dict.keys():
         print "cannot set the id, failed"
-        return False
+        return False'''
     for field in dict.keys():
         if field not in Group.FIELD_LIST:
             print "illegal field, failed"
             return False
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     try:
         group = Group.objects.model()
     except:
@@ -107,7 +114,6 @@ def setGroup(group, field, value):
         return False
     if field not in Group.FIELD_LIST:
         print "illegal field"
-        return False
     try:
         setattr(group, field, value)
         group.full_clean()
@@ -153,13 +159,15 @@ def getGroupAllDictByObject(group):
 # ------------------------------------------------------------------------------------------------
 def createTimerbyDict(dict):
     # modified by shaoyunqiu, cannot set id and illegal field
-    if Timer.ID in dict.keys():
+    '''if Timer.ID in dict.keys():
         print "cannot set the id, failed"
-        return False
+        return False'''
     for field in dict.keys():
         if field not in Timer.FIELD_LIST:
             print "illegal field, failed"
             return False
+    if 'id' in dict.keys():
+        dict.pop('id')
     try:
         timer = Timer.objects.model()
     except:
@@ -181,6 +189,8 @@ def createTimerbyDict(dict):
 
 
 def setTimer(timer, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(timer, field, value)
         timer.full_clean()
@@ -219,6 +229,8 @@ def removeTimerByDic(dic):
 
 # ------------------------------------------------------------------------------------------------
 def createWechatURLbyDict(dict):
+    if 'id' in dict.keys():
+        dict.pop('id')
     try:
         wechatURL = WechatURL.objects.model()
     except:
@@ -240,6 +252,8 @@ def createWechatURLbyDict(dict):
 
 
 def setWechatURL(wechatURL, field, value):
+    if field == 'id':
+        return False
     try:
         setattr(wechatURL, field, value)
         wechatURL.full_clean()
@@ -296,6 +310,29 @@ def check_volunteerID_date(timer_id, vol_id, date):
         if vol_dic[str(vol_id)][delta_day] == '1':
             return True
     return False
+
+
+def getLastOneWechatURL():
+    all_wechat_url = getWechatURLbyDict({})
+    if len(all_wechat_url) <= 0:
+        return None
+    info_dic = getWechatURLAllDictByObject(all_wechat_url[-1])
+    return info_dic
+
+
+def getLastTenWechatURL():
+    all_wechat_url = getWechatURLbyDict({})
+    end = len(all_wechat_url)
+    start = len(all_wechat_url) - 10
+    ret_list = []
+    for i in range(start, end):
+        if i >= 0 and i < len(all_wechat_url):
+            info_dic = getWechatURLAllDictByObject(all_wechat_url[i])
+            ret_list.append(info_dic)
+    return ret_list
+
+
+
 
 
 
