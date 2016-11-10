@@ -19,7 +19,7 @@ sys.setdefaultencoding('UTF-8')
 Token = "zaoshuizaoqi"
 Appid = "wxd1c16a4667e24faf"
 Appsecret = "efe75bfad99903dff1ba7a783a354e71"
-server_url = "https://gaokao.northeurope.cloudapp.azure.com/"
+server_url = "http://gaokao.northeurope.cloudapp.azure.com/"
 #server_url = "http://59.66.131.171/"
 basic_scope = "snsapi_base"
 
