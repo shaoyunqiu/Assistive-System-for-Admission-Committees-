@@ -52,9 +52,9 @@ def addStudent():
         lineslist = lines.split(',')
         dict[Student.REAL_NAME] = lineslist[1].decode('gbk')
         if lineslist[2].decode('gbk') == u'男':
-            dict['sex'] = 0
-        else:
             dict['sex'] = 1
+        else:
+            dict['sex'] = 2
         dict[Student.ID_NUMBER] = lineslist[9].decode('gbk')
         dict['email'] = lineslist[12].decode('gbk')
         dict['school'] = lineslist[14].decode('gbk')
