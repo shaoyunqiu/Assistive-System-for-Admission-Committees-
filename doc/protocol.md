@@ -756,7 +756,7 @@
 		<td>JsonResponse 返回success:'Y'/'N' message:错误信息 </td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
@@ -767,7 +767,7 @@
 		<td>JsonResponse 返回success:'Y'/'N' message:错误信息 </td>
 		<td>POST</td>
 		<td>段清楠</td>
-		<td></td>
+		<td>finish</td>
 	</tr>
 	
 	<tr>
