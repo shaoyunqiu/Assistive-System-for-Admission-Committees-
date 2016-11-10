@@ -8,7 +8,7 @@ from django import forms
 import my_field
 import django.core.validators
 import datetime
-
+import django.utils.timezone as timezone
 
 # Create your models here.
 
@@ -105,6 +105,8 @@ class Student(models.Model):
 
     openid = models.CharField(max_length=500, default='', blank=True)
 
+    readed = models.TextField(default='[]', blank=True)
+
     ID = 'id'
 
     ACCOUNT = 'account'
@@ -155,6 +157,8 @@ class Student(models.Model):
     QUANXIAN = 'quanxian'
     OPEN_ID = 'openid'
 
+    READED = 'readed'
+
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -164,7 +168,8 @@ class Student(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
-                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID]
+                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID,
+                  READED]
 
     def __unicode__(self):
         import sys
@@ -351,16 +356,22 @@ class Picture(models.Model):
         return ret
 
 class Notice(models.Model):
-    send = models.CharField(max_length=300, default='', blank=True)
-    receive_vol = models.CharField(max_length=500, default='', blank=True)
-    receive_stu = models.CharField(max_length=500, default='', blank=True)
+    title = models.CharField(max_length=300, default='', blank=True)
+    text = models.TextField(default='', blank=True)
+    teacher_id = models.CharField(max_length=300, default='', blank=True)
+    send_date = models.DateTimeField(default=timezone.now, blank=True)
+    receive_stu = models.TextField(default='[]', blank=True)
 
     ID = 'id'
-    SEND = 'send'
-    RECEIVE_VOL = 'receive_vol'
+    TITLE = 'title'
+    TEXT = 'text'
+    TEACHER_ID = 'teacher_id'
+    SEND_DATE = 'send_date'
     RECEIVE_STU = 'receive_stu'
 
-    FIELD_LIST = [ID, SEND, RECEIVE_VOL, RECEIVE_STU]
+    FIELD_LIST = [ID, TITLE, TEXT, TEACHER_ID, SEND_DATE,
+                  RECEIVE_STU]
+
     def __unicode__(self):
         import sys
         reload(sys)
@@ -427,14 +438,19 @@ class Timer(models.Model):
 
 class WechatURL(models.Model):
 
-    picture_url = models.CharField(max_length=1000, default='{}', blank=True)
-    message_url = models.CharField(max_length=1000, default='{}', blank=True)
+    title = models.CharField(max_length=1000, default='', blank=True)
+    text = models.CharField(max_length=1000, default='', blank=True)
+    picture_url = models.CharField(max_length=1000, default='', blank=True)
+    message_url = models.CharField(max_length=1000, default='', blank=True)
+
 
     ID = 'id'
+    TITLE = 'title'
+    TEXT = 'text'
     PICTURE_URL = 'picture_url'
     MESSAGE_URL = 'message_url'
 
-    FIELD_LIST = [ID, PICTURE_URL, MESSAGE_URL]
+    FIELD_LIST = [ID, TITLE, TEXT, PICTURE_URL, MESSAGE_URL]
 
     def __unicode__(self):
         import sys

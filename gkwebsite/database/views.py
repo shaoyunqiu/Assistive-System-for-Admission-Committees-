@@ -83,7 +83,9 @@ def get_teacher_name_by_id(request):
     :return:
     '''
     if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
+        id = request.session.get('teacher_id', -1)
+        if id == -1:
+            return JsonResponse({'name':'', 'success':'N'})
         account = tch.idToAccountTeacher(id)
         t = {'name': tch.getTeacher(account, 'realName')}
         return JsonResponse(t)
@@ -95,7 +97,9 @@ def get_volunteer_name_by_id(request):
     # by dqn14 Oct 19, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = request.POST.get('id')
+        id = request.session.get('volunteer_id', -1)
+        if id == -1:
+            return JsonResponse({'name':'', 'success':'N'})
         account = vol.idToAccountVolunteer(id)
         t = {'name': vol.getVolunteer(account, 'realName')}
         return JsonResponse(t)
@@ -106,7 +110,9 @@ def get_student_name_by_id(request):
     # by dqn14 Nov 3, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        id = int(request.POST.get('id'))
+        id = request.session.get('student_id', -1)
+        if id == -1:
+            return JsonResponse({'name':'', 'success':'N'})
         account = stu.idToAccountStudent(id)
         name = stu.getStudent(account, Student.REAL_NAME)
         t = {'name': name}
@@ -213,7 +219,9 @@ def export_registration_code(request):
     # by dqn14 Oct 22, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        teacher = request.POST.get('id')
+        teacher = request.session.get('teacher_id', -1)
+        if teacher == -1:
+            return JsonResponse({'success':'N'})
         length = request.POST.get('length')
         filename = "%s_teacher.xls" % teacher
         t = {'filename': filename}
@@ -601,7 +609,9 @@ def add_activity(request):
         name = request.POST.get('name')
         date_begin = request.POST.get('date_begin')
         date_end = request.POST.get('date_end')
-        teacher_id = request.POST.get('teacher_id')
+        teacher_id = request.session.get('teacher_id', -1)
+        if teacher_id == -1:
+            return JsonResponse({'success':'N'})
         print name, date_begin, date_end
         try:
             begin_list = date_begin.split('-')
@@ -630,7 +640,9 @@ def export_activity_result(request):
     if request.is_ajax() and request.method == 'POST':
         try:
             id = int(request.POST.get('id'))
-            teacher_id = int(request.POST.get('teacher_id'))
+            teacher_id = int(request.session.get('teacher_id', -1))
+            if teacher_id == -1:
+                return JsonResponse({'success':'N'})
             filename = 'files/%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
             generateTimerXLS(id, teacher_id, filename)
             t = {}
@@ -688,10 +700,28 @@ def batch_add_to_group(request):
     # by dqn14 Nov 7, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        stu_num = request.POST.get('student_num')
-        stu_0_id = request.POST.get('student_id_0')
-        stu_1_id = request.POST.get('student_id_1')
-        target_group = request.POST.get('group')    # This is a string
+        stu_num = int(request.POST.get('student_num'))
+        group_id = int(request.POST.get('group'))    # This is a string
+
+        key_list = []
+        for i in range(0, stu_num):
+            key_list.append('student_id_%s'%(str(i)))
+        id_list = []
+        for item in key_list:
+            id_list.append(int(request.POST.get(item)))
+
+        group = back.getGroupbyDict({Group.ID: group_id})[0]
+        stu_list = getattr(group, Group.STU_LIST).split('_')
+        if '' in stu_list:
+            stu_list.remove('')
+        for item in id_list:
+            item = str(item)
+            if item not in stu_list:
+                stu_list.append(item)
+
+        back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
+
+
         t = {}
         if stu_num > 0:
             t['success'] = 'Y'
@@ -708,9 +738,20 @@ def push_stack(request):
     if request.is_ajax() and request.method == 'POST':
         pic_url = request.POST.get('pic_url')
         msg_url = request.POST.get('msg_url')
-        t = {}
-        t['success']='N'
-        t['message']='服务器未响应'
+        title = request.POST.get('title')
+        text = request.POST.get('abstract')
+        try:
+            back.createWechatURLbyDict({WechatURL.PICTURE_URL: pic_url,
+                                        WechatURL.MESSAGE_URL: msg_url,
+                                        WechatURL.TITLE: title,
+                                        WechatURL.TEXT: text})
+            t = {}
+            t['success']='Y'
+            t['message']=u'微信消息发布成功'
+        except:
+            t = {}
+            t['success']='N'
+            t['message']='服务器未响应'
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -719,13 +760,14 @@ def get_grouplist(request):
     # by dqn14 Nov 7, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        t = []
-        b = {'value':'', 'string':''}
-        c = {'value':'1', 'string':'1'}
-        d = {'value':'2', 'string':'2'}
-        t.append(b)
-        t.append(c)
-        t.append(d)
+        group_list = back.getGroupbyDict({})
+        ret_list = []
+        t = [{'value':'', 'string':''}]
+        for group in group_list:
+            group_info = back.getGroupAllDictByObject(group)
+            group_id = group_info[Group.ID]
+            group_name = group_info[Group.NAME]
+            t.append({'value': str(group_id), 'string': '%s:%s'%(str(group_id), str(group_name))})
         return JsonResponse(t, safe=False)
     else:
         return HttpResponse('Access denied.')
@@ -734,17 +776,34 @@ def new_message_to_group(request):
     # by dqn14 Nov 7, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        title = request.POST.get('title')
-        target_group = request.POST.get('group_val')
-        text = request.POST.get('maintext')
-        # time = getServerTimeNow
-        # teacher_id = request.session.get('teacher_id', -1)
-        # if teacher_id == -1:
-        #   return xxx
-        
-        t = {}
-        t['success']='N'
-        t['message']=text
-        return JsonResponse(t)
+        try:
+            title = request.POST.get('title')
+            target_group = request.POST.get('group_val')
+            text = request.POST.get('maintext')
+            teacher_id = request.session.get('teacher_id', -1)
+            print title, target_group, text, teacher_id
+
+            group = back.getGroupbyDict({Group.ID: int(target_group)})[0]
+            stu_id_list_str = getattr(group, Group.STU_LIST).split('_')
+            if '' in stu_id_list_str:
+                stu_id_list_str.remove('')
+            stu_id_list = []
+            for item in stu_id_list_str:
+                stu_id_list.append(int(item))
+
+            back.createNoticebyDict({Notice.TITLE: title,
+                                     Notice.TEXT: text,
+                                     Notice.TEACHER_ID: int(teacher_id),
+                                     Notice.RECEIVE_STU: stu_id_list})
+            t = {}
+            t['success']='Y'
+            t['message']=u'发布成功'
+            return JsonResponse(t)
+
+        except:
+            t = {}
+            t['success']='N'
+            t['message']=u'发布失败'
+            return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
