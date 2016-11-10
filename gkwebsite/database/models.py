@@ -19,13 +19,15 @@ class Teacher(models.Model):
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
-
     email = models.CharField(max_length=50, default='', blank=True, validators=[django.core.validators.EmailValidator()])
+
     area = models.CharField(max_length=50, default='', blank=True)
     volunteerList = my_field.ListField(default=[], blank=True)
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
+
+    last_login_time = models.DateTimeField(default=timezone.now, blank=True)
 
     ID = 'id'
     ACCOUNT = 'account'
@@ -39,6 +41,8 @@ class Teacher(models.Model):
     WECHAT = 'wechat'
     FIXED_PHONE = 'fixedPhone'
     COMMENT = 'comment'
+
+    LAST_LOGIN_TIME = 'last_login_time'
 
     def __unicode__(self):
         import sys
@@ -106,6 +110,7 @@ class Student(models.Model):
     openid = models.CharField(max_length=500, default='', blank=True)
 
     readed = models.TextField(default='[]', blank=True)
+    last_login_time = models.DateTimeField(default=timezone.now, blank=True)
 
     ID = 'id'
 
@@ -158,6 +163,7 @@ class Student(models.Model):
     OPEN_ID = 'openid'
 
     READED = 'readed'
+    LAST_LOGIN_TIME = 'last_login_time'
 
 
     FIELD_LIST = [ID,
@@ -169,7 +175,7 @@ class Student(models.Model):
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
                   DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID,
-                  READED]
+                  READED, LAST_LOGIN_TIME]
 
     def __unicode__(self):
         import sys
@@ -229,6 +235,7 @@ class Volunteer(models.Model):
     qq = models.CharField(max_length=50, default='', blank=True)
 
     quanxian = models.IntegerField(default=0, blank=True)
+    last_login_time = models.DateTimeField(default=timezone.now, blank=True)
 
     ID = 'id'
 
@@ -276,6 +283,7 @@ class Volunteer(models.Model):
 
     QQ = 'qq'
     QUANXIAN = 'quanxian'
+    LAST_LOGIN_TIME = 'last_login_time'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -285,7 +293,7 @@ class Volunteer(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED,STUDENT_ID, GROUP_LIST, WECHAT, FIXED_PHONE,
-                  QQ, QUANXIAN]
+                  QQ, QUANXIAN, LAST_LOGIN_TIME]
 
     def __unicode__(self):
         import sys
