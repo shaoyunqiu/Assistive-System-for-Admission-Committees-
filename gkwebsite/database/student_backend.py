@@ -263,15 +263,15 @@ def checkStudentPassword(_account,_password):
 
 def checkStudentOpenID(open_id):
     if open_id.strip() == '':
-        return False, 'OPEN ID IS EMPTY'
+        return False, 'OPEN ID IS EMPTY', 'no '
     all_student_list = getAllInStudent()
     for student in all_student_list:
         stu_open_id = getattr(student, Student.OPEN_ID, '')
         if stu_open_id == open_id:
-            _id = getattr(student, Student.ID, '')
-            if _id.strip() != '':
-                return True, str(_id)
-    return False, 'not exist this open id'
+            _id = getattr(student, Student.ID)
+            _username = getattr(student, Student.ACCOUNT)
+            return True, str(_id), str(_username)
+    return False, 'not exist this open id', 'no'
 
 
 
