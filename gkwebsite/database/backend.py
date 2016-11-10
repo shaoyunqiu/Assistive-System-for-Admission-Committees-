@@ -265,12 +265,13 @@ def check_volunteerID_date(timer_id, vol_id, date):
 
 def getLastOneWechatURL():
     all_wechat_url = getWechatURLbyDict({})
-    if len(all_wechat_url) <= 0:
+    size = len(all_wechat_url)
+    if size <= 0:
         return None
-    info_dic = getWechatURLAllDictByObject(all_wechat_url[-1])
+    info_dic = getWechatURLAllDictByObject(all_wechat_url[size-1])
     return info_dic
 
-
+'''
 def getLastTenWechatURL():
     all_wechat_url = getWechatURLbyDict({})
     end = len(all_wechat_url)
@@ -281,7 +282,21 @@ def getLastTenWechatURL():
             info_dic = getWechatURLAllDictByObject(all_wechat_url[i])
             ret_list.append(info_dic)
     return ret_list
+'''
 
+# modified by shaoyunqiu
+def getLastTenWechatURL():
+    all_wechat_url = getWechatURLbyDict({})
+    size = len(all_wechat_url)
+    ret_list = []
+    for i in range(0, size):
+        index = size - i - 1
+        if index < 0:
+            break
+        else:
+            info_dict = getWechatURLAllDictByObject(all_wechat_url[index])
+            ret_list.append(info_dict)
+    return ret_list
 
 
 
