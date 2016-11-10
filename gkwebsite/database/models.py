@@ -8,24 +8,26 @@ from django import forms
 import my_field
 import django.core.validators
 import datetime
-
+import django.utils.timezone as timezone
 
 # Create your models here.
 
 class Teacher(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d)+$')])
-
     email = models.CharField(max_length=50, default='', blank=True, validators=[django.core.validators.EmailValidator()])
+
     area = models.CharField(max_length=50, default='', blank=True)
     volunteerList = my_field.ListField(default=[], blank=True)
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
+
+    last_login_time = models.DateTimeField(default=timezone.now, blank=True)
 
     ID = 'id'
     ACCOUNT = 'account'
@@ -39,6 +41,8 @@ class Teacher(models.Model):
     WECHAT = 'wechat'
     FIXED_PHONE = 'fixedPhone'
     COMMENT = 'comment'
+
+    LAST_LOGIN_TIME = 'last_login_time'
 
     def __unicode__(self):
         import sys
@@ -54,7 +58,7 @@ class Teacher(models.Model):
 class Student(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
     # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
@@ -83,7 +87,7 @@ class Student(models.Model):
     testScoreList = my_field.ListField(default=[], blank=True)
     rankList = my_field.ListField(default=[], blank=True)
     sumNumberList = my_field.ListField(default=[], blank=True)
-    estimateScore = models.CharField(max_length=2000, default='{}', blank=True)
+    estimateScore = models.TextField(default='{}', blank=True)
     realScore = models.IntegerField(default=-1, blank=True)
     admissionStatus = models.CharField(max_length=50, default='', blank=True)
     comment = models.TextField(default='', blank=True)
@@ -100,6 +104,13 @@ class Student(models.Model):
     momName = models.CharField(max_length=50, default='', blank=True)
 
     duiyingTeacher = models.CharField(max_length=500, default='', blank=True)
+
+    quanxian = models.IntegerField(default=1, blank=True)
+
+    openid = models.CharField(max_length=500, default='', blank=True)
+
+    readed = models.TextField(default='[]', blank=True)
+    last_login_time = models.DateTimeField(default=timezone.now, blank=True)
 
     ID = 'id'
 
@@ -148,6 +159,11 @@ class Student(models.Model):
     DAD_NAME = 'dadName'
     MOM_NAME = 'momName'
     DUIYING_TEACHER = 'duiyingTeacher'
+    QUANXIAN = 'quanxian'
+    OPEN_ID = 'openid'
+
+    READED = 'readed'
+    LAST_LOGIN_TIME = 'last_login_time'
 
 
     FIELD_LIST = [ID,
@@ -158,7 +174,8 @@ class Student(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, VOLUNTEER_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED, GROUP_LIST, WECHAT, FIXED_PHONE,QQ,
-                  DAD_NAME, MOM_NAME, DUIYING_TEACHER]
+                  DAD_NAME, MOM_NAME, DUIYING_TEACHER, QUANXIAN, OPEN_ID,
+                  READED, LAST_LOGIN_TIME]
 
     def __unicode__(self):
         import sys
@@ -173,8 +190,8 @@ class Student(models.Model):
 class Volunteer(models.Model):
     account = models.CharField(max_length=50, unique=True, validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
     # account validation : 4个或以上的数字或字母
-    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\d|\w){4,}$')])
-    # password validation : 4个或以上的数字或字母
+    password = models.CharField(max_length=50, default="12345678", validators=[django.core.validators.RegexValidator(regex=r'^(\S){4,}$')])
+   # password validation : 4个或以上的数字或字母
     realName = models.CharField(max_length=20, default='', blank=True)
     birth = models.DateField(default=datetime.date.today, blank=True)
     idNumber = models.CharField(max_length=40, default='', blank=True,
@@ -216,6 +233,9 @@ class Volunteer(models.Model):
     wechat = models.CharField(max_length=50, default='', blank=True)
     fixedPhone = models.CharField(max_length=50, default='', blank=True)
     qq = models.CharField(max_length=50, default='', blank=True)
+
+    quanxian = models.IntegerField(default=0, blank=True)
+    last_login_time = models.DateTimeField(default=timezone.now, blank=True)
 
     ID = 'id'
 
@@ -262,6 +282,8 @@ class Volunteer(models.Model):
     FIXED_PHONE = 'fixedPhone'
 
     QQ = 'qq'
+    QUANXIAN = 'quanxian'
+    LAST_LOGIN_TIME = 'last_login_time'
 
     FIELD_LIST = [ID,
                   ACCOUNT, PASSWORD, REAL_NAME, BIRTH, ID_NUMBER,
@@ -271,7 +293,7 @@ class Volunteer(models.Model):
                   RANK_LIST, SUM_NUMBER_LIST, ESTIMATE_SCORE, REAL_SCORE, ADMISSION_STATUS,
                   COMMENT, REGISTER_CODE, TEACHER_LIST, STUDENT_ACCOUNT_LIST, IS_LOGED_IN,
                   IS_REGISTERED,STUDENT_ID, GROUP_LIST, WECHAT, FIXED_PHONE,
-                  QQ, ]
+                  QQ, QUANXIAN, LAST_LOGIN_TIME]
 
     def __unicode__(self):
         import sys
@@ -342,16 +364,22 @@ class Picture(models.Model):
         return ret
 
 class Notice(models.Model):
-    send = models.CharField(max_length=300, default='', blank=True)
-    receive_vol = models.CharField(max_length=500, default='', blank=True)
-    receive_stu = models.CharField(max_length=500, default='', blank=True)
+    title = models.CharField(max_length=300, default='', blank=True)
+    text = models.TextField(default='', blank=True)
+    teacher_id = models.CharField(max_length=300, default='', blank=True)
+    send_date = models.DateTimeField(default=timezone.now, blank=True)
+    receive_stu = models.TextField(default='[]', blank=True)
 
     ID = 'id'
-    SEND = 'send'
-    RECEIVE_VOL = 'receive_vol'
+    TITLE = 'title'
+    TEXT = 'text'
+    TEACHER_ID = 'teacher_id'
+    SEND_DATE = 'send_date'
     RECEIVE_STU = 'receive_stu'
 
-    FIELD_LIST = [ID, SEND, RECEIVE_VOL, RECEIVE_STU]
+    FIELD_LIST = [ID, TITLE, TEXT, TEACHER_ID, SEND_DATE,
+                  RECEIVE_STU]
+
     def __unicode__(self):
         import sys
         reload(sys)
@@ -418,14 +446,19 @@ class Timer(models.Model):
 
 class WechatURL(models.Model):
 
-    picture_url = models.CharField(max_length=1000, default='{}', blank=True)
-    message_url = models.CharField(max_length=1000, default='{}', blank=True)
+    title = models.CharField(max_length=1000, default='', blank=True)
+    text = models.CharField(max_length=1000, default='', blank=True)
+    picture_url = models.CharField(max_length=1000, default='', blank=True)
+    message_url = models.CharField(max_length=1000, default='', blank=True)
+
 
     ID = 'id'
+    TITLE = 'title'
+    TEXT = 'text'
     PICTURE_URL = 'picture_url'
     MESSAGE_URL = 'message_url'
 
-    FIELD_LIST = [ID, PICTURE_URL, MESSAGE_URL]
+    FIELD_LIST = [ID, TITLE, TEXT, PICTURE_URL, MESSAGE_URL]
 
     def __unicode__(self):
         import sys
