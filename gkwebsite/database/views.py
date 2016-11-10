@@ -700,11 +700,26 @@ def batch_add_to_group(request):
     # by dqn14 Nov 7, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        stu_num = request.POST.get('student_num')
-        stu_0_id = request.POST.get('student_id_0')
-        stu_1_id = request.POST.get('student_id_1')
-        target_group = request.POST.get('group')    # This is a string
-        print 'tiaoshi ', stu_num, stu_0_id, stu_1_id, target_group
+        stu_num = int(request.POST.get('student_num'))
+        group_id = int(request.POST.get('group'))    # This is a string
+
+        key_list = []
+        for i in range(0, stu_num):
+            key_list.append('student_id_%s'%(str(i)))
+        id_list = []
+        for item in key_list:
+            id_list.append(int(request.POST.get(item)))
+
+        group = back.getGroupbyDict({Group.ID: group_id})[0]
+        stu_list = getattr(group, Group.STU_LIST).split('_')
+        if '' in stu_list:
+            stu_list.remove('')
+        for item in id_list:
+            item = str(item)
+            if item not in stu_list:
+                stu_list.append(item)
+
+        back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
 
 
         t = {}
