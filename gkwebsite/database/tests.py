@@ -18,6 +18,8 @@ from back_test import *
 from volunteer_backend import *
 import image_backend as img_back
 import register_backend as reg_back
+import datetime
+import django.utils.timezone as timezone
 
 setup_test_environment()
 
@@ -923,6 +925,52 @@ class TestGroupBases(TestCase):
         self.assertEqual(dic[Group.NAME], "group1")
         self.assertEqual(dic[Group.VOL_LIST], "houyf1")
         self.assertEqual(back.getGroupAllDictByObject(None), None)
+
+
+class TestTimerBases(TestCase):
+    def setUp(self):
+        time1 = Timer.objects.model()
+        setattr(time1, Timer.NAME, "test_timer_1")
+        setattr(time1, Timer.TEACHER_ID, 1)
+        time1.full_clean()
+        time1.save()
+        time2 = Timer.objects.model()
+        setattr(time2, Timer.NAME, "test_timer_2")
+        setattr(time2, Timer.START_TIME, datetime.date.today())
+        time2.full_clean()
+        time2.save()
+
+    def test_createtimer(self):
+        self.assertEqual(back.createTimerbyDict({Timer.NAME: "test_timer_3", Timer.TEACHER_ID: 1}), True)
+        self.assertEqual(back.createTimerbyDict({Timer.NAME: "test_timer_4", Timer.ID: 0}), True)
+        self.assertEqual(back.createTimerbyDict({}), True)
+        self.assertEqual(back.createTimerbyDict({Timer.NAME: "test_timer_5", "hh": 0}), True)
+        all_time = Timer.objects.all()
+        self.assertEqual(len(all_time), 6)
+        self.assertEqual(getattr(all_time[3], Timer.ID, "error"), 4)
+
+    def test_settimer(self):
+        all_time = Timer.objects.all()
+        self.assertEqual(back.setTimer(all_time[0], Timer.NAME, "test"), True)
+        self.assertEqual(back.setTimer(all_time[0], Timer.ID, 0), False)
+        self.assertEqual(getattr(all_time[0], Timer.NAME, "error"), "test")
+        self.assertEqual(getattr(all_time[0], Timer.ID, "error"), 1)
+        self.assertEqual(back.setTimer(all_time[0], "hh", 0), True)
+        self.assertEqual(getattr(all_time[0], "hh", "error"), "error")
+
+    def test_gettimerallbydict(self):
+        all_time = Timer.objects.all()
+        dict1 = back.getTimerAllDictByObject(all_time[0])
+        self.assertEqual(dict1[Timer.NAME], "test_timer_1")
+        self.assertEqual(dict1[Timer.TEACHER_ID], 1)
+
+    def test_removebydic(self):
+        self.assertEqual(back.removeTimerByDic({Timer.NAME: "test_timer_1", Timer.ID: 1}), True)
+        self.assertEqual(back.removeTimerByDic({Timer.ID: 2, "hh": 0}), False)
+        all_time = Timer.objects.all()
+        self.assertEqual(len(all_time), 1)
+
+
 
 
 

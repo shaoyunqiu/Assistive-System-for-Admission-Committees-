@@ -26,11 +26,11 @@
 24. database/backend.py, setGroup,修改同notice, 已修改。
 25. database/backend.py, getGroupbyDict(dic),根据三胖建议，一开始的特判是没必要的，所以去掉了。
 26. 补充：student_backend.py 和 teacher_backend.py, image_backend.py中加了不能修改id 和 field的检查，之前没有发现，现在统一补上, volteer的create要加范围限定，所以待修改。
-=======
 【ok】9. database/backend.py, notice 的id可以人为设定和修改，不合要求，需要修改，测试未能通过。
-【ok】10.datanase/volunteer.py, getVolunteerByField,没有检查键值是否有效，加了checkfield的检查，已修改
-【ok】11.datanase/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
->>>>>>> origin/dev
+【ok】10.database/volunteer.py, getVolunteerByField,没有检查键值是否有效，加了checkfield的检查，已修改
+【ok】11.database/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
+27. database/backend.py removeTimerByDic(),加入了try execpt结构处理异常情况，然后返回true/false的返回值。
+28. 补充，把createstudent和createteacher中的field检查去掉了，去除了遍历的时间，反正不存在的字段不会设立，对其他也没有影响。
 
 
 

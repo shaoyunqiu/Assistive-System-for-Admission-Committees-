@@ -80,11 +80,11 @@ def createGroupbyDict(dict):
     # modified by shaoyunqiu to forbiden set the id and illegal field
     '''if Group.ID in dict.keys():
         print "cannot set the id, failed"
-        return False'''
+        return False
     for field in dict.keys():
         if field not in Group.FIELD_LIST:
             print "illegal field, failed"
-            return False
+            return False'''
     if 'id' in dict.keys():
         dict.pop('id')
 
@@ -161,11 +161,11 @@ def createTimerbyDict(dict):
     # modified by shaoyunqiu, cannot set id and illegal field
     '''if Timer.ID in dict.keys():
         print "cannot set the id, failed"
-        return False'''
+        return False
     for field in dict.keys():
         if field not in Timer.FIELD_LIST:
             print "illegal field, failed"
-            return False
+            return False'''
     if 'id' in dict.keys():
         dict.pop('id')
     try:
@@ -222,8 +222,13 @@ def getTimerAllDictByObject(timer):
         dict[Timer.VOLUNTEER_DIC] = {}
     return dict
 
+# modified by shaoyunqiu add try except and return value
 def removeTimerByDic(dic):
-    Timer.objects.all().filter(**dic).delete()
+    try:
+        Timer.objects.all().filter(**dic).delete()
+        return True
+    except:
+        return False
 
 
 
