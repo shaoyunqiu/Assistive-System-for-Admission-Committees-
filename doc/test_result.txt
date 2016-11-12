@@ -31,6 +31,9 @@
 【ok】11.database/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
 27. database/backend.py removeTimerByDic(),加入了try execpt结构处理异常情况，然后返回true/false的返回值。
 28. 补充，把createstudent和createteacher中的field检查去掉了，去除了遍历的时间，反正不存在的字段不会设立，对其他也没有影响。
+29. database/backend.py getwechaturlbydic, 加入try excpet结构，如果失败返回[], 否则返回一个列表
+30. datanase/backend.py removewechat，加入try excepcy结构，加入bool返回值
+
 
 
 
@@ -41,3 +44,4 @@ my_field.py中未测的函数：class ListField创建数据库的类不大好测
 volunteer.py 中getVolunteerAllDictByAccount(account)这个函数字典太大，不大好测，请观察是否有问题。
 volunteer.py中的 removeVolunteerAccount未测，需要先测group和timer,之后再测
 register_backend.py中的tmpcreateNewRegisterCode()函数，返回值的随机性太强，没办法测，请直接观察函数调用方面是否会有问题。
+database/backend.py date_start_to_end,check_volunteerID_date， 未测，不理解函数含义

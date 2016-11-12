@@ -270,8 +270,13 @@ def setWechatURL(wechatURL, field, value):
         return False
 
 
+# add try except and if failed return []
 def getWechatURLbyDict(dic):
-    return WechatURL.objects.filter(**dic)
+    try:
+        we_list = WechatURL.objects.filter(**dic)
+        return we_list
+    except:
+        return []
 
 
 def getWechatURLAllDictByObject(wechatURL):
@@ -284,8 +289,13 @@ def getWechatURLAllDictByObject(wechatURL):
     return dict
 
 
+#modify by shaoyuqniu, try except and bool return value
 def removeWechatURLByDic(dic):
-    WechatURL.objects.all().filter(**dic).delete()
+    try:
+        WechatURL.objects.all().filter(**dic).delete()
+        return True
+    except:
+        return False
 
 
 def date_start_to_end(start, end):
@@ -325,18 +335,6 @@ def getLastOneWechatURL():
     info_dic = getWechatURLAllDictByObject(all_wechat_url[size-1])
     return info_dic
 
-'''
-def getLastTenWechatURL():
-    all_wechat_url = getWechatURLbyDict({})
-    end = len(all_wechat_url)
-    start = len(all_wechat_url) - 10
-    ret_list = []
-    for i in range(start, end):
-        if i >= 0 and i < len(all_wechat_url):
-            info_dic = getWechatURLAllDictByObject(all_wechat_url[i])
-            ret_list.append(info_dic)
-    return ret_list
-'''
 
 # modified by shaoyunqiu
 def getLastTenWechatURL():

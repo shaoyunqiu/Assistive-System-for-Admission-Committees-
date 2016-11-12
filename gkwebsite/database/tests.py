@@ -971,6 +971,68 @@ class TestTimerBases(TestCase):
         self.assertEqual(len(all_time), 1)
 
 
+class TestWechatBases(TestCase):
+    def setUp(self):
+        we1 = WechatURL.objects.model()
+        setattr(we1, WechatURL.TITLE, "test_wechat_1")
+        setattr(we1, WechatURL.PICTURE_URL, "http://")
+        we1.full_clean()
+        we1.save()
+        we2 = WechatURL.objects.model()
+        setattr(we2, WechatURL.TITLE, "test_wechat_2")
+        setattr(we2, WechatURL.MESSAGE_URL, "http://")
+        we2.full_clean()
+        we2.save()
+
+    def test_creaturl(self):
+        self.assertEqual(back.createWechatURLbyDict({WechatURL.TITLE: "test_wechat_3", WechatURL.PICTURE_URL: "http://3"}), True)
+        self.assertEqual(back.createWechatURLbyDict({WechatURL.TITLE: "test_wechat_4", WechatURL.ID: 0}), True)
+        self.assertEqual(back.createWechatURLbyDict({}), True)
+        self.assertEqual(back.createWechatURLbyDict({WechatURL.TITLE: "test_wechat_5", "hh": 0}), True)
+        all_wechat = WechatURL.objects.all()
+        self.assertEqual(len(all_wechat), 6)
+        self.assertEqual(getattr(all_wechat[3], WechatURL.ID, "error"), 4)
+
+    def test_setwechat(self):
+        all_wechat = WechatURL.objects.all()
+        self.assertEqual(back.setWechatURL(all_wechat[0], WechatURL.TITLE, "test"), True)
+        self.assertEqual(back.setWechatURL(all_wechat[0], WechatURL.MESSAGE_URL, "text"), True)
+        self.assertEqual(back.setWechatURL(all_wechat[0], WechatURL.ID, 0), False)
+        self.assertEqual(back.setWechatURL(all_wechat[0], "hehe", 0), True)
+        self.assertEqual(getattr(all_wechat[0], WechatURL.MESSAGE_URL, "error"), "text")
+        self.assertEqual(getattr(all_wechat[0], WechatURL.ID, "error"), 1)
+        self.assertEqual(getattr(all_wechat[0], "hehe", "error"), "error")
+
+    def test_getwechatbydic(self):
+        all_wechat = WechatURL.objects.all()
+        self.assertEqual(back.getWechatURLbyDict({WechatURL.TITLE: "test_wechat_1", WechatURL.ID: 1})[0], all_wechat[0])
+        self.assertEqual(len(back.getWechatURLbyDict({WechatURL.ID: 2, WechatURL.TITLE: "test"})), 0)
+        self.assertEqual(len(back.getWechatURLbyDict({WechatURL.ID: 3})), 0)
+
+    def test_getwechatdicbyobject(self):
+        all_wechat = WechatURL.objects.all()
+        dict1 = back.getWechatURLAllDictByObject(all_wechat[0])
+        self.assertEqual(dict1[WechatURL.TITLE], "test_wechat_1")
+        self.assertEqual(dict1[WechatURL.ID], 1)
+
+    def test_removebydic(self):
+        self.assertEqual(back.removeWechatURLByDic({WechatURL.TITLE: "test_wechat_1", WechatURL.ID: 1}), True)
+        self.assertEqual(back.removeWechatURLByDic({WechatURL.ID: 2, WechatURL.TEXT: "hahah"}), True)
+        self.assertEqual(back.removeWechatURLByDic({WechatURL.ID: 2, "hh": 0}), False)
+        self.assertEqual(len(WechatURL.objects.all()), 1)
+
+    def test_getlastonewechaturl(self):
+        all_wechat = WechatURL.objects.all()
+        dict1 = back.getLastOneWechatURL()
+        self.assertEqual(dict1[WechatURL.TITLE], "test_wechat_2")
+
+    def test_getlastetnwechat(self):
+        all_wechat = WechatURL.objects.all()
+        dict_list = back.getLastTenWechatURL()
+        self.assertEqual(len(dict_list), 2)
+        self.assertEqual(dict_list[0][WechatURL.TITLE], "test_wechat_2")
+        self.assertEqual(dict_list[1][WechatURL.TITLE], "test_wechat_1")
+
 
 
 
