@@ -20,8 +20,25 @@ import database.backend as back
 import database.volunteer_backend as vol
 import time
 import pytz
-
+import wechat.wechat_api as we
+import database.student_backend as student_backend
 # Create your views here.
+
+
+def check_should_log_out(request, id):
+    total_seconds = 600 # 10min
+    account = stu.idToAccountStudent(id)
+    try:
+        new_time = stu.getStudent(account, Student.LAST_LOGIN_TIME)
+        this_time = time.strptime(request.session.get['login_time'], "%Y-%m-%d %H:%M:%S")
+        time_delta = (new_time - this_time).total_seconds()
+        if time_delta > total_seconds or time_delta < -total_seconds:
+            return redirect('/login/')
+        else:
+            return False
+    except:
+        return False
+
 
 
 def back_to_profile(request, id):
@@ -71,11 +88,57 @@ def back_to_profile(request, id):
     print '----------------*****--------'
     return redirect('/student/profile/?auth=0')
 
+'''
+    wechat login
+    by byr 161110
+'''
+def openid(request):
+    tmp = we.get_code(request)
+    #print "code: " + tmp[1]
+    if tmp[0] == True:
+        tmp_opneid = we.get_openid_byCode(tmp[1])
+        if tmp_opneid[0] == True:
+            open_id = tmp_opneid[1]
+            request.session['open_id'] = open_id
+            print "openid: " + open_id
+
+'''
+    wechat openid login
+    by byr 161110
+'''
+def weichatopenid(request):
+    if 'student_id' in request.session:
+        print "wocao-------1", request.session['student_id']
+
+    openid(request)
+    if 'student_id' in request.session:
+        print "wocao-------2", request.session['student_id']
+
+    if 'open_id' in request.session:
+        if 'student_id' in request.session:
+            print "wocao-------3", request.session['student_id']
+
+        open_id = request.session['open_id']
+        (login, id, username) = student_backend.checkStudentOpenID(open_id)
+        if 'student_id' in request.session:
+            print "wocao-------4", request.session['student_id']
+
+        if login:
+            print "$$$$$$$$$", id
+            request.session['student_id'] = int(id)
+            request.session['user_name'] = username
+
+
 def check_identity(identity):
     def decorator(func):
         def wrapper(request, *args, **kw):
             # 下面这空白的位置填session相应的id名
+            print '**********'
+            if 'student_id' in request.session:
+                print "wocao-------", request.session['student_id']
+            weichatopenid(request)
             identity_dic = {'student': 'student_id', 'volunteer': '', 'teacher': ''}
+            print identity, request.session.get(identity_dic[identity])
             id = int(request.session.get(identity_dic[identity]))
             if identity == 'student':
                 if stu.is_have_permission(id) == False:
@@ -92,6 +155,7 @@ def check_identity(identity):
 
 @check_identity('student')
 def student_center(request):
+    print 'zhuye#$%#$'
     t = get_template('student/center.html')
     id = request.session.get('student_id', -1)
     c = {'id': id}
@@ -203,7 +267,7 @@ def student_logout(request):
 
 @csrf_exempt
 def profile(request):
-
+    weichatopenid(request)
     id = request.session.get('student_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
@@ -218,24 +282,28 @@ def profile(request):
 
         info_dict = request.POST.copy()
         print info_dict
+
+        if info_dict['password'].strip() != '':
+            stu.setStudent(account, Student.PASSWORD, info_dict['password'])
+
         for i in range(1, 7):
             if info_dict['majorSelect' + str(i)].strip() == '':
                 info_dict['majorSelect' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['testScore' + str(i)].strip() == '':
-                info_dict['testScore' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
-        for i in range(1, 4):
-            if info_dict['rank' + str(i) + str(i)].strip() == '':
-                info_dict['rank' + str(i) + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['testScore' + str(i)].strip() == '':
+        #         info_dict['testScore' + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['rank' + str(i)].strip() == '':
+        #         info_dict['rank' + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['rank' + str(i)].strip() == '':
+        #         info_dict['rank' + str(i)] = '0'
+        # for i in range(1, 4):
+        #     if info_dict['rank' + str(i) + str(i)].strip() == '':
+        #         info_dict['rank' + str(i) + str(i)] = '0'
         if info_dict['realScore'].strip() == '':
             info_dict['realScore'] = '0'
-
+        print 'phone ', info_dict.get('tutorPhone')
         dic = {
             'name': info_dict.get('name'),
             'identification': info_dict.get('identification'),
@@ -266,16 +334,16 @@ def profile(request):
             'majorSelect5': int(info_dict.get('majorSelect5')),
             'majorSelect6': int(info_dict.get('majorSelect6')),
 
-            'testScore1': int(info_dict.get('testScore1')),
-            'testScore2': int(info_dict.get('testScore2')),
-            'testScore3': int(info_dict.get('testScore3')),
+            # 'testScore1': int(info_dict.get('testScore1')),
+            # 'testScore2': int(info_dict.get('testScore2')),
+            # 'testScore3': int(info_dict.get('testScore3')),
 
-            'rank1': int(info_dict.get('rank1')),
-            'rank11': int(info_dict.get('rank11')),
-            'rank2': int(info_dict.get('rank2')),
-            'rank22': int(info_dict.get('rank22')),
-            'rank3': int(info_dict.get('rank3')),
-            'rank33': int(info_dict.get('rank33')),
+            # 'rank1': int(info_dict.get('rank1')),
+            # 'rank11': int(info_dict.get('rank11')),
+            # 'rank2': int(info_dict.get('rank2')),
+            # 'rank22': int(info_dict.get('rank22')),
+            # 'rank3': int(info_dict.get('rank3')),
+            # 'rank33': int(info_dict.get('rank33')),
 
             'realScore': int(info_dict.get('realScore')),
             # 'relTeacher': info_dict.get('relTeacher'),
@@ -312,8 +380,9 @@ def profile(request):
 
         stu.setStudent(account, Student.CLASSROOM, dic['stu_class'])
         stu.setStudent(account, Student.TUTOR_NAME, dic['tutorName'])
+        # print '09090909090909090'
         stu.setStudent(account, Student.TUTOR_PHONE, dic['tutorPhone'])
-
+        # print '0909090------------9090909090'
         stu.setStudent(account,
                        Student.MAJOR,
                        [dic['majorSelect1'],
@@ -322,22 +391,23 @@ def profile(request):
                         dic['majorSelect4'],
                         dic['majorSelect5'],
                         dic['majorSelect6']])
+        # print '0909090-222222222229090'
+        # stu.setStudent(
+        #     account, Student.TEST_SCORE_LIST, [
+        #         dic['testScore1'], dic['testScore2'], dic['testScore3']])
 
-        stu.setStudent(
-            account, Student.TEST_SCORE_LIST, [
-                dic['testScore1'], dic['testScore2'], dic['testScore3']])
-
-        stu.setStudent(
-            account, Student.RANK_LIST, [
-                dic['rank1'], dic['rank2'], dic['rank3']])
-
-        stu.setStudent(
-            account, Student.SUM_NUMBER_LIST, [
-                dic['rank11'], dic['rank22'], dic['rank33']])
+        # stu.setStudent(
+        #     account, Student.RANK_LIST, [
+        #         dic['rank1'], dic['rank2'], dic['rank3']])
+        #
+        # stu.setStudent(
+        #     account, Student.SUM_NUMBER_LIST, [
+        #         dic['rank11'], dic['rank22'], dic['rank33']])
 
         stu.setStudent(account, Student.REAL_SCORE, dic['realScore'])
-        stu.setStudent(account, Student.COMMENT, dic['comment'])
-
+        # print '0909090-----333---9090909090'
+        # stu.setStudent(account, Student.COMMENT, dic['comment'])
+        # print '0909090-----35553---9090909090'
 
         return JsonResponse(dic)
     else:
@@ -620,8 +690,8 @@ def get_all_message(request):
                        'state': read_state,
                        'message_id':info_dic[Notice.ID]}
             dic.append(tmp_dic)
-
-    return JsonResponse(dic, safe=False)
+    ret = list(reversed(dic))
+    return JsonResponse(ret, safe=False)
 
 
 @csrf_exempt

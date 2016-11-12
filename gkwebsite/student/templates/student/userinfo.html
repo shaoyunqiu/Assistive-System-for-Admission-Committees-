@@ -165,7 +165,7 @@
        </div>
        <div class="w3_agile_main_grid">
         <span class="agile_grid"> <label>班主任手机号<i>:</i></label>
-         <input type="text" id="tutorPhone" {{dict.tutorPhone}}  placeholder="班主任手机号" required="" /> </span>
+         <input type="text" id="tutorPhone" value="{{dict.tutorPhone}}"  placeholder="班主任手机号" required="" /> </span>
        </div>
        <div class="w3_agile_main_grid">
         <span class="agile_grid"> <label>志愿一<i>:</i></label>
@@ -372,70 +372,25 @@
             var stu_class = $("#stu_class").val();
             var tutorName = $("#tutorName").val();
             var tutorPhone = $("#tutorPhone").val();
+               //str为你要判断的字符 执行返回结果 true 或 false
+              if (r.test(tutorPhone) == false){
+                alert("手机号中只能包含数字");
+                  return;
+            }
+                        if (tutorPhone.length != 11){
+                  alert("请输入11位手机号");
+                  return;
+              }
             var majorSelect1 = $("#majorSelect1").val();
             var majorSelect2 = $("#majorSelect2").val();
             var majorSelect3 = $("#majorSelect3").val();
             var majorSelect4 = $("#majorSelect4").val();
             var majorSelect5 = $("#majorSelect5").val();
             var majorSelect6 = $("#majorSelect6").val();
-       //     var testScore1 = $("#testScore1").val();
-       //     var testScore2 = $("#testScore2").val();
-        //    var testScore3 = $("#testScore3").val();
-        //    var rank1 = $("#rank1").val();
-         //   var rank11 = $("#rank11").val();
-          //  var rank2 = $("#rank2").val();
-           // var rank22 = $("#rank22").val();
-            //var rank3 = $("#rank3").val();
-            //var rank33 = $("#rank33").val();
             var estimateScore = $("#estimateScore").val();
            var estimateRank = $("#estimateRank").val();
-
             var realScore = $("#realScore").val();
-            //var admissionStatus = $("#admissionStatus").val();
-         //   var relTeacher = $("#relTeacher").val();
-       //     var relVolunteer = $("#relVolunteer").val();
             var comment= $("#comment").val();
-/*alert(
-         name+" "+
-                        identification+" "+
-                     sex+" "+
-                  nation+" "+
-                 birth+" "+
-            province+" "+
-           phone+" "+
-          email+" "+
-         wenli+" "+
-          address+" "+
-           dadName+" "+
-          dadPhone+" "+
-           momName+" "+
-         momPhone+" "+
-             school+" "+
-            stu_class+" "+
-            tutorName+" "+
-             tutorPhone+" "+
-          majorSelect1+" "+
-        majorSelect2+" "+
-         majorSelect3+" "+
-  majorSelect4+" "+
-      majorSelect5+" "+
-        majorSelect6+" "+
-           testScore1+" "+
-            testScore2+" "+
-             testScore3+" "+
-        rank1+" "+
-          rank11+" "+
-         rank2+" "+
-         rank22+" "+
-             rank3+" "+
-        rank33+" "+
-
-            realScore+" "+
-
-            relTeacher+" "+
-
-            comment
-);*/
             $.post("",
                     {
                      'name':name,
@@ -463,22 +418,9 @@
              'majorSelect4' : majorSelect4,
              'majorSelect5' : majorSelect5,
              'majorSelect6' : majorSelect6,
-           //  'testScore1' : testScore1,
-            // 'testScore2' : testScore2,
-             //'testScore3' : testScore3,
-             //'rank1' : rank1,
-             //'rank11' : rank11,
-             //'rank2' : rank2,
-             //'rank22' : rank22,
-             //'rank3' : rank3,
-             //'rank33' : rank33,
              'estimateScore' : estimateScore,
                      'estimateRank' : estimateRank,
              'realScore' : realScore,
-           //  'admissionStatus' : admissionStatus,
-          //   'relTeacher': relTeacher,
-         //    'relVolunteer' : relVolunteer,
-          //   'comment': comment,
                     },
                     function(profileDict){
 document.getElementById("save").disabled = false;
