@@ -1034,6 +1034,27 @@ class TestWechatBases(TestCase):
         self.assertEqual(dict_list[1][WechatURL.TITLE], "test_wechat_1")
 
 
+class Testcheckopenid(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.OPEN_ID, "aaaa")
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.OPEN_ID, "bbbb")
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        stu2.full_clean()
+        stu2.save()
+
+    def test_checkopenid(self):
+        self.assertEqual(checkStudentOpenID(""), (False, 'OPEN ID IS EMPTY', 'no '))
+        self.assertEqual(checkStudentOpenID("aaaa"), (True, "1", "test_stu_1"))
+        self.assertEqual(checkStudentOpenID("test"), (False, 'not exist this open id', 'no'))
+
+
+
+
 
 
 

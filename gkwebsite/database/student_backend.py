@@ -268,7 +268,7 @@ def checkStudentPassword(_account,_password):
     #hash function should be applied here
 
 
-def checkStudentOpenID(openid):
+'''def checkStudentOpenID(openid):
     student_list = getStudentbyField(Student.OPEN_ID, openid)
     if len(student_list) <= 0:
         return (False , 'openid not exist')
@@ -278,7 +278,7 @@ def checkStudentOpenID(openid):
         return (True, str(student_id))
     except:
         return (False, 'id not exist')
-
+'''
 
 def checkStudentOpenID(open_id):
     if open_id.strip() == '':
@@ -340,39 +340,6 @@ def setStudentGroupbyList(student, id_list):
             stu_list.append(stu_id)
         back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
     return True
-
-
-'''
-def getStudentEstimateRank(student):
-    print "getStudentEstimateRank"
-    score = int(getStudentEstimateScore(student))
-
-    all_student_estimate_score = [999999]
-    student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
-    no_gufen_number = 0
-    for student in student_list:
-        estimate_dic = eval(getattr(student, Student.ESTIMATE_SCORE))
-        tmp = 0
-        for key in estimate_dic.keys():
-            tmp = tmp + int(estimate_dic[key]['score'])
-        if tmp == 0:
-            no_gufen_number = no_gufen_number + 1
-
-    if score == 0:
-        return str(len(student_list)-no_gufen_number), str(len(student_list)-no_gufen_number)
-    for item in student_list:
-        all_student_estimate_score.append(getStudentEstimateScore(item))
-
-    rank = 1
-    ranked_score_list = sorted(all_student_estimate_score, reverse=True)
-    length = len(ranked_score_list)
-    for i in range(0, length):
-        if score >= ranked_score_list[i]:
-            rank = i
-            break
-
-    return str(rank), str(len(student_list)-no_gufen_number)
-'''
 
 
 # create by shaoyunqiu
