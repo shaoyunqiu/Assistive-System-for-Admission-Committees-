@@ -33,7 +33,7 @@
 28. 补充，把createstudent和createteacher中的field检查去掉了，去除了遍历的时间，反正不存在的字段不会设立，对其他也没有影响。
 29. database/backend.py getwechaturlbydic, 加入try excpet结构，如果失败返回[], 否则返回一个列表
 30. datanase/backend.py removewechat，加入try excepcy结构，加入bool返回值
-
+31. database/backend.py getStudentEstimateRank, 修改了返回值，使其语意与getStudentEstimateRank，一样，通过测试。
 
 
 
