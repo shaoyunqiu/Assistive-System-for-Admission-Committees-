@@ -45,3 +45,4 @@ volunteer.py 中getVolunteerAllDictByAccount(account)这个函数字典太大，
 volunteer.py中的 removeVolunteerAccount未测，需要先测group和timer,之后再测
 register_backend.py中的tmpcreateNewRegisterCode()函数，返回值的随机性太强，没办法测，请直接观察函数调用方面是否会有问题。
 database/backend.py date_start_to_end,check_volunteerID_date， 未测，不理解函数含义
+database/student_backend.py, getStudentGroupIDListString(student), setStudentGroupbyList(student, id_list)没测，不会构造样例数据，手动运行看是否会有问题吧

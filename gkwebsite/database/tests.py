@@ -552,7 +552,7 @@ class Testgetestimate(TestCase):
         stu3 = Student.objects.filter(account="test_stu_3")[0]
         stu4 = Student.objects.filter(account="test_stu_4")[0]
         self.assertEqual(getStudentEstimateRank(stu1), ("2", "2"))
-        self.assertEqual(getStudentEstimateRank(stu2), ("2", "2"))
+        self.assertEqual(getStudentEstimateRank(stu2), ("3", "2"))
         self.assertEqual(getStudentEstimateRank(stu3), ("1", "2"))
         self.assertEqual(getStudentEstimateRank(stu4), ("1", "1"))
 
@@ -584,7 +584,7 @@ class Testgetestimate(TestCase):
         stu3 = Student.objects.filter(account="test_stu_3")[0]
         stu4 = Student.objects.filter(account="test_stu_4")[0]
         self.assertEqual(getStudentEstimateRank_Every(stu1, u'2016_北京_语文'),("1","2"))
-        self.assertEqual(getStudentEstimateRank_Every(stu2, u'2016_北京_数学'),("1","1"))
+        self.assertEqual(getStudentEstimateRank_Every(stu2, u'2016_北京_数学'),("2","1"))
         self.assertEqual(getStudentEstimateRank_Every(stu3, u'2016_北京_数学'), ("1","1"))
         self.assertEqual(getStudentEstimateRank_Every(stu4, u'2016_天津_英语'), ("1", "0"))
 
@@ -706,10 +706,11 @@ class TestVolBases(TestCase):
     def test_createVolunteer(self):
         self.assertEqual(createVolunteer("test_vol_1",{Volunteer.NATION:10}), False)
         self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ACCOUNT:"vol"}),False)
-        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.NATION:1000}), False)
-        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ID:3}), False)
+        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.NATION:1000}), True)
+        self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ID:0}), True)
+        self.assertEqual(Volunteer.objects.filter(account="test_vol_3")[0].id, 3)
         # cannot pass the above two tests
-        self.assertEqual(createVolunteer("test_vol_3", {Volunteer.REAL_NAME:"lihy1"}),True)
+        self.assertEqual(createVolunteer("test_vol_4", {Volunteer.REAL_NAME:"lihy1"}),True)
         self.assertEqual(len(Volunteer.objects.filter(realName="lihy1")), 2)
 
 
@@ -1051,6 +1052,8 @@ class Testcheckopenid(TestCase):
         self.assertEqual(checkStudentOpenID(""), (False, 'OPEN ID IS EMPTY', 'no '))
         self.assertEqual(checkStudentOpenID("aaaa"), (True, "1", "test_stu_1"))
         self.assertEqual(checkStudentOpenID("test"), (False, 'not exist this open id', 'no'))
+
+
 
 
 

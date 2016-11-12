@@ -368,21 +368,24 @@ def getStudentEstimateRank(student):
             no_gufen_number = no_gufen_number + 1
             continue
 
+# modify by shaoyunqiu ,chenge the return value to match the get_estimate_rank_every
     try:
         myscore = int(getStudentEstimateScore(student))
-        if myscore == 0:
+        '''if myscore == 0:
             return str(all_student-no_gufen_number), str(all_student-no_gufen_number)
-        else:
-            ranked_score_list = sorted(all_estimate_score, reverse=True)
-            length = len(ranked_score_list)
-            for i in range(0, length):
-                if myscore >= ranked_score_list[i]:
-                    rank = i
-                    break
-            # print 'asfd', all_student, no_gufen_number
-            return str(rank), str(all_student-no_gufen_number)
+        else:'''
+        ranked_score_list = sorted(all_estimate_score, reverse=True)
+        length = len(ranked_score_list)
+        rank = 0
+        for item in ranked_score_list:
+            if myscore >= item:
+                break
+            else:
+                rank = rank + 1
+        # print 'asfd', all_student, no_gufen_number
+        return str(rank), str(all_student-no_gufen_number)
     except:
-        return str(all_student-no_gufen_number), str(all_student-no_gufen_number)
+        return str(all_student-no_gufen_number + 1), str(all_student-no_gufen_number)
 
 
 def getStudentEstimateScore_Every(student, test_id):
@@ -437,7 +440,8 @@ def getStudentEstimateRank_Every(student, test_id):
                 continue
             if 'shenhe' not in estimate_dic[test_id].keys():
                 continue
-            all_score_list.append(estimate_dic[test_id]['score'])
+            # modify by shaoyunqiu score must be int
+            all_score_list.append(int(estimate_dic[test_id]['score']))
         except:
             continue
 
