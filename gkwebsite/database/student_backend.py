@@ -489,7 +489,11 @@ def get_all_student_score_and_rank(province):
             except:
                 score = 0
             name = getattr(student, Student.REAL_NAME)
-            score_tuple_list.append((name, score))
+            sex = getattr(student, Student.SEX)
+            school = getattr(student, Student.SCHOOL)
+            if score <= 0:
+                continue
+            score_tuple_list.append((name, score, sex, school))
         reverse_ret_list = sorted(score_tuple_list, key=lambda student: student[1])
         ret_list = list(reversed(reverse_ret_list))
         return ret_list

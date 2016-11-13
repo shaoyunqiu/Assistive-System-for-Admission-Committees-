@@ -49,6 +49,7 @@ def get_province_list(request):
     if id == -1:
         return HttpResponse('Access denied')
     dic = {'province_list':['','北京','四川','延庆']}
+    dic = {'province_list': PROVINCE_LIST}
     return JsonResponse(dic)
 
 
@@ -60,17 +61,39 @@ def rank_student_by_province(request):
     '''
     if request.is_ajax() and request.method == 'POST':
         t = []
-        pro = request.POST.get('province')
-        print 'province:',pro
-        for item in range(50):
-            dic = {'name': '1',
-                   'gender': '2',
-                   'source': '3',
-                   'school': '4',
-                   'socre': '5',
-                   'rank': '6'
+        pro = int(request.POST.get('province'))
+        stu_info_list = stu.get_all_student_score_and_rank(pro)
+        length = len(stu_info_list)
+        for i in range(0,length):
+            item = stu_info_list[i]
+
+
+            if i > 0 and str(item[1]) == t[i-1]['socre']:
+                # print 'asdfasdf------'
+                rank = t[i-1]['rank']
+            else:
+                rank = str(i+1)
+
+
+            dic = {'name': item[0],
+                   'gender': SEX_LIST[item[2]],
+                   'source': PROVINCE_LIST[pro],
+                   'school': item[3],
+                   'socre': str(item[1]),
+                   'rank': '%s'%(rank)
                    }
             t.append(dic)
+
+
+        # for item in range(50):
+        #     dic = {'name': '1',
+        #            'gender': '2',
+        #            'source': '3',
+        #            'school': '4',
+        #            'socre': '5',
+        #            'rank': '6'
+        #            }
+        #     t.append(dic)
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
