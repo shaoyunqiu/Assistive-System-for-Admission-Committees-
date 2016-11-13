@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>查看学生排名</title>
+    {% load staticfiles %}
+    {% include 'teacher/include/cssinclude.html' %}
+</head>
+<body>
+    <div id="wrapper">
+          {% include 'teacher/include/navtop.html' %}
+        <!--/. NAV TOP  -->
+    {% include 'teacher/include/navside.html' %}
+        <!-- /. NAV SIDE  -->
+
+        <div id="page-wrapper" >
+            <div id="page-inner">
+        <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            查看学生排名 <small>高考招生系统教师端  您好，<span id='namefield'></span></small>
+                        </h1>
+                    </div>
+                </div>
+        <!--row-->
+        <div class = "row">
+          <div class = "col-md-12 col-lg-12">
+            <div class= "panel panel-default">
+              <div class = "panel-body">
+                <div class = "row">
+                  <div class = "col-lg-5 col-md-5">
+                    <div class = "form-horizontal" >
+                      <div class = "form-group">
+                        <div class="col-md-3 col-lg-2">
+                        <label for = "province" class = "control-label">省份：</label>
+                        </div>
+                        <div class="col-md-6 col-lg-8">
+                        <!--input type = "text" class = "form-control" id = "realName"></input-->
+                            <select class="form-control" id="province" name="province">
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-lg-2">
+                        <button type = "button" class = "btn btn-primary" value = "search" id="search">查看排名</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class = "row">
+                  <div class = "col-md-12 col-lg-10">
+                    <table class="table table-hover">
+                      <caption>排名结果</caption>
+                      <thead>
+                        <tr>
+                          <th>姓名</th>
+                          <th>性别</th>
+                          <th>生源地</th>
+                          <th>学校</th>
+                          <th>估分</th>
+                          <th>排名</th>
+                        </tr>
+                      </thead>
+                      <tbody id="student_list">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-lg-10" style="text-align:center">
+                    <ul class="pagination pagination-lg" id="pages">
+                    </ul><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /. ROW -->
+   {% include 'teacher/include/footer.html' %}
+      </div>
+
+             <!-- /. PAGE INNER  -->
+        </div>
+         <!-- /. PAGE WRAPPER  -->
+    </div>
+     <!-- /. WRAPPER  -->
+    {% include 'teacher/include/jsinclude.html' %}
+    <script src="{% static 'jquery-ui-1.12.1/datepicker-zh.js' %}"></script>
+		<script src="{% static 'jquery-validation-1.14.0/dist/jquery.validate.min.js' %}"></script>
+		<script src="{% static 'jquery-validation-1.14.0/dist/additional-methods.js' %}"></script>
+		<script src="{% static 'jquery-validation-1.14.0/dist/localization/messages_zh.js' %}"></script>
+    <script>
+      var list_start_pos = 0;
+      var item_per_list = {{n_item}};
+      var user_array = [];
+      var checked_list = [];
+      function jump_prev(){
+        if(list_start_pos - item_per_list >= 0)
+          list_start_pos -= item_per_list;
+        show_list(list_start_pos);
+      }
+      function jump_next(){
+        if(list_start_pos + item_per_list < user_array.length)
+          list_start_pos += item_per_list;
+        show_list(list_start_pos);
+      }
+      function jump_page(num){
+        list_start_pos = (num-1)*item_per_list;
+        if(list_start_pos < 0)
+          list_start_pos = 0;
+        if(list_start_pos > user_array.length - 1)
+          list_start_pos = user_array.length - 1;
+        show_list(list_start_pos);
+      }
+      function show_list(startnum){
+        var tag1, tag2, tag3;
+        var listitem="";
+        checked_list.splice(0, checked_list.length);
+        var page = Math.floor(startnum / item_per_list) + 1;
+        var n_page = Math.ceil(user_array.length / item_per_list);
+        $("li").removeClass("disabled");
+        $("li").removeClass("active");
+        if(page == 1){
+          $("#prev").addClass("disabled");
+        }
+        if(page == n_page){
+          $("#next").addClass("disabled");
+        }
+        $("#page_"+page).addClass("active");
+        $('#student_list').empty();
+        for(var i = startnum; i < user_array.length && i < startnum + item_per_list; ++i){
+          tag1 = String(i)+'_A';
+          tag2 = String(i)+'_B';
+          tag3 = String(i)+'_C';
+          tag4 = String(i)+'_check';
+          listitems="<tr><td>"+user_array[i]['name']+"</td><td>"+user_array[i]['gender']+"</td><td>"+user_array[i]['source']+"</td><td>"+user_array[i]['school']+"</td><td>"+user_array[i]['id_card']+"</td><td>"+user_array[i]['id_card']+"</td>";
+          listitems+="</tr>";
+          $('#student_list').append(listitems);
+        }
+      }
+      function postreq(namestr){
+        if(namestr=='0'){
+          alert('请选择一个省份');
+        }
+        else{
+          list_start_pos = 0;
+          //access server and load matching records
+          $.post("/backend/search_student_by_name/", {'name':namestr}, function(ret){
+            user_array=ret;
+            $('#pages').empty();
+            var n_page = Math.ceil(user_array.length / item_per_list);
+            $('#pages').append("<li id=\"prev\"><a href=\"javascript:void(0)\" onclick=\"jump_prev()\">&laquo;</a></li>\n");
+            for(var i = 1; i <= n_page; ++i){
+              $('#pages').append("<li id=\"page_"+String(i)+"\"><a href=\"javascript:void(0)\" onclick=\"jump_page("+String(i)+")\">"+String(i)+"</a></li>\n");
+            }
+            $('#pages').append("<li id=\"next\"><a href=\"javascript:void(0)\" onclick=\"jump_next()\">&raquo;</a></li>\n");
+            show_list(list_start_pos);
+          })
+        }
+      }
+
+      $(document).ready(function(){
+        //CSRF token (See https://docs.djangoproject.com/en/1.9/ref/csrf/)
+        var csrftoken = getCookie('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        $.post("/backend/get_teacher_name_by_id/", {}, function(ret){
+            $('#namefield').append(ret['name']);
+        })
+        $.post("/teacher/get_province_list/", {}, function(ret){
+            var i = 0;
+            $('#province').empty();
+            for(i = 0;i < ret.province_list.length;i++)
+            {
+                if(i == 0)
+                {
+                    $('#province').append("<option value=\"0\" selected=\"selected\">" + "请选择一个省份，并点击查看排名按钮" + "</option>");
+                }
+                else
+                {
+                    $('#province').append("<option value=" + String(i) + ">" + ret.province_list[i] + "</option>");
+                }
+            }
+        })
+        $('#rank_student').addClass("active-menu");
+        $('#rank_student').attr("href", "#");
+        console.log($('#province').val());
+        //var nameinit=$('#province').val();
+        //postreq(nameinit);
+
+        $('#search').click(function(){
+            var namestr=$('#province').val();
+            postreq(namestr);
+        });
+      });
+    </script>
+</body>
+</html>

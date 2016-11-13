@@ -30,6 +30,25 @@ def search_student(request):
 
 
 @ensure_csrf_cookie
+def rank_student(request):
+    id = request.session.get('teacher_id', -1)
+    if id == -1:
+        return HttpResponse('Access denied')
+    t = get_template('teacher/rank_student.html')
+    c = {'id': id, 'n_item': 15}
+    return HttpResponse(t.render(c))
+
+
+@ensure_csrf_cookie
+def get_province_list(request):
+    id = request.session.get('teacher_id', -1)
+    if id == -1:
+        return HttpResponse('Access denied')
+    dic = {'province_list':['','北京','四川','延庆']}
+    return JsonResponse(dic)
+
+
+@ensure_csrf_cookie
 def manage_activity(request):
     id = request.session.get('teacher_id', -1)
     if id == -1:
