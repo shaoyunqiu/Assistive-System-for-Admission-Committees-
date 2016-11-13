@@ -483,7 +483,7 @@ def get_all_tests(request):
     province = int(stu_dic[Student.PROVINCE]['province'])
     print 'pro ', province
     dic = {
-        Picture.YEAR: year,
+        # Picture.YEAR: year,
         Picture.PROVINCE: province,
         Picture.IS_TITLE: 0,
         Picture.IS_DELEVERED: 1,

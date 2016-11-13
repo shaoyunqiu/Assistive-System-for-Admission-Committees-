@@ -479,6 +479,29 @@ def getStudentEstimateRank_Every(student, test_id):
     return str(rank), str(len(all_score_list)-1)
 
 
+def get_all_student_score_and_rank(province):
+    try:
+        student_list = getStudentbyField(Student.PROVINCE, province)
+        score_tuple_list = []
+        for student in student_list:
+            try:
+                score = int(getStudentEstimateScore(student))
+            except:
+                score = 0
+            name = getattr(student, Student.REAL_NAME)
+            score_tuple_list.append((name, score))
+        reverse_ret_list = sorted(score_tuple_list, key=lambda student: student[1])
+        ret_list = list(reversed(reverse_ret_list))
+        return ret_list
+    except:
+        return []
+
+
+
+
+
+
+
 
 
 
