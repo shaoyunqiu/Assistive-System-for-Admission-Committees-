@@ -41,11 +41,39 @@ def rank_student(request):
 
 @ensure_csrf_cookie
 def get_province_list(request):
+    '''
+        后端在此处返回全部的省的信息
+        列表第一个要为空字符串
+    '''
     id = request.session.get('teacher_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
     dic = {'province_list':['','北京','四川','延庆']}
     return JsonResponse(dic)
+
+
+@ensure_csrf_cookie
+def rank_student_by_province(request):
+    '''
+        后端在此处返回排好序的学生列表信息
+        下面的pro变量为省的序号（字符串），已保证不为0，且与get_province_list函数给前段的列表对应
+    '''
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        pro = request.POST.get('province')
+        print 'province:',pro
+        for item in range(50):
+            dic = {'name': '1',
+                   'gender': '2',
+                   'source': '3',
+                   'school': '4',
+                   'socre': '5',
+                   'rank': '6'
+                   }
+            t.append(dic)
+        return JsonResponse(t, safe=False)  # must use 'safe=False'
+    else:
+        return HttpResponse('Access denied.')
 
 
 @ensure_csrf_cookie

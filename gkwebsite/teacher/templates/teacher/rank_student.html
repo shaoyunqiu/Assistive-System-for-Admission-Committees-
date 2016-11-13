@@ -42,7 +42,7 @@
                             </select>
                         </div>
                         <div class="col-md-3 col-lg-2">
-                        <button type = "button" class = "btn btn-primary" value = "search" id="search">查看排名</button>
+                        <button type = "button" class = "btn btn-primary" value = "search" id="search">查看该省排名</button>
                         </div>
                       </div>
                     </div>
@@ -135,7 +135,7 @@
           tag2 = String(i)+'_B';
           tag3 = String(i)+'_C';
           tag4 = String(i)+'_check';
-          listitems="<tr><td>"+user_array[i]['name']+"</td><td>"+user_array[i]['gender']+"</td><td>"+user_array[i]['source']+"</td><td>"+user_array[i]['school']+"</td><td>"+user_array[i]['id_card']+"</td><td>"+user_array[i]['id_card']+"</td>";
+          listitems="<tr><td>"+user_array[i]['name']+"</td><td>"+user_array[i]['gender']+"</td><td>"+user_array[i]['source']+"</td><td>"+user_array[i]['school']+"</td><td>"+user_array[i]['socre']+"</td><td>"+user_array[i]['rank']+"</td>";
           listitems+="</tr>";
           $('#student_list').append(listitems);
         }
@@ -147,7 +147,8 @@
         else{
           list_start_pos = 0;
           //access server and load matching records
-          $.post("/backend/search_student_by_name/", {'name':namestr}, function(ret){
+          //$.post("/backend/search_student_by_name/", {'name':namestr}, function(ret){
+          $.post("/teacher/rank_student_by_province/", {'province':namestr}, function(ret){
             user_array=ret;
             $('#pages').empty();
             var n_page = Math.ceil(user_array.length / item_per_list);
@@ -181,7 +182,7 @@
             {
                 if(i == 0)
                 {
-                    $('#province').append("<option value=\"0\" selected=\"selected\">" + "请选择一个省份，并点击查看排名按钮" + "</option>");
+                    $('#province').append("<option value=\"0\" selected=\"selected\">" + "请选择一个省份，并点击查看该省排名按钮" + "</option>");
                 }
                 else
                 {
@@ -191,10 +192,6 @@
         })
         $('#rank_student').addClass("active-menu");
         $('#rank_student').attr("href", "#");
-        console.log($('#province').val());
-        //var nameinit=$('#province').val();
-        //postreq(nameinit);
-
         $('#search').click(function(){
             var namestr=$('#province').val();
             postreq(namestr);
