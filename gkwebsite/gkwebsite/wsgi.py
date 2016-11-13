@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 """
 
 import os
+from os.path import join,dirname,abspath
 
 PROJECT_DIR = dirname(dirname(abspath(__file__)))
 
