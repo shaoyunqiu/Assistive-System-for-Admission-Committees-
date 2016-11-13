@@ -94,6 +94,8 @@ def rank_student_by_province(request):
         #            'rank': '6'
         #            }
         #     t.append(dic)
+
+        stu.output_all_student_info('hahah.xls')
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')

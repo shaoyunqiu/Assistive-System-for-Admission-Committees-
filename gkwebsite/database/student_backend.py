@@ -502,6 +502,46 @@ def get_all_student_score_and_rank(province):
 
 
 
+def output_all_student_info(filename):
+    student_list = getAllInStudent()
+    title_list = [u'姓名', u'性別', u'出生年月', u'省份', u'身份证号', u'类型']
+    name_list = []
+    sex_list = []
+    birth_list = []
+    province_list = []
+    id_number_list = []
+    type_list = []
+
+    for student in student_list:
+        try:
+            name = getattr(student, Student.REAL_NAME, '')
+            sex = SEX_LIST[getattr(student, Student.SEX, 0)]
+            birth = getattr(student, Student.BIRTH).strftime('%Y-%m-%d')
+            province = PROVINCE_LIST[getattr(student, Student.PROVINCE, 0)]
+            id_number = getattr(student, Student.ID_NUMBER, '')
+            type = TYPE_LIST[getattr(student, Student.TYPE, 0)]
+        except:
+            continue
+
+        name_list.append(name)
+        sex_list.append(sex)
+        birth_list.append(birth)
+        province_list.append(province)
+        id_number_list.append(id_number)
+        type_list.append(type)
+
+    ret_list = []
+    ret_list.append(name_list)
+    ret_list.append(sex_list)
+    ret_list.append(birth_list)
+    ret_list.append(province_list)
+    ret_list.append(id_number_list)
+    ret_list.append(type_list)
+
+    if os.path.exists(filename):
+        os.remove(filename)
+    outputXLS('', filename, 'sheet1', ret_list, title_list)
+
 
 
 
