@@ -381,7 +381,7 @@ def profile(request):
         stu.setStudent(account, Student.CLASSROOM, dic['stu_class'])
         stu.setStudent(account, Student.TUTOR_NAME, dic['tutorName'])
         # print '09090909090909090'
-        # print stu.setStudent(account, Student.TUTOR_PHONE, dic['tutorPhone'])
+        stu.setStudent(account, Student.TUTOR_PHONE, dic['tutorPhone'])
         # print '0909090------------9090909090'
         stu.setStudent(account,
                        Student.MAJOR,
