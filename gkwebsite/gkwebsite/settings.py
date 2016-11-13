@@ -23,9 +23,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd&c$@l2*f$d7e^h@vnxgtkj*v*cmg&mff^nw2xt)!i7c!y-#vg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# by dqn14 Nov 13, 2016
+# These people will get a e-mail notice when an error occurs.
+ADMINS = [('Qingnan Duan', 'dqn14@mails.tsinghua.edu.cn'), ('Yunren Bai', '360559261@qq.com'), ('Haoyang Li', 'lihy45@163.com'), ('Yufan Hou', 'evan9669@126.com'), ('Yunqiu Shao', 'shaoyunqiu@163.com')]
+MANAGERS = [('Qingnan Duan', 'dqn14@mails.tsinghua.edu.cn'), ('Yunren Bai', '360559261@qq.com'), ('Haoyang Li', 'lihy45@163.com'), ('Yufan Hou', 'evan9669@126.com'), ('Yunqiu Shao', 'shaoyunqiu@163.com')]
+
+ALLOWED_HOSTS = ['gaokao.northeurope.cloudapp.azure.com', 'localhost', '127.0.0.1', '[::1]']
+
+# by dqn14 Nov 13, 2016
+# Default setting
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+
+# by dqn14 Nov 13, 2016
+# Set to Monday
+FIRST_DAY_OF_WEEK = 1
 
 # Application definition
 
@@ -52,7 +65,9 @@ INSTALLED_APPS = [
     'wechat',
 ]
 
-MIDDLEWARE_CLASSES = [
+# by dqn14 Nov 13, 2016
+MIDDLEWARE = [
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,6 +77,9 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# MIDDLEWARE_CLASSES is deprecated in 1.10
+# MIDDLEWARE_CLASSES = []
 
 ROOT_URLCONF = 'gkwebsite.urls'
 '''
@@ -119,15 +137,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-CN'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
-USE_I18N = True
+USE_TZ=True
+
+USE_I18N = False
 
 USE_L10N = True
-
-USE_TZ = True
 
 #APPEND_SLASH = False
 
@@ -135,10 +153,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_files")
 # MEDIA_URL = "/media/"
 # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "gkwebsite/exam_picture")
 
 
-TIME_ZONE = 'Asia/Shanghai'
-USE_TZ=True
