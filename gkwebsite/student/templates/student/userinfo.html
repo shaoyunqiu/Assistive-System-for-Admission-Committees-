@@ -298,7 +298,12 @@
   <script src="{% static 'assets/js/jquery-ui.js' %}"></script>
   <script>
 					  $(function() {
-						$( "#datepicker" ).datepicker();
+						$( "#datepicker" ).datepicker(
+                                {
+                                    changeMonth: true,
+                                    changeYear: true
+                                }
+                        );
 					  });
 			  </script>
   <!-- //Calendar -->
@@ -308,7 +313,6 @@
 
           $('#link_profile').attr("href", "#");
           $("#save").click(function(){
-              document.getElementById("save").disabled = true;
            var password1 = $("#password1").val();
             var password2 = $("#password2").val();
             if (password1 != password2){
@@ -390,7 +394,13 @@
             var estimateScore = $("#estimateScore").val();
            var estimateRank = $("#estimateRank").val();
             var realScore = $("#realScore").val();
-            var comment= $("#comment").val();
+             if (r.test(realScore) == false){
+                alert("成绩中只能包含数字");
+                  return;
+            }
+              var comment= $("#comment").val();
+                            document.getElementById("save").disabled = true;
+
             $.post("",
                     {
                      'name':name,

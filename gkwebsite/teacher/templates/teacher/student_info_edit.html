@@ -27,7 +27,7 @@
         <div class="panel-body">
          <div class="row">
           <div class="col-md-offset-3 col-md-6">
-           <form class="form-horizontal" role="form" action="#">
+           <form class="form-horizontal" role="form" action="#" id="commentForm">
              {% csrf_token %}
             <fieldset disabled="">
              <div class="form-group">
@@ -49,14 +49,14 @@
              <div class="form-group">
               <label for="realName" style="text-align:left;padding-left: 2em;" class="col-sm-2 control-label">姓名：</label>
               <div class="col-sm-10">
-               <input type="text" class="form-control" id="realName" name="realName" value="{{student.realName}}" />
+               <input type="text" required class="form-control" id="realName" name="realName" value="{{student.realName}}" />
               </div>
              </div>
 
              <div class="form-group">
               <label for="idNumber" style="text-align:left;padding-left: 2em;" class="col-sm-2 control-label">身份证号：</label>
               <div class="col-sm-10">
-               <input type="text" class="form-control" id="idNumber" name="idNumber" value="{{student.idNumber}}" />
+               <input type="text" required class="form-control" id="idNumber" name="idNumber" value="{{student.idNumber}}" />
               </div>
              </div>
              <div class="form-group">
@@ -95,7 +95,7 @@
              <div class="form-group">
               <label style="text-align:left;padding-left: 2em;" for="birth" class="col-sm-2 control-label">出生日期: </label>
               <div class="col-sm-10">
-              <input type="text" class="form-control" id="birth" name="birth" value="{{student.birth}}" />
+              <input type="text" required class="form-control" id="birth" name="birth" value="{{student.birth}}" />
 
               </div>
              </div>
@@ -494,8 +494,8 @@
 
  <script>
       $(document).ready(function(){
+          $("#commentForm").validate();
           $("#student_save").click(function(){
-            document.getElementById("student_save").disabled = true;
             var user_name = $("#account").val();
             var sex = $("#sex").val();
             var idNumber = $("#idNumber").val();
@@ -545,42 +545,7 @@
             var team5= $("#team5").val();
             var forbid = $("#forbid").val();
             var birth = $("#birth").val();
-           /*alert(
-                        'type'+type+
-             'province' +province+
-             'phone' +phone+
-             'email' +email+
-             'address' +address+
-             'dadName' +dadName+
-             'dadPhone' +dadPhone+
-             'momName' +momName+
-             'momPhone' +momPhone+
-             'school' +school+
-             'stu_class' +stu_class+
-             'tutorName' +tutorName+
-             'tutorPhone' +tutorPhone+
-             'majorSelect1' +majorSelect1+
-             'majorSelect2' +majorSelect2+
-             'majorSelect3' +majorSelect3+
-             'majorSelect4' +majorSelect4+
-             'majorSelect5' +majorSelect5+
-             'majorSelect6' +majorSelect6+
-             'testScore1' +testScore1+
-             'testScore2' +testScore2+
-             'testScore3' +testScore3+
-             'rank1' +rank1+
-             'rank11' +rank11+
-             'rank2' +rank2+
-             'rank22' +rank22+
-             'rank3' +rank3+
-             'rank33' +rank33+
-             'estimateScore' +estimateScore+
-             'realScore' +realScore+
-             'admissionStatus' +admissionStatus+
-             'relTeacher'+relTeacher+
-             'relVolunteer' +relVolunteer+
-             'comment'+comment
-                    );*/
+            document.getElementById("student_save").disabled = true;
             $.post("",
                     {
                      'user_name':user_name,
