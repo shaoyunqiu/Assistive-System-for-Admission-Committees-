@@ -895,7 +895,9 @@ def distribute_student(request):
     '''
        GET newteam 新建组
     '''
-    if 'newteam' in request.GET:
+    if ('newteam' in request.GET) and ('newteamname' in request.GET):
+        newteamname = request.GET['newteamname']
+        print newteamname
         back.createGroupbyDict({Group.NAME: 'new name'})
         num = len(back.getGroupbyDict({}))
         return JsonResponse({'teamnum': num})

@@ -20,7 +20,10 @@
               <h1 class="page-header" style="text-align: center">学生分组</h1></div>
           </div>
           <!--row-->
-         <div class="row" id="newteam">
+         <div class="row" id="newteam" style="padding-bottom: 10px;">
+             <div class="col-md-4">
+                 <input type="text" id="newteamname" name="newteamname" style="width: 100%;">
+             </div>
                <div class="col-md-4">
                 <button onclick="newteam()" type="button">新建一组</button>
                    </div>
@@ -101,7 +104,7 @@
       
     }
         function newteam() {
-            data={'newteam':1};
+            data={'newteam':1, 'newteamname':$("#newteamname").val()};
             $.ajax({
                     type: 'GET',
                     url: '/teacher/list_group',
