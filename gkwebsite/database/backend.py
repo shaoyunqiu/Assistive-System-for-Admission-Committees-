@@ -16,6 +16,15 @@ def createNoticebyDict(dict):
         print "create object fail"
         traceback.print_exc()
         return False
+    # modified by shaoyunqiu, cannot set the id and chedk field
+    if Notice.ID in dict.keys():
+        print "cannot set the id, cannot create"
+        return False
+    for field in dict.keys():
+        if field not in Notice.FIELD_LIST:
+            print "illegal, field"
+            return False
+
     try:
         for item in dict.keys():
             setattr(notice, item, dict[item])
@@ -30,9 +39,13 @@ def createNoticebyDict(dict):
     return True
 
 
+# modified by shaoyunqiu, cannot set the id, and check the field is legal.
 def setNotice(notice, field, value):
-    if field == 'id':
+    if field == Notice.ID :
+        print "cannot set the id, fail"
         return False
+    if field not in Notice.FIELD_LIST:
+        print "illegal field"
     try:
         setattr(notice, field, value)
         notice.full_clean()
@@ -42,8 +55,12 @@ def setNotice(notice, field, value):
         print "can not saved!!"
         return False
 
-
+# modified by shaoyunqiu, check the field
 def getNoticebyDict(dic):
+    for field in dic.keys():
+        if field not in Notice.FIELD_LIST:
+            print "illegal field"
+            return []
     return Notice.objects.filter(**dic)
 
 
@@ -60,6 +77,14 @@ def getNoticeAllDictByObject(notice):
 
 # ------------------------------------------------------------------------------------------------
 def createGroupbyDict(dict):
+    # modified by shaoyunqiu to forbiden set the id and illegal field
+    '''if Group.ID in dict.keys():
+        print "cannot set the id, failed"
+        return False
+    for field in dict.keys():
+        if field not in Group.FIELD_LIST:
+            print "illegal field, failed"
+            return False'''
     if 'id' in dict.keys():
         dict.pop('id')
 
@@ -82,10 +107,13 @@ def createGroupbyDict(dict):
     print 'successfully create account'
     return True
 
-
+# modified by shaoyunqiu, cannot set the id, and check the field is legal.
 def setGroup(group, field, value):
-    if field == 'id':
+    if field == Group.ID :
+        print "cannot set the id, fail"
         return False
+    if field not in Group.FIELD_LIST:
+        print "illegal field"
     try:
         setattr(group, field, value)
         group.full_clean()
@@ -97,10 +125,24 @@ def setGroup(group, field, value):
         return False
 
 
+# modified by shaoyunqiu, check the field, the first check is no need.
 def getGroupbyDict(dic):
-    if len(dic.keys()) <= 0:
-        return Group.objects.all()
-    return Group.objects.filter(**dic)
+    '''if len(dic.keys()) <= 0:
+        return Group.objects.all()'''
+    try:
+        for field in dic.keys():
+            if field not in Group.FIELD_LIST:
+                print "illegal key"
+                return []
+    except:
+        print "dict error"
+        return []
+    try:
+        ans = Group.objects.filter(**dic)
+        return ans
+    except:
+        print "failed"
+        return []
 
 
 def getGroupAllDictByObject(group):
@@ -110,13 +152,20 @@ def getGroupAllDictByObject(group):
             # print 'ri ', getattr(group, item)
             dict[item] = getattr(group, item)
         except:
-
             return None
     return dict
 
 
 # ------------------------------------------------------------------------------------------------
 def createTimerbyDict(dict):
+    # modified by shaoyunqiu, cannot set id and illegal field
+    '''if Timer.ID in dict.keys():
+        print "cannot set the id, failed"
+        return False
+    for field in dict.keys():
+        if field not in Timer.FIELD_LIST:
+            print "illegal field, failed"
+            return False'''
     if 'id' in dict.keys():
         dict.pop('id')
     try:
@@ -173,8 +222,13 @@ def getTimerAllDictByObject(timer):
         dict[Timer.VOLUNTEER_DIC] = {}
     return dict
 
+# modified by shaoyunqiu add try except and return value
 def removeTimerByDic(dic):
-    Timer.objects.all().filter(**dic).delete()
+    try:
+        Timer.objects.all().filter(**dic).delete()
+        return True
+    except:
+        return False
 
 
 
@@ -216,8 +270,13 @@ def setWechatURL(wechatURL, field, value):
         return False
 
 
+# add try except and if failed return []
 def getWechatURLbyDict(dic):
-    return WechatURL.objects.filter(**dic)
+    try:
+        we_list = WechatURL.objects.filter(**dic)
+        return we_list
+    except:
+        return []
 
 
 def getWechatURLAllDictByObject(wechatURL):
@@ -230,8 +289,13 @@ def getWechatURLAllDictByObject(wechatURL):
     return dict
 
 
+#modify by shaoyuqniu, try except and bool return value
 def removeWechatURLByDic(dic):
-    WechatURL.objects.all().filter(**dic).delete()
+    try:
+        WechatURL.objects.all().filter(**dic).delete()
+        return True
+    except:
+        return False
 
 
 def date_start_to_end(start, end):
@@ -271,18 +335,6 @@ def getLastOneWechatURL():
     info_dic = getWechatURLAllDictByObject(all_wechat_url[size-1])
     return info_dic
 
-'''
-def getLastTenWechatURL():
-    all_wechat_url = getWechatURLbyDict({})
-    end = len(all_wechat_url)
-    start = len(all_wechat_url) - 10
-    ret_list = []
-    for i in range(start, end):
-        if i >= 0 and i < len(all_wechat_url):
-            info_dic = getWechatURLAllDictByObject(all_wechat_url[i])
-            ret_list.append(info_dic)
-    return ret_list
-'''
 
 # modified by shaoyunqiu
 def getLastTenWechatURL():
