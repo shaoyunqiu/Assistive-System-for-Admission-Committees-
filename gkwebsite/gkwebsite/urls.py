@@ -28,8 +28,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^teacher/', include('teacher.urls')),
 
+    
     #    关联login界面
     #    by byr 161003
+    url(r'^/$', loginViews.login),
     url(r'^login/$', loginViews.login),
     #   login表单检查
     #   by byr 161006
