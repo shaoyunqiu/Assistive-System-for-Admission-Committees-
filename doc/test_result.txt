@@ -6,9 +6,34 @@
 6. database/student_backend.py getStudentEstimateScore_Every, 对keyerror进行判断，确认字典有'score'这个key,已修改。
 7. database/student_backend.py getStudentEstimateScore_Every_no_shenhe, 对keyerror进行判断，已修改
 8. database/student_backend.py getStudentEstimateRank_Every, 加了key的判断，但在排名时有一些不合理的地方，建议修改返回值，返回值还未修改。
+<<<<<<< HEAD
+9. database/backend.py, notice 的id可以人为设定和修改，不合要求，需要修改，测试未能通过。
+(修改，目前是在建立的时候加特判字典里是否设置id,若设置，则不能创立，返回Falsem以及加入field检查。)
+10.datanase/volunteer.py, getVolunteerByField,没有检查键值是否有效，加了checkfield的检查，已修改
+11.datanase/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
+12.database/image_backend.py, removePictureIDByDic(dic)如果有不合法的键值，程序会炸，加上键值的判断，且返回bool值判断是否修改成功。
+13. database/image_backend.py, getPicturebyDict(dic)与12同样的问题，已修改，加上键值的判断。
+14. database/image_backend.py, getPicturebyField(field, argc)与12有同样的问题，已修改
+15. database/image_backedn.py, setPicture, 如果field值不合法也可以修改，同时可以修改ID，目前是在函数里面加了特判，暂时通过测试，不过建议还是在数据库中加入权限设定。
+16. database/register_backend.py, getRegisterCodeByField, 同12, 加了对field合法性的检查，已修改
+17. database/register_backend.py, setReigisterCode, 函数本身有错误，register应该是一个对象而不是列表，否则永远都是会出现error，而无法修改属性值，以修改。
+18. database/register_backend.py, createRegisterCode, 与其相关的函数都没有检查code的唯一性，虽然产生方式随机，但安全起见还是应该先检测唯一性，所以加了是否已存在的判断，已修改。
+19. database/register_backend.py, createNewRegisterCode, 根据上一个函数修改，保证产生的注册码被存入数据库再返回注册码，已修改。
+20. database/register_backend.py, random_str,对输入的length限定在了ascii码范围内，之前不会报错，但貌似是返回空串，观察进行的修改，如果不需要，可删。
+21. database/backend.py, setNotice不能修改ID，也不能设立不存在的field，对程序加了特判，已修改。
+22. database/backend.py, getNoticebyDict(dic)检查dic中的key合法，已修改。
+23. database/backend.py, createGroupbyDict,检查key 合法，同时不能修改id, 已修改。
+24. database/backend.py, setGroup,修改同notice, 已修改。
+25. database/backend.py, getGroupbyDict(dic),根据三胖建议，一开始的特判是没必要的，所以去掉了。
+26. 补充：student_backend.py 和 teacher_backend.py, image_backend.py中加了不能修改id 和 field的检查，之前没有发现，现在统一补上, volteer的create要加范围限定，所以待修改。
 【ok】9. database/backend.py, notice 的id可以人为设定和修改，不合要求，需要修改，测试未能通过。
-【ok】10.datanase/volunteer.py, getVolunteerByField,没有检查键值是否有效，加了checkfield的检查，已修改
-【ok】11.datanase/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
+【ok】10.database/volunteer.py, getVolunteerByField,没有检查键值是否有效，加了checkfield的检查，已修改
+【ok】11.database/volunteer.py, createrVolunteer, 对于整数的索引需要增加范围限定，已经创建时不能自己设定id值，待修改。
+27. database/backend.py removeTimerByDic(),加入了try execpt结构处理异常情况，然后返回true/false的返回值。
+28. 补充，把createstudent和createteacher中的field检查去掉了，去除了遍历的时间，反正不存在的字段不会设立，对其他也没有影响。
+29. database/backend.py getwechaturlbydic, 加入try excpet结构，如果失败返回[], 否则返回一个列表
+30. datanase/backend.py removewechat，加入try excepcy结构，加入bool返回值
+31. database/backend.py getStudentEstimateRank, 修改了返回值，使其语意与getStudentEstimateRank，一样，通过测试。
 
 
 
@@ -18,3 +43,6 @@
 my_field.py中未测的函数：class ListField创建数据库的类不大好测，类中的函数也没测，outputExcels和generateexcels没法测
 volunteer.py 中getVolunteerAllDictByAccount(account)这个函数字典太大，不大好测，请观察是否有问题。
 volunteer.py中的 removeVolunteerAccount未测，需要先测group和timer,之后再测
+register_backend.py中的tmpcreateNewRegisterCode()函数，返回值的随机性太强，没办法测，请直接观察函数调用方面是否会有问题。
+database/backend.py date_start_to_end,check_volunteerID_date， 未测，不理解函数含义
+database/student_backend.py, getStudentGroupIDListString(student), setStudentGroupbyList(student, id_list)没测，不会构造样例数据，手动运行看是否会有问题吧

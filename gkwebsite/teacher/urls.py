@@ -38,4 +38,7 @@ urlpatterns = [
     url(r'^delete_activity/$',views.delete_activity, name='delete_activity'),
     url(r'^wechat_push_stack/$', views.wechat_push_stack, name='wechat_push_stack'),
     url(r'^new_message/$',views.new_message, name='new_message'),
+    url(r'^rank_student/$',views.rank_student, name='rank_student'),
+    url(r'^get_province_list/$',views.get_province_list),
+    url(r'^rank_student_by_province/$',views.rank_student_by_province),
 ]

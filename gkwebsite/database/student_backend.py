@@ -216,7 +216,14 @@ def createStudent(account, dict):
         if dict[Student.ACCOUNT] != account:
             print "args conflict"
             return False
-
+    #modified by shaoyunqiu cannot changeid and ckeck the field
+    if dict.has_key(Student.ID):
+        print "cannot set the id, failed"
+        return False
+    for field in dict.keys():
+        if field not in Student.FIELD_LIST:
+            print "illegal field"
+            return False
     try:
         student = Student.objects.model()
     except:
@@ -261,7 +268,7 @@ def checkStudentPassword(_account,_password):
     #hash function should be applied here
 
 
-def checkStudentOpenID(openid):
+'''def checkStudentOpenID(openid):
     student_list = getStudentbyField(Student.OPEN_ID, openid)
     if len(student_list) <= 0:
         return (False , 'openid not exist')
@@ -271,7 +278,7 @@ def checkStudentOpenID(openid):
         return (True, str(student_id))
     except:
         return (False, 'id not exist')
-
+'''
 
 def checkStudentOpenID(open_id):
     if open_id.strip() == '':
@@ -335,39 +342,6 @@ def setStudentGroupbyList(student, id_list):
     return True
 
 
-'''
-def getStudentEstimateRank(student):
-    print "getStudentEstimateRank"
-    score = int(getStudentEstimateScore(student))
-
-    all_student_estimate_score = [999999]
-    student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
-    no_gufen_number = 0
-    for student in student_list:
-        estimate_dic = eval(getattr(student, Student.ESTIMATE_SCORE))
-        tmp = 0
-        for key in estimate_dic.keys():
-            tmp = tmp + int(estimate_dic[key]['score'])
-        if tmp == 0:
-            no_gufen_number = no_gufen_number + 1
-
-    if score == 0:
-        return str(len(student_list)-no_gufen_number), str(len(student_list)-no_gufen_number)
-    for item in student_list:
-        all_student_estimate_score.append(getStudentEstimateScore(item))
-
-    rank = 1
-    ranked_score_list = sorted(all_student_estimate_score, reverse=True)
-    length = len(ranked_score_list)
-    for i in range(0, length):
-        if score >= ranked_score_list[i]:
-            rank = i
-            break
-
-    return str(rank), str(len(student_list)-no_gufen_number)
-'''
-
-
 # create by shaoyunqiu
 def getStudentEstimateRank(student):
     student_list = []
@@ -394,21 +368,24 @@ def getStudentEstimateRank(student):
             no_gufen_number = no_gufen_number + 1
             continue
 
+# modify by shaoyunqiu ,chenge the return value to match the get_estimate_rank_every
     try:
         myscore = int(getStudentEstimateScore(student))
-        if myscore == 0:
+        '''if myscore == 0:
             return str(all_student-no_gufen_number), str(all_student-no_gufen_number)
-        else:
-            ranked_score_list = sorted(all_estimate_score, reverse=True)
-            length = len(ranked_score_list)
-            for i in range(0, length):
-                if myscore >= ranked_score_list[i]:
-                    rank = i
-                    break
-            # print 'asfd', all_student, no_gufen_number
-            return str(rank), str(all_student-no_gufen_number)
+        else:'''
+        ranked_score_list = sorted(all_estimate_score, reverse=True)
+        length = len(ranked_score_list)
+        rank = 0
+        for item in ranked_score_list:
+            if myscore >= item:
+                break
+            else:
+                rank = rank + 1
+        # print 'asfd', all_student, no_gufen_number
+        return str(rank), str(all_student-no_gufen_number)
     except:
-        return str(all_student-no_gufen_number), str(all_student-no_gufen_number)
+        return str(all_student-no_gufen_number + 1), str(all_student-no_gufen_number)
 
 
 def getStudentEstimateScore_Every(student, test_id):
@@ -463,7 +440,8 @@ def getStudentEstimateRank_Every(student, test_id):
                 continue
             if 'shenhe' not in estimate_dic[test_id].keys():
                 continue
-            all_score_list.append(estimate_dic[test_id]['score'])
+            # modify by shaoyunqiu score must be int
+            all_score_list.append(int(estimate_dic[test_id]['score']))
         except:
             continue
 
@@ -489,7 +467,11 @@ def get_all_student_score_and_rank(province):
             except:
                 score = 0
             name = getattr(student, Student.REAL_NAME)
-            score_tuple_list.append((name, score))
+            sex = getattr(student, Student.SEX)
+            school = getattr(student, Student.SCHOOL)
+            if score <= 0:
+                continue
+            score_tuple_list.append((name, score, sex, school))
         reverse_ret_list = sorted(score_tuple_list, key=lambda student: student[1])
         ret_list = list(reversed(reverse_ret_list))
         return ret_list
@@ -497,6 +479,46 @@ def get_all_student_score_and_rank(province):
         return []
 
 
+
+def output_all_student_info(filename):
+    student_list = getAllInStudent()
+    title_list = [u'姓名', u'性別', u'出生年月', u'省份', u'身份证号', u'类型']
+    name_list = []
+    sex_list = []
+    birth_list = []
+    province_list = []
+    id_number_list = []
+    type_list = []
+
+    for student in student_list:
+        try:
+            name = getattr(student, Student.REAL_NAME, '')
+            sex = SEX_LIST[getattr(student, Student.SEX, 0)]
+            birth = getattr(student, Student.BIRTH).strftime('%Y-%m-%d')
+            province = PROVINCE_LIST[getattr(student, Student.PROVINCE, 0)]
+            id_number = getattr(student, Student.ID_NUMBER, '')
+            type = TYPE_LIST[getattr(student, Student.TYPE, 0)]
+        except:
+            continue
+
+        name_list.append(name)
+        sex_list.append(sex)
+        birth_list.append(birth)
+        province_list.append(province)
+        id_number_list.append(id_number)
+        type_list.append(type)
+
+    ret_list = []
+    ret_list.append(name_list)
+    ret_list.append(sex_list)
+    ret_list.append(birth_list)
+    ret_list.append(province_list)
+    ret_list.append(id_number_list)
+    ret_list.append(type_list)
+
+    if os.path.exists(filename):
+        os.remove(filename)
+    outputXLS('', filename, 'sheet1', ret_list, title_list)
 
 
 

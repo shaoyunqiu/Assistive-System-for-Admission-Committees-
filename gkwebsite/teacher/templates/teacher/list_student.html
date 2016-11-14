@@ -45,7 +45,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class = "col-lg-4 col-md-5">
+                  <div class = "col-lg-5 col-md-6">
                     <button type = "button" class = "btn btn-primary" id="all">显示全部</button>
                     <button type = "button" class = "btn btn-primary" id="check_all">本页全选</button>
                     <button type = "button" class = "btn btn-primary" id="add_to">加入到组...</button>
@@ -75,6 +75,11 @@
                   <div class="col-md-12 col-lg-10" style="text-align:center">
                     <ul class="pagination pagination-lg" id="pages">
                     </ul><br>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-lg-3">
+                    <button type="button" id="export_all" class="btn btn-success" title="导出数据库中全部学生信息">导出全部</button>
                   </div>
                 </div>
               </div>
@@ -173,7 +178,7 @@
           $('#'+tag3).click(function(){
             var parse = this.id.split("_");
             var row = parseInt(parse[0]);
-            alert("Operation:drop at row #"+row);
+            //alert("Operation:drop at row #"+row);
             var abs_pos=row;
             $.post("/backend/remove_student_by_id/", {'id':user_array[abs_pos]['id']}, function(ret){
             //$.post("/teacher/fake_backend/", {'name':namestr}, function(ret){
@@ -301,6 +306,17 @@
           close: function() {
             $("#form")[0].reset();
           }
+        });
+        $('#export_all').click(function(){
+          $.post("/backend/export_all_student/", {}, function(ret){
+            if(ret['success'].charAt(0) == 'N'){
+              $.growl.error({ title: "导出失败", message: ret['message'] });
+            }
+            else{
+              location.href="/teacher/download_xls/file"+ret['filename'];
+            }
+            
+          });
         });
         $('#add_to').click(function(){
           checked_list.splice(0, checked_list.length);
