@@ -1000,4 +1000,9 @@ $.validator.addMethod("legalPassword", function(value, element) {
     return this.optional(element) || (psw.test(value));
 }, "密码允许数字、字母和+-?!@#$%<>,.^&*[]，长度在4-20之间");
 
+$.validator.addMethod("IDChina", function(value, element) {   
+    var ID = /^\d{17}[X0-9]$/;
+    return this.optional(element) || (ID.test(value));
+}, "请输入正确的身份证号");
+
 }));

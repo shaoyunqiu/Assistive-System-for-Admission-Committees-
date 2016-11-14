@@ -11,9 +11,15 @@ from my_field import *
 import ast
 import xlwt
 import os
+import time
+import random, string
 from teacher_backend import *
 from back_test import *
 from volunteer_backend import *
+import image_backend as img_back
+import register_backend as reg_back
+import datetime
+import django.utils.timezone as timezone
 
 setup_test_environment()
 
@@ -240,10 +246,10 @@ class Testcreatestudent(TestCase):
         stu1.save()
 
     def test_create_account_exist(self):
-        self.assertEqual(createStudent("test_stu_1",{}), False)
+        self.assertEqual(createStudent("test_stu_1",{Student.ACCOUNT:"test_stu_1"}), False)
 
     def test_create_account_change_id(self):
-        self.assertEqual(createStudent("test_2", {Student.ID: 1}), False)
+        self.assertEqual(createStudent("test_2", {Student.ID: 1, Student.ACCOUNT:"test_2"}), False)
         self.assertEqual(len(Student.objects.filter(account="test_2")), 0)
 
     def test_create_account_change_account(self):
@@ -258,6 +264,7 @@ class Testcreatestudent(TestCase):
 
     def test_create_wrong_attr(self):
         self.assertEqual(createStudent("test_5", {Student.PROVINCE:"jiang"}), False)
+        self.assertEqual(createStudent("test_6", {"haha":0}), False)
 
 
 class Testcheckstudentpassword(TestCase):
@@ -363,6 +370,9 @@ class Testcreateteacher(TestCase):
 
     def test_create_illegal_key(self):
         self.assertEqual(createTeacher({Teacher.ACCOUNT:"test", "nonexist": 1}), True)
+
+    def test_set_id(self):
+        self.assertEqual(createTeacher({Teacher.ACCOUNT: "test_id", Teacher.ID: 5}), False)
 
 
 class Testcheckteacherpassword(TestCase):
@@ -542,7 +552,7 @@ class Testgetestimate(TestCase):
         stu3 = Student.objects.filter(account="test_stu_3")[0]
         stu4 = Student.objects.filter(account="test_stu_4")[0]
         self.assertEqual(getStudentEstimateRank(stu1), ("2", "2"))
-        self.assertEqual(getStudentEstimateRank(stu2), ("2", "2"))
+        self.assertEqual(getStudentEstimateRank(stu2), ("3", "2"))
         self.assertEqual(getStudentEstimateRank(stu3), ("1", "2"))
         self.assertEqual(getStudentEstimateRank(stu4), ("1", "1"))
 
@@ -574,12 +584,11 @@ class Testgetestimate(TestCase):
         stu3 = Student.objects.filter(account="test_stu_3")[0]
         stu4 = Student.objects.filter(account="test_stu_4")[0]
         self.assertEqual(getStudentEstimateRank_Every(stu1, u'2016_北京_语文'),("1","2"))
-        self.assertEqual(getStudentEstimateRank_Every(stu2, u'2016_北京_数学'),("1","1"))
+        self.assertEqual(getStudentEstimateRank_Every(stu2, u'2016_北京_数学'),("2","1"))
         self.assertEqual(getStudentEstimateRank_Every(stu3, u'2016_北京_数学'), ("1","1"))
         self.assertEqual(getStudentEstimateRank_Every(stu4, u'2016_天津_英语'), ("1", "0"))
 
 
-# unfinished can't pass the test
 class Testnotice(TestCase):
     def setUp(self):
         no1 = Notice.objects.model()
@@ -593,14 +602,38 @@ class Testnotice(TestCase):
         no2.full_clean()
         no2.save()
 
-     #cannot pass the test, need to modify
-    def testcreatenotice(self):
+     #already modified by shaoyunqiu to pass the test
+    def test_createnotice(self):
         self.assertEqual(back.createNoticebyDict({"send":"notice3", "id": 0}), False)
         self.assertEqual(len(Notice.objects.filter(id=0)), 0)
         self.assertEqual(back.createNoticebyDict({"send":"notice4", "receive_stu":"stu1"}), True)
         self.assertEqual(len(Notice.objects.filter(receive_stu="stu1")), 2)
+        self.assertEqual(back.createNoticebyDict({"haha": 0}), False)
+
+    def test_setnotice(self):
+        no_all = Notice.objects.all()
+        self.assertEqual(back.setNotice(no_all[0], Notice.SEND, "change"), True)
+        self.assertEqual(getattr(no_all[0], Notice.SEND, "Error"), "change")
+        self.assertEqual(back.setNotice(no_all[0], Notice.ID, 0), False)
+        self.assertEqual(getattr(no_all[0], Notice.ID, "Error"), 1)
+        self.assertEqual(back.setNotice(no_all[0], "hahaha", 0), False)
+
+    def test_getnoticebydic(self):
+        no_all = Notice.objects.all()
+        self.assertEqual(back.getNoticebyDict({Notice.SEND:"notice1", Notice.RECEIVE_STU:"stu1"})[0], no_all[0])
+        self.assertEqual(len(back.getNoticebyDict({Notice.ID:3})), 0)
+        self.assertEqual(len(back.getNoticebyDict({Notice.SEND:"notice2", Notice.ID:0})), 0)
+        self.assertEqual(len(back.getNoticebyDict({"hehe":0})), 0)
+
+    def test_getnoticeallbyobject(self):
+        no_all = Notice.objects.all()
+        self.assertEqual(back.getNoticeAllDictByObject(no_all[0])[Notice.SEND], "notice1")
+        self.assertEqual(back.getNoticeAllDictByObject(no_all[0])[Notice.ID], 1)
+        self.assertEqual(back.getNoticeAllDictByObject(no_all[0])[Notice.RECEIVE_STU], "stu1")
+        self.assertEqual(back.getNoticeAllDictByObject(None), None)
 
 
+# create vol need to be changed.
 class TestVolBases(TestCase):
     def setUp(self):
         vol1 = Volunteer.objects.model()
@@ -673,10 +706,11 @@ class TestVolBases(TestCase):
     def test_createVolunteer(self):
         self.assertEqual(createVolunteer("test_vol_1",{Volunteer.NATION:10}), False)
         self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ACCOUNT:"vol"}),False)
-        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.NATION:1000}), False)
-        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ID:3}), False)
+        #self.assertEqual(createVolunteer("test_vol_3", {Volunteer.NATION:1000}), True)
+        self.assertEqual(createVolunteer("test_vol_3", {Volunteer.ID:0}), True)
+        self.assertEqual(Volunteer.objects.filter(account="test_vol_3")[0].id, 3)
         # cannot pass the above two tests
-        self.assertEqual(createVolunteer("test_vol_3", {Volunteer.REAL_NAME:"lihy1"}),True)
+        self.assertEqual(createVolunteer("test_vol_4", {Volunteer.REAL_NAME:"lihy1"}),True)
         self.assertEqual(len(Volunteer.objects.filter(realName="lihy1")), 2)
 
 
@@ -685,6 +719,356 @@ class TestVolBases(TestCase):
         self.assertEqual(checkVolunteerPassword("test_vol_1", "mimimi"), (False , 'Password is incorrect'))
         self.assertEqual(checkVolunteerPassword("test", "mima"), (False , 'Account does not exist.'))
         self.assertEqual(checkVolunteerPassword("test", "mima"), (False , 'Account does not exist.'))
+
+
+class TestImageBases(TestCase):
+    def setUp(self):
+        img1 = Picture.objects.model()
+        setattr(img1, Picture.YEAR, 2016)
+        setattr(img1, Picture.PROVINCE, 1)
+        setattr(img1, Picture.CATEGORY, 1)
+        img1.full_clean()
+        img1.save()
+        img2 = Picture.objects.model()
+        setattr(img2, Picture.YEAR, 2015)
+        setattr(img2, Picture.PROVINCE, 1)
+        setattr(img2, Picture.CATEGORY, 1)
+        setattr(img2, Picture.IS_DELEVERED, 1)
+        img2.full_clean()
+        img2.save()
+
+    def test_getallinpicture(self):
+        img = img_back.getAllInPicture()
+        self.assertEqual(len(img), 2)
+
+    def test_deletepictureall(self):
+        img_back.deletePictureAll()
+        img = img_back.getAllInPicture()
+        self.assertEqual(len(img), 0)
+
+    def test_removepictureidbydic(self):
+        ans = img_back.removePictureIDByDic({Picture.YEAR: 2016, Picture.CATEGORY: 1})
+        img1 = Picture.objects.filter(year=2016)
+        self.assertEqual(len(img1), 0)
+        self.assertEqual(ans, True)
+        ans = img_back.removePictureIDByDic({Picture.YEAR:2016})
+        img1 = Picture.objects.filter(year=2016)
+        self.assertEqual(len(img1), 0)
+        self.assertEqual(ans, False)
+        ans = img_back.removePictureIDByDic({Picture.YEAR:2015, Picture.PROVINCE:0})
+        img1 = Picture.objects.filter(year=2015)
+        self.assertEqual(len(img1), 1)
+        self.assertEqual(ans, False)
+        ans = img_back.removePictureIDByDic({Picture.YEAR:2015, "haha":0})
+        img1 = Picture.objects.filter(year=2015)
+        self.assertEqual(len(img1), 1)
+        self.assertEqual(ans, False)
+
+    def test_getpicturebydic(self):
+        img_all = img_back.getAllInPicture()
+        self.assertEqual(img_back.getPicturebyDict({Picture.PROVINCE:1})[0], img_all[0])
+        self.assertEqual(img_back.getPicturebyDict({Picture.PROVINCE: 1})[1], img_all[1])
+        self.assertEqual(len(img_back.getPicturebyDict({Picture.YEAR: 2016, "haha": 0})), 0)
+        self.assertEqual(len(img_back.getPicturebyDict({Picture.YEAR: 2016, Picture.CATEGORY:0})), 0)
+        self.assertEqual(img_back.getPicturebyDict({Picture.YEAR: 2015})[0], img_all[1])
+
+    def test_getalldictbyobject(self):
+        img_all = img_back.getAllInPicture()
+        dict_0 = img_back.getPictureAllDictByObject(img_all[0])
+        dict_1 = img_back.getPictureAllDictByObject(img_all[1])
+        self.assertEqual(dict_0[Picture.YEAR], 2016)
+        self.assertEqual(dict_1[Picture.IS_DELEVERED], 1)
+        for field in Picture.FIELD_LIST:
+            if field in dict_0.keys():
+                self.assertEqual(dict_0[field], getattr(img_all[0], field, "Error"))
+            if field in dict_1.keys():
+                self.assertEqual(dict_1[field], getattr(img_all[1], field, "Error"))
+
+    def test_getpicturebyfield(self):
+        img_all = img_back.getAllInPicture()
+        self.assertEqual(img_back.getPicturebyField(Picture.YEAR, 2016)[0], img_all[0])
+        self.assertEqual(img_back.getPicturebyField(Picture.IS_DELEVERED, 1)[0], img_all[1])
+        self.assertEqual(img_back.getPicturebyField(Picture.PROVINCE, 1)[0], img_all[0])
+        self.assertEqual(img_back.getPicturebyField(Picture.PROVINCE, 1)[1], img_all[1])
+        self.assertEqual(len(img_back.getPicturebyField(Picture.PROVINCE,20)), 0)
+        self.assertEqual(len(img_back.getPicturebyField("hh", 0)), 0)
+
+    def test_setpicture(self):
+        img_all = img_back.getAllInPicture()
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.IS_DELEVERED, 1), True)
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.IS_DELEVERED, "false"), False)
+        self.assertEqual(getattr(img_all[0],Picture.IS_DELEVERED, "Error"), 1)
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.YEAR, 2015), True)
+        self.assertEqual(getattr(img_all[0], Picture.YEAR, "Error"), 2015)
+        self.assertEqual(img_back.setPicture(img_all[0], "hehe", 0), False)
+        self.assertEqual(img_back.setPicture(img_all[0], Picture.ID, 0), False)
+        self.assertEqual(getattr(img_all[0], Picture.ID, "Error"), 1)
+
+    def test_createpicture(self):
+        self.assertEqual(img_back.createPicturebyDict({Picture.YEAR: 2016, Picture.PROVINCE:2}), True)
+        self.assertEqual(len(Picture.objects.filter(year=2016)), 2)
+        self.assertEqual(img_back.createPicturebyDict({Picture.CATEGORY: "Chinese"}), False)
+        self.assertEqual(img_back.createPicturebyDict({"hahah": 0}), False)
+        self.assertEqual(img_back.createPicturebyDict({Picture.ID: 0}), False)
+        self.assertEqual(len(Picture.objects.filter(id=0)), 0)
+
+
+class TestRegisterBases(TestCase):
+    def setUp(self):
+        reg1 = RegisterCode.objects.model()
+        setattr(reg1, RegisterCode.ACCOUNT, "test_reg_1")
+        setattr(reg1, RegisterCode.REGISTER_CODE, "2014011426")
+        setattr(reg1, RegisterCode.STATE, 0)
+        reg1.full_clean()
+        reg1.save()
+        reg2 = RegisterCode.objects.model()
+        setattr(reg2, RegisterCode.ACCOUNT, "test_reg_2")
+        setattr(reg2, RegisterCode.REGISTER_CODE, "2014011425")
+        setattr(reg2, RegisterCode.STATE, 1)
+        reg2.full_clean()
+        reg2.save()
+
+    def test_getallinregestercode(self):
+        tmp_reg = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(tmp_reg), 2)
+        self.assertEqual(getattr(tmp_reg[0], RegisterCode.REGISTER_CODE, "Error"), "2014011426")
+
+    def test_removeregistercode(self):
+        reg_back.removeRegisterCode("2014011426")
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(reg_all), 1)
+        reg_back.removeRegisterCode("test")
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(reg_all), 1)
+
+    def test_deleteregisterall(self):
+        reg_back.deleteRegisterCodeAll()
+        self.assertEqual(len(reg_back.getAllInRegisterCode()), 0)
+
+    def test_getregisterbyfield(self):
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(reg_back.getRegisterCodebyField(RegisterCode.ACCOUNT, "test_reg_1")[0], reg_all[0])
+        self.assertEqual(reg_back.getRegisterCodebyField(RegisterCode.REGISTER_CODE, "2014011425")[0], reg_all[1])
+        self.assertEqual(len(reg_back.getRegisterCodebyField("haha", 0)), 0)
+
+    def test_setRegisterCode(self):
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(reg_back.setRegisterCode("2014011426", RegisterCode.REGISTER_CODE, "2016011426"), False)
+        self.assertEqual(getattr(reg_all[0], RegisterCode.REGISTER_CODE, "Error"), "2014011426")
+        self.assertEqual(reg_back.setRegisterCode("2014011426", RegisterCode.STATE, 1), True)
+        self.assertEqual(getattr(reg_all[0], RegisterCode.STATE, 0), 1)
+        self.assertEqual(reg_back.setRegisterCode("2014011426", "hehe", 0), False)
+
+    def test_isExistregistercode(self):
+        self.assertEqual(reg_back.isExistRegisterCode("2014011426"), True)
+        self.assertEqual(reg_back.isExistRegisterCode("2015011426"), False)
+
+    def test_creatregistercode(self):
+        self.assertEqual(reg_back.createRegisterCode("2011011111"), True)
+        self.assertEqual(len(RegisterCode.objects.filter(registerCode="2011011111")), 1)
+        self.assertEqual(reg_back.createRegisterCode("2014011426"), False)
+        self.assertEqual(len(RegisterCode.objects.filter(registerCode="2014011426")), 1)
+
+    def test_createnewregistercode(self):
+        code1 = reg_back.createNewRegisterCode()
+        code2 = reg_back.createNewRegisterCode()
+        reg_all = reg_back.getAllInRegisterCode()
+        self.assertEqual(len(reg_all), 4)
+        self.assertEqual(getattr(reg_all[2], RegisterCode.REGISTER_CODE, "error"), code1)
+        self.assertEqual(getattr(reg_all[3], RegisterCode.REGISTER_CODE, "error"), code2)
+
+    def test_randomstr(self):
+        str1 = reg_back.random_str(-100)
+        print str1
+        str2 = reg_back.random_str(100)
+        print str2
+
+
+class TestGroupBases(TestCase):
+    def setUp(self):
+        g1 = Group.objects.model()
+        setattr(g1, Group.NAME, "group1")
+        setattr(g1, Group.STU_LIST, "lihy1")
+        setattr(g1, Group.VOL_LIST, "houyf1")
+        g1.full_clean()
+        g1.save()
+        g2 = Group.objects.model()
+        setattr(g2, Group.NAME, "group2")
+        g2.full_clean()
+        g2.save()
+
+    def test_creategroup(self):
+        self.assertEqual(back.createGroupbyDict({Group.NAME: "group3", Group.STU_LIST: "lihy2"}), True)
+        self.assertEqual(len(Group.objects.all()), 3)
+        self.assertEqual(back.createGroupbyDict({Group.ID: 0, Group.NAME: "group0"}), False)
+        self.assertEqual(back.createGroupbyDict({Group.NAME: "group4", "hahah": 0}), False)
+        self.assertEqual(len(Group.objects.all()), 3)
+
+    def test_setgroup(self):
+        g_all = Group.objects.all()
+        self.assertEqual(back.setGroup(g_all[0], Group.NAME, "change"), True)
+        self.assertEqual(getattr(g_all[0], Group.NAME, "Error"), "change")
+        self.assertEqual(back.setGroup(g_all[0], Group.ID, 0), False)
+        self.assertEqual(getattr(g_all[0], Group.ID, "Error"), 1)
+        self.assertEqual(back.setGroup(g_all[0], "haha", 0), False)
+        self.assertEqual(back.setGroup(None, Group.NAME, "name"), False)
+
+    def test_getgroupbydic(self):
+        g_all = Group.objects.all()
+        self.assertEqual(len(back.getGroupbyDict({})), 2)
+        self.assertEqual(len(back.getGroupbyDict({Group.NAME:"group1", Group.STU_LIST:"stu1"})), 0)
+        self.assertEqual(back.getGroupbyDict({Group.NAME: "group1", Group.VOL_LIST: "houyf1"})[0], g_all[0])
+        self.assertEqual(len(back.getGroupbyDict({"haha": 0})), 0)
+
+    def test_getgroupalldicbyobject(self):
+        g_all = Group.objects.all()
+        dic = back.getGroupAllDictByObject(g_all[0])
+        self.assertEqual(dic[Group.NAME], "group1")
+        self.assertEqual(dic[Group.VOL_LIST], "houyf1")
+        self.assertEqual(back.getGroupAllDictByObject(None), None)
+
+
+class TestTimerBases(TestCase):
+    def setUp(self):
+        time1 = Timer.objects.model()
+        setattr(time1, Timer.NAME, "test_timer_1")
+        setattr(time1, Timer.TEACHER_ID, 1)
+        time1.full_clean()
+        time1.save()
+        time2 = Timer.objects.model()
+        setattr(time2, Timer.NAME, "test_timer_2")
+        setattr(time2, Timer.START_TIME, datetime.date.today())
+        time2.full_clean()
+        time2.save()
+
+    def test_createtimer(self):
+        self.assertEqual(back.createTimerbyDict({Timer.NAME: "test_timer_3", Timer.TEACHER_ID: 1}), True)
+        self.assertEqual(back.createTimerbyDict({Timer.NAME: "test_timer_4", Timer.ID: 0}), True)
+        self.assertEqual(back.createTimerbyDict({}), True)
+        self.assertEqual(back.createTimerbyDict({Timer.NAME: "test_timer_5", "hh": 0}), True)
+        all_time = Timer.objects.all()
+        self.assertEqual(len(all_time), 6)
+        self.assertEqual(getattr(all_time[3], Timer.ID, "error"), 4)
+
+    def test_settimer(self):
+        all_time = Timer.objects.all()
+        self.assertEqual(back.setTimer(all_time[0], Timer.NAME, "test"), True)
+        self.assertEqual(back.setTimer(all_time[0], Timer.ID, 0), False)
+        self.assertEqual(getattr(all_time[0], Timer.NAME, "error"), "test")
+        self.assertEqual(getattr(all_time[0], Timer.ID, "error"), 1)
+        self.assertEqual(back.setTimer(all_time[0], "hh", 0), True)
+        self.assertEqual(getattr(all_time[0], "hh", "error"), "error")
+
+    def test_gettimerallbydict(self):
+        all_time = Timer.objects.all()
+        dict1 = back.getTimerAllDictByObject(all_time[0])
+        self.assertEqual(dict1[Timer.NAME], "test_timer_1")
+        self.assertEqual(dict1[Timer.TEACHER_ID], 1)
+
+    def test_removebydic(self):
+        self.assertEqual(back.removeTimerByDic({Timer.NAME: "test_timer_1", Timer.ID: 1}), True)
+        self.assertEqual(back.removeTimerByDic({Timer.ID: 2, "hh": 0}), False)
+        all_time = Timer.objects.all()
+        self.assertEqual(len(all_time), 1)
+
+
+class TestWechatBases(TestCase):
+    def setUp(self):
+        we1 = WechatURL.objects.model()
+        setattr(we1, WechatURL.TITLE, "test_wechat_1")
+        setattr(we1, WechatURL.PICTURE_URL, "http://")
+        we1.full_clean()
+        we1.save()
+        we2 = WechatURL.objects.model()
+        setattr(we2, WechatURL.TITLE, "test_wechat_2")
+        setattr(we2, WechatURL.MESSAGE_URL, "http://")
+        we2.full_clean()
+        we2.save()
+
+    def test_creaturl(self):
+        self.assertEqual(back.createWechatURLbyDict({WechatURL.TITLE: "test_wechat_3", WechatURL.PICTURE_URL: "http://3"}), True)
+        self.assertEqual(back.createWechatURLbyDict({WechatURL.TITLE: "test_wechat_4", WechatURL.ID: 0}), True)
+        self.assertEqual(back.createWechatURLbyDict({}), True)
+        self.assertEqual(back.createWechatURLbyDict({WechatURL.TITLE: "test_wechat_5", "hh": 0}), True)
+        all_wechat = WechatURL.objects.all()
+        self.assertEqual(len(all_wechat), 6)
+        self.assertEqual(getattr(all_wechat[3], WechatURL.ID, "error"), 4)
+
+    def test_setwechat(self):
+        all_wechat = WechatURL.objects.all()
+        self.assertEqual(back.setWechatURL(all_wechat[0], WechatURL.TITLE, "test"), True)
+        self.assertEqual(back.setWechatURL(all_wechat[0], WechatURL.MESSAGE_URL, "text"), True)
+        self.assertEqual(back.setWechatURL(all_wechat[0], WechatURL.ID, 0), False)
+        self.assertEqual(back.setWechatURL(all_wechat[0], "hehe", 0), True)
+        self.assertEqual(getattr(all_wechat[0], WechatURL.MESSAGE_URL, "error"), "text")
+        self.assertEqual(getattr(all_wechat[0], WechatURL.ID, "error"), 1)
+        self.assertEqual(getattr(all_wechat[0], "hehe", "error"), "error")
+
+    def test_getwechatbydic(self):
+        all_wechat = WechatURL.objects.all()
+        self.assertEqual(back.getWechatURLbyDict({WechatURL.TITLE: "test_wechat_1", WechatURL.ID: 1})[0], all_wechat[0])
+        self.assertEqual(len(back.getWechatURLbyDict({WechatURL.ID: 2, WechatURL.TITLE: "test"})), 0)
+        self.assertEqual(len(back.getWechatURLbyDict({WechatURL.ID: 3})), 0)
+
+    def test_getwechatdicbyobject(self):
+        all_wechat = WechatURL.objects.all()
+        dict1 = back.getWechatURLAllDictByObject(all_wechat[0])
+        self.assertEqual(dict1[WechatURL.TITLE], "test_wechat_1")
+        self.assertEqual(dict1[WechatURL.ID], 1)
+
+    def test_removebydic(self):
+        self.assertEqual(back.removeWechatURLByDic({WechatURL.TITLE: "test_wechat_1", WechatURL.ID: 1}), True)
+        self.assertEqual(back.removeWechatURLByDic({WechatURL.ID: 2, WechatURL.TEXT: "hahah"}), True)
+        self.assertEqual(back.removeWechatURLByDic({WechatURL.ID: 2, "hh": 0}), False)
+        self.assertEqual(len(WechatURL.objects.all()), 1)
+
+    def test_getlastonewechaturl(self):
+        all_wechat = WechatURL.objects.all()
+        dict1 = back.getLastOneWechatURL()
+        self.assertEqual(dict1[WechatURL.TITLE], "test_wechat_2")
+
+    def test_getlastetnwechat(self):
+        all_wechat = WechatURL.objects.all()
+        dict_list = back.getLastTenWechatURL()
+        self.assertEqual(len(dict_list), 2)
+        self.assertEqual(dict_list[0][WechatURL.TITLE], "test_wechat_2")
+        self.assertEqual(dict_list[1][WechatURL.TITLE], "test_wechat_1")
+
+
+class Testcheckopenid(TestCase):
+    def setUp(self):
+        stu1 = Student.objects.model()
+        setattr(stu1, Student.OPEN_ID, "aaaa")
+        setattr(stu1, Student.ACCOUNT, "test_stu_1")
+        stu1.full_clean()
+        stu1.save()
+        stu2 = Student.objects.model()
+        setattr(stu2, Student.OPEN_ID, "bbbb")
+        setattr(stu2, Student.ACCOUNT, "test_stu_2")
+        stu2.full_clean()
+        stu2.save()
+
+    def test_checkopenid(self):
+        self.assertEqual(checkStudentOpenID(""), (False, 'OPEN ID IS EMPTY', 'no '))
+        self.assertEqual(checkStudentOpenID("aaaa"), (True, "1", "test_stu_1"))
+        self.assertEqual(checkStudentOpenID("test"), (False, 'not exist this open id', 'no'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
