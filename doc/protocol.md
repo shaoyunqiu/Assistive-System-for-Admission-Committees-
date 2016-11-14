@@ -845,7 +845,7 @@
 		<td>导出所有学生信息到excel文件</td>
 		<td>database/views.py</td>
 		<td>request 空</td>
-		<td>JsonResponse(dict) dict = {'filename':}</td>
+		<td>JsonResponse(dict) dict = {'filename':} 'success', 'message' 键与之前用法相同</td>
 		<td>POST</td>
 		<td>段清楠</td>
 		<td></td>
