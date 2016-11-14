@@ -30,6 +30,78 @@ def search_student(request):
 
 
 @ensure_csrf_cookie
+def rank_student(request):
+    id = request.session.get('teacher_id', -1)
+    if id == -1:
+        return HttpResponse('Access denied')
+    t = get_template('teacher/rank_student.html')
+    c = {'id': id, 'n_item': 15}
+    return HttpResponse(t.render(c))
+
+
+@ensure_csrf_cookie
+def get_province_list(request):
+    '''
+        后端在此处返回全部的省的信息
+        列表第一个要为空字符串
+    '''
+    id = request.session.get('teacher_id', -1)
+    if id == -1:
+        return HttpResponse('Access denied')
+    dic = {'province_list':['','北京','四川','延庆']}
+    dic = {'province_list': PROVINCE_LIST}
+    return JsonResponse(dic)
+
+
+@ensure_csrf_cookie
+def rank_student_by_province(request):
+    '''
+        后端在此处返回排好序的学生列表信息
+        下面的pro变量为省的序号（字符串），已保证不为0，且与get_province_list函数给前段的列表对应
+    '''
+    if request.is_ajax() and request.method == 'POST':
+        t = []
+        pro = int(request.POST.get('province'))
+        stu_info_list = stu.get_all_student_score_and_rank(pro)
+        length = len(stu_info_list)
+        for i in range(0,length):
+            item = stu_info_list[i]
+
+
+            if i > 0 and str(item[1]) == t[i-1]['socre']:
+                # print 'asdfasdf------'
+                rank = t[i-1]['rank']
+            else:
+                rank = str(i+1)
+
+
+            dic = {'name': item[0],
+                   'gender': SEX_LIST[item[2]],
+                   'source': PROVINCE_LIST[pro],
+                   'school': item[3],
+                   'socre': str(item[1]),
+                   'rank': '%s'%(rank)
+                   }
+            t.append(dic)
+
+
+        # for item in range(50):
+        #     dic = {'name': '1',
+        #            'gender': '2',
+        #            'source': '3',
+        #            'school': '4',
+        #            'socre': '5',
+        #            'rank': '6'
+        #            }
+        #     t.append(dic)
+
+        stu.output_all_student_info('hahah.xls')
+        return JsonResponse(t, safe=False)  # must use 'safe=False'
+    else:
+        return HttpResponse('Access denied.')
+
+
+@ensure_csrf_cookie
 def manage_activity(request):
     id = request.session.get('teacher_id', -1)
     if id == -1:
@@ -182,11 +254,27 @@ def student_info_edit(request):
             'team4': info_dict.get('team4', '1'),
             'team5': info_dict.get('team5', '1'),
             'forbid': int(info_dict.get('forbid', '1')),
+
+            'name': info_dict.get('realName'),
+            'id_card': info_dict.get('idNumber'),
+            'sex': int(info_dict.get('sex')),
+            'nation': int(info_dict.get('nation')),
+            'birth':info_dict.get('birth'),
         }
 
         if info_dict.get('newcomment', '110').strip() == '':
             dic['comment'] = info_dict.get('comment', '110')
 
+        stu.setStudent(account, Student.REAL_NAME, dic['name'])
+        stu.setStudent(account, Student.ID_NUMBER, dic['id_card'])
+        stu.setStudent(account, Student.SEX, dic['sex'])
+        stu.setStudent(account, Student.NATION, dic['nation'])
+        try:
+            tmp = dic['birth'].split('-')
+            stu.setStudent(account, Student.BIRTH, datetime.date(int(tmp[0]),int(tmp[1]),int(tmp[2])))
+        except:
+            pass
+        print 'asdfasdfasdf-----'
         stu.setStudent(account, Student.TYPE, dic['type'])
         stu.setStudent(account, Student.PROVINCE, dic['province'])
         stu.setStudent(account, Student.PHONE, dic['phone'])

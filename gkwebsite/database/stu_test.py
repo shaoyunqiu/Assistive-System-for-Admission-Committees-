@@ -9,38 +9,31 @@ def addStudent():
     dict = {Student.PASSWORD: 'mima',
  Student.REAL_NAME: u'田旭',
  Student.BIRTH: datetime.datetime(1999, 8, 2),
- Student.ID_NUMBER: '500234199908020014',
+ Student.ID_NUMBER: '',
  'type': 1,
  'sex': 1,
  'nation': 1,
- 'school': u'重庆市第一中学',
- 'classroom': u'高三5班',
- 'address': u'重庆市江北区',
- 'phone': '18290278879',
- 'email': '1053872424@qq.com',
- 'dadPhone': '13436230900',
- 'momPhone': '13983542066',
-
+ 'school': u'',
+ 'classroom': u'',
+ 'address': u'',
+ 'phone': '',
+ 'email': '',
+ 'dadPhone': '',
+ 'momPhone': '',
  'tutorName': u'',
  'tutorPhone': '',
  'province': 1,
- 'major': [1, 2, 3],
- 'testScoreList': [100, 99, 98],
-
- 'rankList': [1, 2, 3],
- 'sumNumberList': [1000, 2000, 3000],
-
- 'realScore': 687,
+ 'major': [],
+ 'testScoreList': [],
+ 'rankList': [],
+ 'sumNumberList': [],
+ 'realScore': 0,
  'admissionStatus': ' ',
-
-
- # 'registerCode': ,
- 'teacherList': ['houyf1', 'houyf2'],
- 'volunteerAccountList': ['vol1', 'vol2'],
+ 'teacherList': [],
+ 'volunteerAccountList': [],
  'isLogedin': 0,
-
  'isRegistered': 0,
- 'groupList': [1, 2],
+ 'groupList': [],
  }
     file = open("students_data.txt")
     i = 0
@@ -56,6 +49,29 @@ def addStudent():
         else:
             dict['sex'] = 2
         dict[Student.ID_NUMBER] = lineslist[9].decode('gbk')
+        year = int(lineslist[6][0:4])
+        month = int(lineslist[6][4:6])
+        day = int(lineslist[6][6:8])
+        #print year, month, day, lineslist[1], lineslist[6]
+        dict[Student.BIRTH] = datetime.datetime(year, month, day)
+        nation = 0
+        province = 0
+        cnt = 0
+        for it in PROVINCE_LIST:
+            if (lineslist[8].decode('gbk') == it):
+                province = cnt
+                #print province
+                break
+            cnt = cnt + 1
+        cnt = 0
+        for it in NATION_LIST:
+            if (lineslist[7].decode('gbk') == it):
+                nation = cnt
+                #print nation
+                break
+            cnt = cnt + 1
+        dict['nation'] = nation
+        dict['province'] = province
         dict['email'] = lineslist[12].decode('gbk')
         dict['school'] = lineslist[14].decode('gbk')
         dict['phone'] = lineslist[15].decode('gbk')
@@ -64,7 +80,7 @@ def addStudent():
         dict[Student.MOM_NAME] = lineslist[19].decode('gbk')
         dict['momPhone'] = lineslist[20].decode('gbk')
 
-        createStudent('lihy_xjj_%s'%str(i), dict)
+        createStudent('student_%s'%str(i), dict)
         i = i + 1
 
 def testCreateStudentNew():
