@@ -491,10 +491,122 @@
 
 
 {% include 'teacher/include/jsinclude.html' %}
+<script src="{% static 'jquery-validation-1.14.0/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/additional-methods.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/localization/messages_zh.js' %}"></script>
 
  <script>
       $(document).ready(function(){
-          $("#commentForm").validate();
+          $("#commentForm").validate({
+          rules:{
+              idNumber:{
+                  IDChina:true,
+              },
+            email:{
+              email:true,
+              required:true
+            },
+              phone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+              momPhone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+              dadPhone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+              tutorPhone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+
+              testScore1:{
+                  number:true,
+              },
+              testScore2:{
+                  number:true,
+              },
+              testScore3:{
+                  number:true,
+              },
+              realScore:{
+                  number:true,
+              },
+
+              rank1:{
+                  digits:true,
+              },
+              rank11:{
+                  digits:true,
+              },
+                            rank2:{
+                  digits:true,
+              },
+              rank22:{
+                  digits:true,
+              },
+              rank3:{
+                  digits:true,
+              },
+              rank33:{
+                  digits:true,
+              },
+
+
+
+          },
+          messages:{
+              testScore1:"<span style=\"color:red\">请输入有效的分数</span>",
+              testScore2:"<span style=\"color:red\">请输入有效的分数</span>",
+              testScore3:"<span style=\"color:red\">请输入有效的分数</span>",
+              realScore:"<span style=\"color:red\">请输入有效的分数</span>",
+              rank1:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank11:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank2:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank22:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank3:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank33:"<span style=\"color:red\">请输入有效的排名</span>",
+
+            phone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+             momPhone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+              dadPhone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+              tutorPhone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+            email:{
+                email:"<span style=\"color:red\">请输入有效的邮箱</span>",
+            }
+          }
+        });
+
+
+        $.validator.addMethod("IDChina", function(value, element){
+
+            var ID = /^\d{17}[X0-9]$/;
+            return this.optional(element) || (ID.test(value));
+        }, "<span style=\"color:red\">请输入有效的身份证号</span>");
+
           $("#student_save").click(function(){
             var user_name = $("#account").val();
             var sex = $("#sex").val();
