@@ -39,8 +39,8 @@ def gnrtyzm(width, height):
     # 注意这个是windows系统下默认的字体，其他系统自己找
     '''
     # 导入字体
-    #font_addr = os.path.join(settings.STATIC_ROOT, 'assets/fonts/mnfqh.otf')
-    font_addr = os.getcwd()+'/login/static/assets/fonts/mnfqh.otf'
+    font_addr = os.path.join(settings.STATIC_ROOT, 'assets/fonts/mnfqh.otf')
+    #font_addr = os.getcwd()+'/login/static/assets/fonts/mnfqh.otf'
     font = ImageFont.truetype(font_addr, size)
     print font_addr
     '''
