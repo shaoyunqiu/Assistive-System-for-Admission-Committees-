@@ -313,7 +313,7 @@
 		<td>给学生分组</td>
 		<td>teacher/views.py</td>
 		<td>request(GET)
-		如果是新建分组的请求含有newteam关键字，如果是删除请求含有id和teamid关键字，如果没有关键字就是查询所有分组情况
+		如果是新建分组的请求含有newteam和newteamname关键字,创建一个名字为newteamname的新组，如果是删除请求含有id和teamid关键字，如果没有关键字就是查询所有分组情况
 		</td>
 		<td>
 		新建分组返回组号，查询所有返回所有信息，删除返回是否成功，都存在字典中
