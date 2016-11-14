@@ -309,7 +309,13 @@
         });
         $('#export_all').click(function(){
           $.post("/backend/export_all_student/", {}, function(ret){
-            location.href="/teacher/download_xls/file"+ret['filename'];
+            if(ret['success'].charAt(0) == 'N'){
+              $.growl.error({ title: "导出失败", message: ret['message'] });
+            }
+            else{
+              location.href="/teacher/download_xls/file"+ret['filename'];
+            }
+            
           });
         });
         $('#add_to').click(function(){
