@@ -126,10 +126,12 @@
             $('#'+withdraw_tag).click(function(){
               var parse = this.id.split("_");
               var row = parseInt(parse[0]);
+              $.growl.notice({ title: "开始撤回", message: '' });
               $.post("/backend/withdraw_test/", {'id':testlist[row]['id']}, function(ret){
                 if(ret['success'].charAt(0) == 'N'){
                   $.growl.error({ title: "撤回失败", message: ret['message'] });
                 }
+                $.growl.notice({ title: "撤回成功", message: '' });
                 refresh();
               });
             });

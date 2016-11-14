@@ -229,6 +229,19 @@ def export_registration_code(request):
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
+        
+def export_all_student(request):
+    # by dqn14 Nov 14, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        teacher = request.session.get('teacher_id', -1)
+        if teacher == -1:
+            return JsonResponse({'success':'N'})
+        filename = "a.xls"
+        t = {'filename': filename}
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
 
 
 def get_teacher_alert_by_id(request):
@@ -352,7 +365,6 @@ def withdraw_test(request):
         t['message'] = 'ok'
 
 
-
         student_list = stu.getAllInStudent()
         for student in student_list:
             account = getattr(student, Student.ACCOUNT)
@@ -360,7 +372,6 @@ def withdraw_test(request):
             if id in estimate.keys():
                 estimate.pop(id)
             stu.setStudent(account, Student.ESTIMATE_SCORE, estimate)
-
 
         return JsonResponse(t)
     else:

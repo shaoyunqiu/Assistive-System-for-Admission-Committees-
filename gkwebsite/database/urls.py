@@ -35,4 +35,5 @@ urlpatterns = [
     url(r'^push_stack/$', views.push_stack, name="push_stack"),
     url(r'^get_grouplist/$', views.get_grouplist, name="get_grouplist"),
     url(r'^new_message_to_group/$', views.new_message_to_group, name="new_message_to_group"),
+    url(r'^export_all_student/$', views.export_all_student, name="export_all_student"),
 	]
