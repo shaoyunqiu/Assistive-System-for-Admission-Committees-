@@ -28,7 +28,7 @@
         <div class="panel-body">
          <div class="row">
           <div class="col-md-offset-3 col-md-6">
-           <form class="form-horizontal" role="form" action="#">
+           <form class="form-horizontal" role="form" action="#" id="commentForm">
              {% csrf_token %}
             <fieldset disabled="">
              <div class="form-group">
@@ -187,7 +187,7 @@
             <div class="form-group">
              <label style="text-align:left;padding-left: 2em;" for="phone" class="col-sm-2 control-label">手机：</label>
              <div class="col-sm-10">
-              <input type="number" class="form-control" name="phone" id="phone" value="{{dict.phone}}" />
+              <input type="text"class="form-control" name="phone" id="phone" value="{{dict.phone}}" />
              </div>
             </div>
             <div class="form-group">
@@ -199,7 +199,7 @@
                <div class="form-group">
              <label style="text-align:left;padding-left: 2em;" for="qqn" class="col-sm-2 control-label">QQ：</label>
              <div class="col-sm-10">
-              <input type="number" class="form-control" id="qqn" name="qqn" value="{{dict.qqn}}" />
+              <input type="text" class="form-control" id="qqn" name="qqn" value="{{dict.qqn}}" />
              </div>
             </div>
                <div class="form-group">
@@ -233,7 +233,7 @@
 
             <div class="form-group">
              <div class="col-sm-offset-2 col-sm-10">
-              <button id="volunteer_save" type="button" class="btn btn-primary" value="save">保存</button>
+              <button id="volunteer_save" type="submit" class="btn btn-primary" value="save">保存</button>
              </div>
             </div>
            </form>
@@ -250,9 +250,58 @@
    <!-- /. PAGE WRAPPER  -->
   </div>
   <!-- /. WRAPPER  --> {% include 'teacher/include/jsinclude.html' %}
+<script src="{% static 'jquery-validation-1.14.0/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/additional-methods.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/localization/messages_zh.js' %}"></script>
+
  <script>
       $(document).ready(function(){
-          $("#volunteer_save").click(function(){
+          $("#commentForm").validate({
+              submitHandler:volunteerSave,
+          rules:{
+            email:{
+              email:true,
+              required:true
+            },
+              phone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+             qqn:{
+                  digits:true,
+                  minlength:6,
+                  maxlength:11,
+              },
+
+
+
+          },
+          messages:{
+
+
+            phone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+             qqn:{
+              minlength:"<span style=\"color:red\">请输入有效的QQ号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的QQ号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的QQ号码</span>",
+            },
+            email:{
+                email:"<span style=\"color:red\">请输入有效的邮箱</span>",
+            }
+          }
+        });
+
+
+
+
+
+
+         /* $("#volunteer_save").click(function(){
                           document.getElementById("volunteer_save").disabled = true;
 
             var volunteer_name = $("#volunteer_name").val();
@@ -281,8 +330,41 @@
                                     document.getElementById("volunteer_save").disabled = false;
 
             })
-          });
+          });*/
       });
   </script>
+ <script>
+     function volunteerSave(){
+
+
+            var volunteer_name = $("#volunteer_name").val();
+            var email = $("#email").val();
+            var phone = $("#phone").val();
+            var qqn = $("#qqn").val();
+            var weichat = $("#weichat").val();
+            var describe = $("#comment").val();
+            var forbid = $("#forbid").val();
+         document.getElementById("volunteer_save").disabled = true;
+            $.post("",
+                    {
+                        'user_name':volunteer_name,
+                        'email':email,
+
+                        'phone':phone,
+                        'qqn':qqn,
+                        'weichat':weichat,
+                        'comment':describe,
+                        'forbid' :forbid,
+                    },
+                    function(profileDict){
+
+                        for (key_i in profileDict)
+                            $("#"+key_i).val(profileDict[key_i]);
+                        alert("修改成功");
+                                    document.getElementById("volunteer_save").disabled = false;
+
+            })
+     }
+ </script>
  </body>
 </html>
