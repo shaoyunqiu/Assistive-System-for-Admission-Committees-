@@ -178,7 +178,7 @@
           $('#'+tag3).click(function(){
             var parse = this.id.split("_");
             var row = parseInt(parse[0]);
-            alert("Operation:drop at row #"+row);
+            //alert("Operation:drop at row #"+row);
             var abs_pos=row;
             $.post("/backend/remove_student_by_id/", {'id':user_array[abs_pos]['id']}, function(ret){
             //$.post("/teacher/fake_backend/", {'name':namestr}, function(ret){
@@ -308,7 +308,9 @@
           }
         });
         $('#export_all').click(function(){
-          
+          $.post("/backend/export_all_student/", {}, function(ret){
+            location.href="/teacher/download_xls/file"+ret['filename'];
+          });
         });
         $('#add_to').click(function(){
           checked_list.splice(0, checked_list.length);
