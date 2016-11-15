@@ -9,9 +9,9 @@ import register_backend as reg
 import image_backend as pic
 from my_field import *
 import backend as back
-
+import os
 from teacher.views import generateTimerXLS
-
+from django.conf import settings
 
 # Create your views here.
 
@@ -223,9 +223,9 @@ def export_registration_code(request):
         if teacher == -1:
             return JsonResponse({'success':'N'})
         length = request.POST.get('length')
-        filename = "%s_teacher.xls" % teacher
-        t = {'filename': filename}
-        print 'file xls ' + filename
+        file_name = "%s_teacher_registercode.xls" % teacher
+        t = {'filename': file_name}
+        print 'file xls ' + file_name
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -237,8 +237,21 @@ def export_all_student(request):
         teacher = request.session.get('teacher_id', -1)
         if teacher == -1:
             return JsonResponse({'success':'N'})
-        filename = "a.xls"
-        t = {'filename': filename}
+
+        file_name = '%s_teacher_all_student.xls'%(teacher)
+        # file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
+        file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
+
+        t={}
+        try:
+            print "start-----"
+            stu.output_all_student_info(file_path)
+            print "end-----"
+            t['success'] = 'Y'
+        except:
+            t['success'] = 'N'
+        t['filename']= file_name
+
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -654,12 +667,17 @@ def export_activity_result(request):
             teacher_id = int(request.session.get('teacher_id', -1))
             if teacher_id == -1:
                 return JsonResponse({'success':'N'})
-            filename = 'files/%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
+
+            # path = os.path.join(settings.MEDIA_ROOT, 'files/')
+            path = os.getcwd() + '/files/'
+            filename = path + '%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
+            print '-----',filename
             generateTimerXLS(id, teacher_id, filename)
             t = {}
             t['success']='Y'
             t['filename']='%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
         except:
+            t = {}
             t['success'] = 'N'
             t['filename'] = 'no'
         return JsonResponse(t)

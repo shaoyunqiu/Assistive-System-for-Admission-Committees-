@@ -95,7 +95,7 @@ def rank_student_by_province(request):
         #            }
         #     t.append(dic)
 
-        stu.output_all_student_info('hahah.xls')
+
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
@@ -674,7 +674,11 @@ def profile(request):
 '''
 def handle_uploaded_img(imgFile, year, province, subject, number, score, category):
     imgName = imgFile.name
+
     path = 'student/static/images/'+ get_picture_path(year, province, subject, number, score, category)
+
+
+
     dst = open(path, 'wb')
     dst.write(imgFile.read())
 
@@ -984,7 +988,10 @@ def distribute_student(request):
 
 
 def download_xls(request, file_name):
-    file_path = os.path.join('files', file_name)
+
+    # file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
+    file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
+
     response = FileResponse(open(file_path, 'rb'))
     response['Content-type'] = 'application/vnd.ms-excel'
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)

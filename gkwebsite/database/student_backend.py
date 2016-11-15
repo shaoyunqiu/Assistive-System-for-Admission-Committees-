@@ -483,12 +483,20 @@ def get_all_student_score_and_rank(province):
 def output_all_student_info(filename):
     student_list = getAllInStudent()
     title_list = [u'姓名', u'性別', u'出生年月', u'省份', u'身份证号', u'类型']
+
     name_list = []
     sex_list = []
     birth_list = []
     province_list = []
     id_number_list = []
     type_list = []
+    nation_list = []
+    school_list = []
+    classroom_list = []
+    address_list = []
+
+    phone_list = []
+    email_list = []
 
     for student in student_list:
         try:
