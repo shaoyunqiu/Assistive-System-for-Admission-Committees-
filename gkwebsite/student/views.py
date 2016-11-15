@@ -139,7 +139,11 @@ def check_identity(identity):
             weichatopenid(request)
             identity_dic = {'student': 'student_id', 'volunteer': '', 'teacher': ''}
             print identity, request.session.get(identity_dic[identity])
-            id = int(request.session.get(identity_dic[identity]))
+            try:
+                id = int(request.session.get(identity_dic[identity]))
+            except:
+                print '-9090909090------'
+                return redirect('/login/')
             if identity == 'student':
                 if stu.is_have_permission(id) == False:
                     return back_to_profile(request, id)
