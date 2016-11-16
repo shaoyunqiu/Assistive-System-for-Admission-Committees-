@@ -675,9 +675,9 @@ def profile(request):
 def handle_uploaded_img(imgFile, year, province, subject, number, score, category):
     imgName = imgFile.name
 
-    path = 'student/static/images/'+ get_picture_path(year, province, subject, number, score, category)
+    path = os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + get_picture_path(year, province, subject, number, score, category)
 
-
+    print 'upload', path
 
     dst = open(path, 'wb')
     dst.write(imgFile.read())

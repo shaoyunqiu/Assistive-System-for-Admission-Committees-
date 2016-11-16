@@ -250,7 +250,7 @@ def export_all_student(request):
             t['success'] = 'Y'
         except:
             t['success'] = 'N'
-        t['filename']= file_name
+        t['filename'] = file_name
 
         return JsonResponse(t)
     else:
@@ -668,8 +668,8 @@ def export_activity_result(request):
             if teacher_id == -1:
                 return JsonResponse({'success':'N'})
 
-            # path = os.path.join(settings.MEDIA_ROOT, 'files/')
-            path = os.getcwd() + '/files/'
+            path = os.path.join(settings.MEDIA_ROOT, 'files/')
+            # path = os.getcwd() + '/files/'
             filename = path + '%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
             print '-----',filename
             generateTimerXLS(id, teacher_id, filename)

@@ -22,6 +22,8 @@ import time
 import pytz
 import wechat.wechat_api as we
 import database.student_backend as student_backend
+from django.conf import settings
+import os
 # Create your views here.
 
 
@@ -595,8 +597,11 @@ def get_problem_info(request):
     dic = {'problem_num': pic_dic[Picture.NUMBER],
        'problem_type': CATEGORY_LIST[pic_dic[Picture.CATEGORY]],
        'problem_full_score': pic_dic[Picture.SCORE],
-       'problem_pic': '/static/images/'+pic_name}
 
+
+       'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images/') +pic_name}
+
+    print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + pic_name
     return JsonResponse({'problem_info': dic})
 
 @csrf_exempt
