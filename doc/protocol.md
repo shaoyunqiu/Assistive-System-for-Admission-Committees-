@@ -851,6 +851,17 @@
 		<td></td>
 	</tr>
 	
+	<tr>
+		<td>get_student_alert</td>
+		<td>获取学生的提醒</td>
+		<td>database/views.py</td>
+		<td>request 空</td>
+		<td>JsonResponse(dict) 键：message</td>
+		<td>POST</td>
+		<td>段清楠</td>
+		<td></td>
+	</tr>
+	
 		<tr>
 		<td>a</td>
 		<td>b</td>
