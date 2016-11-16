@@ -360,7 +360,7 @@ def getStudentEstimateRank(student):
         try:
             tmp_score = int(getStudentEstimateScore(stu))
             # print "tmp_score = " + str(tmp_score)
-            if tmp_score == 0:
+            if tmp_score < 0:
                 no_gufen_number = no_gufen_number + 1
             else:
                 all_estimate_score.append(tmp_score)
@@ -395,7 +395,7 @@ def getStudentEstimateScore_Every(student, test_id):
     except:
         tmp_dic = eval('{}')
 
-    score = 0
+    score = -1
     if test_id not in tmp_dic.keys():
         return str(score)
     # shaoyunqiu
@@ -412,7 +412,7 @@ def getStudentEstimateScore_Every_no_shenhe(student, test_id):
     except:
         tmp_dic = eval('{}')
 
-    score = 0
+    score = -1
     if test_id not in tmp_dic.keys():
         return str(score)
     # shaoyunqiu
@@ -424,9 +424,6 @@ def getStudentEstimateScore_Every_no_shenhe(student, test_id):
 
 def getStudentEstimateRank_Every(student, test_id):
     score = int(getStudentEstimateScore_Every(student, test_id))
-
-
-
     try:
         student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
     except:
@@ -469,7 +466,7 @@ def get_all_student_score_and_rank(province):
             name = getattr(student, Student.REAL_NAME)
             sex = getattr(student, Student.SEX)
             school = getattr(student, Student.SCHOOL)
-            if score <= 0:
+            if score < 0:
                 continue
             score_tuple_list.append((name, score, sex, school))
         reverse_ret_list = sorted(score_tuple_list, key=lambda student: student[1])
@@ -483,12 +480,20 @@ def get_all_student_score_and_rank(province):
 def output_all_student_info(filename):
     student_list = getAllInStudent()
     title_list = [u'姓名', u'性別', u'出生年月', u'省份', u'身份证号', u'类型']
+
     name_list = []
     sex_list = []
     birth_list = []
     province_list = []
     id_number_list = []
     type_list = []
+    nation_list = []
+    school_list = []
+    classroom_list = []
+    address_list = []
+
+    phone_list = []
+    email_list = []
 
     for student in student_list:
         try:

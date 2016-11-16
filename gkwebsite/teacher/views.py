@@ -6,7 +6,7 @@ from django.template import Context
 
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 import os
 import database.teacher_backend as tch
 import database.student_backend as stu
@@ -83,19 +83,6 @@ def rank_student_by_province(request):
                    'rank': '%s'%(rank)
                    }
             t.append(dic)
-
-
-        # for item in range(50):
-        #     dic = {'name': '1',
-        #            'gender': '2',
-        #            'source': '3',
-        #            'school': '4',
-        #            'socre': '5',
-        #            'rank': '6'
-        #            }
-        #     t.append(dic)
-
-        stu.output_all_student_info('hahah.xls')
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
@@ -674,7 +661,11 @@ def profile(request):
 '''
 def handle_uploaded_img(imgFile, year, province, subject, number, score, category):
     imgName = imgFile.name
-    path = 'student/static/images/'+ get_picture_path(year, province, subject, number, score, category)
+
+    path = os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + get_picture_path(year, province, subject, number, score, category)
+
+    print 'upload', path
+
     dst = open(path, 'wb')
     dst.write(imgFile.read())
 
@@ -895,7 +886,9 @@ def distribute_student(request):
     '''
        GET newteam 新建组
     '''
-    if 'newteam' in request.GET:
+    if ('newteam' in request.GET) and ('newteamname' in request.GET):
+        newteamname = request.GET['newteamname']
+        print newteamname
         back.createGroupbyDict({Group.NAME: 'new name'})
         num = len(back.getGroupbyDict({}))
         return JsonResponse({'teamnum': num})
@@ -982,7 +975,10 @@ def distribute_student(request):
 
 
 def download_xls(request, file_name):
-    file_path = os.path.join('files', file_name)
+
+    file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
+    # file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
+    print 'os path', file_path
     response = FileResponse(open(file_path, 'rb'))
     response['Content-type'] = 'application/vnd.ms-excel'
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)

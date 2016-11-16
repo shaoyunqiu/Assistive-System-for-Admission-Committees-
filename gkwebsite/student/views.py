@@ -22,6 +22,10 @@ import time
 import pytz
 import wechat.wechat_api as we
 import database.student_backend as student_backend
+from django.conf import settings
+import os
+
+from mobi.decorators import detect_mobile
 # Create your views here.
 
 
@@ -139,7 +143,11 @@ def check_identity(identity):
             weichatopenid(request)
             identity_dic = {'student': 'student_id', 'volunteer': '', 'teacher': ''}
             print identity, request.session.get(identity_dic[identity])
-            id = int(request.session.get(identity_dic[identity]))
+            try:
+                id = int(request.session.get(identity_dic[identity]))
+            except:
+                print '-9090909090------'
+                return redirect('/login/')
             if identity == 'student':
                 if stu.is_have_permission(id) == False:
                     return back_to_profile(request, id)
@@ -154,11 +162,15 @@ def check_identity(identity):
 
 
 @check_identity('student')
+@detect_mobile
 def student_center(request):
-    print 'zhuye#$%#$'
     t = get_template('student/center.html')
     id = request.session.get('student_id', -1)
     c = {'id': id}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
     return HttpResponse(t.render(c))
 
 @check_identity('student')
@@ -509,7 +521,7 @@ def get_all_tests(request):
         shenhe_fen = int(stu.getStudentEstimateScore_Every(student, item))
         no_shenhe_fen = int(stu.getStudentEstimateScore_Every_no_shenhe(student, item))
         print shenhe_fen, no_shenhe_fen
-        if no_shenhe_fen == 0:
+        if no_shenhe_fen == -1:
             done_list.append(u'未测试')
         else:
             if shenhe_fen != no_shenhe_fen:
@@ -591,8 +603,11 @@ def get_problem_info(request):
     dic = {'problem_num': pic_dic[Picture.NUMBER],
        'problem_type': CATEGORY_LIST[pic_dic[Picture.CATEGORY]],
        'problem_full_score': pic_dic[Picture.SCORE],
-       'problem_pic': '/static/images/'+pic_name}
 
+    'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images') +pic_name}
+    # 'problem_pic': '/static/images/' + pic_name}
+
+    print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + pic_name
     return JsonResponse({'problem_info': dic})
 
 @csrf_exempt
