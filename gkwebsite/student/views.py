@@ -515,7 +515,7 @@ def get_all_tests(request):
         shenhe_fen = int(stu.getStudentEstimateScore_Every(student, item))
         no_shenhe_fen = int(stu.getStudentEstimateScore_Every_no_shenhe(student, item))
         print shenhe_fen, no_shenhe_fen
-        if no_shenhe_fen == 0:
+        if no_shenhe_fen == -1:
             done_list.append(u'未测试')
         else:
             if shenhe_fen != no_shenhe_fen:
@@ -598,8 +598,8 @@ def get_problem_info(request):
        'problem_type': CATEGORY_LIST[pic_dic[Picture.CATEGORY]],
        'problem_full_score': pic_dic[Picture.SCORE],
 
-
-       'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images/') +pic_name}
+    'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images') +pic_name}
+    # 'problem_pic': '/static/images/' + pic_name}
 
     print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + pic_name
     return JsonResponse({'problem_info': dic})

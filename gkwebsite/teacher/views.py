@@ -83,19 +83,6 @@ def rank_student_by_province(request):
                    'rank': '%s'%(rank)
                    }
             t.append(dic)
-
-
-        # for item in range(50):
-        #     dic = {'name': '1',
-        #            'gender': '2',
-        #            'source': '3',
-        #            'school': '4',
-        #            'socre': '5',
-        #            'rank': '6'
-        #            }
-        #     t.append(dic)
-
-
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')

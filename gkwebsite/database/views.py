@@ -378,7 +378,8 @@ def withdraw_test(request):
         t['message'] = 'ok'
 
 
-        student_list = stu.getAllInStudent()
+        # student_list = stu.getAllInStudent()
+        student_list = stu.getStudentbyField(Student.PROVINCE, province)
         for student in student_list:
             account = getattr(student, Student.ACCOUNT)
             estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
