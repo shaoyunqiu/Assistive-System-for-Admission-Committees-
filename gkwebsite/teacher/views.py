@@ -25,7 +25,7 @@ def search_student(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/list_student.html')
-    c = {'id': id, 'n_item': 15}
+    c = {'n_item': 15}
     return HttpResponse(t.render(c))
 
 
@@ -35,7 +35,7 @@ def rank_student(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/rank_student.html')
-    c = {'id': id, 'n_item': 15}
+    c = {'n_item': 15}
     return HttpResponse(t.render(c))
 
 
@@ -94,7 +94,7 @@ def manage_activity(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/manage_activity.html')
-    c = {'id': id, 'n_item': 15}
+    c = {'n_item': 15}
     return HttpResponse(t.render(c))
 
 
@@ -157,7 +157,7 @@ def search_volunteer(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/list_volunteer.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 def wechat_push_stack(request):
@@ -165,7 +165,7 @@ def wechat_push_stack(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/wechat_push_stack.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 @csrf_exempt
@@ -519,7 +519,7 @@ def add_student(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/add_student.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 
@@ -552,7 +552,7 @@ def dashboard(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/dashboard.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 
@@ -561,7 +561,7 @@ def add_volunteer(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/add_volunteer.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 
@@ -989,7 +989,7 @@ def view_message(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/view_message.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 def manage_test(request):
@@ -997,7 +997,7 @@ def manage_test(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/view_test.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 def edit_test(request, test_id):
@@ -1005,7 +1005,7 @@ def edit_test(request, test_id):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/edit_test.html')
-    c = {'id': id, 'test_id': test_id}
+    c = {'test_id': test_id}
     return HttpResponse(t.render(c))
 
 @csrf_exempt
@@ -1158,5 +1158,5 @@ def new_message(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/edit_message.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))

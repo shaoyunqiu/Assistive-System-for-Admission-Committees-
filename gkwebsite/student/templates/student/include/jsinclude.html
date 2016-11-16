@@ -44,7 +44,6 @@
             }
         }
     });
-    var session_id = {{id}};
     var message_num;
     $.post("/backend/get_student_alert/", {}, function(ret){
       message_num = parseInt(ret["message"]);

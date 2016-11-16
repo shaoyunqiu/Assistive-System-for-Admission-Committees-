@@ -234,7 +234,7 @@ def student_admit(request):
         info = u'暂时还没有您的录取信息，请耐心等待老师添加'
     admition = info
     return render(request,
-                  'student/admit.html', {'admition': admition, 'id':id})
+                  'student/admit.html', {'admition': admition})
 
 @check_identity('student')
 def student_contact(request):
@@ -267,7 +267,7 @@ def student_contact(request):
         address = tmp_dic[Volunteer.ADDRESS]
         dict = {'profession':u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
         list.append(dict)
-    return render(request,'student/contact.html', {'dict': list, 'id':id})
+    return render(request,'student/contact.html', {'dict': list})
 
 
 def student_logout(request):
@@ -470,7 +470,7 @@ def profile(request):
         print 'jiao baba', dic
         if 'auth' in request.GET:
             dic['auth'] = '0'
-        return render(request, 'student/userinfo.html', {'dict': dic, 'id':id})
+        return render(request, 'student/userinfo.html', {'dict': dic})
 
 
 
