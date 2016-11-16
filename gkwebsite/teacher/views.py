@@ -915,9 +915,9 @@ def distribute_student(request):
     if ('newteam' in request.GET) and ('newteamname' in request.GET):
         newteamname = request.GET['newteamname']
         print newteamname
-        back.createGroupbyDict({Group.NAME: 'new name'})
+        back.createGroupbyDict({Group.NAME: newteamname})
         num = len(back.getGroupbyDict({}))
-        return JsonResponse({'teamnum': num})
+        return JsonResponse({'teamnum': str(num) + ' ' + newteamname})
     '''
     GET id teamid 删除
     '''
@@ -957,6 +957,9 @@ def distribute_student(request):
             team = {}
             team['teamleader'] = str(group_dic[Group.ID])
             team['teamname'] = str(group_dic[Group.NAME])
+
+            team['teamleader'] = str(group_dic[Group.ID]) + ' ' + str(group_dic[Group.NAME])
+
             team['volunteer'] = {}
             team['student'] = {}
 
