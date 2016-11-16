@@ -19,8 +19,19 @@ from database.models import *
 from database.my_field import *
 
 
+def check_identity():
+    def decorator(func):
+        def wrapper(request, *args, **kw):
+            if str(request.session.get('teacher_id', -1)) == '-1':
+                return redirect('/login/')
+            return func(request, *args, **kw)
+        return wrapper
+    return decorator
+
+
 @ensure_csrf_cookie
 def search_student(request):
+
     id = request.session.get('teacher_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
@@ -583,6 +594,7 @@ def dashboard(request):
 
 
 def add_volunteer(request):
+
     id = request.session.get('teacher_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
@@ -596,13 +608,15 @@ def add_volunteer(request):
 		by byr 161012
 '''
 # @csrf_protect
+@check_identity()
 @csrf_exempt
 def profile(request):
     if request.method == 'POST':
         '''
             后端需要在这里改代码，保存传进来的数据到数据库，并返回正确的dict
         '''
-        print request.POST
+        # if str(request.session.get('teacher_id',-1)) == '-1':
+        #     return redirect('/login/')
         flag = False
         if 'password' not in request.POST.keys():
             flag = False
@@ -637,9 +651,10 @@ def profile(request):
         #   dosomething()
         # by dqn14 2016/11/1
 
+
         id = (int)(request.session.get('teacher_id'))
         account = tch.idToAccountTeacher(id)
-
+        print 'laoshi ', id
         if not tch.setTeacher(account, Teacher.REAL_NAME, teacher_name):
             return JsonResponse({'success': 'N', 'message': 'real name missing'})
         if not tch.setTeacher(account, Teacher.PHONE, phone):
@@ -662,7 +677,10 @@ def profile(request):
         '''
             后端需要在这里改代码，从数据库读取正确的dict，并返回
         '''
-        id = (str)(request.session.get('teacher_id'))
+        # if str(request.session.get('teacher_id',-1)) == '-1':
+        #     return redirect('/login/')
+
+        id = (str)(request.session.get('teacher_id',-1))
         account = tch.idToAccountTeacher(id)
         teacher = tch.getTeacherAll(account)
         dict = {
@@ -701,6 +719,7 @@ def handle_uploaded_img(imgFile, year, province, subject, number, score, categor
 		by byr 161016
 '''
 @csrf_exempt
+@check_identity()
 def upload(request):
     if request.method == 'GET':
         id = request.GET.get('test_id')
@@ -908,6 +927,7 @@ def volunteer_info_edit(request):
 		老师给学生分组
 		by byr 161017
 '''
+@check_identity()
 def distribute_student(request):
     '''
        GET newteam 新建组
@@ -1038,6 +1058,7 @@ def edit_test(request, test_id):
     return HttpResponse(t.render(c))
 
 @csrf_exempt
+@check_identity()
 def checkscore(request):
     '''
 

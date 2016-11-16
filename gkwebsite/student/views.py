@@ -79,6 +79,8 @@ def back_to_profile(request, id):
         'estimateScore': getStudentEstimateScore(stu.getStudentAll(account)),
         'estimateRank': str(rank) + '/' + str(tmp)
     }
+    if dic['estimateScore'] == '-1':
+        dic['estimateScore'] = ' '
     group_list = stu.getStudentGroupIDListString(student).split(' ')
     for i in range(1, 6):
         if i < len(group_list):
@@ -450,6 +452,8 @@ def profile(request):
             'estimateScore': getStudentEstimateScore(stu.getStudentAll(account)),
             'estimateRank': str(rank)+'/'+str(tmp)
         }
+        if dic['estimateScore'] == '-1':
+            dic['estimateScore'] = u'还没有估分啊亲'
         group_list = stu.getStudentGroupIDListString(student).split(' ')
         for i in range(1, 6):
             if i < len(group_list):
@@ -597,7 +601,7 @@ def get_problem_info(request):
        'problem_type': CATEGORY_LIST[pic_dic[Picture.CATEGORY]],
        'problem_full_score': pic_dic[Picture.SCORE],
 
-    # 'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images') +pic_name}
+    # 'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images/') +pic_name}
     'problem_pic': '/static/images/' + pic_name}
 
     print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static_img/images/') + pic_name
