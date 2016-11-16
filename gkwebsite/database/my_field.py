@@ -119,7 +119,7 @@ def outputXLS(path, filename, sheet, list, _titleList):
     return True
 
 
-def generateExcel(request,id, path, filename, sheet, list, _titleList):
+def generateExcel(request, id, path, filename, sheet, list, _titleList):
     file_name = "%s_teacher_registercode.xls" % id
 
     file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))

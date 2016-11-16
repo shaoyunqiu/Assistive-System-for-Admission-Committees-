@@ -147,9 +147,9 @@ def getStudentAllDictByAccount(account):
     major_int_list = dict[Student.MAJOR]
     for i in range(0, 10):
         major_int_list.append(0)
-        dict[Student.TEST_SCORE_LIST].append(0)
-        dict[Student.RANK_LIST].append(0)
-        dict[Student.SUM_NUMBER_LIST].append(0)
+        dict[Student.TEST_SCORE_LIST].append(-1)
+        dict[Student.RANK_LIST].append(-1)
+        dict[Student.SUM_NUMBER_LIST].append(-1)
     dict[Volunteer.MAJOR] = []
     for item in major_int_list:
         numitem = (int)(item)

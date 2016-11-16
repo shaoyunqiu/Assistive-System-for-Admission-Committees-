@@ -340,17 +340,6 @@ def profile(request):
             'majorSelect5': int(info_dict.get('majorSelect5')),
             'majorSelect6': int(info_dict.get('majorSelect6')),
 
-            # 'testScore1': int(info_dict.get('testScore1')),
-            # 'testScore2': int(info_dict.get('testScore2')),
-            # 'testScore3': int(info_dict.get('testScore3')),
-
-            # 'rank1': int(info_dict.get('rank1')),
-            # 'rank11': int(info_dict.get('rank11')),
-            # 'rank2': int(info_dict.get('rank2')),
-            # 'rank22': int(info_dict.get('rank22')),
-            # 'rank3': int(info_dict.get('rank3')),
-            # 'rank33': int(info_dict.get('rank33')),
-
             'realScore': int(info_dict.get('realScore')),
             # 'relTeacher': info_dict.get('relTeacher'),
             'comment': info_dict.get('comment'),
@@ -598,8 +587,8 @@ def get_problem_info(request):
        'problem_type': CATEGORY_LIST[pic_dic[Picture.CATEGORY]],
        'problem_full_score': pic_dic[Picture.SCORE],
 
-    'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images') +pic_name}
-    # 'problem_pic': '/static/images/' + pic_name}
+    # 'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images') +pic_name}
+    'problem_pic': '/static/images/' + pic_name}
 
     print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + pic_name
     return JsonResponse({'problem_info': dic})

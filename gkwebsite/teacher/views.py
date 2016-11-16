@@ -182,24 +182,25 @@ def student_info_edit(request):
                 info_dict['majorSelect' + str(i)] = '0'
         for i in range(1, 4):
             if info_dict['testScore' + str(i)].strip() == '':
-                info_dict['testScore' + str(i)] = '0'
+                info_dict['testScore' + str(i)] = '-1'
         for i in range(1, 4):
             if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
+                info_dict['rank' + str(i)] = '-1'
         for i in range(1, 4):
             if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
+                info_dict['rank' + str(i)] = '-1'
         for i in range(1, 4):
             if info_dict['rank' + str(i) + str(i)].strip() == '':
-                info_dict['rank' + str(i) + str(i)] = '0'
+                info_dict['rank' + str(i) + str(i)] = '-1'
         if info_dict['estimateScore'].strip() == '':
             info_dict['estimateScore'] = '0'
         if info_dict['realScore'].strip() == '':
             info_dict['realScore'] = '0'
-        if info_dict['admissionStatus'].strip() == '':
-            info_dict['admissionStatus'] = '0'
+        # if info_dict['admissionStatus'].strip() == '':
+        #     info_dict['admissionStatus'] = '0'
 
         print info_dict
+        print 'kexuanze', info_dict['admissionStatus']
         dic = {
             'type': int(info_dict.get('type', '110')),
             'province': int(info_dict.get('province', '110')),
@@ -312,7 +313,7 @@ def student_info_edit(request):
         for key in request.POST.copy().keys():
             ret_dic[key] = request.POST.copy().get(key)
         ret_dic['comment'] = dic['comment']
-
+        print 'finish-------------------'
         return JsonResponse(ret_dic)
     else:
         '''
@@ -367,6 +368,19 @@ def student_info_edit(request):
             Student.DAD_NAME: stu_dic[Student.DAD_NAME],
             Student.DUIYING_TEACHER: stu_dic[Student.DUIYING_TEACHER],
         }
+
+        if dic[Student.ESTIMATE_SCORE] == '-1':
+            dic[Student.ESTIMATE_SCORE] = ' '
+        for i in range(0,len(dic[Student.TEST_SCORE_LIST])):
+            if dic[Student.TEST_SCORE_LIST][i] == -1 or dic[Student.TEST_SCORE_LIST][i] == '-1':
+                dic[Student.TEST_SCORE_LIST][i] = ''
+        for i in range(0,len(dic[Student.RANK_LIST])):
+            if dic[Student.RANK_LIST][i] == -1 or dic[Student.RANK_LIST][i] == '-1':
+                dic[Student.RANK_LIST][i] = ''
+        for i in range(0,len(dic[Student.SUM_NUMBER_LIST])):
+            if dic[Student.SUM_NUMBER_LIST][i] == -1 or dic[Student.SUM_NUMBER_LIST][i] == '-1':
+                dic[Student.SUM_NUMBER_LIST][i] = ''
+        # print '9090909090()()', dic[Student.TEST_SCORE_LIST]
 
         group_list = stu.getStudentGroupIDListString(student).split(' ')
         if '' in group_list:
@@ -491,6 +505,18 @@ def student_info_show(request):
         Student.DAD_NAME: stu_dic[Student.DAD_NAME],
         Student.DUIYING_TEACHER: stu_dic[Student.DUIYING_TEACHER],
     }
+
+    if dic[Student.ESTIMATE_SCORE] == '-1':
+        dic[Student.ESTIMATE_SCORE] = ' '
+    for i in range(0, len(dic[Student.TEST_SCORE_LIST])):
+        if dic[Student.TEST_SCORE_LIST][i] == -1 or dic[Student.TEST_SCORE_LIST][i] == '-1':
+            dic[Student.TEST_SCORE_LIST][i] = ''
+    for i in range(0, len(dic[Student.RANK_LIST])):
+        if dic[Student.RANK_LIST][i] == -1 or dic[Student.RANK_LIST][i] == '-1':
+            dic[Student.RANK_LIST][i] = ''
+    for i in range(0, len(dic[Student.SUM_NUMBER_LIST])):
+        if dic[Student.SUM_NUMBER_LIST][i] == -1 or dic[Student.SUM_NUMBER_LIST][i] == '-1':
+            dic[Student.SUM_NUMBER_LIST][i] = ''
 
     group_list = stu.getStudentGroupIDListString(student).split(' ')
     if '' in group_list:
