@@ -114,6 +114,7 @@ def outputXLS(path, filename, sheet, list, _titleList):
     for i in range(0, len(mylist)):
         for j in range(0, len(mylist[i])):
             sh.write(j + 1, i, mylist[i][j])
+    print 'woca ', filename
     book.save(filename)
     return True
 

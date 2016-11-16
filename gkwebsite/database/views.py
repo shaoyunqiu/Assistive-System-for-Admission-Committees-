@@ -239,12 +239,12 @@ def export_all_student(request):
             return JsonResponse({'success':'N'})
 
         file_name = '%s_teacher_all_student.xls'%(teacher)
-        # file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
-        file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
+        file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
+        # file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
 
         t={}
         try:
-            print "start-----"
+            print "start-----", file_path
             stu.output_all_student_info(file_path)
             print "end-----"
             t['success'] = 'Y'

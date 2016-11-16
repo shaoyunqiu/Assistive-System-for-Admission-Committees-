@@ -6,7 +6,7 @@ from django.template import Context
 
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 import os
 import database.teacher_backend as tch
 import database.student_backend as stu
@@ -989,9 +989,9 @@ def distribute_student(request):
 
 def download_xls(request, file_name):
 
-    # file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
-    file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
-
+    file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
+    # file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
+    print 'os path', file_path
     response = FileResponse(open(file_path, 'rb'))
     response['Content-type'] = 'application/vnd.ms-excel'
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)

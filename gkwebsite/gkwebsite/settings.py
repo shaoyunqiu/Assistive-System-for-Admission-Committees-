@@ -137,7 +137,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "gkwebsite")
 
 
 TIME_ZONE = 'Asia/Shanghai'
