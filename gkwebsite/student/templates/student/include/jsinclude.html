@@ -45,5 +45,14 @@
         }
     });
     var session_id = {{id}};
+    var message_num;
+    $.post("/backend/get_student_alert/", {}, function(ret){
+      message_num = parseInt(ret["message"]);
+      //score_num = parseInt(ret["score"]);
+      $('#message_text').empty();
+      $('#message_text').append("您有"+message_num+"条未读消息");
+      //$('#score_text').empty();
+      //$('#score_text').append(score_num+"个新的估分结果");
+    });
   });
   </script>
