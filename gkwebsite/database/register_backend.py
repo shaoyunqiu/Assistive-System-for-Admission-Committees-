@@ -62,9 +62,15 @@ def isExistRegisterCode(code):
 def tmpcreateNewRegisterCode():
     code = ''
     code = code + time.strftime('%Y', time.localtime(time.time()))
+    code = code + '-'
+    code = code + 'GKZS' + '-'
     code = code + str(str(len(getAllInRegisterCode())).zfill(7))
-    code = code + random_str(9)
-    return code
+    code = code + random_str(5)
+    ret = code[:-8] + '-' + code[-8:-4] + '-' + code[-4:]
+
+    ret = ret.replace('O', '0')
+    ret = ret.replace('o','0')
+    return ret
 
 def createRegisterCode(code):
     obj = RegisterCode.objects.model()
@@ -91,6 +97,7 @@ def createNewRegisterCode():
 
     # 将生成的code加入数据库
     # modified by shaoyunqiu, to confirm the registercode have been add to database successfully
+    # checked by lihy
     while(True):
         flag = createRegisterCode(code)
         if flag == True:
