@@ -22,6 +22,8 @@ import time
 import pytz
 import wechat.wechat_api as we
 import database.student_backend as student_backend
+
+from mobi.decorators import detect_mobile
 # Create your views here.
 
 
@@ -158,11 +160,15 @@ def check_identity(identity):
 
 
 @check_identity('student')
+@detect_mobile
 def student_center(request):
-    print 'zhuye#$%#$'
     t = get_template('student/center.html')
     id = request.session.get('student_id', -1)
     c = {'id': id}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
     return HttpResponse(t.render(c))
 
 @check_identity('student')
