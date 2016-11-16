@@ -8,8 +8,11 @@ from PIL import ImageDraw
 from PIL import ImageFont
 # 导入StringIO模块
 from StringIO import StringIO
-
+from django.contrib.staticfiles.templatetags.staticfiles import static
 import os
+
+from django.conf import settings
+
 
 def gnrtyzm(width, height):
     # 验证码中的字符长度
@@ -36,14 +39,17 @@ def gnrtyzm(width, height):
     # 注意这个是windows系统下默认的字体，其他系统自己找
     '''
     # 导入字体
-    font = ImageFont.truetype(os.getcwd()+'/login/static/assets/fonts/mnfqh.otf', size)
+    #font_addr = os.path.join(settings.STATIC_ROOT, 'assets/fonts/mnfqh.otf')
+    font_addr = os.getcwd()+'/login/static/assets/fonts/mnfqh.otf'
+    font = ImageFont.truetype(font_addr, size)
+    print font_addr
     '''
     # 用到了`ImageDraw 的 Draw 函数
     # 有且只有一个参数，就是之前创建的画布
     '''
     # 创建画笔
     draw = ImageDraw.Draw(img)
-    text = '235679AKMNWXYZ'
+    text = '23457'
     yzmString = ''
     for i in range(wordsCount):
         textColor = (randint(0, 160), randint(0, 160), randint(0, 160))

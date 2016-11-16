@@ -102,12 +102,14 @@
   <script src="{% static 'jquery-validation-1.14.0/dist/localization/messages_zh.js' %}"></script>
   <script>
       function save(){
+
         var teacher_name = $("#teacher_name").val();
         var email = $("#email").val();
         var work_address = $("#work_address").val();
         var password = $("#password1").val();
         var phone = $("#phone").val();
         var describe = $("#describe").val();
+       document.getElementById("teacher_save").disabled = true;
         if(password.length>0){
           $.post("",
             {
@@ -119,6 +121,7 @@
                 'describe':describe,
             },
             function(ret){
+             document.getElementById("teacher_save").disabled = false;
               if(ret['success'].charAt(0)=='N'){
                 $.growl.error({ title: "修改信息失败", message: ret['message'] });
               }
@@ -140,6 +143,7 @@
                 'describe':describe,
             },
             function(ret){
+             document.getElementById("teacher_save").disabled = false;
               if(ret['success'].charAt(0)=='N'){
                 $.growl.error({ title: "修改信息失败", message: ret['message'] });
               }

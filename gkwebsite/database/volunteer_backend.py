@@ -64,6 +64,17 @@ def deleteVolunteerAll():
     getAllInVolunteer().delete()
 
 
+def is_have_permission(_id):
+    if type(_id) == str:
+        _id = int(_id)
+    account = idToAccountVolunteer(_id)
+    ret = getVolunteer(account, Volunteer.QUANXIAN)
+    if ret == 1:
+        return True
+    else:
+        return False
+
+
 def idToAccountVolunteer(id):
     '''
 
@@ -92,8 +103,24 @@ def accountToIDVolunteer(account):
     return (str)(getVolunteer(account, 'id'))
 
 def removeVolunteerAccount(_account):
-    getAllInVolunteer().filter(account= _account).delete()
 
+    vol_id = str(accountToIDVolunteer(_account))
+    group_list = back.getGroupbyDict({})
+    for group in group_list:
+        vol_list = getattr(group, Group.VOL_LIST).split('_')
+        if vol_id in vol_list:
+            vol_list.remove(vol_id)
+        if '' in vol_list:
+            vol_list.remove('')
+        back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
+
+    timer_list = back.getTimerbyDict({})
+    for timer in timer_list:
+        timer_dic = eval(getattr(timer, Timer.VOLUNTEER_DIC, '{}'))
+        if vol_id in timer_dic.keys():
+            timer_dic.pop(vol_id)
+        back.setTimer(timer, Timer.VOLUNTEER_DIC, timer_dic)
+    getAllInVolunteer().filter(account=_account).delete()
 
 def getVolunteerbyField(field, argc):
     '''
@@ -101,8 +128,15 @@ def getVolunteerbyField(field, argc):
     :param argc:字段的值
     :return:返回一个volunteer对象
     '''
-    dic = {field: argc}
-    return Volunteer.objects.filter(**dic)
+
+    #shaoyunqiu need to checkfield
+    # checked by lihy 2016/11/07
+    if (checkField(field) == True):
+        dic = {field: argc}
+        return Volunteer.objects.filter(**dic)
+    else:
+        print "field is not exist"
+        return []
 
 
 def checkField(field):
@@ -151,6 +185,8 @@ def setVolunteer(account, field, value):
     :param field:字段
     :return:字段对应的值
     '''
+    if field == 'id':
+        return False
     try:
         if not checkField(field):
             return False
@@ -176,6 +212,9 @@ def createVolunteer(account, dict):
     :param dict:其余信息的键值对
     :return:是否成功添加
     '''
+    if 'id' in dict.keys():
+        dict.pop('id')
+
     if getVolunteerAll(account):
         print "account existed"
         return False
@@ -223,6 +262,7 @@ def getVolunteerGroupIDListString(volunteer):
         vol_id = getattr(volunteer, Volunteer.ID)
     except:
         vol_id = 1
+
     group_all_list = back.getGroupbyDict({})
     id_list = []
     for group in group_all_list:
@@ -243,6 +283,8 @@ def setVolunteerGroupbyList(volunteer, id_list):
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
         if vol_id in vol_list:
             vol_list.remove(vol_id)
+        if '' in vol_list:
+            vol_list.remove('')
         vol_string = '_'.join(vol_list)
         back.setGroup(group, Group.VOL_LIST, vol_string)
 
@@ -252,12 +294,34 @@ def setVolunteerGroupbyList(volunteer, id_list):
             continue
         group = back.getGroupbyDict({Group.ID: new_id})[0]
         vol_list = back.getGroupAllDictByObject(group)[Group.VOL_LIST].split('_')
+        if '' in vol_list:
+            vol_list.remove('')
         if vol_id in vol_list:
             print 'Big bug!'
         else:
             vol_list.append(vol_id)
         back.setGroup(group, Group.VOL_LIST, '_'.join(vol_list))
     return True
+
+def get_can_see_students(vol_id):
+    all_group = back.getGroupbyDict({})
+    stu_id_list = []
+    for group in all_group:
+        vol_list = getattr(group, Group.VOL_LIST).split('_')
+        if '' in vol_list:
+            vol_list.remove('')
+        if str(vol_id) in vol_list:
+            tmp_list = getattr(group, Group.STU_LIST).split('_')
+            stu_id_list = stu_id_list + tmp_list
+
+    ret = []
+    for _id in stu_id_list:
+        if _id != '':
+            try:
+                ret.append(int(_id))
+            except:
+                pass
+    return ret
 
 
 

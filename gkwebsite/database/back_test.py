@@ -35,17 +35,17 @@ def startTest():
 
 def createTestData():
     tch.deleteTeacherAll()
-    dic = {'account': 'houyf1', 'password': 'mima', 'area': u'北京', 'email': 'alienlhy@163.com', 'phone': '18812341234',
-           'realName': u'张三', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
+    dic = {'account': 'houyf1', 'password': 'mima', 'area': u'北京', 'email': 'nsu@math.thu.edu.cn', 'phone': '13901684995',
+           'realName': u'苏宁', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf2', 'password': 'mima', 'area': u'广东', 'email': 'alienlhy@163.com', 'phone': '18812341234',
-           'realName': u'李四', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
+    dic = {'account': 'houyf2', 'password': 'mima', 'area': u'广东', 'email': 'sywang@mail.tsinghua.edu.cn', 'phone': '18815750324',
+           'realName': u'王山鹰', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf3', 'password': 'mima', 'area': u'广西', 'email': 'alienlhy@163.com', 'phone': '18812341234',
-           'realName': u'王五', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
+    dic = {'account': 'houyf3', 'password': 'mima', 'area': u'广西', 'email': 'sunjg@mail.tsinghua.edu.cn', 'phone': '13825669941',
+           'realName': u'孙家广', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
-    dic = {'account': 'houyf4', 'password': 'mima', 'area': u'广西', 'email': 'alienlhy@163.com', 'phone': '18812341234',
-           'realName': u'张三', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
+    dic = {'account': 'houyf4', 'password': 'mima', 'area': u'新疆', 'email': 'liss02@tsinghua.edu.cn', 'phone': '17877766432',
+           'realName': u'李山山', 'volunteerList': ['vol1', 'vol2', 'vol3', 'vol4', 'vol5']}
     tch.createTeacher(dic)
 
 def createAccountTest():

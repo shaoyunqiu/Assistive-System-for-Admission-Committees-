@@ -6,19 +6,19 @@ import datetime
 def testCreateVolunteerNew():
     deleteVolunteerAll()
     createVolunteer('vol1', {'password': 'mima',
-                             'realName': u'李昊阳',
+                             'realName': u'郭书宇',
                             'birth': datetime.datetime(2015, 1, 12),
-                            'idNumber': '123456789123456789',
+                            'idNumber': '',
 
                             'type': 1,
-                            'sex': 1,
+                            'sex': 2,
                             'nation': 1,
                             'school': u'清华大学',
-                            'classroom': u'计41',
+                            'classroom': u'英51',
 
-                            'address': u'武汉长江大桥下',
-                            'phone': '18812344321',
-                            'email': 'alienlhy@163.com',
+                            'address': u'',
+                            'phone': '1305133336',
+                            'email': '15335182228@189.cn',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -34,7 +34,7 @@ def testCreateVolunteerNew():
                             'realScore': 687,
 
 
-                            'comment': u'娃是好娃，就是成绩不太好',
+                            'comment': u'',
                             # 'registerCode': ,
                             'teacherList': ['houyf1', 'houyf2'],
                             'studentAccountList': ['lihy1', 'lihy2', 'lihy3'],
@@ -42,23 +42,23 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
-                             'student_id': '2014011419'
+                             'student_id': '2015012616'
                             })
 
     createVolunteer('vol2', {'password': 'mima',
-                             'realName': u'杨凯琳',
+                             'realName': u'吕毅韬',
                             'birth': datetime.datetime(2015, 1, 12),
                             'idNumber': '123456789123456789',
 
                             'type': 1,
-                            'sex': 2,
+                            'sex': 1,
                             'nation': 3,
                             'school': u'清华大学',
-                            'classroom': u'计41',
+                            'classroom': u'社科5',
 
-                            'address': u'武汉长江大桥下',
-                            'phone': '18812344321',
-                            'email': 'alienlhy@163.com',
+                            'address': u'',
+                            'phone': '18813129399',
+                            'email': 'lvyt15@mails.tsinghua.edu.cn',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -73,7 +73,7 @@ def testCreateVolunteerNew():
                             'estimateScore': 690,
                             'realScore': 687,
 
-                            'comment': u'娃是好娃，就是成绩不太好',
+                            'comment': u'',
                             # 'registerCode': ,
                             'teacherList': ['houyf1', 'houyf2'],
                             'studentAccountList': ['lihy1', 'lihy2', 'lihy3'],
@@ -81,23 +81,23 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
-                             'student_id': '2014011419'
+                             'student_id': '2015012868'
                             })
 
     createVolunteer('vol3', {'password': 'mima',
-                             'realName': u'王恒志',
+                             'realName': u'张轩',
                             'birth': datetime.datetime(2015, 1, 12),
                             'idNumber': '123456789123456789',
 
                             'type': 1,
-                            'sex': 2,
-                            'nation': 4,
+                            'sex': 1,
+                            'nation': 1,
                             'school': u'清华大学',
-                            'classroom': u'计45',
+                            'classroom': u'计43',
 
-                            'address': u'武汉长江大桥下',
-                            'phone': '18812344321',
-                            'email': 'alienlhy@163.com',
+                            'address': u'',
+                            'phone': '13621338918',
+                            'email': 'riolu@vip.qq.com',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -113,7 +113,7 @@ def testCreateVolunteerNew():
                             'realScore': 687,
 
 
-                            'comment': u'娃是好娃，就是成绩不太好',
+                            'comment': u'',
                             # 'registerCode': ,
                             'teacherList': ['houyf1', 'houyf2'],
                             'studentAccountList': ['lihy1', 'lihy4', 'lihy5'],
@@ -121,23 +121,23 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
-                             'student_id': '2014011419'
+                             'student_id': '2014011347'
                             })
 
     createVolunteer('vol4', {'password': 'mima',
-                             'realName': u'杨凯琳',
+                             'realName': u'谷子青',
                             'birth': datetime.datetime(2015, 1, 12),
                             'idNumber': '123456789123456789',
 
                             'type': 1,
-                            'sex': 1,
+                            'sex': 2,
                             'nation': 1,
                             'school': u'清华大学',
-                            'classroom': u'计45',
+                            'classroom': u'汽42',
 
-                            'address': u'武汉长江大桥下',
-                            'phone': '18812344321',
-                            'email': 'alienlhy@163.com',
+                            'address': u'',
+                            'phone': '13381233733',
+                            'email': 'guzq14@mails.tsinghua.edu.cn',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -153,7 +153,7 @@ def testCreateVolunteerNew():
                             'realScore': 687,
 
 
-                            'comment': u'娃是好娃，就是成绩不太好',
+                            'comment': u'',
                             # 'registerCode': ,
                             'teacherList': ['houyf1', 'houyf2'],
                             'studentAccountList': ['lihy7', 'lihy8', 'lihy9'],
@@ -161,23 +161,23 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
-                             'student_id': '2014011419'
+                             'student_id': '2014010813'
                             })
 
     createVolunteer('vol5', {'password': 'mima',
-                             'realName': u'杨凯琳',
+                             'realName': u'张祎玮',
                             'birth': datetime.datetime(2015, 1, 12),
                             'idNumber': '123456789123456789',
 
                             'type': 1,
-                            'sex': 1,
+                            'sex': 2,
                             'nation': 1,
                             'school': u'清华大学',
-                            'classroom': u'生45',
+                            'classroom': u'无42',
 
-                            'address': u'武汉长江大桥下',
-                            'phone': '18812344321',
-                            'email': 'alienlhy@163.com',
+                            'address': u'',
+                            'phone': '17888830182',
+                            'email': 'zhang-yw14@mails.tsinghua.edu.cn',
                             'dadPhone': '17845699654',
                             'momPhone': '17845699654',
 
@@ -193,7 +193,7 @@ def testCreateVolunteerNew():
                             'realScore': 687,
 
 
-                            'comment': u'娃是好娃，就是成绩不太好',
+                            'comment': u'',
                             # 'registerCode': ,
                             'teacherList': ['houyf1', 'houyf2'],
                             'studentAccountList': ['lihy8', 'lihy9', 'lihy10'],
@@ -201,7 +201,7 @@ def testCreateVolunteerNew():
 
                             'isRegistered': 0,
                             'groupList': [1, 2],
-                             'student_id': '2014011419'
+                             'student_id': '2014011063'
                             })
 
 

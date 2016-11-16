@@ -23,10 +23,15 @@ def getRegisterCodebyField(field, argc):
     '''
     :param field:待查询的字段
     :param argc:字段的值
-    :return:返回一个student对象
+    :return:返回一个对象列表
     '''
-    dic = {field: argc}
-    return RegisterCode.objects.filter(**dic)
+    # modified by shaoyunqiu
+    if field not in RegisterCode.FIELD_LIST:
+        print "illegal field"
+        return []
+    else:
+        dic = {field: argc}
+        return RegisterCode.objects.filter(**dic)
 
 def setRegisterCode(code, field, value):
     try:
@@ -37,7 +42,8 @@ def setRegisterCode(code, field, value):
             print 'can not modify code'
             return False
         print 'start set'
-        register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)
+        # modified by shaoyunqiu. register need to be an object
+        register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)[0]
         setattr(register, field, value)
         register.full_clean()
         register.save()
@@ -62,6 +68,11 @@ def tmpcreateNewRegisterCode():
 
 def createRegisterCode(code):
     obj = RegisterCode.objects.model()
+    # modified by shaoyunqiu, registercode need to be unique
+    if isExistRegisterCode(code):
+        print "the registercode already exist, can not save"
+        return False
+
     try:
         setattr(obj, RegisterCode.REGISTER_CODE, code)
         obj.full_clean()
@@ -75,15 +86,25 @@ def createRegisterCode(code):
 def createNewRegisterCode():
     # 产生code直到不重复
     code = tmpcreateNewRegisterCode()
-    # while(isExistRegisterCode(code)):
+    #while(isExistRegisterCode(code)):
     #     code = tmpcreateNewRegisterCode()
 
     # 将生成的code加入数据库
-    createRegisterCode(code)
-
+    # modified by shaoyunqiu, to confirm the registercode have been add to database successfully
+    while(True):
+        flag = createRegisterCode(code)
+        if flag == True:
+            break
+        else:
+            print "try again"
+            code = tmpcreateNewRegisterCode()
     return code
 
+
 def random_str(randomlength=8):
+    # modified by shaoyunqiu
+    if randomlength < 1 or randomlength > 255 :
+        randomlength = 8
     a = list(string.ascii_letters)
     random.shuffle(a)
     return ''.join(a[:randomlength])

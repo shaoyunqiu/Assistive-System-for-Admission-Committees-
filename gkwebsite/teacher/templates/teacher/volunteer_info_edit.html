@@ -28,7 +28,7 @@
         <div class="panel-body">
          <div class="row">
           <div class="col-md-offset-3 col-md-6">
-           <form class="form-horizontal" role="form" action="#">
+           <form class="form-horizontal" role="form" action="#" id="commentForm">
              {% csrf_token %}
             <fieldset disabled="">
              <div class="form-group">
@@ -48,11 +48,17 @@
              <div class="form-group">
               <label style="text-align:left;padding-left: 2em;" class="col-sm-2 control-label" for="sex">性别：</label>
               <div class="col-sm-10">
-              {% if dict.sex == 0 %}
-                    <select class="form-control" id="sex" name="sex"> <option value="0" selected="selected">男</option><option value="1">女</option> </select>
-               {% else %}
-                    <select class="form-control" id="sex" name="sex"> <option value="0">男</option><option value="1" selected="selected">女</option> </select>
-               {% endif %}
+ <select class="form-control" id="sex" name="sex">
+                {% for item in dict.sex.sexlist %}
+                   {% if forloop.counter0 == dict.sex.sex %}
+                         <option value="{{forloop.counter0}}" selected="selected">{{item}}</option>
+                   {% else %}
+                         <option value="{{forloop.counter0}}">{{item}}</option>
+                   {% endif %}
+               {% empty %}
+                   <li>抱歉，列表为空</li>
+               {% endfor %}
+               </select>
               </div>
              </div>
              <div class="form-group">
@@ -181,7 +187,7 @@
             <div class="form-group">
              <label style="text-align:left;padding-left: 2em;" for="phone" class="col-sm-2 control-label">手机：</label>
              <div class="col-sm-10">
-              <input type="number" class="form-control" name="phone" id="phone" value="{{dict.phone}}" />
+              <input type="text"class="form-control" name="phone" id="phone" value="{{dict.phone}}" />
              </div>
             </div>
             <div class="form-group">
@@ -193,7 +199,7 @@
                <div class="form-group">
              <label style="text-align:left;padding-left: 2em;" for="qqn" class="col-sm-2 control-label">QQ：</label>
              <div class="col-sm-10">
-              <input type="number" class="form-control" id="qqn" name="qqn" value="{{dict.qqn}}" />
+              <input type="text" class="form-control" id="qqn" name="qqn" value="{{dict.qqn}}" />
              </div>
             </div>
                <div class="form-group">
@@ -205,12 +211,29 @@
             <div class="form-group">
              <label style="text-align:left;padding-left: 2em;" for="comment" class="col-sm-2 control-label">备注：</label>
              <div class="col-sm-10">
-              <textarea type="text" class="form-control" id="comment" name="comment" rows="10" placeholder="备注信息">{{dict.comment}}</textarea>
+              <textarea readonly type="text" class="form-control" id="comment" name="comment" rows="10" placeholder="备注信息">{{dict.comment}}</textarea>
              </div>
             </div>
             <div class="form-group">
+             <label style="text-align:left;padding-left: 2em;" for="comment" class="col-sm-2 control-label">权限设置：</label>
+             <div class="col-sm-10">
+           <select class="form-control" id="forbid" name="forbid">
+                {% for item in dict.forbidlist %}
+                   {% if forloop.counter0 == dict.forbid %}
+                         <option value="{{forloop.counter0}}" selected="selected">{{item}}</option>
+                   {% else %}
+                         <option value="{{forloop.counter0}}">{{item}}</option>
+                   {% endif %}
+               {% empty %}
+                   <li>抱歉，列表为空</li>
+               {% endfor %}
+               </select>
+             </div>
+            </div>
+
+            <div class="form-group">
              <div class="col-sm-offset-2 col-sm-10">
-              <button id="volunteer_save" type="button" class="btn btn-primary" value="save">保存</button>
+              <button id="volunteer_save" type="submit" class="btn btn-primary" value="save">保存</button>
              </div>
             </div>
            </form>
@@ -227,38 +250,121 @@
    <!-- /. PAGE WRAPPER  -->
   </div>
   <!-- /. WRAPPER  --> {% include 'teacher/include/jsinclude.html' %}
+<script src="{% static 'jquery-validation-1.14.0/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/additional-methods.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/localization/messages_zh.js' %}"></script>
+
  <script>
-      console.log("WTF");
       $(document).ready(function(){
-          console.log("Arrive here");
-          $("#volunteer_save").click(function(){
-              console.log("volunteer_save");
+          $("#commentForm").validate({
+              submitHandler:volunteerSave,
+          rules:{
+            email:{
+              email:true,
+              required:true
+            },
+              phone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+             qqn:{
+                  digits:true,
+                  minlength:6,
+                  maxlength:11,
+              },
+
+
+
+          },
+          messages:{
+
+
+            phone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+             qqn:{
+              minlength:"<span style=\"color:red\">请输入有效的QQ号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的QQ号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的QQ号码</span>",
+            },
+            email:{
+                email:"<span style=\"color:red\">请输入有效的邮箱</span>",
+            }
+          }
+        });
+
+
+
+
+
+
+         /* $("#volunteer_save").click(function(){
+                          document.getElementById("volunteer_save").disabled = true;
+
             var volunteer_name = $("#volunteer_name").val();
-            var distribute = $("#distribute").val();
             var email = $("#email").val();
             var phone = $("#phone").val();
             var qqn = $("#qqn").val();
             var weichat = $("#weichat").val();
             var describe = $("#comment").val();
+            var forbid = $("#forbid").val();
             $.post("",
                     {
                         'user_name':volunteer_name,
                         'email':email,
-                        'distribute': distribute,
 
                         'phone':phone,
                         'qqn':qqn,
                         'weichat':weichat,
                         'comment':describe,
+                        'forbid' :forbid,
                     },
                     function(profileDict){
 
                         for (key_i in profileDict)
                             $("#"+key_i).val(profileDict[key_i]);
                         alert("修改成功");
+                                    document.getElementById("volunteer_save").disabled = false;
+
             })
-          });
+          });*/
       });
   </script>
+ <script>
+     function volunteerSave(){
+
+
+            var volunteer_name = $("#volunteer_name").val();
+            var email = $("#email").val();
+            var phone = $("#phone").val();
+            var qqn = $("#qqn").val();
+            var weichat = $("#weichat").val();
+            var describe = $("#comment").val();
+            var forbid = $("#forbid").val();
+         document.getElementById("volunteer_save").disabled = true;
+            $.post("",
+                    {
+                        'user_name':volunteer_name,
+                        'email':email,
+
+                        'phone':phone,
+                        'qqn':qqn,
+                        'weichat':weichat,
+                        'comment':describe,
+                        'forbid' :forbid,
+                    },
+                    function(profileDict){
+
+                        for (key_i in profileDict)
+                            $("#"+key_i).val(profileDict[key_i]);
+                        alert("修改成功");
+                                    document.getElementById("volunteer_save").disabled = false;
+
+            })
+     }
+ </script>
  </body>
 </html>
