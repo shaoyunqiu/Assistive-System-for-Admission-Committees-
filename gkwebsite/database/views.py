@@ -272,8 +272,37 @@ def get_student_alert(request):
     # by dqn14 Nov 16, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
+
         t = {}
         t["message"] = "3"
+
+        id = request.session.get('student_id', -1)
+        if id == -1:
+            return HttpResponse('Access denied')
+        id = int(id)
+        unread_number = 0
+        notice_list = back.getNoticebyDict({})
+        for notice in notice_list:
+            info_dic = back.getNoticeAllDictByObject(notice)
+            # print info_dic
+            try:
+                rece_stu_list = eval(info_dic[Notice.RECEIVE_STU])
+            except:
+                print 'bug'
+                rece_stu_list = []
+
+            if id in rece_stu_list or str(id) in rece_stu_list:
+                send_tch_account = tch.idToAccountTeacher(int(info_dic[Notice.TEACHER_ID]))
+
+                unread_number = unread_number + 1
+                try:
+                    stu_readed_list = eval(stu.getStudent(stu.idToAccountStudent(id), Student.READED))
+                except:
+                    stu_readed_list = []
+                if info_dic[Notice.ID] in stu_readed_list:
+                    unread_number = unread_number - 1
+
+        t["message"] = str(unread_number)
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

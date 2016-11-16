@@ -79,6 +79,8 @@ def back_to_profile(request, id):
         'estimateScore': getStudentEstimateScore(stu.getStudentAll(account)),
         'estimateRank': str(rank) + '/' + str(tmp)
     }
+    if dic['estimateScore'] == '-1':
+        dic['estimateScore'] = ' '
     group_list = stu.getStudentGroupIDListString(student).split(' ')
     for i in range(1, 6):
         if i < len(group_list):
@@ -195,6 +197,10 @@ def student_rank(request):
     rank_list = []
     score = getStudentEstimateScore(student)
     rank, sum_rank = stu.getStudentEstimateRank(student)
+    if score == '-1':
+        score = '0'
+        rank = '0'
+        sum_rank = '0'
 
     name_list.append(u'总成绩（审核通过）')
     score_list.append(score)
@@ -234,7 +240,7 @@ def student_admit(request):
         info = u'暂时还没有您的录取信息，请耐心等待老师添加'
     admition = info
     return render(request,
-                  'student/admit.html', {'admition': admition, 'id':id})
+                  'student/admit.html', {'admition': admition})
 
 @check_identity('student')
 def student_contact(request):
@@ -265,9 +271,9 @@ def student_contact(request):
         phone = tmp_dic[Volunteer.PHONE]
         email = tmp_dic[Volunteer.EMAIL]
         address = tmp_dic[Volunteer.ADDRESS]
-        dict = {'profession':u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
+        dict = {'profession': u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
         list.append(dict)
-    return render(request,'student/contact.html', {'dict': list, 'id':id})
+    return render(request,'student/contact.html', {'dict': list})
 
 
 def student_logout(request):
@@ -345,17 +351,6 @@ def profile(request):
             'majorSelect4': int(info_dict.get('majorSelect4')),
             'majorSelect5': int(info_dict.get('majorSelect5')),
             'majorSelect6': int(info_dict.get('majorSelect6')),
-
-            # 'testScore1': int(info_dict.get('testScore1')),
-            # 'testScore2': int(info_dict.get('testScore2')),
-            # 'testScore3': int(info_dict.get('testScore3')),
-
-            # 'rank1': int(info_dict.get('rank1')),
-            # 'rank11': int(info_dict.get('rank11')),
-            # 'rank2': int(info_dict.get('rank2')),
-            # 'rank22': int(info_dict.get('rank22')),
-            # 'rank3': int(info_dict.get('rank3')),
-            # 'rank33': int(info_dict.get('rank33')),
 
             'realScore': int(info_dict.get('realScore')),
             # 'relTeacher': info_dict.get('relTeacher'),
@@ -457,6 +452,8 @@ def profile(request):
             'estimateScore': getStudentEstimateScore(stu.getStudentAll(account)),
             'estimateRank': str(rank)+'/'+str(tmp)
         }
+        if dic['estimateScore'] == '-1':
+            dic['estimateScore'] = u'还没有估分啊亲'
         group_list = stu.getStudentGroupIDListString(student).split(' ')
         for i in range(1, 6):
             if i < len(group_list):
@@ -470,7 +467,7 @@ def profile(request):
         print 'jiao baba', dic
         if 'auth' in request.GET:
             dic['auth'] = '0'
-        return render(request, 'student/userinfo.html', {'dict': dic, 'id':id})
+        return render(request, 'student/userinfo.html', {'dict': dic})
 
 
 
@@ -604,10 +601,10 @@ def get_problem_info(request):
        'problem_type': CATEGORY_LIST[pic_dic[Picture.CATEGORY]],
        'problem_full_score': pic_dic[Picture.SCORE],
 
-    'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images') +pic_name}
-    # 'problem_pic': '/static/images/' + pic_name}
+    # 'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images/') +pic_name}
+    'problem_pic': '/static/images/' + pic_name}
 
-    print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + pic_name
+    print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static_img/images/') + pic_name
     return JsonResponse({'problem_info': dic})
 
 @csrf_exempt
@@ -678,10 +675,9 @@ def get_all_message(request):
     id = int(id)
     dic = []
     notice_list = back.getNoticebyDict({})
-    # print 'notice_list', len(notice_list)
     for notice in notice_list:
         info_dic = back.getNoticeAllDictByObject(notice)
-        print info_dic
+        # print info_dic
         try:
             rece_stu_list = eval(info_dic[Notice.RECEIVE_STU])
         except:
