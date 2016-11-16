@@ -262,8 +262,18 @@ def get_teacher_alert_by_id(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         t = {}
-        t["message"] = "15"
+        #t["message"] = "15"
         t["score"] = get_num_teacher_shenhe_estimate()
+        return JsonResponse(t)
+    else:
+        return HttpResponse('Access denied.')
+        
+def get_student_alert(request):
+    # by dqn14 Nov 16, 2016
+    # use this if-else to block violent access
+    if request.is_ajax() and request.method == 'POST':
+        t = {}
+        t["message"] = "3"
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')

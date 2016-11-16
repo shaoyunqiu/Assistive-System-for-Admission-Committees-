@@ -15,6 +15,7 @@ urlpatterns = [
 	url(r'^add_volunteer/$', views.add_volunteer, name="add_volunteer"),
     url(r'^export_registration_code/$', views.export_registration_code, name="export_registration_code"),
     url(r'^get_teacher_alert_by_id/$', views.get_teacher_alert_by_id, name="get_teacher_alert_by_id"),
+    url(r'^get_student_alert/$', views.get_student_alert, name="get_student_alert"),
     url(r'^test_list_all/$', views.test_list_all, name="test_list_all"),
     url(r'^release_test/$', views.release_test, name="release_test"),
     url(r'^remove_test/$', views.remove_test, name="remove_test"),
