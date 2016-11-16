@@ -189,6 +189,10 @@ def student_rank(request):
     rank_list = []
     score = getStudentEstimateScore(student)
     rank, sum_rank = stu.getStudentEstimateRank(student)
+    if score == '-1':
+        score = '0'
+        rank = '0'
+        sum_rank = '0'
 
     name_list.append(u'总成绩（审核通过）')
     score_list.append(score)
