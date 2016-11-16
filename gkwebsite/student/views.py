@@ -263,7 +263,7 @@ def student_contact(request):
         phone = tmp_dic[Volunteer.PHONE]
         email = tmp_dic[Volunteer.EMAIL]
         address = tmp_dic[Volunteer.ADDRESS]
-        dict = {'profession':u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
+        dict = {'profession': u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
         list.append(dict)
     return render(request,'student/contact.html', {'dict': list, 'id':id})
 
@@ -665,10 +665,9 @@ def get_all_message(request):
     id = int(id)
     dic = []
     notice_list = back.getNoticebyDict({})
-    # print 'notice_list', len(notice_list)
     for notice in notice_list:
         info_dic = back.getNoticeAllDictByObject(notice)
-        print info_dic
+        # print info_dic
         try:
             rece_stu_list = eval(info_dic[Notice.RECEIVE_STU])
         except:
