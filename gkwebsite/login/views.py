@@ -84,9 +84,9 @@ def logincheck(request):
                         #request.session['password'] = password
                         return redirect('/student/')
                     else:
-                        return HttpResponse(u"<a href='/login'>学生界面登录失败啦</a>")
+                        return HttpResponse(u"<a href='/login'>学生界面登录失败 账户密码不匹配</a>")
                 else:
-                    return HttpResponse(u"<a href='/login'>学生界面登录失败</a>")
+                    return HttpResponse(u"<a href='/login'>学生界面登录失败</a>" + u"你输入的验证码是" + yzmString + u" 正确的验证码是 " + request.session['yzmString'])
             elif 'teacher' in request.POST:
                 username = request.POST.get('login_username')
                 password = request.POST.get('login_password')
@@ -100,9 +100,9 @@ def logincheck(request):
                         #request.session['password'] = password
                         return redirect('/teacher/')
                     else:
-                        return HttpResponse(u"a href='/login'>教师界面登录失败<</a>")
+                        return HttpResponse(u"<a href='/login'>教师界面登录失败 账户密码不匹配</a>")
                 else:
-                    return HttpResponse(u"<a href='/login'>教师界面登录失败</a>")
+                    return HttpResponse(u"<a href='/login'>教师界面登录失败</a>"  + u"你输入的验证码是" + yzmString + u" 正确的验证码是 " + request.session['yzmString'])
             elif 'volunteer' in request.POST:
                 username = request.POST.get('login_username')
                 password = request.POST.get('login_password')
@@ -117,9 +117,9 @@ def logincheck(request):
                         return redirect('/volunteer')
                         #return HttpResponse(u"志愿者界面")
                     else:
-                        return HttpResponse(u"<a href='/login'>志愿者界面登录失败</a>")
+                        return HttpResponse(u"<a href='/login'>志愿者界面登录失败 账户、密码不匹配</a>")
                 else:
-                    return HttpResponse(u"<a href='/login'>验证码不正确</a>")
+                    return HttpResponse(u"<a href='/login'>志愿者界面登录失败</a>" + u"你输入的验证码是" + yzmString + u" 正确的验证码是 " + request.session['yzmString'])
             else:
                 return HttpResponse(u"<a href='/login'>请检查用户名是否存在，请检查用户名、密码、验证码是否未填</a>")
         else:

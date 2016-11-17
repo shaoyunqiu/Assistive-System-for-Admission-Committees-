@@ -49,7 +49,10 @@ def check_identity(identity):
         def wrapper(request, *args, **kw):
             # 下面这空白的位置填session相应的id名
             identity_dic = {'student': 'student_id', 'volunteer': 'volunteer_id', 'teacher': 'teacher_id'}
-            id = int(request.session.get(identity_dic[identity]))
+            try:
+                id = int(request.session.get(identity_dic[identity]))
+            except:
+                return redirect('/login/')
             if identity == 'student':
                 if stu.is_have_permission(id) == False:
                     pass

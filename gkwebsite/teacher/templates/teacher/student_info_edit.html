@@ -27,7 +27,7 @@
         <div class="panel-body">
          <div class="row">
           <div class="col-md-offset-3 col-md-6">
-           <form class="form-horizontal" role="form" action="#">
+           <form class="form-horizontal" role="form" action="#" id="commentForm">
              {% csrf_token %}
             <fieldset disabled="">
              <div class="form-group">
@@ -49,14 +49,14 @@
              <div class="form-group">
               <label for="realName" style="text-align:left;padding-left: 2em;" class="col-sm-2 control-label">姓名：</label>
               <div class="col-sm-10">
-               <input type="text" class="form-control" id="realName" name="realName" value="{{student.realName}}" />
+               <input type="text" required class="form-control" id="realName" name="realName" value="{{student.realName}}" />
               </div>
              </div>
 
              <div class="form-group">
               <label for="idNumber" style="text-align:left;padding-left: 2em;" class="col-sm-2 control-label">身份证号：</label>
               <div class="col-sm-10">
-               <input type="text" class="form-control" id="idNumber" name="idNumber" value="{{student.idNumber}}" />
+               <input type="text" required class="form-control" id="idNumber" name="idNumber" value="{{student.idNumber}}" />
               </div>
              </div>
              <div class="form-group">
@@ -95,7 +95,7 @@
              <div class="form-group">
               <label style="text-align:left;padding-left: 2em;" for="birth" class="col-sm-2 control-label">出生日期: </label>
               <div class="col-sm-10">
-              <input type="text" class="form-control" id="birth" name="birth" value="{{student.birth}}" />
+              <input type="text" required class="form-control" id="birth" name="birth" value="{{student.birth}}" />
 
               </div>
              </div>
@@ -444,7 +444,7 @@
 
 
                          <div class="form-group">
-             <label style="text-align:left;padding-left: 2em;" for="comment" class="col-sm-2 control-label">强制禁止：</label>
+             <label style="text-align:left;padding-left: 2em;" for="comment" class="col-sm-2 control-label">权限设置：</label>
              <div class="col-sm-10">
            <select class="form-control" id="forbid" name="forbid">
                 {% for item in student.forbidlist %}
@@ -463,7 +463,7 @@
 
              <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-              <button id="student_save" type="button" class="btn btn-primary" value="save">保存</button>
+              <button id="student_save" type="submit" class="btn btn-primary" value="save" >保存</button>
               </div>
              </div>
 
@@ -491,11 +491,125 @@
 
 
 {% include 'teacher/include/jsinclude.html' %}
+<script src="{% static 'jquery-validation-1.14.0/dist/jquery.validate.min.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/additional-methods.js' %}"></script>
+<script src="{% static 'jquery-validation-1.14.0/dist/localization/messages_zh.js' %}"></script>
 
  <script>
       $(document).ready(function(){
-          $("#student_save").click(function(){
-            document.getElementById("student_save").disabled = true;
+          $("#commentForm").validate({
+              submitHandler:studentSave,
+          rules:{
+              idNumber:{
+                  IDChina:true,
+              },
+            email:{
+              email:true,
+              required:true
+            },
+              phone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+              momPhone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+              dadPhone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+              tutorPhone:{
+                  digits:true,
+                  minlength:11,
+                  maxlength:11,
+              },
+
+              testScore1:{
+                  number:true,
+              },
+              testScore2:{
+                  number:true,
+              },
+              testScore3:{
+                  number:true,
+              },
+              realScore:{
+                  number:true,
+              },
+
+              rank1:{
+                  digits:true,
+              },
+              rank11:{
+                  digits:true,
+              },
+                            rank2:{
+                  digits:true,
+              },
+              rank22:{
+                  digits:true,
+              },
+              rank3:{
+                  digits:true,
+              },
+              rank33:{
+                  digits:true,
+              },
+
+
+
+          },
+          messages:{
+              testScore1:"<span style=\"color:red\">请输入有效的分数</span>",
+              testScore2:"<span style=\"color:red\">请输入有效的分数</span>",
+              testScore3:"<span style=\"color:red\">请输入有效的分数</span>",
+              realScore:"<span style=\"color:red\">请输入有效的分数</span>",
+              rank1:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank11:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank2:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank22:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank3:"<span style=\"color:red\">请输入有效的排名</span>",
+              rank33:"<span style=\"color:red\">请输入有效的排名</span>",
+
+            phone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+             momPhone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+              dadPhone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+              tutorPhone:{
+              minlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              maxlength:"<span style=\"color:red\">请输入有效的手机号码</span>",
+              digits:"<span style=\"color:red\">请输入有效的手机号码</span>",
+            },
+            email:{
+                email:"<span style=\"color:red\">请输入有效的邮箱</span>",
+            }
+          }
+        });
+
+
+        $.validator.addMethod("IDChina", function(value, element){
+
+            var ID = /^\d{17}[X0-9]$/;
+            return this.optional(element) || (ID.test(value));
+        }, "<span style=\"color:red\">请输入有效的身份证号</span>");
+
+         /* $("#student_save").click(function(){
+
             var user_name = $("#account").val();
             var sex = $("#sex").val();
             var idNumber = $("#idNumber").val();
@@ -545,42 +659,7 @@
             var team5= $("#team5").val();
             var forbid = $("#forbid").val();
             var birth = $("#birth").val();
-           /*alert(
-                        'type'+type+
-             'province' +province+
-             'phone' +phone+
-             'email' +email+
-             'address' +address+
-             'dadName' +dadName+
-             'dadPhone' +dadPhone+
-             'momName' +momName+
-             'momPhone' +momPhone+
-             'school' +school+
-             'stu_class' +stu_class+
-             'tutorName' +tutorName+
-             'tutorPhone' +tutorPhone+
-             'majorSelect1' +majorSelect1+
-             'majorSelect2' +majorSelect2+
-             'majorSelect3' +majorSelect3+
-             'majorSelect4' +majorSelect4+
-             'majorSelect5' +majorSelect5+
-             'majorSelect6' +majorSelect6+
-             'testScore1' +testScore1+
-             'testScore2' +testScore2+
-             'testScore3' +testScore3+
-             'rank1' +rank1+
-             'rank11' +rank11+
-             'rank2' +rank2+
-             'rank22' +rank22+
-             'rank3' +rank3+
-             'rank33' +rank33+
-             'estimateScore' +estimateScore+
-             'realScore' +realScore+
-             'admissionStatus' +admissionStatus+
-             'relTeacher'+relTeacher+
-             'relVolunteer' +relVolunteer+
-             'comment'+comment
-                    );*/
+            document.getElementById("student_save").disabled = true;
             $.post("",
                     {
                      'user_name':user_name,
@@ -639,8 +718,121 @@
                                     document.getElementById("student_save").disabled = false;
                         alert("修改成功");
             })
-          });
+          });*/
       });
   </script>
+ <script>
+     function studentSave(){
+  var user_name = $("#account").val();
+            var sex = $("#sex").val();
+            var idNumber = $("#idNumber").val();
+            var type = $("#type").val();
+            var province = $("#province").val();
+            var nation = $("#nation").val();
+            var phone = $("#phone").val();
+            var email = $("#email").val();
+            var address = $("#address").val();
+            var dadName = $("#dadName").val();
+            var dadPhone = $("#dadPhone").val();
+            var momName = $("#momName").val();
+            var momPhone = $("#momPhone").val();
+            var school = $("#school").val();
+            var stu_class = $("#stu_class").val();
+            var tutorName = $("#tutorName").val();
+            var tutorPhone = $("#tutorPhone").val();
+            var majorSelect1 = $("#majorSelect1").val();
+            var majorSelect2 = $("#majorSelect2").val();
+            var majorSelect3 = $("#majorSelect3").val();
+            var majorSelect4 = $("#majorSelect4").val();
+            var majorSelect5 = $("#majorSelect5").val();
+            var majorSelect6 = $("#majorSelect6").val();
+            var testScore1 = $("#testScore1").val();
+            var testScore2 = $("#testScore2").val();
+            var testScore3 = $("#testScore3").val();
+            var rank1 = $("#rank1").val();
+            var rank11 = $("#rank11").val();
+            var rank2 = $("#rank2").val();
+            var rank22 = $("#rank22").val();
+            var rank3 = $("#rank3").val();
+            var rank33 = $("#rank33").val();
+            var estimateScore = $("#estimateScore").val();
+            var realScore = $("#realScore").val();
+            var admissionStatus = $("#admissionStatus").val();
+            var realName = $("#realName").val();
+            var relVolunteer = $("#relVolunteer").val();
+            var comment= $("#comment").val();
+            var myDate = new Date();
+            var newcomment = '';
+            if ($("#newcomment").val() != '')
+                newcomment = "【" + myDate.toLocaleString() + "】    " + $("#newcomment").val();
+            var team1= $("#team1").val();
+            var team2= $("#team2").val();
+            var team3= $("#team3").val();
+            var team4= $("#team4").val();
+            var team5= $("#team5").val();
+            var forbid = $("#forbid").val();
+            var birth = $("#birth").val();
+            document.getElementById("student_save").disabled = true;
+            $.post("",
+                    {
+                     'user_name':user_name,
+                        'idNumber':idNumber,
+                        'type': type,
+                        'realName':realName,
+             'province' :province,
+             'phone' : phone,
+             'email' : email,
+             'address' : address,
+             'dadName' : dadName,
+             'dadPhone' : dadPhone,
+             'momName' : momName,
+             'momPhone' : momPhone,
+             'school' : school,
+             'stu_class' : stu_class,
+             'tutorName' : tutorName,
+             'tutorPhone' : tutorPhone,
+                        'nation':nation,
+             'majorSelect1' : majorSelect1,
+             'majorSelect2' : majorSelect2,
+             'majorSelect3' : majorSelect3,
+                        'birth':birth,
+             'majorSelect4' : majorSelect4,
+             'majorSelect5' : majorSelect5,
+             'majorSelect6' : majorSelect6,
+             'testScore1' : testScore1,
+             'testScore2' : testScore2,
+             'testScore3' : testScore3,
+             'rank1' : rank1,
+             'rank11' : rank11,
+             'rank2' : rank2,
+             'rank22' : rank22,
+             'rank3' : rank3,
+             'rank33' : rank33,
+             'estimateScore' : estimateScore,
+             'realScore' : realScore,
+             'admissionStatus' : admissionStatus,
+          //   'relTeacher': relTeacher,
+             'relVolunteer' : relVolunteer,
+             'comment': comment,
+             'newcomment' : newcomment,
+             'team1': team1,
+             'team2': team2,
+             'team3': team3,
+             'team4': team4,
+             'team5': team5,
+            'sex':sex,
+             'forbid': forbid,
+                    },
+                    function(profileDict){
+
+                        for (key_i in profileDict)
+                            $("#"+key_i).val(profileDict[key_i]);
+                            $('#newcomment').val('');
+                                    document.getElementById("student_save").disabled = false;
+                        alert("修改成功");
+            })
+          }
+
+ </script>
  </body>
 </html>

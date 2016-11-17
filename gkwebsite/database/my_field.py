@@ -7,7 +7,7 @@ import ast
 import xlwt
 import os
 from models import *
-
+from django.conf import settings
 from django.http import HttpResponse
 
 MAJOR_LIST = [u'',u'计算机科学与技术系', u'电子工程系', u'自动化系', u'化学系', u'物理系']
@@ -114,15 +114,20 @@ def outputXLS(path, filename, sheet, list, _titleList):
     for i in range(0, len(mylist)):
         for j in range(0, len(mylist[i])):
             sh.write(j + 1, i, mylist[i][j])
+    print 'woca ', filename
     book.save(filename)
     return True
 
 
-def generateExcel(request,id, path, filename, sheet, list, _titleList):
-    filename = "files/%s_teacher.xls" % id
-    if os.path.exists(filename):
-        os.remove(filename)
-    outputXLS(path, filename, sheet, list, _titleList)
+def generateExcel(request, id, path, filename, sheet, list, _titleList):
+    file_name = "%s_teacher_registercode.xls" % id
+
+    file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
+    # file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
+
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    outputXLS(path, file_path, sheet, list, _titleList)
 
 
 
@@ -133,14 +138,18 @@ def getStudentEstimateScore(student):
     except:
         tmp_dic = eval('{}')
     sum_score = 0
+    flag = False
     for key in tmp_dic.keys():
         # shaoyunqiu check keyerror and typeerror, if not int, then skip
         if 'shenhe' in tmp_dic[key].keys() and 'score' in tmp_dic[key].keys():
             try:
+                flag = True
                 sum_score += tmp_dic[key]['score']
             except:
                 print "int error"
                 continue
+    if flag == False:
+        return str(-1)
     return str(sum_score)
 
 

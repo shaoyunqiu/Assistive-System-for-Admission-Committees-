@@ -6,7 +6,7 @@ from django.template import Context
 
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 import os
 import database.teacher_backend as tch
 import database.student_backend as stu
@@ -19,13 +19,24 @@ from database.models import *
 from database.my_field import *
 
 
+def check_identity():
+    def decorator(func):
+        def wrapper(request, *args, **kw):
+            if str(request.session.get('teacher_id', -1)) == '-1':
+                return redirect('/login/')
+            return func(request, *args, **kw)
+        return wrapper
+    return decorator
+
+
 @ensure_csrf_cookie
 def search_student(request):
+
     id = request.session.get('teacher_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/list_student.html')
-    c = {'id': id, 'n_item': 15}
+    c = {'n_item': 15}
     return HttpResponse(t.render(c))
 
 
@@ -35,7 +46,7 @@ def rank_student(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/rank_student.html')
-    c = {'id': id, 'n_item': 15}
+    c = {'n_item': 15}
     return HttpResponse(t.render(c))
 
 
@@ -83,19 +94,6 @@ def rank_student_by_province(request):
                    'rank': '%s'%(rank)
                    }
             t.append(dic)
-
-
-        # for item in range(50):
-        #     dic = {'name': '1',
-        #            'gender': '2',
-        #            'source': '3',
-        #            'school': '4',
-        #            'socre': '5',
-        #            'rank': '6'
-        #            }
-        #     t.append(dic)
-
-        stu.output_all_student_info('hahah.xls')
         return JsonResponse(t, safe=False)  # must use 'safe=False'
     else:
         return HttpResponse('Access denied.')
@@ -107,7 +105,7 @@ def manage_activity(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/manage_activity.html')
-    c = {'id': id, 'n_item': 15}
+    c = {'n_item': 15}
     return HttpResponse(t.render(c))
 
 
@@ -170,7 +168,7 @@ def search_volunteer(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/list_volunteer.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 def wechat_push_stack(request):
@@ -178,7 +176,7 @@ def wechat_push_stack(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/wechat_push_stack.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 @csrf_exempt
@@ -195,24 +193,25 @@ def student_info_edit(request):
                 info_dict['majorSelect' + str(i)] = '0'
         for i in range(1, 4):
             if info_dict['testScore' + str(i)].strip() == '':
-                info_dict['testScore' + str(i)] = '0'
+                info_dict['testScore' + str(i)] = '-1'
         for i in range(1, 4):
             if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
+                info_dict['rank' + str(i)] = '-1'
         for i in range(1, 4):
             if info_dict['rank' + str(i)].strip() == '':
-                info_dict['rank' + str(i)] = '0'
+                info_dict['rank' + str(i)] = '-1'
         for i in range(1, 4):
             if info_dict['rank' + str(i) + str(i)].strip() == '':
-                info_dict['rank' + str(i) + str(i)] = '0'
+                info_dict['rank' + str(i) + str(i)] = '-1'
         if info_dict['estimateScore'].strip() == '':
             info_dict['estimateScore'] = '0'
         if info_dict['realScore'].strip() == '':
             info_dict['realScore'] = '0'
-        if info_dict['admissionStatus'].strip() == '':
-            info_dict['admissionStatus'] = '0'
+        # if info_dict['admissionStatus'].strip() == '':
+        #     info_dict['admissionStatus'] = '0'
 
         print info_dict
+        print 'kexuanze', info_dict['admissionStatus']
         dic = {
             'type': int(info_dict.get('type', '110')),
             'province': int(info_dict.get('province', '110')),
@@ -325,7 +324,7 @@ def student_info_edit(request):
         for key in request.POST.copy().keys():
             ret_dic[key] = request.POST.copy().get(key)
         ret_dic['comment'] = dic['comment']
-
+        print 'finish-------------------'
         return JsonResponse(ret_dic)
     else:
         '''
@@ -380,6 +379,19 @@ def student_info_edit(request):
             Student.DAD_NAME: stu_dic[Student.DAD_NAME],
             Student.DUIYING_TEACHER: stu_dic[Student.DUIYING_TEACHER],
         }
+
+        if dic[Student.ESTIMATE_SCORE] == '-1':
+            dic[Student.ESTIMATE_SCORE] = ' '
+        for i in range(0,len(dic[Student.TEST_SCORE_LIST])):
+            if dic[Student.TEST_SCORE_LIST][i] == -1 or dic[Student.TEST_SCORE_LIST][i] == '-1':
+                dic[Student.TEST_SCORE_LIST][i] = ''
+        for i in range(0,len(dic[Student.RANK_LIST])):
+            if dic[Student.RANK_LIST][i] == -1 or dic[Student.RANK_LIST][i] == '-1':
+                dic[Student.RANK_LIST][i] = ''
+        for i in range(0,len(dic[Student.SUM_NUMBER_LIST])):
+            if dic[Student.SUM_NUMBER_LIST][i] == -1 or dic[Student.SUM_NUMBER_LIST][i] == '-1':
+                dic[Student.SUM_NUMBER_LIST][i] = ''
+        # print '9090909090()()', dic[Student.TEST_SCORE_LIST]
 
         group_list = stu.getStudentGroupIDListString(student).split(' ')
         if '' in group_list:
@@ -505,6 +517,18 @@ def student_info_show(request):
         Student.DUIYING_TEACHER: stu_dic[Student.DUIYING_TEACHER],
     }
 
+    if dic[Student.ESTIMATE_SCORE] == '-1':
+        dic[Student.ESTIMATE_SCORE] = ' '
+    for i in range(0, len(dic[Student.TEST_SCORE_LIST])):
+        if dic[Student.TEST_SCORE_LIST][i] == -1 or dic[Student.TEST_SCORE_LIST][i] == '-1':
+            dic[Student.TEST_SCORE_LIST][i] = ''
+    for i in range(0, len(dic[Student.RANK_LIST])):
+        if dic[Student.RANK_LIST][i] == -1 or dic[Student.RANK_LIST][i] == '-1':
+            dic[Student.RANK_LIST][i] = ''
+    for i in range(0, len(dic[Student.SUM_NUMBER_LIST])):
+        if dic[Student.SUM_NUMBER_LIST][i] == -1 or dic[Student.SUM_NUMBER_LIST][i] == '-1':
+            dic[Student.SUM_NUMBER_LIST][i] = ''
+
     group_list = stu.getStudentGroupIDListString(student).split(' ')
     if '' in group_list:
         group_list.remove('')
@@ -532,7 +556,7 @@ def add_student(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/add_student.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 
@@ -565,16 +589,17 @@ def dashboard(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/dashboard.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 
 def add_volunteer(request):
+
     id = request.session.get('teacher_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/add_volunteer.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 
@@ -583,13 +608,15 @@ def add_volunteer(request):
 		by byr 161012
 '''
 # @csrf_protect
+@check_identity()
 @csrf_exempt
 def profile(request):
     if request.method == 'POST':
         '''
             后端需要在这里改代码，保存传进来的数据到数据库，并返回正确的dict
         '''
-        print request.POST
+        # if str(request.session.get('teacher_id',-1)) == '-1':
+        #     return redirect('/login/')
         flag = False
         if 'password' not in request.POST.keys():
             flag = False
@@ -624,9 +651,10 @@ def profile(request):
         #   dosomething()
         # by dqn14 2016/11/1
 
+
         id = (int)(request.session.get('teacher_id'))
         account = tch.idToAccountTeacher(id)
-
+        print 'laoshi ', id
         if not tch.setTeacher(account, Teacher.REAL_NAME, teacher_name):
             return JsonResponse({'success': 'N', 'message': 'real name missing'})
         if not tch.setTeacher(account, Teacher.PHONE, phone):
@@ -649,7 +677,10 @@ def profile(request):
         '''
             后端需要在这里改代码，从数据库读取正确的dict，并返回
         '''
-        id = (str)(request.session.get('teacher_id'))
+        # if str(request.session.get('teacher_id',-1)) == '-1':
+        #     return redirect('/login/')
+
+        id = (str)(request.session.get('teacher_id',-1))
         account = tch.idToAccountTeacher(id)
         teacher = tch.getTeacherAll(account)
         dict = {
@@ -674,7 +705,11 @@ def profile(request):
 '''
 def handle_uploaded_img(imgFile, year, province, subject, number, score, category):
     imgName = imgFile.name
-    path = 'student/static/images/'+ get_picture_path(year, province, subject, number, score, category)
+
+    path = os.path.join(settings.MEDIA_ROOT, 'student/static_img/images/') + get_picture_path(year, province, subject, number, score, category)
+
+    print 'upload', path
+
     dst = open(path, 'wb')
     dst.write(imgFile.read())
 
@@ -684,6 +719,7 @@ def handle_uploaded_img(imgFile, year, province, subject, number, score, categor
 		by byr 161016
 '''
 @csrf_exempt
+@check_identity()
 def upload(request):
     if request.method == 'GET':
         id = request.GET.get('test_id')
@@ -721,9 +757,16 @@ def upload(request):
             Picture.CATEGORY: int(category),
         }
 
-        flag = pic.createPicturebyDict(dic)
+        if len(pic.getPicturebyDict({Picture.NUMBER: int(number)})) > 0:
+            return JsonResponse({'result': '禁止重复上传',
+                                 'url': '%s_%s_%s' % (str(YEAR_LIST[dic[Picture.YEAR]]),
+                                    SHITI_LIST[dic[Picture.PROVINCE]],
+                                    SUBJECT_LIST[dic[Picture.SUBJECT]])})
+
+
         imgFile = request.FILES['problem_upload']
         handle_uploaded_img(imgFile, year, province, subject, number, score, category)
+        flag = pic.createPicturebyDict(dic)
 
         if flag:
             dict = {'result': '上传成功'}
@@ -891,14 +934,17 @@ def volunteer_info_edit(request):
 		老师给学生分组
 		by byr 161017
 '''
+@check_identity()
 def distribute_student(request):
     '''
        GET newteam 新建组
     '''
-    if 'newteam' in request.GET:
-        back.createGroupbyDict({Group.NAME: 'new name'})
+    if ('newteam' in request.GET) and ('newteamname' in request.GET):
+        newteamname = request.GET['newteamname']
+        print newteamname
+        back.createGroupbyDict({Group.NAME: newteamname})
         num = len(back.getGroupbyDict({}))
-        return JsonResponse({'teamnum': num})
+        return JsonResponse({'teamnum': str(num) + ' ' + newteamname})
     '''
     GET id teamid 删除
     '''
@@ -938,6 +984,9 @@ def distribute_student(request):
             team = {}
             team['teamleader'] = str(group_dic[Group.ID])
             team['teamname'] = str(group_dic[Group.NAME])
+
+            team['teamleader'] = str(group_dic[Group.ID]) + ' ' + str(group_dic[Group.NAME])
+
             team['volunteer'] = {}
             team['student'] = {}
 
@@ -982,7 +1031,10 @@ def distribute_student(request):
 
 
 def download_xls(request, file_name):
-    file_path = os.path.join('files', file_name)
+
+    file_path = os.path.join(settings.MEDIA_ROOT, os.path.join('files', file_name))
+    # file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
+    print 'os path', file_path
     response = FileResponse(open(file_path, 'rb'))
     response['Content-type'] = 'application/vnd.ms-excel'
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)
@@ -993,7 +1045,7 @@ def view_message(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/view_message.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 def manage_test(request):
@@ -1001,7 +1053,7 @@ def manage_test(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/view_test.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
 
 def edit_test(request, test_id):
@@ -1009,10 +1061,11 @@ def edit_test(request, test_id):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/edit_test.html')
-    c = {'id': id, 'test_id': test_id}
+    c = {'test_id': test_id}
     return HttpResponse(t.render(c))
 
 @csrf_exempt
+@check_identity()
 def checkscore(request):
     '''
 
@@ -1162,5 +1215,5 @@ def new_message(request):
     if id == -1:
         return HttpResponse('Access denied')
     t = get_template('teacher/edit_message.html')
-    c = {'id': id}
+    c = {}
     return HttpResponse(t.render(c))
