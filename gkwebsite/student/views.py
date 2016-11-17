@@ -79,6 +79,8 @@ def back_to_profile(request, id):
         'estimateScore': getStudentEstimateScore(stu.getStudentAll(account)),
         'estimateRank': str(rank) + '/' + str(tmp)
     }
+    if dic['estimateScore'] == '-1':
+        dic['estimateScore'] = ' '
     group_list = stu.getStudentGroupIDListString(student).split(' ')
     for i in range(1, 6):
         if i < len(group_list):
@@ -174,12 +176,17 @@ def student_center(request):
     return HttpResponse(t.render(c))
 
 @check_identity('student')
+@detect_mobile
 def student_score(request):
     t = get_template('student/score.html')
     id = request.session.get('student_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
     c = {'id': id}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
     return HttpResponse(t.render(c))
 
 @check_identity('student')
@@ -195,6 +202,10 @@ def student_rank(request):
     rank_list = []
     score = getStudentEstimateScore(student)
     rank, sum_rank = stu.getStudentEstimateRank(student)
+    if score == '-1':
+        score = '0'
+        rank = '0'
+        sum_rank = '0'
 
     name_list.append(u'总成绩（审核通过）')
     score_list.append(score)
@@ -218,6 +229,7 @@ def student_rank(request):
     return render(request, 'student/rank.html', {'dict': listall, 'id': id})
 
 @check_identity('student')
+@detect_mobile
 def student_admit(request):
     '''
 
@@ -233,10 +245,17 @@ def student_admit(request):
     if info.strip() == '' or info.strip() == "0":
         info = u'暂时还没有您的录取信息，请耐心等待老师添加'
     admition = info
+    c={'admition': admition}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
+    
     return render(request,
-                  'student/admit.html', {'admition': admition, 'id':id})
+                  'student/admit.html', c)
 
 @check_identity('student')
+@detect_mobile
 def student_contact(request):
     '''
                 后端需要在这里改代码，从数据库读取正确的dict，并返回
@@ -265,9 +284,14 @@ def student_contact(request):
         phone = tmp_dic[Volunteer.PHONE]
         email = tmp_dic[Volunteer.EMAIL]
         address = tmp_dic[Volunteer.ADDRESS]
-        dict = {'profession':u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
+        dict = {'profession': u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
         list.append(dict)
-    return render(request,'student/contact.html', {'dict': list, 'id':id})
+    c={'dict': list }
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
+    return render(request,'student/contact.html', c)
 
 
 def student_logout(request):
@@ -278,6 +302,7 @@ def student_logout(request):
     return redirect('/login')
 
 @csrf_exempt
+@detect_mobile
 def profile(request):
     weichatopenid(request)
     id = request.session.get('student_id', -1)
@@ -316,6 +341,7 @@ def profile(request):
         if info_dict['realScore'].strip() == '':
             info_dict['realScore'] = '0'
         print 'phone ', info_dict.get('tutorPhone')
+        print 'province baiyunren', int(info_dict.get('province'))
         dic = {
             'name': info_dict.get('name'),
             'identification': info_dict.get('identification'),
@@ -346,17 +372,6 @@ def profile(request):
             'majorSelect5': int(info_dict.get('majorSelect5')),
             'majorSelect6': int(info_dict.get('majorSelect6')),
 
-            # 'testScore1': int(info_dict.get('testScore1')),
-            # 'testScore2': int(info_dict.get('testScore2')),
-            # 'testScore3': int(info_dict.get('testScore3')),
-
-            # 'rank1': int(info_dict.get('rank1')),
-            # 'rank11': int(info_dict.get('rank11')),
-            # 'rank2': int(info_dict.get('rank2')),
-            # 'rank22': int(info_dict.get('rank22')),
-            # 'rank3': int(info_dict.get('rank3')),
-            # 'rank33': int(info_dict.get('rank33')),
-
             'realScore': int(info_dict.get('realScore')),
             # 'relTeacher': info_dict.get('relTeacher'),
             'comment': info_dict.get('comment'),
@@ -365,8 +380,8 @@ def profile(request):
         }
         # print 'wocao ni mei', dic
         try:
-            birth_list = info_dict['birth'].split('/')
-            dic['birth'] = datetime.date(int(birth_list[2]), int(birth_list[0]), int(birth_list[1]))
+            birth_list = info_dict['birth'].split('-')
+            dic['birth'] = datetime.date(int(birth_list[0]), int(birth_list[1]), int(birth_list[2]))
         except:
             dic['success'] = 'N'
             dic['message'] = u'日期设置不正确，请重新输入'
@@ -433,7 +448,7 @@ def profile(request):
             'identification': stu_dic[Student.ID_NUMBER],
             'sex': stu_dic[Student.SEX],
             'nation': stu_dic[Student.NATION],
-            'birth': stu_dic[Student.BIRTH].strftime("%m/%d/%Y"),
+            'birth': stu_dic[Student.BIRTH].strftime("%Y-%m-%d"),
             'province': stu_dic[Student.PROVINCE],
             'phone': stu_dic[Student.PHONE],
             'email': stu_dic[Student.EMAIL],
@@ -457,6 +472,8 @@ def profile(request):
             'estimateScore': getStudentEstimateScore(stu.getStudentAll(account)),
             'estimateRank': str(rank)+'/'+str(tmp)
         }
+        if dic['estimateScore'] == '-1':
+            dic['estimateScore'] = u'还没有估分啊亲'
         group_list = stu.getStudentGroupIDListString(student).split(' ')
         for i in range(1, 6):
             if i < len(group_list):
@@ -470,7 +487,12 @@ def profile(request):
         print 'jiao baba', dic
         if 'auth' in request.GET:
             dic['auth'] = '0'
-        return render(request, 'student/userinfo.html', {'dict': dic, 'id':id})
+        c={'dict': dic}
+        if request.mobile:
+            c['mobile'] = "Y"
+        else:
+            c['mobile'] = "N"
+        return render(request, 'student/userinfo.html', c)
 
 
 
@@ -538,10 +560,16 @@ def get_all_tests(request):
 
 @csrf_exempt
 @check_identity('student')
+@detect_mobile
 def do_test(request):
     test_name = request.GET.get('test_name')
     t = get_template('student/do_test.html')
-    return HttpResponse(t.render({'test_name': test_name}))
+    c={'test_name': test_name}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
+    return HttpResponse(t.render(c))
     # return render(request, 'student/do_test.html')
     # return HttpResponse(t.render({}))
 
@@ -604,10 +632,10 @@ def get_problem_info(request):
        'problem_type': CATEGORY_LIST[pic_dic[Picture.CATEGORY]],
        'problem_full_score': pic_dic[Picture.SCORE],
 
-    'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images') +pic_name}
-    # 'problem_pic': '/static/images/' + pic_name}
+    # 'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images/') +pic_name}
+    'problem_pic':  '/media/images/' + pic_name}
+    # 'problem_pic':  '/static/images/' + pic_name}
 
-    print 'get ', os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + pic_name
     return JsonResponse({'problem_info': dic})
 
 @csrf_exempt
@@ -658,12 +686,17 @@ def get_last_estimate_score(stu_id, test_id):
 
 @csrf_exempt
 @check_identity('student')
+@detect_mobile
 def message(request):
     t = get_template('student/message.html')
     id = request.session.get('student_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
     c = {'id': id}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
     return HttpResponse(t.render(c))
 
 
@@ -678,10 +711,9 @@ def get_all_message(request):
     id = int(id)
     dic = []
     notice_list = back.getNoticebyDict({})
-    # print 'notice_list', len(notice_list)
     for notice in notice_list:
         info_dic = back.getNoticeAllDictByObject(notice)
-        print info_dic
+        # print info_dic
         try:
             rece_stu_list = eval(info_dic[Notice.RECEIVE_STU])
         except:

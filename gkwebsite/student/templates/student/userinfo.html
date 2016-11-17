@@ -301,7 +301,9 @@
 						$( "#datepicker" ).datepicker(
                                 {
                                     changeMonth: true,
-                                    changeYear: true
+                                    changeYear: true,
+                                    dateFormat: 'yy-mm-dd'
+
                                 }
                         );
 					  });
@@ -337,11 +339,11 @@
             var birth = $("#datepicker").val();
             var phone = $("#phone").val();
               if (phone.length != 11){
-                  alert("请输入11位手机号");
+                  alert("请输入11位个人手机号");
                   return;
               }
                 if (r.test(phone) == false){
-                alert("手机号中只能包含数字");
+                alert("个人手机号中只能包含数字");
                   return;
             }
            var wenli = $("#priority").val();
@@ -353,22 +355,22 @@
             var dadName = $("#dadName").val();
             var dadPhone = $("#dadPhone").val();
                             if (dadPhone.length != 11){
-                  alert("请输入11位手机号");
+                  alert("请输入11位父亲手机号");
                   return;
               }
   if (r.test(dadPhone) == false){
-                alert("手机号中只能包含数字");
+                alert("父亲手机号中只能包含数字");
                   return;
             }
             var momName = $("#momName").val();
             var momPhone = $("#momPhone").val();
                             if (momPhone.length != 11){
-                  alert("请输入11位手机号");
+                  alert("请输入11位母亲手机号");
                   return;
               }
             //str为你要判断的字符 执行返回结果 true 或 false
               if (r.test(momPhone) == false){
-                alert("手机号中只能包含数字");
+                alert("母亲手机号中只能包含数字");
                   return;
             }
             var school = $("#school").val();
@@ -378,11 +380,11 @@
             var tutorPhone = $("#tutorPhone").val();
                //str为你要判断的字符 执行返回结果 true 或 false
               if (r.test(tutorPhone) == false){
-                alert("手机号中只能包含数字");
+                alert("班主任手机号中只能包含数字");
                   return;
             }
                         if (tutorPhone.length != 11){
-                  alert("请输入11位手机号");
+                  alert("请输入11位班主任手机号");
                   return;
               }
             var majorSelect1 = $("#majorSelect1").val();

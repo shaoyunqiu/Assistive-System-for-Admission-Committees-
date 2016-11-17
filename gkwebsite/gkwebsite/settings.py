@@ -158,6 +158,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_files")
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "gkwebsite")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "gkwebsite_pic")
 
 

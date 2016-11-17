@@ -147,9 +147,9 @@ def getStudentAllDictByAccount(account):
     major_int_list = dict[Student.MAJOR]
     for i in range(0, 10):
         major_int_list.append(0)
-        dict[Student.TEST_SCORE_LIST].append(0)
-        dict[Student.RANK_LIST].append(0)
-        dict[Student.SUM_NUMBER_LIST].append(0)
+        dict[Student.TEST_SCORE_LIST].append(-1)
+        dict[Student.RANK_LIST].append(-1)
+        dict[Student.SUM_NUMBER_LIST].append(-1)
     dict[Volunteer.MAJOR] = []
     for item in major_int_list:
         numitem = (int)(item)
@@ -371,6 +371,8 @@ def getStudentEstimateRank(student):
 # modify by shaoyunqiu ,chenge the return value to match the get_estimate_rank_every
     try:
         myscore = int(getStudentEstimateScore(student))
+        if myscore == -1:
+            return '0', '0'
         '''if myscore == 0:
             return str(all_student-no_gufen_number), str(all_student-no_gufen_number)
         else:'''
@@ -479,13 +481,19 @@ def get_all_student_score_and_rank(province):
 
 def output_all_student_info(filename):
     student_list = getAllInStudent()
-    title_list = [u'姓名', u'性別', u'出生年月', u'省份', u'身份证号', u'类型']
+    title_list = [u'姓名', u'性別', u'出生年月', u'省份', u'身份证号',
+                  u'类型', u'民族', u'学校', u'班级', u'地址',
+                  u'手机', u'邮箱', u'母亲姓名', u'母亲手机', u'父亲姓名',
+                  u'父亲手机', u'班主任姓名', u'班主任手机',
+                  u'估分', u'实考分',
+                  u'专业一', u'专业二',u'专业三', u'专业四',u'专业五',]
 
     name_list = []
     sex_list = []
     birth_list = []
     province_list = []
     id_number_list = []
+
     type_list = []
     nation_list = []
     school_list = []
@@ -494,32 +502,142 @@ def output_all_student_info(filename):
 
     phone_list = []
     email_list = []
+    mom_name_list = []
+    dad_name_list = []
+    mom_phone_list = []
+
+    dad_phone_list = []
+    tutor_name_list  = []
+    tutor_phone_list = []
+
+    estimate_list = []
+    real_list= []
+
+    major1_list = []
+    major2_list = []
+    major3_list = []
+    major4_list = []
+    major5_list = []
+
+
+
+
 
     for student in student_list:
+        # try:
+        name = getattr(student, Student.REAL_NAME, '')
+        sex = SEX_LIST[getattr(student, Student.SEX, 0)]
+        birth = getattr(student, Student.BIRTH).strftime('%Y-%m-%d')
+        province = PROVINCE_LIST[getattr(student, Student.PROVINCE, 0)]
+        id_number = getattr(student, Student.ID_NUMBER, '')
+        type = TYPE_LIST[getattr(student, Student.TYPE, 0)]
+
+        account = getattr(student, Student.ACCOUNT)
+        info_dic = getStudentAllDictByAccount(account)
+
+        nation = NATION_LIST[int(info_dic[Student.NATION]['nation'])]
+        school = info_dic[Student.SCHOOL]
+        classrom = info_dic[Student.CLASSROOM]
+        address = info_dic[Student.ADDRESS]
+        phone = info_dic[Student.PHONE]
+        email = info_dic[Student.EMAIL]
+        mom_name = info_dic[Student.MOM_NAME]
+        dad_name = info_dic[Student.DAD_NAME]
+        mom_phone = info_dic[Student.MOM_PHONE]
+        dad_phone = info_dic[Student.DAD_PHONE]
+        tutor_name = info_dic[Student.TUTOR_NAME]
+        tutor_phone = info_dic[Student.TUTOR_PHONE]
+        estimate = getStudentEstimateScore(student)
+        if estimate == '-1' or estimate == -1:
+            estimate = ' '
+        real = info_dic[Student.REAL_SCORE]
         try:
-            name = getattr(student, Student.REAL_NAME, '')
-            sex = SEX_LIST[getattr(student, Student.SEX, 0)]
-            birth = getattr(student, Student.BIRTH).strftime('%Y-%m-%d')
-            province = PROVINCE_LIST[getattr(student, Student.PROVINCE, 0)]
-            id_number = getattr(student, Student.ID_NUMBER, '')
-            type = TYPE_LIST[getattr(student, Student.TYPE, 0)]
+            major1 = MAJOR_LIST[int(info_dic[Student.MAJOR][0]['department'])]
         except:
-            continue
+            major1 = 0
+        try:
+            major2 = MAJOR_LIST[int(info_dic[Student.MAJOR][1]['department'])]
+        except:
+            major2 = ''
+        try:
+            major3 = MAJOR_LIST[int(info_dic[Student.MAJOR][2]['department'])]
+        except:
+            major3 = ''
+        try:
+            major4 = MAJOR_LIST[int(info_dic[Student.MAJOR][3]['department'])]
+        except:
+            major4 = ''
+        try:
+            major5 = MAJOR_LIST[int(info_dic[Student.MAJOR][4]['department'])]
+        except:
+            major5 = ''
+
+        # except:
+        #     continue
 
         name_list.append(name)
         sex_list.append(sex)
         birth_list.append(birth)
         province_list.append(province)
         id_number_list.append(id_number)
+
         type_list.append(type)
+        nation_list.append(nation)
+        school_list.append(school)
+        classroom_list.append(classrom)
+        address_list.append(address)
+
+        phone_list.append(phone)
+        email_list.append(email)
+        mom_name_list.append(mom_name)
+        mom_phone_list.append(mom_phone)
+        dad_name_list.append(dad_name)
+
+        dad_phone_list.append(dad_phone)
+        tutor_name_list.append(tutor_name)
+        tutor_phone_list.append(tutor_phone)
+
+        estimate_list.append(estimate)
+        real_list.append(real)
+
+        major1_list.append(major1)
+        major2_list.append(major2)
+        major3_list.append(major3)
+        major4_list.append(major4)
+        major5_list.append(major5)
 
     ret_list = []
+
     ret_list.append(name_list)
     ret_list.append(sex_list)
     ret_list.append(birth_list)
     ret_list.append(province_list)
     ret_list.append(id_number_list)
+
     ret_list.append(type_list)
+    ret_list.append(nation_list)
+    ret_list.append(school_list)
+    ret_list.append(classroom_list)
+    ret_list.append(address_list)
+
+    ret_list.append(phone_list)
+    ret_list.append(email_list)
+    ret_list.append(mom_name_list)
+    ret_list.append(mom_phone_list)
+    ret_list.append(dad_name_list)
+
+    ret_list.append(dad_phone_list)
+    ret_list.append(tutor_name_list)
+    ret_list.append(tutor_phone_list)
+
+    ret_list.append(estimate_list)
+    ret_list.append(real_list)
+
+    ret_list.append(major1_list)
+    ret_list.append(major2_list)
+    ret_list.append(major3_list)
+    ret_list.append(major4_list)
+    ret_list.append(major5_list)
 
     if os.path.exists(filename):
         os.remove(filename)

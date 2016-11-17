@@ -59,17 +59,27 @@ def isExistRegisterCode(code):
         return True
     return False
 
+def swap_str(str, i,j):
+    ci = str[i]
+    cj = str[j]
+    return str[:i-1] + cj + str[i+1:j-1] + ci + str[j-1:]
+
+
 def tmpcreateNewRegisterCode():
     code = ''
     code = code + time.strftime('%Y', time.localtime(time.time()))
-    code = code + '-'
-    code = code + 'GKZS' + '-'
-    code = code + str(str(len(getAllInRegisterCode())).zfill(7))
+    code = code + 'GKZS'
+    code = code + str(str(len(getAllInRegisterCode()) + 139246).zfill(7))
     code = code + random_str(5)
-    ret = code[:-8] + '-' + code[-8:-4] + '-' + code[-4:]
 
-    ret = ret.replace('O', '0')
-    ret = ret.replace('o','0')
+    code = code[:9] + (code[10] + 'B') + code[11:]
+    code = code[:11] + (code[12] + 'C') + code[13:]
+    code = swap_str(code, 10, 17)
+
+    ret = code[:-16]+ '-' +code[-16:-12] + '-' + code[-12:-8] + '-' + code[-8:-4] + '-' + code[-4:]
+    ret = ret.upper()
+    ret = ret.replace('O','0')
+
     return ret
 
 def createRegisterCode(code):

@@ -12,7 +12,7 @@ import backend as back
 import os
 from teacher.views import generateTimerXLS
 from django.conf import settings
-
+from random import shuffle
 # Create your views here.
 
 
@@ -56,6 +56,9 @@ def student_list_all(request):
     # completed by evan69
     # by dqn14 Oct 12, 2016
     # use this if-else to block violent access
+    # stu.output_all_student_info('ememe.xls')
+
+
     if request.is_ajax() and request.method == 'POST':
         t = []
         stu_list = stu.getAllInStudent()
@@ -189,8 +192,12 @@ def add_student(request):
         for i in range(0, num):
             code = str(reg.createNewRegisterCode())
             c = {'code': code}
-            t.append(c)
+            # t.append(c)
             codelist.append(code)
+
+        shuffle(codelist)
+        for code in codelist:
+            t.append({'code': code})
         id = (str)(request.session['teacher_id'])
         generateExcel(request, id, '', '', 'sheet1', [codelist], [u'注册码'])
         return JsonResponse(t, safe=False)
@@ -243,13 +250,13 @@ def export_all_student(request):
         # file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
 
         t={}
-        try:
-            print "start-----", file_path
-            stu.output_all_student_info(file_path)
-            print "end-----"
-            t['success'] = 'Y'
-        except:
-            t['success'] = 'N'
+        # try:
+        print "start-----", file_path
+        stu.output_all_student_info(file_path)
+        print "end-----"
+        t['success'] = 'Y'
+        # except:
+        #     t['success'] = 'N'
         t['filename'] = file_name
 
         return JsonResponse(t)
@@ -272,8 +279,37 @@ def get_student_alert(request):
     # by dqn14 Nov 16, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
+
         t = {}
         t["message"] = "3"
+
+        id = request.session.get('student_id', -1)
+        if id == -1:
+            return HttpResponse('Access denied')
+        id = int(id)
+        unread_number = 0
+        notice_list = back.getNoticebyDict({})
+        for notice in notice_list:
+            info_dic = back.getNoticeAllDictByObject(notice)
+            # print info_dic
+            try:
+                rece_stu_list = eval(info_dic[Notice.RECEIVE_STU])
+            except:
+                print 'bug'
+                rece_stu_list = []
+
+            if id in rece_stu_list or str(id) in rece_stu_list:
+                send_tch_account = tch.idToAccountTeacher(int(info_dic[Notice.TEACHER_ID]))
+
+                unread_number = unread_number + 1
+                try:
+                    stu_readed_list = eval(stu.getStudent(stu.idToAccountStudent(id), Student.READED))
+                except:
+                    stu_readed_list = []
+                if info_dic[Notice.ID] in stu_readed_list:
+                    unread_number = unread_number - 1
+
+        t["message"] = str(unread_number)
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -422,7 +458,9 @@ def remove_test(request):
         t['message'] = 'ok'
 
 
-        student_list = stu.getAllInStudent()
+        # student_list = stu.getAllInStudent()
+        student_list = stu.getStudentbyField(Student.PROVINCE, province)
+
         for student in student_list:
             account = getattr(student, Student.ACCOUNT)
             estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
@@ -699,7 +737,14 @@ def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        group_id = int(request.POST.get('group_id'))
+        print 'sdfsdf', request.POST.get('group_id')
+        try:
+            group_id = int(request.POST.get('group_id').split('、')[0])
+        except:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'失败亲'
+            return JsonResponse(t)
         student_id_num = request.POST.get('student_num')
 
         vol_list = vol.getVolunteerbyField(Volunteer.STUDENT_ID, student_id_num)
