@@ -734,7 +734,14 @@ def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        group_id = int(request.POST.get('group_id'))
+        print 'sdfsdf', request.POST.get('group_id')
+        try:
+            group_id = int(request.POST.get('group_id').split('、')[0])
+        except:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'失败亲'
+            return JsonResponse(t)
         student_id_num = request.POST.get('student_num')
 
         vol_list = vol.getVolunteerbyField(Volunteer.STUDENT_ID, student_id_num)
