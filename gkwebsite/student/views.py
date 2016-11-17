@@ -341,6 +341,7 @@ def profile(request):
         if info_dict['realScore'].strip() == '':
             info_dict['realScore'] = '0'
         print 'phone ', info_dict.get('tutorPhone')
+        print 'province baiyunren', int(info_dict.get('province'))
         dic = {
             'name': info_dict.get('name'),
             'identification': info_dict.get('identification'),
@@ -447,7 +448,7 @@ def profile(request):
             'identification': stu_dic[Student.ID_NUMBER],
             'sex': stu_dic[Student.SEX],
             'nation': stu_dic[Student.NATION],
-            'birth': stu_dic[Student.BIRTH].strftime("%m/%d/%Y"),
+            'birth': stu_dic[Student.BIRTH].strftime("%Y-%m-%d"),
             'province': stu_dic[Student.PROVINCE],
             'phone': stu_dic[Student.PHONE],
             'email': stu_dic[Student.EMAIL],
