@@ -43,6 +43,13 @@
                <input type="text" class="form-control" id="registerCode" name="registerCode" value="{{student.registerCode}}" />
               </div>
              </div>
+                                 <div class="form-group">
+              <label style="text-align:left;padding-left: 2em;" for="estimateScore" class="col-sm-2 control-label">估分：</label>
+              <div class="col-sm-10">
+               <input type="text" class="form-control" id="estimateScore" name="estimateScore" value="{{student.estimateScore}}" />
+              </div>
+             </div>
+
              </fieldset>
 
 
@@ -97,12 +104,6 @@
               <div class="col-sm-10">
               <input type="text" required class="form-control" id="birth" name="birth" value="{{student.birth}}" />
 
-              </div>
-             </div>
-                    <div class="form-group">
-              <label style="text-align:left;padding-left: 2em;" for="estimateScore" class="col-sm-2 control-label">估分：</label>
-              <div class="col-sm-10">
-               <input type="text" class="form-control" id="estimateScore" name="estimateScore" value="{{student.estimateScore}}" />
               </div>
              </div>
              <div class="form-group">
@@ -834,5 +835,18 @@
           }
 
  </script>
+
+ <script>
+					  $(function() {
+						$( "#birth" ).datepicker(
+                                {
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    dateFormat: 'yy-mm-dd'
+                                }
+                        );
+					  });
+			  </script>
+
  </body>
 </html>

@@ -944,7 +944,7 @@ def distribute_student(request):
         print newteamname
         back.createGroupbyDict({Group.NAME: newteamname})
         num = len(back.getGroupbyDict({}))
-        return JsonResponse({'teamnum': str(num) + ' ' + newteamname})
+        return JsonResponse({'teamnum': str(num) + '、' + newteamname})
     '''
     GET id teamid 删除
     '''

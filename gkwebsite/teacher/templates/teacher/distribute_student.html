@@ -21,8 +21,8 @@
           </div>
           <!--row-->
          <div class="row" id="newteam" style="padding-bottom: 10px;">
-             <div class="col-md-4">
-                 <input type="text" id="newteamname" name="newteamname" style="width: 100%;">
+             <div class="col-md-6">
+                 <input type="text" id="newteamname" name="newteamname" style="width: 100%;" placeholder="请输入组名，只能含有汉字、字母、数字，不能有任何标点和空格。可以为空">
              </div>
                <div class="col-md-4">
                 <button onclick="newteam()" type="button">新建一组</button>
@@ -104,6 +104,12 @@
       
     }
         function newteam() {
+            var newteamname = $("#newteamname").val();
+            pattem = /^[a-zA-z0-9\u4E00-\u9FA5]*$/;
+            if (pattem.test(newteamname) == false){
+                alert("新建组名中只能包含汉字、字母、数字，不能含有标点、空格等特殊字符。请检查！");
+                return;
+            }
             data={'newteam':1, 'newteamname':$("#newteamname").val()};
             $.ajax({
                     type: 'GET',
@@ -113,6 +119,7 @@
                     success: function(data) {
                         teamnum = data['teamnum'];
                         alert('新建分组 “' + teamnum + '” 成功');
+                        $("#newteamname").val('');
                         var newNode = document.createElement("div");
                         var str = "<div class=\"row\">"+
                             "<div class=\"col-md-12\">"+
