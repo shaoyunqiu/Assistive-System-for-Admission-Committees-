@@ -29,7 +29,7 @@ DEBUG = True
 # These people will get a e-mail notice when an error occurs.
 SERVER_EMAIL = 'site@daydayup.com'
 ADMINS = [('Qingnan Duan', 'dqn14@mails.tsinghua.edu.cn'), ('Yunren Bai', '360559261@qq.com'), ('Haoyang Li', 'lihy45@163.com'), ('Yufan Hou', 'evan9669@126.com'), ('Yunqiu Shao', 'shaoyunqiu@163.com')]
-#MANAGERS = [('Qingnan Duan', 'dqn14@mails.tsinghua.edu.cn'), ('Yunren Bai', '360559261@qq.com'), ('Haoyang Li', 'lihy45@163.com'), ('Yufan Hou', 'evan9669@126.com'), ('Yunqiu Shao', 'shaoyunqiu@163.com')]
+MANAGERS = [('Qingnan Duan', 'dqn14@mails.tsinghua.edu.cn'), ('Yunren Bai', '360559261@qq.com'), ('Haoyang Li', 'lihy45@163.com'), ('Yufan Hou', 'evan9669@126.com'), ('Yunqiu Shao', 'shaoyunqiu@163.com')]
 
 ALLOWED_HOSTS = ['gaokao.northeurope.cloudapp.azure.com', 'localhost', '127.0.0.1', '[::1]']
 
