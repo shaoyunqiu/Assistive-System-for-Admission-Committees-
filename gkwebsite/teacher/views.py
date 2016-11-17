@@ -757,7 +757,12 @@ def upload(request):
             Picture.CATEGORY: int(category),
         }
 
-        if len(pic.getPicturebyDict({Picture.NUMBER: int(number)})) > 0:
+        if len(pic.getPicturebyDict({
+            Picture.YEAR: int(year),
+            Picture.PROVINCE: int(province),
+            Picture.SUBJECT: int(subject),
+            Picture.NUMBER: int(number)
+        })) > 0:
             return JsonResponse({'result': '禁止重复上传',
                                  'url': '%s_%s_%s' % (str(YEAR_LIST[dic[Picture.YEAR]]),
                                     SHITI_LIST[dic[Picture.PROVINCE]],
@@ -939,12 +944,13 @@ def distribute_student(request):
     '''
        GET newteam 新建组
     '''
+    print request.GET
     if ('newteam' in request.GET) and ('newteamname' in request.GET):
         newteamname = request.GET['newteamname']
         print newteamname
         back.createGroupbyDict({Group.NAME: newteamname})
         num = len(back.getGroupbyDict({}))
-        return JsonResponse({'teamnum': str(num) + ' ' + newteamname})
+        return JsonResponse({'teamnum': str(num) + '、' + newteamname})
     '''
     GET id teamid 删除
     '''
