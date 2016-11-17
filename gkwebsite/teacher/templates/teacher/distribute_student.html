@@ -35,7 +35,7 @@
                 <div class="panel-heading">
                   <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#team{{team.teamleader}}">{{team.teamleader}}</a>
-                    <button class="btn btn-link" onclick="setVolunteer({{team.teamleader}})">给该组增加志愿者</button></h4>
+                    <button class="btn btn-link" onclick="setVolunteer('{{team.teamleader}}')">给该组增加志愿者</button></h4>
 
                   <div id="team{{team.teamleader}}" class="panel-collapse collapse">
                     <div class="panel-body" id="body{{team.teamleader}}">
@@ -127,7 +127,7 @@
                                 "<div class=\"panel-heading\">"+
                                  "<h4 class=\"panel-title\">"+
                                     "<a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#team"+teamnum+"\">"+teamnum+" </a>"+
-                                    '<button class="btn btn-link" onclick="setVolunteer(' + teamnum + ')">给该组增加志愿者</button></h4>'+
+                                    '<button class="btn btn-link" onclick="setVolunteer(\'' + teamnum + '\')">给该组增加志愿者</button></h4>'+
                                         "<div id=\"team"+teamnum+"\" class=\"panel-collapse collapse\">"+
                                     "<div class=\"panel-body\" id=\"body" + teamnum+ "\">"+
                                             "</div>"+
