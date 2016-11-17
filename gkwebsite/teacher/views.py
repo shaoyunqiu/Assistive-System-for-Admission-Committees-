@@ -951,7 +951,13 @@ def distribute_student(request):
     if ('id' in request.GET) and ('teamid' in request.GET)and ('class' in request.GET):
 
         print 'cao ', request.GET
-        group_id = int(request.GET['teamid'])
+
+        nimei = 0
+        try:
+            nimei = int(request.GET['teamid'].split('、')[0])
+        except:
+            nimei = -1
+        group_id = nimei
         isDelStudent = int(request.GET['class'])
         if isDelStudent == 1:
             stu_id = str(request.GET['id'])
@@ -982,10 +988,10 @@ def distribute_student(request):
         for group in group_list:
             group_dic = back.getGroupAllDictByObject(group)
             team = {}
-            team['teamleader'] = str(group_dic[Group.ID])
+            # team['teamleader'] = str(group_dic[Group.ID])
             team['teamname'] = str(group_dic[Group.NAME])
 
-            team['teamleader'] = str(group_dic[Group.ID]) + ' ' + str(group_dic[Group.NAME])
+            team['teamleader'] = str(group_dic[Group.ID]) + '、' + str(group_dic[Group.NAME])
 
             team['volunteer'] = {}
             team['student'] = {}
