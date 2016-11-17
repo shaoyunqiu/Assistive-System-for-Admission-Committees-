@@ -706,13 +706,12 @@ def profile(request):
 def handle_uploaded_img(imgFile, year, province, subject, number, score, category):
     imgName = imgFile.name
 
-    # path = os.path.join(settings.MEDIA_ROOT, 'student/static_img/images/') + get_picture_path(year, province, subject, number, score, category)
-    path = os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + get_picture_path(year, province, subject,
-                                                                                              number, score, category)
+    _path = os.path.join(settings.MEDIA_ROOT, 'images/') + get_picture_path(year, province, subject, number, score, category)
+    # path = os.path.join(settings.MEDIA_ROOT, 'student/static/images/') + get_picture_path(year, province, subject,number, score, category)
 
-    print 'upload', path
+    # print 'upload', path
 
-    dst = open(path, 'wb')
+    dst = open(_path , 'wb')
     dst.write(imgFile.read())
 
 

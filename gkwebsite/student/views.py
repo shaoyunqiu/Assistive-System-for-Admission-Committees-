@@ -633,8 +633,8 @@ def get_problem_info(request):
        'problem_full_score': pic_dic[Picture.SCORE],
 
     # 'problem_pic': os.path.join(settings.MEDIA_ROOT, 'student/static/images/') +pic_name}
-    # 'problem_pic':  '/static_img/images/' + pic_name}
-    'problem_pic':  '/static/images/' + pic_name}
+    'problem_pic':  '/media/images/' + pic_name}
+    # 'problem_pic':  '/static/images/' + pic_name}
 
     return JsonResponse({'problem_info': dic})
 
