@@ -472,8 +472,14 @@ def profile(request):
             'estimateScore': getStudentEstimateScore(stu.getStudentAll(account)),
             'estimateRank': str(rank)+'/'+str(tmp)
         }
+
+
         if dic['estimateScore'] == '-1':
             dic['estimateScore'] = u'还没有估分啊亲'
+        if dic['realScore'] == '-1':
+            dic['realScore'] = ''
+
+
         group_list = stu.getStudentGroupIDListString(student).split(' ')
         for i in range(1, 6):
             if i < len(group_list):
