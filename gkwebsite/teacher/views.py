@@ -22,7 +22,10 @@ from database.my_field import *
 def check_identity():
     def decorator(func):
         def wrapper(request, *args, **kw):
-            if str(request.session.get('teacher_id', -1)) == '-1':
+            try:
+                if str(request.session.get('teacher_id', -1)) == '-1':
+                    return redirect('/login/')
+            except:
                 return redirect('/login/')
             return func(request, *args, **kw)
         return wrapper
@@ -284,6 +287,7 @@ def student_info_edit(request):
         stu.setStudent(account, Student.MOM_PHONE, dic['momPhone'])
         stu.setStudent(account, Student.SCHOOL, dic['school'])
         stu.setStudent(account, Student.CLASSROOM, dic['stu_class'])
+        print 'byr bug', dic['stu_class']
         stu.setStudent(account, Student.TUTOR_NAME, dic['tutorName'])
         stu.setStudent(account, Student.TUTOR_PHONE, dic['tutorPhone'])
         stu.setStudent(account,
@@ -351,7 +355,7 @@ def student_info_edit(request):
             Student.SEX: stu_dic[Student.SEX],
             Student.NATION: stu_dic[Student.NATION],
             Student.SCHOOL: stu_dic[Student.SCHOOL],
-            Student.CLASSROOM: stu_dic[Student.CLASSROOM],
+            'stu_class': stu_dic[Student.CLASSROOM],
 
             Student.ADDRESS: stu_dic[Student.ADDRESS],
             Student.PHONE: stu_dic[Student.PHONE],
@@ -379,6 +383,7 @@ def student_info_edit(request):
             Student.DAD_NAME: stu_dic[Student.DAD_NAME],
             Student.DUIYING_TEACHER: stu_dic[Student.DUIYING_TEACHER],
         }
+        # print 'byr lasdjf', Student.CLASSROOM, dic[Student.CLASSROOM]
 
         if dic[Student.ESTIMATE_SCORE] == '-1':
             dic[Student.ESTIMATE_SCORE] = ' '
