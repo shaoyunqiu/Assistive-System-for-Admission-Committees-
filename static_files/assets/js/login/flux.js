@@ -9,7 +9,7 @@ $(document).ready(function() {
             input.removeClass("valid").addClass("invalid")
         }
     })
-});
+});/*
 $(function() {
     $('#tou').avgrund({
         width: 380,
@@ -19,7 +19,7 @@ $(function() {
         showCloseText: 'Close',
         template: '<div class="tou_popup"><center><h2>Flux - Terms of Use</h2></center><br><p>By accessing this web site, you are agreeing to be bound by these web site Terms and Conditions of Use, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this web site are protected by applicable copyright and trade mark law.</p><br><center><a href="http://termsfeed.com/terms-service/generator/#get_started" target="_blank">Terms of use generator</a></center></div>'
     })
-});
+});*/
 $(function() {
     $('#about').avgrund({
         width: 380,
@@ -27,7 +27,8 @@ $(function() {
         holderClass: 'custom',
         showClose: true,
         showCloseText: 'Close',
-        template: '<div class="about_popup"><center><h2>Flux - About</h2></center><br><p>Lorem ipsum dolor sit amet, wisi aliquet accumsan magna purus nulla tincidunt. Malesuada quisque suspendisse nec lobortis, cursus nec rutrum duis commodo volutpat tempus, integer natoque lacinia sed, rutrum erat ipsum lobortis viverra. Gravida aliquet nostra commodo massa malesuada, dis facilisis sed, urna ultrices luctus vivamus, nam magnam. Ligula parturient ullamcorper arcu. Massa tortor in, ut erat dui, nascetur nunc velit arcu amet dictum id, placerat cras hymenaeos velit pellentesque, in nonummy. Elit pede a praesent ut in, maecenas nec ipsum inceptos.</p></div>'
+        template: '<div class="about_popup"><center><h2>早睡早起小组</h2></center><br>' +
+        '<p>这是一个辅助高考招生的系统，由早睡早起小组开发。</p></div>'
     })
 });
 $(function() {
@@ -37,7 +38,8 @@ $(function() {
         holderClass: 'custom',
         showClose: true,
         showCloseText: 'Close',
-        template: '<div class="contact_popup"><center><h2>Flux - Contact</h2></center><br><p>Lorem ipsum dolor sit amet, wisi aliquet accumsan magna purus nulla tincidunt. Malesuada quisque suspendisse nec lobortis, cursus nec rutrum duis commodo volutpat tempus, integer natoque lacinia sed, rutrum erat ipsum lobortis viverra. Gravida aliquet nostra commodo massa malesuada, dis facilisis sed, urna ultrices luctus vivamus, nam magnam. Ligula parturient ullamcorper arcu. Massa tortor in, ut erat dui, nascetur nunc velit arcu amet dictum id, placerat cras hymenaeos velit pellentesque, in nonummy. Elit pede a praesent ut in, maecenas nec ipsum inceptos.</p></div>'
+        template: '<div class="contact_popup"><center><h2>联系我们</h2></center><br>' +
+        '<p>开发人员：段清楠、白云仁、邵韵秋、李昊阳、侯禺凡</p></div>'
     })
 });
 $(function() {
@@ -47,7 +49,8 @@ $(function() {
         holderClass: 'custom',
         showClose: true,
         showCloseText: 'Close',
-        template: '<div class="info_popup"><center><h2>Flux - Info</h2></center><br><p>Lorem ipsum dolor sit amet, wisi aliquet accumsan magna purus nulla tincidunt. Malesuada quisque suspendisse nec lobortis, cursus nec rutrum duis commodo volutpat tempus, integer natoque lacinia sed, rutrum erat ipsum lobortis viverra. Gravida aliquet nostra commodo massa malesuada, dis facilisis sed, urna ultrices luctus vivamus, nam magnam. Ligula parturient ullamcorper arcu. Massa tortor in, ut erat dui, nascetur nunc velit arcu amet dictum id, placerat cras hymenaeos velit pellentesque, in nonummy. Elit pede a praesent ut in, maecenas nec ipsum inceptos.</p></div>'
+        template: '<div class="info_popup"><center><h2>相关信息</h2></center><br>' +
+        '<p><a href="http://www.tsinghua.edu.cn/publish/newthu/index.html">进入清华大学官网</a></p></div>'
     })
 });
 $(function() {
