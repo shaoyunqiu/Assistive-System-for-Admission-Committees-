@@ -12,7 +12,7 @@ import backend as back
 import os
 from teacher.views import generateTimerXLS
 from django.conf import settings
-
+from random import shuffle
 # Create your views here.
 
 
@@ -189,8 +189,12 @@ def add_student(request):
         for i in range(0, num):
             code = str(reg.createNewRegisterCode())
             c = {'code': code}
-            t.append(c)
+            # t.append(c)
             codelist.append(code)
+
+        shuffle(codelist)
+        for code in codelist:
+            t.append({'code': code})
         id = (str)(request.session['teacher_id'])
         generateExcel(request, id, '', '', 'sheet1', [codelist], [u'注册码'])
         return JsonResponse(t, safe=False)
@@ -451,7 +455,9 @@ def remove_test(request):
         t['message'] = 'ok'
 
 
-        student_list = stu.getAllInStudent()
+        # student_list = stu.getAllInStudent()
+        student_list = stu.getStudentbyField(Student.PROVINCE, province)
+
         for student in student_list:
             account = getattr(student, Student.ACCOUNT)
             estimate = eval(getattr(student, Student.ESTIMATE_SCORE))
@@ -728,7 +734,14 @@ def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        group_id = int(request.POST.get('group_id'))
+        print 'sdfsdf', request.POST.get('group_id')
+        try:
+            group_id = int(request.POST.get('group_id').split('、')[0])
+        except:
+            t = {}
+            t['success'] = 'N'
+            t['message'] = u'失败亲'
+            return JsonResponse(t)
         student_id_num = request.POST.get('student_num')
 
         vol_list = vol.getVolunteerbyField(Volunteer.STUDENT_ID, student_id_num)

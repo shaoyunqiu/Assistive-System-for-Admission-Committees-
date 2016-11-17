@@ -757,7 +757,12 @@ def upload(request):
             Picture.CATEGORY: int(category),
         }
 
-        if len(pic.getPicturebyDict({Picture.NUMBER: int(number)})) > 0:
+        if len(pic.getPicturebyDict({
+            Picture.YEAR: int(year),
+            Picture.PROVINCE: int(province),
+            Picture.SUBJECT: int(subject),
+            Picture.NUMBER: int(number)
+        })) > 0:
             return JsonResponse({'result': '禁止重复上传',
                                  'url': '%s_%s_%s' % (str(YEAR_LIST[dic[Picture.YEAR]]),
                                     SHITI_LIST[dic[Picture.PROVINCE]],
@@ -939,19 +944,26 @@ def distribute_student(request):
     '''
        GET newteam 新建组
     '''
+    print request.GET
     if ('newteam' in request.GET) and ('newteamname' in request.GET):
         newteamname = request.GET['newteamname']
         print newteamname
         back.createGroupbyDict({Group.NAME: newteamname})
         num = len(back.getGroupbyDict({}))
-        return JsonResponse({'teamnum': str(num) + ' ' + newteamname})
+        return JsonResponse({'teamnum': str(num) + '、' + newteamname})
     '''
     GET id teamid 删除
     '''
     if ('id' in request.GET) and ('teamid' in request.GET)and ('class' in request.GET):
 
         print 'cao ', request.GET
-        group_id = int(request.GET['teamid'])
+
+        nimei = 0
+        try:
+            nimei = int(request.GET['teamid'].split('、')[0])
+        except:
+            nimei = -1
+        group_id = nimei
         isDelStudent = int(request.GET['class'])
         if isDelStudent == 1:
             stu_id = str(request.GET['id'])
@@ -982,10 +994,10 @@ def distribute_student(request):
         for group in group_list:
             group_dic = back.getGroupAllDictByObject(group)
             team = {}
-            team['teamleader'] = str(group_dic[Group.ID])
+            # team['teamleader'] = str(group_dic[Group.ID])
             team['teamname'] = str(group_dic[Group.NAME])
 
-            team['teamleader'] = str(group_dic[Group.ID]) + ' ' + str(group_dic[Group.NAME])
+            team['teamleader'] = str(group_dic[Group.ID]) + '、' + str(group_dic[Group.NAME])
 
             team['volunteer'] = {}
             team['student'] = {}

@@ -379,8 +379,8 @@ def profile(request):
         }
         # print 'wocao ni mei', dic
         try:
-            birth_list = info_dict['birth'].split('/')
-            dic['birth'] = datetime.date(int(birth_list[2]), int(birth_list[0]), int(birth_list[1]))
+            birth_list = info_dict['birth'].split('-')
+            dic['birth'] = datetime.date(int(birth_list[0]), int(birth_list[1]), int(birth_list[2]))
         except:
             dic['success'] = 'N'
             dic['message'] = u'日期设置不正确，请重新输入'
