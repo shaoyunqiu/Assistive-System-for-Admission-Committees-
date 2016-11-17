@@ -147,9 +147,9 @@ def getStudentAllDictByAccount(account):
     major_int_list = dict[Student.MAJOR]
     for i in range(0, 10):
         major_int_list.append(0)
-        dict[Student.TEST_SCORE_LIST].append(0)
-        dict[Student.RANK_LIST].append(0)
-        dict[Student.SUM_NUMBER_LIST].append(0)
+        dict[Student.TEST_SCORE_LIST].append(-1)
+        dict[Student.RANK_LIST].append(-1)
+        dict[Student.SUM_NUMBER_LIST].append(-1)
     dict[Volunteer.MAJOR] = []
     for item in major_int_list:
         numitem = (int)(item)
@@ -371,6 +371,8 @@ def getStudentEstimateRank(student):
 # modify by shaoyunqiu ,chenge the return value to match the get_estimate_rank_every
     try:
         myscore = int(getStudentEstimateScore(student))
+        if myscore == -1:
+            return '0', '0'
         '''if myscore == 0:
             return str(all_student-no_gufen_number), str(all_student-no_gufen_number)
         else:'''
