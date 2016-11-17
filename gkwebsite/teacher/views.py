@@ -757,9 +757,16 @@ def upload(request):
             Picture.CATEGORY: int(category),
         }
 
-        flag = pic.createPicturebyDict(dic)
+        if len(pic.getPicturebyDict({Picture.NUMBER: int(number)})) > 0:
+            return JsonResponse({'result': '禁止重复上传',
+                                 'url': '%s_%s_%s' % (str(YEAR_LIST[dic[Picture.YEAR]]),
+                                    SHITI_LIST[dic[Picture.PROVINCE]],
+                                    SUBJECT_LIST[dic[Picture.SUBJECT]])})
+
+
         imgFile = request.FILES['problem_upload']
         handle_uploaded_img(imgFile, year, province, subject, number, score, category)
+        flag = pic.createPicturebyDict(dic)
 
         if flag:
             dict = {'result': '上传成功'}
