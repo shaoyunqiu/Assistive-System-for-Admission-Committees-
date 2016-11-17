@@ -23,16 +23,29 @@
 														估分测试 <small><span id="username">您好，</span></small>
 												</h1>
                         <h2 class="page-header"><small>注意：开始估分后，我们将显示并记录您每道题估分所用时间。</small></h2>
-                        <h2 class="page-header"><small>选择试题：</small></h2>
 										</div>
 								</div>
 
                                 <!--div class="row">
                                     <include clock declaration>
 								</div-->
-                                <div class="row" id = 'test_list'>
-								</div>
-				
+                                <div class = "row">
+                  <div class = "col-md-12 col-lg-10">
+                    <table class="table table-hover">
+                      <caption>试题列表</caption>
+                      <thead>
+                        <tr>
+                          <th>名称</th>
+                          <th>状态</th>
+                          <th>开始测试</th>
+                        </tr>
+                      </thead>
+                      <tbody id="test_list">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
 			{% include 'student/include/footer.html' %}
 						</div>
 						<!-- /. PAGE INNER	-->
@@ -58,7 +71,7 @@
 				$.post("/backend/get_student_name_by_id/", {'id': {{ id }} }, function(data, status, xhr){
 					$('#username').append(data['name']);
 				})
-				
+
 			});
 			var user_array = [];
 			var done_array = [];
@@ -69,26 +82,14 @@
 				for(var i = 0; i < user_array.length; ++i){
 					tag1 = String(i)+'_A';
 					tag2 = String(i)+'_Aname';
-					var tt_begin = "<div class=\"col-md-12\" style = \"width:100%\"><label id = \"" + tag2 + "\" style = \"font-size: 20px\">";
-			        var data = user_array[i];
-			        var done = "";
-			        /*
-			        if(done_array[i] == "1")
-			        {
-                       done = "<small>（已估分）</small>";
-			        }
-			        else
-			        {
-                        done = "<small>（未估分）</small>";
-			        }
-			        */
-			        done = "<small>(" + String(done_array[i]) + ")</small>"
-			        var tt_end = "</label>" + done + "<div class=\"button blue\" style = \"margin-right: auto;text-align:right;float:right\" id = \"" + tag1 + "\">开始测试</div></div>"
-			        $('#test_list').append(tt_begin + data + tt_end);
+					listitems="<tr><td>"+user_array[i]+"</td><td>"+done_array[i]+"</td>";
+                    listitems+="<td><button type=\"button\" id=\""+tag1+"\" class = \"btn btn-success btn-xs\">开始测试</button></td>\n";
+                    listitems+="</tr>";
+                    $('#test_list').append(listitems);
 					$('#'+tag1).click(function(){
 					    var parse = this.id.split("_");
-						var row = this.id + "name";
-                        window.location="/student/do_test?test_name="+document.getElementById(row).innerHTML;
+						var row = parseInt(parse[0]);
+                        window.location="/student/do_test?test_name="+user_array[row];
 						//No need to examine the suffix since we are dealing with 'tag1'
 			        })
 			    }
