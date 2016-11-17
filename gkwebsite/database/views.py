@@ -56,6 +56,9 @@ def student_list_all(request):
     # completed by evan69
     # by dqn14 Oct 12, 2016
     # use this if-else to block violent access
+    # stu.output_all_student_info('ememe.xls')
+
+
     if request.is_ajax() and request.method == 'POST':
         t = []
         stu_list = stu.getAllInStudent()
@@ -247,13 +250,13 @@ def export_all_student(request):
         # file_path = os.path.join(os.getcwd(), os.path.join('files', file_name))
 
         t={}
-        try:
-            print "start-----", file_path
-            stu.output_all_student_info(file_path)
-            print "end-----"
-            t['success'] = 'Y'
-        except:
-            t['success'] = 'N'
+        # try:
+        print "start-----", file_path
+        stu.output_all_student_info(file_path)
+        print "end-----"
+        t['success'] = 'Y'
+        # except:
+        #     t['success'] = 'N'
         t['filename'] = file_name
 
         return JsonResponse(t)
