@@ -176,12 +176,17 @@ def student_center(request):
     return HttpResponse(t.render(c))
 
 @check_identity('student')
+@detect_mobile
 def student_score(request):
     t = get_template('student/score.html')
     id = request.session.get('student_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
     c = {'id': id}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
     return HttpResponse(t.render(c))
 
 @check_identity('student')
@@ -224,6 +229,7 @@ def student_rank(request):
     return render(request, 'student/rank.html', {'dict': listall, 'id': id})
 
 @check_identity('student')
+@detect_mobile
 def student_admit(request):
     '''
 
@@ -239,10 +245,17 @@ def student_admit(request):
     if info.strip() == '' or info.strip() == "0":
         info = u'暂时还没有您的录取信息，请耐心等待老师添加'
     admition = info
+    c={'admition': admition}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
+    
     return render(request,
-                  'student/admit.html', {'admition': admition})
+                  'student/admit.html', c)
 
 @check_identity('student')
+@detect_mobile
 def student_contact(request):
     '''
                 后端需要在这里改代码，从数据库读取正确的dict，并返回
@@ -273,7 +286,12 @@ def student_contact(request):
         address = tmp_dic[Volunteer.ADDRESS]
         dict = {'profession': u'志愿者','name':name, 'phone':phone,'email':email,'address':address}
         list.append(dict)
-    return render(request,'student/contact.html', {'dict': list})
+    c={'dict': list }
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
+    return render(request,'student/contact.html', c)
 
 
 def student_logout(request):
@@ -284,6 +302,7 @@ def student_logout(request):
     return redirect('/login')
 
 @csrf_exempt
+@detect_mobile
 def profile(request):
     weichatopenid(request)
     id = request.session.get('student_id', -1)
@@ -467,7 +486,12 @@ def profile(request):
         print 'jiao baba', dic
         if 'auth' in request.GET:
             dic['auth'] = '0'
-        return render(request, 'student/userinfo.html', {'dict': dic})
+        c={'dict': dic}
+        if request.mobile:
+            c['mobile'] = "Y"
+        else:
+            c['mobile'] = "N"
+        return render(request, 'student/userinfo.html', c)
 
 
 
@@ -535,10 +559,16 @@ def get_all_tests(request):
 
 @csrf_exempt
 @check_identity('student')
+@detect_mobile
 def do_test(request):
     test_name = request.GET.get('test_name')
     t = get_template('student/do_test.html')
-    return HttpResponse(t.render({'test_name': test_name}))
+    c={'test_name': test_name}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
+    return HttpResponse(t.render(c))
     # return render(request, 'student/do_test.html')
     # return HttpResponse(t.render({}))
 
@@ -655,12 +685,17 @@ def get_last_estimate_score(stu_id, test_id):
 
 @csrf_exempt
 @check_identity('student')
+@detect_mobile
 def message(request):
     t = get_template('student/message.html')
     id = request.session.get('student_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
     c = {'id': id}
+    if request.mobile:
+        c['mobile'] = "Y"
+    else:
+        c['mobile'] = "N"
     return HttpResponse(t.render(c))
 
 
