@@ -341,6 +341,8 @@ def getLastTenWechatURL():
     all_wechat_url = getWechatURLbyDict({})
     size = len(all_wechat_url)
     ret_list = []
+    if size == 0:
+        return ret_list
     for i in range(0, size):
         index = size - i - 1
         if index < 0:
