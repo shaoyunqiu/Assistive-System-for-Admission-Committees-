@@ -21,18 +21,18 @@ def removePictureIDByDic(dic):
 def removePictureIDByDic(dic):
     for key in dic.keys():
         if key not in Picture.FIELD_LIST:
-            print "illegal key, can't remove"
+            # print "illegal key, can't remove"
             return False
     toremove = Picture.objects.filter(**dic)
     if len(toremove) == 0:
-        print "cant not find the picture"
+        # print "cant not find the picture"
         return False
     else:
         try:
             toremove.delete()
             return True
         except:
-            print "cannot remove"
+            # print "cannot remove"
             return False
 
 def getPictureAllDictByObject(picture):
@@ -42,7 +42,7 @@ def getPictureAllDictByObject(picture):
             dict[item] = getattr(picture, item)
             # print '******'
         except:
-            print '----', item
+            # print '----', item
             return None
     return dict
 
@@ -71,7 +71,7 @@ def getPicturebyDict(dic):
     #     dic[Picture.IS_TITLE] = 0
     for key in dic.keys():
         if key not in Picture.FIELD_LIST:
-            print "illegal key, cannot find"
+            # print "illegal key, cannot find"
             return []
     return Picture.objects.filter(**dic)
 
@@ -83,30 +83,30 @@ def createPicturebyDict(dict):
     #     return False
     # modify by shaoyunqiu
     if Picture.ID in dict.keys():
-        print "cannot set id, failed"
+        # print "cannot set id, failed"
         return False
     for field in dict.keys():
         if field not in Picture.FIELD_LIST:
-            print "illegal field, failed"
+            # print "illegal field, failed"
             return False
     try:
         pic = Picture.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
     try:
         for item in dict.keys():
             setattr(pic, item, dict[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         pic.full_clean()
     except:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
 
     pic.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 # modified by shaoyunqiu
@@ -118,20 +118,20 @@ def setPicture(picture, field, value):
     :return:字段对应的值
     '''
     if field == Picture.ID :
-        print "cannot change the id"
+        # print "cannot change the id"
         return False
     if field not in Picture.FIELD_LIST:
-        print "illegal field, cannot set"
+        # print "illegal field, cannot set"
         return False
     try:
         setattr(picture, field, value)
         picture.full_clean()
         picture.save()
-        print "before return true"
+        # print "before return true"
         return True
     except:
-        print "---------------------"
-        print "can not saved!!"
+        # print "---------------------"
+        # print "can not saved!!"
         return False
 
 

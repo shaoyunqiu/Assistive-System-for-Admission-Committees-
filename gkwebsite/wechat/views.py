@@ -68,7 +68,7 @@ def get_token():
         token_dic['last_time'] = int(time.time())
     except KeyError:
         token_dic['access_token'] = ""
-        print "get access_token failed"
+        # print "get access_token failed"
     #print token_dic['access_token']
 
 
@@ -162,7 +162,7 @@ def handleText(msg):
 
 
 def createMenu():
-    print 'createMenu'
+    # print 'createMenu'
     token()
     url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s" % token_dic['access_token']
 
@@ -243,7 +243,7 @@ def send_pic_text(msg,type):
         picurl = index_pic
         title = u'点击进入注册或登录界面'
         texturl = we.authority("login")
-        print texturl
+        # print texturl
     elif type == "profile":
         picurl = index_pic
         title = u'点击查看个人信息'
@@ -279,11 +279,19 @@ def send_pic_text_many(msg):
     else:
         sendbody = ""
         for content in all_content:
-            title = content[WechatURL.TITLE]
-            abstract = content[WechatURL.TEXT]
-            picurl = content[WechatURL.PICTURE_URL]
-            texturl = content[WechatURL.MESSAGE_URL]
+            title = ""
+            abstract = ""
+            picurl = ""
+            texturl = ""
+            try:
+                title = content[WechatURL.TITLE]
+                abstract = content[WechatURL.TEXT]
+                picurl = content[WechatURL.PICTURE_URL]
+                texturl = content[WechatURL.MESSAGE_URL]
+            except:
+                continue
             sendbody = sendbody + newsbody % (title, abstract, picurl, texturl)
+
         resStr = sendhead + sendbody + newstail
         return resStr
 

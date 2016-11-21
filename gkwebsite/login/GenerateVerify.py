@@ -42,7 +42,7 @@ def gnrtyzm(width, height):
     font_addr = os.path.join(settings.STATIC_ROOT, 'assets/fonts/mnfqh.otf')
     #font_addr = os.getcwd()+'/login/static/assets/fonts/mnfqh.otf'
     font = ImageFont.truetype(font_addr, size)
-    print font_addr
+    # print font_addr
     '''
     # 用到了`ImageDraw 的 Draw 函数
     # 有且只有一个参数，就是之前创建的画布

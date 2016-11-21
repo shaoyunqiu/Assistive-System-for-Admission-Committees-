@@ -103,7 +103,7 @@ def outputXLS(path, filename, sheet, list, _titleList):
     titleList = [u'序号']
     for item in _titleList:
         titleList.append(item)
-    print titleList
+    # print titleList
 
     if len(titleList) != len(mylist):
         return False
@@ -114,7 +114,7 @@ def outputXLS(path, filename, sheet, list, _titleList):
     for i in range(0, len(mylist)):
         for j in range(0, len(mylist[i])):
             sh.write(j + 1, i, mylist[i][j])
-    print 'woca ', filename
+    # print 'woca ', filename
     book.save(filename)
     return True
 
@@ -146,7 +146,7 @@ def getStudentEstimateScore(student):
                 flag = True
                 sum_score += tmp_dic[key]['score']
             except:
-                print "int error"
+                # print "int error"
                 continue
     if flag == False:
         return str(-1)

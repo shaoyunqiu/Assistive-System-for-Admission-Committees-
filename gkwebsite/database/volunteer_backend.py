@@ -84,11 +84,11 @@ def idToAccountVolunteer(id):
     try:
         int_id = (int)(id)
     except:
-        print 'id is not int'
+        # print 'id is not int'
         return False
     acc = Volunteer.objects.filter(id=int_id)
     if len(acc) == 0:
-        print 'id not exist'
+        # print 'id not exist'
         return None
     # if len(acc) > 1:
     #     print 'warning: account not unique!'
@@ -135,7 +135,7 @@ def getVolunteerbyField(field, argc):
         dic = {field: argc}
         return Volunteer.objects.filter(**dic)
     else:
-        print "field is not exist"
+        # print "field is not exist"
         return []
 
 
@@ -147,7 +147,7 @@ def checkField(field):
     '''
     if field in Volunteer.FIELD_LIST:
         return True
-    print 'this column not exist'
+    # print 'this column not exist'
     return False
 
 def getVolunteerAll(account):
@@ -158,10 +158,11 @@ def getVolunteerAll(account):
     '''
     acc = Volunteer.objects.filter(account=account)
     if len(acc) == 0:
-        print 'account not exist'
+        # print 'account not exist'
         return None
     if len(acc) > 1:
-        print 'warning: account not unique!'
+        # print 'warning: account not unique!'
+        pass
     return acc[0]
 
 
@@ -191,7 +192,7 @@ def setVolunteer(account, field, value):
         if not checkField(field):
             return False
         if field == Volunteer.ACCOUNT:
-            print 'can not modify account'
+            # print 'can not modify account'
             return False
         if not getVolunteerAll(account):
             return False
@@ -201,8 +202,8 @@ def setVolunteer(account, field, value):
         volunteer.save()
         return True
     except:
-        print "-------------------------------"
-        print "can not saved!!"
+        # print "-------------------------------"
+        # print "can not saved!!"
         return False
 
 def createVolunteer(account, dict):
@@ -216,13 +217,13 @@ def createVolunteer(account, dict):
         dict.pop('id')
 
     if getVolunteerAll(account):
-        print "account existed"
+        # print "account existed"
         return False
 
     try:
         volunteer = Volunteer.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
 
@@ -230,15 +231,15 @@ def createVolunteer(account, dict):
         setattr(volunteer, Volunteer.ACCOUNT, account)
         for item in dict.keys():
             setattr(volunteer, item, dict[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         volunteer.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
 
     volunteer.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 

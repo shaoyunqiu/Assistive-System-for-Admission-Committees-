@@ -216,7 +216,7 @@ def add_volunteer(request):
             flag = 'true'
         else:
             flag = 'false'
-        print '-------' + username + ' ' + password + ' ' + str(flag)
+        # print '-------' + username + ' ' + password + ' ' + str(flag)
         return JsonResponse({'success': flag, 'username': username})
     else:
         return HttpResponse('Access denied.')
@@ -232,7 +232,7 @@ def export_registration_code(request):
         length = request.POST.get('length')
         file_name = "%s_teacher_registercode.xls" % teacher
         t = {'filename': file_name}
-        print 'file xls ' + file_name
+        # print 'file xls ' + file_name
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -251,9 +251,9 @@ def export_all_student(request):
 
         t={}
         # try:
-        print "start-----", file_path
+        # print "start-----", file_path
         stu.output_all_student_info(file_path)
-        print "end-----"
+        # print "end-----"
         t['success'] = 'Y'
         # except:
         #     t['success'] = 'N'
@@ -295,7 +295,7 @@ def get_student_alert(request):
             try:
                 rece_stu_list = eval(info_dic[Notice.RECEIVE_STU])
             except:
-                print 'bug'
+                # print 'bug'
                 rece_stu_list = []
 
             if id in rece_stu_list or str(id) in rece_stu_list:
@@ -368,7 +368,7 @@ def release_test(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         id = request.POST.get('id')
-        print 'fabu ',id
+        # print 'fabu ',id
         list = id.split('_')
         year = find_item_index_in_list(int(list[0]), YEAR_LIST)
         province = find_item_index_in_list(list[1], SHITI_LIST)
@@ -389,7 +389,7 @@ def release_test(request):
 
         t['success'] = 'Y'
         t['message'] = 'ok'
-        print 'ttt ', t
+        # print 'ttt ', t
         return JsonResponse(t)
     else:
         return HttpResponse('Access denied.')
@@ -400,7 +400,7 @@ def withdraw_test(request):
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
         id = request.POST.get('id')
-        print 'chehui ', id
+        # print 'chehui ', id
         list = id.split('_')
         year = find_item_index_in_list(int(list[0]), YEAR_LIST)
         province = find_item_index_in_list(list[1], SHITI_LIST)
@@ -622,7 +622,7 @@ def get_next_question_num(request):
         test_id = request.POST.get('test_id')
         info = test_id
         info_list = info.split('_')
-        print info_list
+        # print info_list
         year = int(info_list[0]) - YEAR_LIST[1] + 1
         province = find_item_index_in_list(info_list[1], PROVINCE_LIST)
         subject = find_item_index_in_list(info_list[2], SUBJECT_LIST)
@@ -685,7 +685,7 @@ def add_activity(request):
         teacher_id = request.session.get('teacher_id', -1)
         if teacher_id == -1:
             return JsonResponse({'success':'N'})
-        print name, date_begin, date_end
+        # print name, date_begin, date_end
         try:
             begin_list = date_begin.split('-')
             end_list = date_end.split('-')
@@ -697,7 +697,7 @@ def add_activity(request):
             t = {}
             t['success']='Y'
             t['message']= u'活动创建成功'
-            print 't', t
+            # print 't', t
             return JsonResponse(t)
         except:
             t = {}
@@ -720,7 +720,7 @@ def export_activity_result(request):
             path = os.path.join(settings.MEDIA_ROOT, 'files/')
             # path = os.getcwd() + '/files/'
             filename = path + '%s_timer_%s_teacher.xls' % (str(id), str(teacher_id))
-            print '-----',filename
+            # print '-----',filename
             generateTimerXLS(id, teacher_id, filename)
             t = {}
             t['success']='Y'
@@ -737,7 +737,7 @@ def set_volunteer(request):
     # by dqn14 Nov 2, 2016
     # use this if-else to block violent access
     if request.is_ajax() and request.method == 'POST':
-        print 'sdfsdf', request.POST.get('group_id')
+        # print 'sdfsdf', request.POST.get('group_id')
         try:
             group_id = int(request.POST.get('group_id').split('、')[0])
         except:
@@ -866,7 +866,7 @@ def new_message_to_group(request):
             target_group = request.POST.get('group_val')
             text = request.POST.get('maintext')
             teacher_id = request.session.get('teacher_id', -1)
-            print title, target_group, text, teacher_id
+            # print title, target_group, text, teacher_id
 
             group = back.getGroupbyDict({Group.ID: int(target_group)})[0]
             stu_id_list_str = getattr(group, Group.STU_LIST).split('_')
