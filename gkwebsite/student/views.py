@@ -474,9 +474,9 @@ def profile(request):
         }
 
 
-        if dic['estimateScore'] == '-1':
+        if dic['estimateScore'] == '-1' or dic['estimateScore'] == -1:
             dic['estimateScore'] = u'还没有估分啊亲'
-        if dic['realScore'] == '-1':
+        if dic['realScore'] == '-1' or dic['realScore'] == -1:
             dic['realScore'] = ''
 
 
