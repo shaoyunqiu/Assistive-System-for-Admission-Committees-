@@ -279,11 +279,19 @@ def send_pic_text_many(msg):
     else:
         sendbody = ""
         for content in all_content:
-            title = content[WechatURL.TITLE]
-            abstract = content[WechatURL.TEXT]
-            picurl = content[WechatURL.PICTURE_URL]
-            texturl = content[WechatURL.MESSAGE_URL]
+            title = ""
+            abstract = ""
+            picurl = ""
+            texturl = ""
+            try:
+                title = content[WechatURL.TITLE]
+                abstract = content[WechatURL.TEXT]
+                picurl = content[WechatURL.PICTURE_URL]
+                texturl = content[WechatURL.MESSAGE_URL]
+            except:
+                continue
             sendbody = sendbody + newsbody % (title, abstract, picurl, texturl)
+
         resStr = sendhead + sendbody + newstail
         return resStr
 
