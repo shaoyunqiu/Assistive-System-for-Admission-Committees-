@@ -27,7 +27,7 @@ def getRegisterCodebyField(field, argc):
     '''
     # modified by shaoyunqiu
     if field not in RegisterCode.FIELD_LIST:
-        print "illegal field"
+        # print "illegal field"
         return []
     else:
         dic = {field: argc}
@@ -36,12 +36,12 @@ def getRegisterCodebyField(field, argc):
 def setRegisterCode(code, field, value):
     try:
         if (field in RegisterCode.FIELD_LIST) == False:
-            print 'are not'
+            # print 'are not'
             return False
         if field == RegisterCode.REGISTER_CODE:
-            print 'can not modify code'
+            # print 'can not modify code'
             return False
-        print 'start set'
+        # print 'start set'
         # modified by shaoyunqiu. register need to be an object
         register = getRegisterCodebyField(RegisterCode.REGISTER_CODE, code)[0]
         setattr(register, field, value)
@@ -49,8 +49,8 @@ def setRegisterCode(code, field, value):
         register.save()
         return True
     except:
-        print "-------------------------------"
-        print "can not saved!!"
+        # print "-------------------------------"
+        # print "can not saved!!"
         return False
 
 def isExistRegisterCode(code):
@@ -86,14 +86,14 @@ def createRegisterCode(code):
     obj = RegisterCode.objects.model()
     # modified by shaoyunqiu, registercode need to be unique
     if isExistRegisterCode(code):
-        print "the registercode already exist, can not save"
+        # print "the registercode already exist, can not save"
         return False
 
     try:
         setattr(obj, RegisterCode.REGISTER_CODE, code)
         obj.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
     obj.save()
@@ -113,7 +113,7 @@ def createNewRegisterCode():
         if flag == True:
             break
         else:
-            print "try again"
+            # print "try again"
             code = tmpcreateNewRegisterCode()
     return code
 

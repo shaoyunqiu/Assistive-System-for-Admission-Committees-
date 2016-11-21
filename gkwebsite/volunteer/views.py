@@ -253,7 +253,7 @@ def student_info_show(request):
 
 @check_identity('volunteer')
 def date_choose(request):
-    print 'date choose'
+    # print 'date choose'
     if 'volunteer_id' not in request.session.keys():
         return redirect('/login/')
     id = request.session.get('volunteer_id', -1)
@@ -270,7 +270,7 @@ def get_all_activity(request):
         后端应在此处返回该志愿者可以提交的时间问卷列表，包括填过未填过的
         然后放到下面样例写好的dic的'activity'键对应的列表值中，列表里有若干字典
     """
-    print "activity "
+    # print "activity "
     dic = {'activity' : [{'name':'第一次组会','proposer':'李三胖','state':'未填写','activity_id':'12'},
                          {'name':'一对一解答','proposer':'屁孩','state':'已填写','activity_id':'32'},
                          {'name':'庆功会','proposer':'王大神','state':'未填写','activity_id':'9'}]}
@@ -278,7 +278,7 @@ def get_all_activity(request):
     if 'volunteer_id' not in request.session.keys():
         return redirect('/login/')
     id = request.session.get('volunteer_id', -1)
-    print 'vol id', id
+    # print 'vol id', id
     ret_list = []
     timer_list = back.getTimerbyDict({})
     for item in timer_list:
@@ -308,7 +308,7 @@ def get_activity_time(request):
     if 'volunteer_id' not in request.session.keys():
         return redirect('/login/')
     vol_id = str(request.session.get('volunteer_id', -1))
-    print 'ac_id=:', request.POST.get('activity_id')
+    # print 'ac_id=:', request.POST.get('activity_id')
     timer = back.getTimerbyDict({Timer.ID: int(request.POST.get('activity_id'))})[0]
     info_dic = back.getTimerAllDictByObject(timer)
     (time_list, checked_list) = back.date_start_to_end(info_dic[Timer.START_TIME], info_dic[Timer.END_TIME])
@@ -330,8 +330,8 @@ def submit_time(request):
     if 'volunteer_id' not in request.session.keys():
         return redirect('/login/')
     vol_id = str(request.session.get('volunteer_id'))
-    print "vol id" + vol_id
-    print request.POST
+    # print "vol id" + vol_id
+    # print request.POST
     ac_id = request.POST.get('activity_id') # 活动问卷的id
     time_list = request.POST.get('time').split(',') # 列表，存储全部可选的时间
     checked_list = request.POST.get('checked').split(',')  # 列表，和上一个列表对应，1表示选中，0表示未选中
@@ -354,7 +354,7 @@ def profile(request):
     if 'volunteer_id' not in request.session.keys():
         return redirect('/login/')
     vol_id = request.session.get('volunteer_id')
-    print "vol id" + str(vol_id)
+    # print "vol id" + str(vol_id)
     vol_account = vol.idToAccountVolunteer(str(vol_id))
     volunteer = vol.getVolunteerAll(vol_account)
     if request.method == 'POST':
@@ -404,7 +404,7 @@ def profile(request):
                 describe = vol.getVolunteerAllDictByAccount(vol_account)[Volunteer.COMMENT] + describe + '\n'
             else:
                 describe = vol.getVolunteerAllDictByAccount(vol_account)[Volunteer.COMMENT]
-            print 'new ', describe
+            # print 'new ', describe
             vol.setVolunteer(vol_account, Volunteer.COMMENT, describe)
             flag = True
 

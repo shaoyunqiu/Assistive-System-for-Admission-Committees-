@@ -879,9 +879,9 @@ class TestRegisterBases(TestCase):
 
     def test_randomstr(self):
         str1 = reg_back.random_str(-100)
-        print str1
+        # print str1
         str2 = reg_back.random_str(100)
-        print str2
+        # print str2
 
 
 class TestGroupBases(TestCase):

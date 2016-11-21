@@ -13,53 +13,54 @@ def createNoticebyDict(dict):
     try:
         notice = Notice.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
     # modified by shaoyunqiu, cannot set the id and chedk field
     if Notice.ID in dict.keys():
-        print "cannot set the id, cannot create"
+        # print "cannot set the id, cannot create"
         return False
     for field in dict.keys():
         if field not in Notice.FIELD_LIST:
-            print "illegal, field"
+            # print "illegal, field"
             return False
 
     try:
         for item in dict.keys():
             setattr(notice, item, dict[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         notice.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
     notice.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 
 # modified by shaoyunqiu, cannot set the id, and check the field is legal.
 def setNotice(notice, field, value):
     if field == Notice.ID :
-        print "cannot set the id, fail"
+        # print "cannot set the id, fail"
         return False
     if field not in Notice.FIELD_LIST:
-        print "illegal field"
+        pass
+        # print "illegal field"
     try:
         setattr(notice, field, value)
         notice.full_clean()
         notice.save()
         return True
     except:
-        print "can not saved!!"
+        # print "can not saved!!"
         return False
 
 # modified by shaoyunqiu, check the field
 def getNoticebyDict(dic):
     for field in dic.keys():
         if field not in Notice.FIELD_LIST:
-            print "illegal field"
+            # print "illegal field"
             return []
     return Notice.objects.filter(**dic)
 
@@ -91,37 +92,38 @@ def createGroupbyDict(dict):
     try:
         group = Group.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
     try:
         for item in dict.keys():
             setattr(group, item, dict[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         group.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
     group.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 # modified by shaoyunqiu, cannot set the id, and check the field is legal.
 def setGroup(group, field, value):
     if field == Group.ID :
-        print "cannot set the id, fail"
+        # print "cannot set the id, fail"
         return False
     if field not in Group.FIELD_LIST:
-        print "illegal field"
+        # print "illegal field"
+        pass
     try:
         setattr(group, field, value)
         group.full_clean()
         group.save()
         return True
     except:
-        print "-------------------------------"
-        print "can not saved!!"
+        # print "-------------------------------"
+        # print "can not saved!!"
         return False
 
 
@@ -132,16 +134,16 @@ def getGroupbyDict(dic):
     try:
         for field in dic.keys():
             if field not in Group.FIELD_LIST:
-                print "illegal key"
+                # print "illegal key"
                 return []
     except:
-        print "dict error"
+        # print "dict error"
         return []
     try:
         ans = Group.objects.filter(**dic)
         return ans
     except:
-        print "failed"
+        # print "failed"
         return []
 
 
@@ -171,20 +173,20 @@ def createTimerbyDict(dict):
     try:
         timer = Timer.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
     try:
         for item in dict.keys():
             setattr(timer, item, dict[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         timer.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
     timer.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 
@@ -197,8 +199,8 @@ def setTimer(timer, field, value):
         timer.save()
         return True
     except:
-        print "-------------------------------"
-        print "can not saved!!"
+        # print "-------------------------------"
+        # print "can not saved!!"
         return False
 
 
@@ -218,7 +220,7 @@ def getTimerAllDictByObject(timer):
     try:
         dict[Timer.VOLUNTEER_DIC] = eval(dict[Timer.VOLUNTEER_DIC])
     except:
-        print 'Can not change to dict'
+        # print 'Can not change to dict'
         dict[Timer.VOLUNTEER_DIC] = {}
     return dict
 
@@ -239,20 +241,20 @@ def createWechatURLbyDict(dict):
     try:
         wechatURL = WechatURL.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
     try:
         for item in dict.keys():
             setattr(wechatURL, item, dict[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         wechatURL.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
     wechatURL.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 
@@ -265,8 +267,8 @@ def setWechatURL(wechatURL, field, value):
         wechatURL.save()
         return True
     except:
-        print "-------------------------------"
-        print "can not saved!!"
+        # print "-------------------------------"
+        # print "can not saved!!"
         return False
 
 
@@ -300,7 +302,7 @@ def removeWechatURLByDic(dic):
 
 def date_start_to_end(start, end):
     if start > end:
-        print 'time error'
+        # print 'time error'
         return None
     date_list = []
     while True:

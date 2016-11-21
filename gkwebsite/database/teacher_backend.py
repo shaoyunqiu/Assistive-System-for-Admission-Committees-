@@ -25,11 +25,11 @@ def idToAccountTeacher(id):
     try:
         int_id = (int)(id)
     except:
-        print 'id is not int'
+        # print 'id is not int'
         return False
     acc = Teacher.objects.filter(id=int_id)
     if len(acc) == 0:
-        print 'id not exist'
+        # print 'id not exist'
         return None
     # if len(acc) > 1:
     #     print 'warning: account not unique!'
@@ -46,33 +46,33 @@ def createTeacher(kwargs):
     # shaoyunqiu
     # checked by lihy 2016/11/7
     if 'account' not in kwargs.keys():
-        print 'account is required'
+        # print 'account is required'
         return False
     if kwargs.has_key(Teacher.ID):
-        print "cannot set the id"
+        # print "cannot set the id"
         return False
 
     if not checkTeacherAccount(kwargs['account']):
-        print 'account has been occupied'
+        # print 'account has been occupied'
         return False
     try:
         teacher = Teacher.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
     try:
         for item in kwargs.keys():
             if hasattr(teacher, item):
                 setattr(teacher, item, kwargs[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         teacher.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
     teacher.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 def checkTeacherAccount(_account):
@@ -123,10 +123,11 @@ def getTeacherAll(_account):
     """
     acc = getTeacherObject().filter(account = _account)
     if len(acc) == 0:
-        print 'account not exist'
+        # print 'account not exist'
         return None
     if len(acc) > 1:
-        print 'warning: account not unique!'
+        pass
+        # print 'warning: account not unique!'
     return acc[0]
 
 def getTeacher(_account,_colomn):
@@ -140,7 +141,7 @@ def getTeacher(_account,_colomn):
         #不存在账户
         return None
     if not checkTeacherField(_colomn):
-        print 'this column not exist'
+        # print 'this column not exist'
         return None
     return getattr(getTeacherAll(_account), _colomn, 'Error')
 
@@ -154,10 +155,10 @@ def setTeacher(_account,_colomn,_data):
     '''
     try:
         if _colomn == 'account':
-            print 'can not modify account'
+            # print 'can not modify account'
             return False
         if not checkTeacherField(_colomn):
-            print 'this column not exist'
+            # print 'this column not exist'
             return False
         teacher = getTeacherAll(_account)
         setattr(teacher, _colomn, _data)
@@ -165,8 +166,8 @@ def setTeacher(_account,_colomn,_data):
         teacher.save()
         return True
     except:
-        print "-------------------------------"
-        print "can not saved!!"
+        # print "-------------------------------"
+        # print "can not saved!!"
         return False
 
 

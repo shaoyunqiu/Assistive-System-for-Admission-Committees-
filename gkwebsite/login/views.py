@@ -37,7 +37,7 @@ def openid(request):
         if tmp_opneid[0] == True:
             open_id = tmp_opneid[1]
             request.session['open_id'] = open_id
-            print "openid: " + open_id
+            # print "openid: " + open_id
 
 '''
     login & register 界面
@@ -70,16 +70,16 @@ def logincheck(request):
                 password = request.POST.get('login_password')
                 yzmString = request.POST.get('login_yzm').upper()
                 if (yzmString == request.session['yzmString']):
-                    print ' student login'
+                    # print ' student login'
                     (login, id) = student_backend.checkStudentPassword(username, password)
                     if login:
                         if 'open_id' in request.session:
                             stu_id = id
                             account = student_backend.idToAccountStudent(stu_id)
                             student_backend.setStudent(account, 'openid', request.session['open_id'])
-                            print "#############"
+                            # print "#############"
                         request.session['student_id'] = int(id)
-                        print 'student_id', id
+                        # print 'student_id', id
                         request.session['user_name'] = username
                         #request.session['password'] = password
                         return redirect('/student/')
@@ -92,7 +92,7 @@ def logincheck(request):
                 password = request.POST.get('login_password')
                 yzmString = request.POST.get('login_yzm').upper()
                 if (yzmString == request.session['yzmString']):
-                    print ' teacher login'
+                    # print ' teacher login'
                     (login,id) = teacher_backend.checkTeacherPassword(username, password)
                     if login:
                         request.session['teacher_id'] = int(id)
@@ -177,16 +177,16 @@ def register(request):
     后端需要检验邀请码和相关信息
     无误后写入到数据库
     '''
-    print 'commint 12121212'
+    # print 'commint 12121212'
     username = request.POST.get('username', '1')
     password = request.POST.get('password','2')
     email = request.POST.get('email','3')
     invited = request.POST.get('invited','4')
-    print 'username : ', username
+    # print 'username : ', username
 
     reg_list = reg.getRegisterCodebydic({RegisterCode.REGISTER_CODE: invited, RegisterCode.STATE: 0})
     if len(reg_list) <= 0:
-        print '--------------'
+        # print '--------------'
         return JsonResponse({'result': '验证码不可用'})
 
     success = student_backend.createStudent(username, {Student.PASSWORD: password, Student.EMAIL: email,
@@ -206,7 +206,7 @@ def register(request):
     else:
         return JsonResponse({'result': '注册失败，用户名已存在'})
 
-    print email
+    # print email
     if (success):
         sendEmail(email)
     return JsonResponse({'result': '注册成功'})

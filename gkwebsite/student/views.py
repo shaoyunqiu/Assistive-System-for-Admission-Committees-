@@ -91,7 +91,7 @@ def back_to_profile(request, id):
     all_group = back.getGroupbyDict({})
     for item in all_group:
         dic['grouplist'].append(back.getGroupAllDictByObject(item)['id'])
-    print '----------------*****--------'
+    # print '----------------*****--------'
     return redirect('/student/profile/?auth=0')
 
 '''
@@ -106,7 +106,7 @@ def openid(request):
         if tmp_opneid[0] == True:
             open_id = tmp_opneid[1]
             request.session['open_id'] = open_id
-            print "openid: " + open_id
+            # print "openid: " + open_id
 
 '''
     wechat openid login
@@ -114,23 +114,27 @@ def openid(request):
 '''
 def weichatopenid(request):
     if 'student_id' in request.session:
-        print "wocao-------1", request.session['student_id']
+        pass
+        # print "wocao-------1", request.session['student_id']
 
     openid(request)
     if 'student_id' in request.session:
-        print "wocao-------2", request.session['student_id']
+        pass
+        # print "wocao-------2", request.session['student_id']
 
     if 'open_id' in request.session:
         if 'student_id' in request.session:
-            print "wocao-------3", request.session['student_id']
+            pass
+            # print "wocao-------3", request.session['student_id']
 
         open_id = request.session['open_id']
         (login, id, username) = student_backend.checkStudentOpenID(open_id)
         if 'student_id' in request.session:
-            print "wocao-------4", request.session['student_id']
+            pass
+            # print "wocao-------4", request.session['student_id']
 
         if login:
-            print "$$$$$$$$$", id
+            # print "$$$$$$$$$", id
             request.session['student_id'] = int(id)
             request.session['user_name'] = username
 
@@ -139,16 +143,17 @@ def check_identity(identity):
     def decorator(func):
         def wrapper(request, *args, **kw):
             # 下面这空白的位置填session相应的id名
-            print '**********'
+            # print '**********'
             if 'student_id' in request.session:
-                print "wocao-------", request.session['student_id']
+                pass
+                # print "wocao-------", request.session['student_id']
             weichatopenid(request)
             identity_dic = {'student': 'student_id', 'volunteer': '', 'teacher': ''}
-            print identity, request.session.get(identity_dic[identity])
+            # print identity, request.session.get(identity_dic[identity])
             try:
                 id = int(request.session.get(identity_dic[identity]))
             except:
-                print '-9090909090------'
+                # print '-9090909090------'
                 return redirect('/login/')
             if identity == 'student':
                 if stu.is_have_permission(id) == False:
@@ -315,10 +320,10 @@ def profile(request):
         '''
         保存信息并返回json
         '''
-        print "wp",request.POST
+        # print "wp",request.POST
 
         info_dict = request.POST.copy()
-        print info_dict
+        # print info_dict
 
         if info_dict['password'].strip() != '':
             stu.setStudent(account, Student.PASSWORD, info_dict['password'])
@@ -340,8 +345,8 @@ def profile(request):
         #         info_dict['rank' + str(i) + str(i)] = '0'
         if info_dict['realScore'].strip() == '':
             info_dict['realScore'] = '0'
-        print 'phone ', info_dict.get('tutorPhone')
-        print 'province baiyunren', int(info_dict.get('province'))
+        # print 'phone ', info_dict.get('tutorPhone')
+        # print 'province baiyunren', int(info_dict.get('province'))
         dic = {
             'name': info_dict.get('name'),
             'identification': info_dict.get('identification'),
@@ -490,7 +495,7 @@ def profile(request):
         all_group = back.getGroupbyDict({})
         for item in all_group:
             dic['grouplist'].append(back.getGroupAllDictByObject(item)['id'])
-        print 'jiao baba', dic
+        # print 'jiao baba', dic
         if 'auth' in request.GET:
             dic['auth'] = '0'
         c={'dict': dic}
@@ -513,7 +518,7 @@ def get_all_tests(request):
     id = request.session.get('student_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
-    print id
+    # print id
     account = stu.idToAccountStudent(str(id))
     student = stu.getStudentAll(account)
     stu_dic = stu.getStudentAllDictByAccount(account)
@@ -521,7 +526,7 @@ def get_all_tests(request):
 
     year = int(year) - YEAR_LIST[1] + 1
     province = int(stu_dic[Student.PROVINCE]['province'])
-    print 'pro ', province
+    # print 'pro ', province
     dic = {
         # Picture.YEAR: year,
         Picture.PROVINCE: province,
@@ -548,7 +553,7 @@ def get_all_tests(request):
     for item in ret_list:
         shenhe_fen = int(stu.getStudentEstimateScore_Every(student, item))
         no_shenhe_fen = int(stu.getStudentEstimateScore_Every_no_shenhe(student, item))
-        print shenhe_fen, no_shenhe_fen
+        # print shenhe_fen, no_shenhe_fen
         if no_shenhe_fen == -1:
             done_list.append(u'未测试')
         else:
@@ -557,7 +562,7 @@ def get_all_tests(request):
             else:
                 done_list.append(u'已审核, 得分:%s'%(str(shenhe_fen)))
 
-    print 'done ', done_list
+    # print 'done ', done_list
     dic = {'tests' : ret_list,
            'done_list' : done_list}
     # 后端需要增加一个键值对，done_list存储是否估分，长度和ret_list一样
@@ -591,7 +596,7 @@ def get_problem_list(request):
     # print 'test_name', test_name
     info = test_name
     info_list = info.split('_')
-    print info_list
+    # print info_list
     year = int(info_list[0]) - YEAR_LIST[1] + 1
     province = find_item_index_in_list(info_list[1], PROVINCE_LIST)
     subject = find_item_index_in_list(info_list[2], SUBJECT_LIST)
@@ -603,17 +608,18 @@ def get_problem_list(request):
     }
 
     if province == -1 or subject == -1:
-        print 'ERROR !!!!!!!!!!!!!!!!!!!'
+        pass
+        # print 'ERROR !!!!!!!!!!!!!!!!!!!'
 
     id_list = []
     pic_list = pic.getPicturebyDict(dict)
-    print 'len ', len(pic_list)
+    # print 'len ', len(pic_list)
     for item in pic_list:
         pic_dic = pic.getPictureAllDictByObject(item)
         id_list.append(pic_dic[Picture.ID])
 
     dic = {'problem_list': id_list}
-    print 'id_list ', id_list
+    # print 'id_list ', id_list
     return JsonResponse(dic)
 
 @csrf_exempt
@@ -656,8 +662,8 @@ def submit_test_result(request):
     id = request.session.get('student_id', -1)
     if id == -1:
         return HttpResponse('Access denied')
-    print id
-    print request.POST
+    # print id
+    # print request.POST
     time_list = [int(item) for item in request.POST.get('time_list').split(",")]
     score_list = [int(item) for item in request.POST.get('score_list').split(",")]
     test_name = request.POST.get('test_name')
@@ -723,7 +729,7 @@ def get_all_message(request):
         try:
             rece_stu_list = eval(info_dic[Notice.RECEIVE_STU])
         except:
-            print 'bug'
+            # print 'bug'
             rece_stu_list = []
 
         if id in rece_stu_list or str(id) in rece_stu_list:

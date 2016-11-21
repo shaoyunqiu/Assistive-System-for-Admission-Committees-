@@ -37,11 +37,11 @@ def idToAccountStudent(id):
     try:
         int_id = (int)(id)
     except:
-        print 'id is not int'
+        # print 'id is not int'
         return False
     acc = Student.objects.filter(id=int_id)
     if len(acc) == 0:
-        print 'id not exist'
+        # print 'id not exist'
         return None
     # if len(acc) > 1:
     #     print 'warning: account not unique!'
@@ -88,7 +88,7 @@ def getStudentbyField(field, argc):
         dic = {field: argc}
         return Student.objects.filter(**dic)
     else:
-        print "field is not exist"
+        # print "field is not exist"
         return []
 
 
@@ -100,7 +100,7 @@ def checkField(field):
     '''
     if field in Student.FIELD_LIST:
         return True
-    print 'this column not exist'
+    # print 'this column not exist'
     return False
 
 
@@ -112,10 +112,11 @@ def getStudentAll(account):
     '''
     acc = Student.objects.filter(account=account)
     if len(acc) == 0:
-        print 'account not exist'
+        # print 'account not exist'
         return None
     if len(acc) > 1:
-        print 'warning: account not unique!'
+        # print 'warning: account not unique!'
+        pass
     return acc[0]
 
 
@@ -184,7 +185,7 @@ def setStudent(account, field, value):
         if not checkField(field):
             return False
         if field == Student.ACCOUNT:
-            print 'can not modify account'
+            # print 'can not modify account'
             return False
         if not getStudentAll(account):
             return False
@@ -194,8 +195,8 @@ def setStudent(account, field, value):
         student.save()
         return True
     except:
-        print "-------------------------------"
-        print "can not saved!!"
+        # print "-------------------------------"
+        # print "can not saved!!"
         return False
 
 
@@ -207,27 +208,27 @@ def createStudent(account, dict):
     :return:是否成功添加
     '''
     if getStudentAll(account):
-        print "account existed"
+        # print "account existed"
         return False
 
     # confirm that accout == dict[Student.ACCOUNT]
     # checked by lihy 2016/11/7
     if Student.ACCOUNT in dict.keys():
         if dict[Student.ACCOUNT] != account:
-            print "args conflict"
+            # print "args conflict"
             return False
     #modified by shaoyunqiu cannot changeid and ckeck the field
     if dict.has_key(Student.ID):
-        print "cannot set the id, failed"
+        # print "cannot set the id, failed"
         return False
     for field in dict.keys():
         if field not in Student.FIELD_LIST:
-            print "illegal field"
+            # print "illegal field"
             return False
     try:
         student = Student.objects.model()
     except:
-        print "create object fail"
+        # print "create object fail"
         traceback.print_exc()
         return False
 
@@ -235,15 +236,15 @@ def createStudent(account, dict):
         setattr(student, Student.ACCOUNT, account)
         for item in dict.keys():
             setattr(student, item, dict[item])
-        print 'full_clean ing...'
+        # print 'full_clean ing...'
         student.full_clean()
     except ValidationError:
-        print 'validation fail...'
+        # print 'validation fail...'
         traceback.print_exc()
         return False
 
     student.save()
-    print 'successfully create account'
+    # print 'successfully create account'
     return True
 
 
@@ -258,10 +259,10 @@ def checkStudentPassword(_account,_password):
 
     #if _password == hash(getData(_account, 'password')): #哈希
     if not getStudent(_account, 'account'): #无重复，说明不存在这个用户
-        print '---------'
+        # print '---------'
         return (False , 'Account does not exist.')
     if _password != getStudent(_account, 'password'):
-        print '*********'
+        # print '*********'
         return (False , 'Password is incorrect')
     # 密码不正确
     return (True, str(getStudent(_account,'id')))
@@ -335,7 +336,8 @@ def setStudentGroupbyList(student, id_list):
         if '' in stu_list:
             stu_list.remove('')
         if stu_id in stu_list:
-            print 'Big bug!'
+            # print 'Big bug!'
+            pass
         else:
             stu_list.append(stu_id)
         back.setGroup(group, Group.STU_LIST, '_'.join(stu_list))
@@ -352,7 +354,7 @@ def getStudentEstimateRank(student):
     try:
         student_list = getStudentbyField(Student.PROVINCE, getattr(student, Student.PROVINCE))
         all_student = len(student_list)
-        print "allstudent" + str(all_student)
+        # print "allstudent" + str(all_student)
     except:
         return str(0), str(0)
 
@@ -446,7 +448,7 @@ def getStudentEstimateRank_Every(student, test_id):
 
     rank = 0
     sort_score_list = sorted(all_score_list, reverse=True)
-    print score, sort_score_list
+    # print score, sort_score_list
     for item in sort_score_list:
         if score >= sort_score_list[rank]:
             break

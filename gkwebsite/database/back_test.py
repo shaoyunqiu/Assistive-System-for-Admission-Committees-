@@ -49,9 +49,9 @@ def createTestData():
     tch.createTeacher(dic)
 
 def createAccountTest():
-    print '*******************'
-    print 'createAccount'
-    print 'account bug here'
+    # print '*******************'
+    # print 'createAccount'
+    # print 'account bug here'
     dic = {'account': 'houyf##', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf'}
     tch.createTeacher(dic)
@@ -64,7 +64,7 @@ def createAccountTest():
     dic = {'account': 'ho', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    print 'account right here'
+    # print 'account right here'
     dic = {'account': 'houyf1', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com',
            'realName': u'hehe', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
@@ -77,13 +77,13 @@ def createAccountTest():
     dic = {'account': 'houyf4', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': u"李阳", 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    print 'account occupied here'
+    # print 'account occupied here'
     dic = {'account': 'houyf3', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
 
-    print '-------------------------------------------------'
-    print 'email bug here'
+    # print '-------------------------------------------------'
+    # print 'email bug here'
     dic = {'account': 'houyf141', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
@@ -93,47 +93,48 @@ def createAccountTest():
     dic = {'account': 'houyf143', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
-    print 'email right here'
+    # print 'email right here'
     dic = {'account': 'houyf144', 'password': 'mima', 'area': 'wuhan', 'email': 'alienlhy@163.com', 'phone': '11111111',
            'realName': 'hyf', 'volunteerList': ['a', 'b']}
     tch.createTeacher(dic)
 
 def checkAccountTest():
-    print '*******************'
-    print 'checkAccount'
-    print 'False here'
-    print tch.checkTeacherAccount('houyf1')
-    print tch.checkTeacherAccount('houyf144')
-    print 'True here'
-    print tch.checkTeacherAccount('houyf##')
-    print tch.checkTeacherAccount('lihy')
+    # print '*******************'
+    # print 'checkAccount'
+    # print 'False here'
+    tch.checkTeacherAccount('houyf1')
+    tch.checkTeacherAccount('houyf144')
+    # print 'True here'
+    tch.checkTeacherAccount('houyf##')
+    tch.checkTeacherAccount('lihy')
 
 def checkColomnTest():
-    print '*******************'
-    print 'checkColomn'
-    print 'True here'
-    print tch.checkTeacherField('account')
-    print tch.checkTeacherField('password')
-    print tch.checkTeacherField('area')
-    print tch.checkTeacherField('email')
-    print tch.checkTeacherField('phone')
-    print tch.checkTeacherField('realName')
-    print tch.checkTeacherField('volunteerList')
-    print 'False here'
-    print tch.checkTeacherField('none')
+    # print '*******************'
+    # print 'checkColomn'
+    # print 'True here'
+    tch.checkTeacherField('account')
+    tch.checkTeacherField('password')
+    tch.checkTeacherField('area')
+    tch.checkTeacherField('email')
+    tch.checkTeacherField('phone')
+    tch.checkTeacherField('realName')
+    tch.checkTeacherField('volunteerList')
+    # print 'False here'
+    tch.checkTeacherField('none')
 
 def getAccountTest():
     pass
 
 def getDataTest():
-    print '*******************'
-    print 'getData'
-    print tch.getTeacher('houyf1','password')
-    print tch.getTeacher('houyf2','area')
-    print 'None here'
-    print tch.getTeacher('houyf_notexist','area')
-    print tch.getTeacher('houyf2', 'are')
+    # print '*******************'
+    # print 'getData'
+    tch.getTeacher('houyf1','password')
+    tch.getTeacher('houyf2','area')
+    # print 'None here'
+    tch.getTeacher('houyf_notexist','area')
+    tch.getTeacher('houyf2', 'are')
 
 def setDataTest():
-    print '*******************'
-    print 'setData'
+    # print '*******************'
+    # print 'setData'
+    pass
